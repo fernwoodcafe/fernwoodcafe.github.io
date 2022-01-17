@@ -1,7 +1,14 @@
+html { }
+
+body { }
+
+main { }
 
 article {
-  border:thin solid green;
-  padding:10px;
+  border-width: 5px;
+  border-style: double;
+  border-color: green;
+  padding:15px;
 }
 
 article,
@@ -36,4 +43,8 @@ header > h1
 {
   color:black;
   float:left;
+}
+
+footer {
+  height:50px;
 }
