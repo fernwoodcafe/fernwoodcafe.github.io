@@ -24,18 +24,50 @@
 
 <body>
 
-  <article>
+  <article itemscope itemtype="https://schema.org/Restaurant">
     <header>
       <img src="img/logo.jpg" />
-      <h1>Welcome to the Fernwood Road Cafe</h1>
+      <h1>Welcome to the <span itemprop="name">Fernood Road Cafe</span></h1>
     </header>
-    <section></section>
-    <section></section>
-    <section></section>
-    <section></section>
-    <section></section>
-    <footer>
+    <section>
 
+        <h2>Hours</h2>
+        <meta itemprop="openingHours" content="Sa, Su 09:00-16:00">
+        <meta itemprop="openingHours" content="Mo, Tu, Th, Fr 09:00-15:00">
+        <table>
+          <tbody>
+            <thead>
+              <th>
+              <th>Open
+              <th>Closed
+            </thead>
+            <tr><th>Mon<td>9 am</td><td>3 pm</td>
+            <tr><th>Tue<td>9 am</td><td>3 pm</td>
+            <tr><th>Wed<td colspan="2">Closed</td>
+            <tr><th>Thu<td>9 am</td><td>3 pm</td>
+            <tr><th>Fri<td>9 am</td><td>3 pm</td>
+            <tr><th>Sat<td>9 am</td><td>4 pm</td>
+            <tr><th>Sun<td>9 am</td><td>4 pm</td>
+          </tbody>
+        </table>
+
+        <h2>Contact</h2>
+
+        <p itemprop="telephone">(250)-931-2233</p>
+
+        <address itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+          <span itemprop="streetAddress">325 Fernwood Road</span><br/>
+          <span itemprop="addressLocality">Salt Spring Island</span><br/>
+        </address>
+
+        <h2>Map</h2>
+
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.025673777479!2d-123.5353507841076!3d48.914903104679595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548f56846be4e641%3A0x4d8816e100da77f5!2sFernwood%20Road%20Cafe!5e0!3m2!1sen!2sca!4v1642386896966!5m2!1sen!2sca" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+    </section>
+
+    <footer>
+      Thank you for visiting!
     </footer>
   </article>
 

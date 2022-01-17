@@ -1,9 +1,26 @@
+
+article {
+  border:thin solid green;
+  padding:10px;
+}
+
+article,
+article > header
+{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+article,
+article > footer
+{
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
 header {
   height:400px;
   background-image:url("/img/skyview.jpg");
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border:thin solid black;
 }
 
 header > img {
