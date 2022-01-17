@@ -6,12 +6,13 @@
   --color-secondary-light:#d4986d;
 }
 
-
 html { }
 
 body { }
 
-main { }
+main {
+  position: relative;
+}
 
 article {
   border-width: 5px;
@@ -55,4 +56,29 @@ header > h1
 
 footer {
   height:50px;
+}
+
+/* 
+  Single Page App
+  See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
+  See also https://john-doe.neocities.org/
+*/
+article { 
+  /* ! Everything below is needed ! */
+  display: none;
+  visibility:collapse;
+  position: absolute;
+  background-color:white;
+  width: 100%;
+}
+
+article:target { 
+  display: block; 
+  visibility:visible;
+  z-index: 1;
+}
+
+article#home { 
+  display:block; 
+  visibility:visible;
 }
