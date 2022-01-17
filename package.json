@@ -5,7 +5,6 @@
   "keywords": "",
   "license": "",
   "author": "",
-  "distDir": "docs/",
   "scripts": {
     "build": "parcel build index.html --out-dir docs/",
     "dev": "parcel index.html --open",
