@@ -63,22 +63,12 @@ footer {
   See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
   See also https://john-doe.neocities.org/
 */
-article { 
-  /* ! Everything below is needed ! */
-  display: none;
-  visibility:collapse;
-  position: absolute;
-  background-color:white;
-  width: 100%;
+article,
+article:target ~ #home {
+  display:none;
 }
 
-article:target { 
-  display: block; 
-  visibility:visible;
-  z-index: 1;
-}
-
+article:target,
 article#home { 
   display:block; 
-  visibility:visible;
 }
