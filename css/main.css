@@ -6,9 +6,12 @@
   --color-secondary-light:#d4986d;
 }
 
-html { }
+html { 
 
-body { }
+}
+
+body { 
+}
 
 main {
   position: relative;
@@ -71,4 +74,19 @@ article:target ~ #home {
 article:target,
 article#home { 
   display:block; 
+}
+
+dl 
+{
+
+}
+
+dl > dt
+{
+  font-weight: 900;
+}
+
+dl > dd
+{
+  margin:15px;
 }
