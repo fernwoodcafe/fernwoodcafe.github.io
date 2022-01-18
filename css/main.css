@@ -85,12 +85,16 @@ article nav a:hover {
 
 figure {
   display:inline-block;
-  border: thin solid var(--color-primary-light);
-  padding:10px;
+  max-width:200px;
+  padding:5px;
+  margin:5px;
+  border:thin solid var(--color-primary-dark);
+  border-radius: 5px;
 }
 
 figure img {
-  width:49%;
+  display:block;
+  margin:auto;
 }
 
 figure figcaption {
