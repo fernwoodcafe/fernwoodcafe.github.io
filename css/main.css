@@ -61,6 +61,43 @@ footer {
   height:50px;
 }
 
+dl > dt
+{
+  font-weight: 900;
+}
+
+dl > dd
+{
+  margin:15px;
+}
+
+article nav a {
+  margin-top: 20px;
+  display:inline-block;
+  padding:20px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+article nav a:hover {
+  outline:thin solid var(--color-secondary-dark);
+} 
+
+figure {
+  display:inline-block;
+  border: thin solid var(--color-primary-light);
+  padding:10px;
+}
+
+figure img {
+  width:49%;
+}
+
+figure figcaption {
+  padding-top:10px;
+  text-align:center;
+}
+
 /* 
   Single Page App
   See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
@@ -76,17 +113,8 @@ article#home {
   display:block; 
 }
 
-dl 
-{
-
-}
-
-dl > dt
-{
-  font-weight: 900;
-}
-
-dl > dd
-{
-  margin:15px;
+article#home a[href='#home'],
+article#menu a[href='#menu'],
+article#covid a[href='#covid'] { 
+  outline:thin solid var(--color-secondary-light);
 }
