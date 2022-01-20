@@ -85,7 +85,6 @@ article nav a:hover {
 
 figure {
   display:inline-block;
-  max-width:200px;
   padding:5px;
   margin:5px;
   border:thin solid var(--color-primary-dark);
