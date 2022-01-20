@@ -83,7 +83,8 @@ figure {
   display: inline-block;
   padding: 5px;
   margin: 5px;
-  border: thin solid var(--color-primary-dark);
+
+  border:thin solid var(--color-secondary-light);
   border-radius: 5px;
 }
 
@@ -106,13 +107,9 @@ ul {
   column-rule-color: var(--color-secondary-light);
   list-style:none; 
   padding:10px;
-  border-width: var(--fancy-border-width);
-  border-style: var(--fancy-border-style);
-  border-color: var(--color-secondary-light);
+  border:thin solid var(--color-secondary-light);
+  column-rule:thin solid var(--color-secondary-light);
   border-radius: 10px;
-  column-rule-width: var(--fancy-border-width);
-  column-rule-style: var(--fancy-border-style);
-  column-rule-color: var(--color-secondary-light);
 }
 
 ul > li {
