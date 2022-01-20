@@ -2,15 +2,16 @@
   --color-primary-light: #b8d253;
   --color-primary-mid: #7c9b39;
   --color-primary-dark: #5c7f23;
-  --color-secondary-dark:#714c40;
-  --color-secondary-light:#d4986d;
+  --color-secondary-dark: #714c40;
+  --color-secondary-light: #d4986d;
+  --fancy-border-style: double;
+  --fancy-border-width: 5px;
 }
 
-html { 
-
+html {
 }
 
-body { 
+body {
 }
 
 main {
@@ -18,106 +19,123 @@ main {
 }
 
 article {
-  border-width: 5px;
-  border-style: double;
+  border-width: var(--fancy-border-width);
+  border-style: var(--fancy-border-style);
   border-color: var(--color-secondary-light);
-  padding:15px;
+  padding: 15px;
 }
 
 article,
-article > header
-{
+article > header {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
 
 article,
-article > footer
-{
+article > footer {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
 
 header {
-  height:400px;
-  background-image:url("/img/skyview.jpg");
+  height: 400px;
+  background-image: url("/img/skyview.jpg");
 }
 
 header > img {
   border-top-left-radius: 20px;
-  height:175px;
-  width:175px;
-  float:left;
-  margin-right:20px;
+  height: 175px;
+  width: 175px;
+  float: left;
+  margin-right: 20px;
 }
 
-header > h1
-{
-  color:black;
-  float:left;
+header > h1 {
+  color: black;
+  float: left;
 }
 
 footer {
-  height:50px;
+  height: 50px;
 }
 
-dl > dt
-{
+dl > dt {
   font-weight: 900;
 }
 
-dl > dd
-{
-  margin:15px;
+dl > dd {
+  margin: 15px;
 }
 
 article nav a {
   margin-top: 20px;
-  display:inline-block;
-  padding:20px;
+  display: inline-block;
+  padding: 20px;
   border-radius: 5px;
   font-weight: 600;
 }
 
 article nav a:hover {
-  outline:thin solid var(--color-secondary-dark);
-} 
+  outline: thin solid var(--color-secondary-dark);
+}
 
 figure {
-  display:inline-block;
-  padding:5px;
-  margin:5px;
-  border:thin solid var(--color-primary-dark);
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
+  border: thin solid var(--color-primary-dark);
   border-radius: 5px;
 }
 
 figure img {
-  display:block;
-  margin:auto;
+  display: block;
+  margin: auto;
 }
 
 figure figcaption {
-  padding-top:10px;
-  text-align:center;
+  padding-top: 10px;
+  text-align: center;
+}
+
+ul {
+  column-count: 2;
+  column-width: 100px;
+  column-gap: 40px;
+  column-rule-width: var(--fancy-border-width);
+  column-rule-style: var(--fancy-border-style);
+  column-rule-color: var(--color-secondary-light);
+  list-style:none; 
+  padding:10px;
+  border-width: var(--fancy-border-width);
+  border-style: var(--fancy-border-style);
+  border-color: var(--color-secondary-light);
+  border-radius: 10px;
+  column-rule-width: var(--fancy-border-width);
+  column-rule-style: var(--fancy-border-style);
+  column-rule-color: var(--color-secondary-light);
+}
+
+ul > li {
+  padding-bottom: 1rem;
 }
 
 /* 
-  Single Page App
+  Single Page Navigation
   See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
   See also https://john-doe.neocities.org/
 */
 article,
 article:target ~ #home {
-  display:none;
+  display: none;
 }
 
 article:target,
-article#home { 
-  display:block; 
+article#home {
+  display: block;
 }
 
-article#home a[href='#home'],
-article#menu a[href='#menu'],
-article#covid a[href='#covid'] { 
-  outline:thin solid var(--color-secondary-light);
+article#home a[href="#home"],
+article#menu a[href="#menu"],
+article#covid a[href="#covid"] {
+  outline: thin solid var(--color-secondary-light);
 }
