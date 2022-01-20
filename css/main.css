@@ -99,21 +99,22 @@ figure figcaption {
 }
 
 ul {
-  column-count: 2;
-  column-width: 100px;
-  column-gap: 40px;
-  column-rule-width: var(--fancy-border-width);
-  column-rule-style: var(--fancy-border-style);
-  column-rule-color: var(--color-secondary-light);
   list-style:none; 
-  padding:10px;
-  border:thin solid var(--color-secondary-light);
+
+  column-count: 3;
+  column-width: 120px;
+  column-gap: 50px;
+  padding:25px;
+
   column-rule:thin solid var(--color-secondary-light);
+  border:thin solid var(--color-secondary-light);
   border-radius: 10px;
 }
 
 ul > li {
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  break-inside: avoid-column;
 }
 
 /* 
