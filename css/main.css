@@ -57,6 +57,7 @@ header > h1 {
 
 footer {
   height: 50px;
+  border:none;
 }
 
 dl > dt {
