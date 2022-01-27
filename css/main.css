@@ -19,23 +19,20 @@ body {
 
 main {
   position: relative;
-}
-
-article {
   border-width: var(--fancy-border-width);
   border-style: var(--fancy-border-style);
   border-color: var(--color-secondary-light);
   padding: 15px;
 }
 
-article,
-article > header {
+main,
+main > header {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
 
-article,
-article > footer {
+main,
+main > footer {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
@@ -74,15 +71,23 @@ dl > dd {
   margin: 15px;
 }
 
-article nav a {
+main nav {
+  display:flex;
+  flex-direction: row;
+  column-gap: 5px;
+}
+
+main nav a {
   margin-top: 20px;
-  display: inline-block;
   padding: 20px;
   border-radius: 5px;
   font-weight: 600;
+  background-color: var(--color-primary-light);
+  text-align: center;
+  flex-grow:1;
 }
 
-article nav a:hover {
+main nav a:hover {
   outline: thin solid var(--color-secondary-dark);
 }
 
@@ -136,6 +141,13 @@ ul > li {
   See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
   See also https://john-doe.neocities.org/
 */
+article {
+  position:relative;
+  padding-top:600px;
+  margin-top:-600px;
+  z-index: -1;
+}
+
 article,
 article:target ~ #home {
   display: none;
@@ -144,10 +156,4 @@ article:target ~ #home {
 article:target,
 article#home {
   display: block;
-}
-
-article#home a[href="#home"],
-article#menu a[href="#menu"],
-article#covid a[href="#covid"] {
-  outline: thin solid var(--color-secondary-light);
 }
