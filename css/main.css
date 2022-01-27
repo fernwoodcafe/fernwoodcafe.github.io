@@ -139,6 +139,11 @@ ul > li {
   See also https://john-doe.neocities.org/
 */
 
+article {
+  padding-top:800px;
+  margin-top:-800px;
+}
+
 article,
 article:target ~ #home {
   display: none;
