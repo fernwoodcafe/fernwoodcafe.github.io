@@ -91,10 +91,12 @@ figure {
 figure img {
   display: block;
   margin: auto;
+  border-bottom:thin solid var(--color-secondary-light);
 }
 
 figure figcaption {
   padding-top: 10px;
+  padding-bottom:5px;
   text-align: center;
 }
 
