@@ -1,11 +1,14 @@
 :root {
-  --color-primary-light: #b8d253;
+  --color-primary-light: #e1eead;
   --color-primary-mid: #7c9b39;
   --color-primary-dark: #5c7f23;
   --color-secondary-dark: #714c40;
   --color-secondary-light: #d4986d;
   --fancy-border-style: double;
   --fancy-border-width: 5px;
+
+  /* water.css overrides */
+  --background: var(--color-primary-light);
 }
 
 html {
@@ -57,6 +60,9 @@ header > h1 {
 
 footer {
   height: 50px;
+  margin:0 20px;
+  color:black;
+  text-align: right;
   border:none;
 }
 
@@ -101,7 +107,7 @@ figure img {
 figure figcaption {
   padding:10px;
   text-align: center;
-  background-color:var(--color-secondary-dark);
+  background-color:var(--color-primary-dark);
   color:white;
 
 }
