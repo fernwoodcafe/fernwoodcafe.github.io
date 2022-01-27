@@ -14,3 +14,5 @@ https://schema.org/OpeningHoursSpecification
 https://schema.org/openingHours
 
 https://w3c.github.io/developers/tools/
+
+https://validator.w3.org/
