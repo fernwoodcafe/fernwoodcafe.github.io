@@ -12,9 +12,7 @@
 }
 
 html {
-}
-
-body {
+  scroll-behavior: smooth;
 }
 
 main {
@@ -140,6 +138,7 @@ ul > li {
   See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
   See also https://john-doe.neocities.org/
 */
+
 article,
 article:target ~ #home {
   display: none;
