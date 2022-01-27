@@ -18,7 +18,6 @@ body {
 }
 
 main {
-  position: relative;
   border-width: var(--fancy-border-width);
   border-style: var(--fancy-border-style);
   border-color: var(--color-secondary-light);
@@ -141,12 +140,6 @@ ul > li {
   See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
   See also https://john-doe.neocities.org/
 */
-article {
-  position:relative;
-  padding-top:600px;
-  margin-top:-600px;
-}
-
 article,
 article:target ~ #home {
   display: none;
