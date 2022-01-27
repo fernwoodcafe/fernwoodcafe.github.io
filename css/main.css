@@ -145,7 +145,6 @@ article {
   position:relative;
   padding-top:600px;
   margin-top:-600px;
-  z-index: -1;
 }
 
 article,
