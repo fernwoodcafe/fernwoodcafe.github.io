@@ -167,32 +167,39 @@ article#home {
 }
 
 /*
- Custom Hover
+  Custom Aria-Label Hover
 */
 
 [aria-label] {
-    text-decoration:underline;
-    text-decoration-style: dotted;
+    text-decoration: underline;
+    text-decoration-style: dotted
 }
 
 [aria-label]:after {
-    background-image: url('https://www.freeiconspng.com/uploads/paper-clip-icon-19.png');
-    background-repeat:no-repeat;
+    background-image: url(https://www.freeiconspng.com/uploads/paper-clip-icon-19.png);
+    background-repeat: no-repeat;
     background-size: contain;
-    height:30px;
-    width:30px;
-    content:'';
-    position:absolute;
+    height: 30px;
+    width: 30px;
+    content: "";
+    position: absolute
+}
+
+[aria-label]:hover {
+    color: var(--color-primary-dark);
+    text-decoration-style:solid;
 }
 
 [aria-label]:hover:before {
-    background-color:var(--color-primary-dark);
-    border-radius:5px;
-    border:10px solid white;
-    color:white;
-    content:attr(aria-label);
+    background-color: var(--color-primary-dark);
+    border-radius: 5px;
+    border: 5px solid #fff;
+    color: #fff;
+    content: attr(aria-label);
+    font-weight:normal;
     max-width: 200px;
-    padding:5px;
-    position:absolute;
-    transform: translate(100px, -100px);
+    padding: 5px;
+    position: absolute;
+    transform: translate(2rem,2rem);
+    z-index:1;
 }
