@@ -165,3 +165,34 @@ article:target,
 article#home {
   display: block;
 }
+
+/*
+ Custom Hover
+*/
+
+[aria-label] {
+    text-decoration:underline;
+    text-decoration-style: dotted;
+}
+
+[aria-label]:after {
+    background-image: url('https://www.freeiconspng.com/uploads/paper-clip-icon-19.png');
+    background-repeat:no-repeat;
+    background-size: contain;
+    height:30px;
+    width:30px;
+    content:'';
+    position:absolute;
+}
+
+[aria-label]:hover:before {
+    background-color:var(--color-primary-dark);
+    border-radius:5px;
+    border:10px solid white;
+    color:white;
+    content:attr(aria-label);
+    max-width: 200px;
+    padding:5px;
+    position:absolute;
+    transform: translate(100px, -100px);
+}
