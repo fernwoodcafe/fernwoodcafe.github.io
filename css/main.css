@@ -1,5 +1,5 @@
 :root {
-  --color-primary-light: #e1eead;
+  --color-primary-light: #b7d152;
   --color-primary-mid: #7c9b39;
   --color-primary-dark: #5c7f23;
   --color-secondary-dark: #714c40;
@@ -176,7 +176,7 @@ article#home {
 }
 
 [aria-label]:after {
-    background-image: url(https://www.freeiconspng.com/uploads/paper-clip-icon-19.png);
+    background-image: url('/img/icon-paperclip.jpg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
