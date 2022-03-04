@@ -172,22 +172,31 @@ article#home {
 
 [aria-label] {
     text-decoration: underline;
-    text-decoration-style: dotted
+    text-decoration-style: dotted;
+    padding-right:40px;
 }
 
 [aria-label]:after {
-    background-image: url('/img/icon-paperclip.jpg');
+    background-image: url('/img/icon-paperclip.png');
     background-repeat: no-repeat;
-    background-size: contain;
-    height: 30px;
-    width: 30px;
+    background-size: cover;
+    transform: translateX(10px);
+    transition: transform 500ms;
+    height: 20px;
+    width: 20px;
     content: "";
-    position: absolute
+    position: absolute;
 }
 
 [aria-label]:hover {
     color: var(--color-primary-dark);
     text-decoration-style:solid;
+}
+
+[aria-label]:hover:after {
+    transform:rotate(90deg) translate(20px, -10px);
+    transition: transform 500ms;
+    z-index:1;
 }
 
 [aria-label]:hover:before {
@@ -198,8 +207,8 @@ article#home {
     content: attr(aria-label);
     font-weight:normal;
     max-width: 200px;
-    padding: 5px;
+    padding: 10px;
     position: absolute;
-    transform: translate(2rem,2rem);
+    transform: translate(1.5rem,1.5rem);
     z-index:1;
 }
