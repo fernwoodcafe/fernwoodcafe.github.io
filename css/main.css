@@ -1,5 +1,5 @@
 :root {
-  --color-primary-light: #e1eead;
+  --color-primary-light: #b7d152;
   --color-primary-mid: #7c9b39;
   --color-primary-dark: #5c7f23;
   --color-secondary-dark: #714c40;
@@ -164,4 +164,51 @@ article:target ~ #home {
 article:target,
 article#home {
   display: block;
+}
+
+/*
+  Custom Aria-Label Hover
+*/
+
+[aria-label] {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    padding-right:40px;
+}
+
+[aria-label]:after {
+    background-image: url('/img/icon-paperclip.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: translateX(10px);
+    transition: transform 500ms;
+    height: 20px;
+    width: 20px;
+    content: "";
+    position: absolute;
+}
+
+[aria-label]:hover {
+    color: var(--color-primary-dark);
+    text-decoration-style:solid;
+}
+
+[aria-label]:hover:after {
+    transform:rotate(90deg) translate(20px, -10px);
+    transition: transform 500ms;
+    z-index:1;
+}
+
+[aria-label]:hover:before {
+    background-color: var(--color-primary-dark);
+    border-radius: 5px;
+    border: 5px solid #fff;
+    color: #fff;
+    content: attr(aria-label);
+    font-weight:normal;
+    max-width: 200px;
+    padding: 10px;
+    position: absolute;
+    transform: translate(1.5rem,1.5rem);
+    z-index:1;
 }
