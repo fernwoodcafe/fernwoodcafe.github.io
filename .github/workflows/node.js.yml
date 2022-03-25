@@ -1,6 +1,10 @@
-# The goal of the workflow is to customize our deployment to GitHub pages. 
+# This workflow customizes our github-pages deployment.
 # See https://github.com/actions/deploy-pages/issues/20
 # See also https://github.com/actions/deploy-pages/issues/9
+# We disabled the default deployment like this: 
+# 1. Settings | Pages | Source | Branch = github-pages-no-op.
+# 1. Settings | Environments | github-pages | Deployment branches = Protected branches.
+# Customized deployments are currently in pre-beta.
 
 permissions:
   contents: read
