@@ -2,7 +2,7 @@
 
 const $create = (db, objectStoreName, objects) =>
   new Promise((resolve, reject) => {
-    console.log("$create");
+    console.log("$create", objectStoreName);
     const transaction = db.transaction(objectStoreName, "readwrite");
     // Do something when all the data is added to the database.
     transaction.oncomplete = (event) => {
@@ -50,27 +50,78 @@ const $migrate = (schemaVersion) =>
 
       const db = event.target.result;
 
-      const objectStore = db.createObjectStore("supplies", { keyPath: "name" });
-
-      objectStore.transaction.oncomplete = (event) => {
-        console.log("complete", event);
-      };
+      [
+        db.createObjectStore("supplies", { keyPath: "supplyId" }),
+        db.createObjectStore("recipes", { keyPath: "recipeId" }),
+      ].forEach((objectStore) => {
+        objectStore.transaction.oncomplete = (event) => {
+          console.log("complete", event);
+        };
+      });
     };
   });
+
+await new Promise((resolve, reject) => {
+  const request = indexedDB.deleteDatabase("restaurantDB");
+
+  request.onsuccess = (event) => {
+    console.log("success", event);
+    resolve();
+  };
+
+  request.onerror = (event) => {
+    console.log("error", event);
+    reject();
+  };
+
+  request.onblocked = (event) => {
+    console.log("blocked", event);
+    reject();
+  };
+});
 
 const db = await $migrate(1);
 
 await $create(db, "supplies", [
   {
-    name: "8 ounce cups",
-    cost: 10
+    supplyId: "3 ounce cups",
+    unitSize: "cup",
+    costPerUnitDollars: 10,
   },
   {
-    name: "12 ounce cups",
-    cost: 20
+    supplyId: "8 ounce cups",
+    unitSize: "cup",
+    costPerUnitDollars: 10,
   },
   {
-    name: "16 ounce cups",
-    cost: 30
+    supplyId: "12 ounce cups",
+    unitSize: "cup",
+    costPerUnitDollars: 20,
+  },
+  {
+    supplyId: "16 ounce cups",
+    unitSize: "cup",
+    costPerUnitDollars: 30,
+  },
+  {
+    supplyId: "espresso beans",
+    unitSize: "grams",
+    costPerUnitDollars: 10,
+  },
+]);
+
+await $create(db, "recipes", [
+  {
+    recipeId: "espresso",
+    components: [
+      {
+        supplyId: "3 ounce cup",
+        unitQuantity: 1,
+      },
+      {
+        supplyId: "espresso beans",
+        unitQuantity: 18.5,
+      },
+    ],
   },
 ]);
