@@ -1,6 +1,11 @@
-import { $createOrUpdate, $migrateDB, $readMany } from "./indexedDB-client.js";
+import {
+  $createOrUpdate,
+  $deleteDB,
+  $migrateDB,
+  $readMany,
+} from "./indexedDB-client.js";
 
-// $deleteDB("restaurantDB"); // optional reset
+$deleteDB("restaurantDB"); // optional reset
 
 const db = await $migrateDB("restaurantDB", [
   {
@@ -22,6 +27,10 @@ const db = await $migrateDB("restaurantDB", [
       (db) => db.deleteObjectStore("schedule"),
       (db) => db.createObjectStore("schedules", { keyPath: "scheduleId" }),
     ],
+  },
+  {
+    message: "introduce staff",
+    operations: [(db) => db.createObjectStore("staff", { keyPath: "staffId" })],
   },
 ]);
 

@@ -14,7 +14,7 @@ export const $create = (db, objectStoreName, objects) =>
     };
 
     const objectStore = transaction.objectStore(objectStoreName);
-    objects.forEach(function (obj) {
+    objects.forEach((obj) => {
       const request = objectStore.add(obj);
       request.onsuccess = (event) => {
         console.log("success", event);
@@ -67,8 +67,8 @@ export const $createOrUpdate = (db, objectStoreName, objects) =>
       const keyValue = obj[keyPath];
       const readRequest = objectStore.get(keyValue);
       readRequest.onsuccess = function (event) {
-        console.log("success", event, objectStoreRequest);
-        const result = objectStoreRequest.result;
+        console.log("success", event, readRequest);
+        const result = readRequest.result;
         resolve(result);
       };
 
@@ -144,13 +144,13 @@ export const $migrateDB = (databaseName, migrations) =>
 
     openDBRequest.onsuccess = (event) => {
       console.log("success", event);
-      const db = event.target.result;
+      const db = openDBRequest.result;
       resolve(db);
     };
 
     openDBRequest.onupgradeneeded = (event) => {
       console.log("upgradeneeded", event);
-      const db = event.target.result;
+      const db = openDBRequest.result;
 
       migrations.slice(currentVersion).forEach((migration) => {
         console.log(`running migration '${migration.message}`);
