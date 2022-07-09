@@ -1,3 +1,8 @@
+/**
+ * @param {IDBDatabase} db
+ * @param {string} objectStoreName
+ * @param {object[]} objects
+ */
 export const $create = (db, objectStoreName, objects) =>
   new Promise((resolve, reject) => {
     console.log("$create", objectStoreName);
@@ -22,6 +27,11 @@ export const $create = (db, objectStoreName, objects) =>
     });
   });
 
+/**
+ * @param {IDBDatabase} db
+ * @param {string} objectStoreName
+ * @param {object[]} objects
+ */
 export const $update = (db, objectStoreName, objects) =>
   new Promise((resolve, reject) => {
     console.log("$update", objectStoreName);
@@ -46,6 +56,11 @@ export const $update = (db, objectStoreName, objects) =>
     });
   });
 
+/**
+ * @param {IDBDatabase} db
+ * @param {string} objectStoreName
+ * @param {object[]} objects
+ */
 export const $createOrUpdate = (db, objectStoreName, objects) =>
   new Promise((resolve, reject) => {
     console.log("$createOrUpdate", objectStoreName);
@@ -63,6 +78,10 @@ export const $createOrUpdate = (db, objectStoreName, objects) =>
     };
 
     const keyPath = objectStore.keyPath;
+    if (typeof keyPath != "string") {
+      throw Error("We do not yet support keyPath arrays.");
+    }
+
     objects.forEach((obj) => {
       const keyValue = obj[keyPath];
       const readRequest = objectStore.get(keyValue);
@@ -89,6 +108,11 @@ export const $createOrUpdate = (db, objectStoreName, objects) =>
     });
   });
 
+/**
+ * @param {IDBDatabase} db
+ * @param {string} objectStoreName
+ * @param {string} key
+ */
 export const $readSingle = (db, objectStoreName, key) =>
   new Promise((resolve, reject) => {
     console.log("$readSingle", objectStoreName);
@@ -108,6 +132,10 @@ export const $readSingle = (db, objectStoreName, key) =>
     };
   });
 
+/**
+ * @param {IDBDatabase} db
+ * @param {string} objectStoreName
+ */
 export const $readMany = (db, objectStoreName) =>
   new Promise((resolve, reject) => {
     console.log("$readMany", objectStoreName);
@@ -127,8 +155,14 @@ export const $readMany = (db, objectStoreName) =>
     };
   });
 
-export const $delete = () => {};
+export const $delete = () => {
+  throw new Error("Not implemented.");
+};
 
+/**
+ * @param {string} [databaseName]
+ * @param {{ operations: ((db: IDBDatabase)=> any)[], message: string }[]} [migrations]
+ */
 export const $migrateDB = (databaseName, migrations) =>
   new Promise(async (resolve, reject) => {
     const databases = await indexedDB.databases();
@@ -168,6 +202,9 @@ export const $migrateDB = (databaseName, migrations) =>
     };
   });
 
+/**
+ * @param {string} databaseName
+ */
 export const $deleteDB = (databaseName) =>
   new Promise((resolve, reject) => {
     const request = indexedDB.deleteDatabase(databaseName);

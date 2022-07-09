@@ -5,7 +5,9 @@ import {
   $readMany,
 } from "./indexedDB-client.js";
 
-$deleteDB("restaurantDB"); // optional reset
+if (false) {
+  $deleteDB("restaurantDB"); // optional reset
+}
 
 const db = await $migrateDB("restaurantDB", [
   {
