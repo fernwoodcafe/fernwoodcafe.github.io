@@ -89,12 +89,31 @@ export const $createOrUpdate = (db, objectStoreName, objects) =>
     });
   });
 
-export const $read = (db, objectStoreName, key) =>
+export const $readSingle = (db, objectStoreName, key) =>
   new Promise((resolve, reject) => {
-    console.log("$read", objectStoreName);
+    console.log("$readSingle", objectStoreName);
     const transaction = db.transaction(objectStoreName, "readonly");
     const objectStore = transaction.objectStore(objectStoreName);
     const objectStoreRequest = objectStore.get(key);
+
+    objectStoreRequest.onsuccess = function (event) {
+      console.log("success", event, objectStoreRequest);
+      const result = objectStoreRequest.result;
+      resolve(result);
+    };
+
+    objectStoreRequest.onerror = function (event) {
+      console.log("error", event);
+      reject(event);
+    };
+  });
+
+export const $readMany = (db, objectStoreName) =>
+  new Promise((resolve, reject) => {
+    console.log("$readMany", objectStoreName);
+    const transaction = db.transaction(objectStoreName, "readonly");
+    const objectStore = transaction.objectStore(objectStoreName);
+    const objectStoreRequest = objectStore.getAll();
 
     objectStoreRequest.onsuccess = function (event) {
       console.log("success", event, objectStoreRequest);

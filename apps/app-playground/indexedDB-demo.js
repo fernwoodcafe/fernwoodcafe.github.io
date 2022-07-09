@@ -1,4 +1,4 @@
-import { $createOrUpdate, $migrateDB, $read } from "./indexedDB-client.js";
+import { $createOrUpdate, $migrateDB, $readMany } from "./indexedDB-client.js";
 
 // $deleteDB("restaurantDB"); // optional reset
 
@@ -25,17 +25,14 @@ const db = await $migrateDB("restaurantDB", [
   },
 ]);
 
-const result = await $read(db, "supplies", "3 asdf ounce cups");
-console.log("result", result);
-
 await $createOrUpdate(db, "schedules", [
-    {
-        scheduleId: "2022-Jan",
-    },
-    {
-        scheduleId: "2022-Feb",
-    }
-])
+  {
+    scheduleId: "2022-Jan",
+  },
+  {
+    scheduleId: "2022-Feb",
+  },
+]);
 
 await $createOrUpdate(db, "supplies", [
   {
@@ -80,3 +77,25 @@ await $createOrUpdate(db, "recipes", [
     ],
   },
 ]);
+
+// TODO Do this in something like React.
+
+const app = document.getElementById("app");
+$readMany(db, "recipes").then((results) => {
+  app.insertAdjacentHTML("beforebegin", `<h1>Recipes</h1>`);
+  results.forEach((result) => {
+    app.insertAdjacentHTML("beforebegin", `<p>${result.recipeId}</p>`);
+  });
+});
+$readMany(db, "supplies").then((results) => {
+  app.insertAdjacentHTML("beforebegin", `<h1>Supplies</h1>`);
+  results.forEach((result) => {
+    app.insertAdjacentHTML("beforebegin", `<p>${result.supplyId}</p>`);
+  });
+});
+$readMany(db, "schedules").then((results) => {
+  app.insertAdjacentHTML("beforebegin", `<h1>Schedules</h1>`);
+  results.forEach((result) => {
+    app.insertAdjacentHTML("beforebegin", `<p>${result.scheduleId}</p>`);
+  });
+});
