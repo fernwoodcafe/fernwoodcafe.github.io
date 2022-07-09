@@ -1,0 +1,13 @@
+{
+  "name": "apps",
+  "version": "0.0.1",
+  "description": "Manage the development of apps for this repository.",
+  "scripts": {
+    "serve:playground": "serve --single ./app-playground/"
+  },
+  "author": "Shaun Luttin",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^13.0.4"
+  }
+}
