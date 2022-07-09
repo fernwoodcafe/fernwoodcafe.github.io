@@ -30,9 +30,9 @@ const $update = async () => {};
 
 const $delete = async () => {};
 
-const $migrate = (schemaVersion) =>
+const $migrateDB = (databaseName, schemaVersion, operations) =>
   new Promise((resolve, reject) => {
-    const openDBRequest = indexedDB.open("restaurantDB", schemaVersion);
+    const openDBRequest = indexedDB.open(databaseName, schemaVersion);
 
     openDBRequest.onerror = (event) => {
       console.log("error", event);
@@ -50,10 +50,8 @@ const $migrate = (schemaVersion) =>
 
       const db = event.target.result;
 
-      [
-        db.createObjectStore("supplies", { keyPath: "supplyId" }),
-        db.createObjectStore("recipes", { keyPath: "recipeId" }),
-      ].forEach((objectStore) => {
+      operations.forEach((operation) => {
+        const objectStore = operation(db);
         objectStore.transaction.oncomplete = (event) => {
           console.log("complete", event);
         };
@@ -61,8 +59,8 @@ const $migrate = (schemaVersion) =>
     };
   });
 
-await new Promise((resolve, reject) => {
-  const request = indexedDB.deleteDatabase("restaurantDB");
+const $deleteDB = (databaseName) => new Promise((resolve, reject) => {
+  const request = indexedDB.deleteDatabase(databaseName);
 
   request.onsuccess = (event) => {
     console.log("success", event);
@@ -80,7 +78,16 @@ await new Promise((resolve, reject) => {
   };
 });
 
-const db = await $migrate(1);
+// ------------------------
+// Test 
+// ------------------------
+
+$deleteDB("restaurantDB");
+
+const db = await $migrateDB("restaurantDB", 1, [
+    db => db.createObjectStore("supplies", { keyPath: "supplyId" }),
+    db => db.createObjectStore("recipes", { keyPath: "recipeId" }),
+]);
 
 await $create(db, "supplies", [
   {
