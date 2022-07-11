@@ -1,13 +1,21 @@
+<!--
+  https://www.ag-grid.com/vue-data-grid
+ -->
 <template>
   <ag-grid-vue
     class="ag-theme-alpine"
-    style="height: 500px"
     :columnDefs="columnDefs.value"
     :rowData="rowData.value"
     :defaultColDef="defaultColDef"
   >
   </ag-grid-vue>
 </template>
+
+<style>
+.ag-theme-alpine {
+  height: 500px;
+}
+</style>
 
 <script>
 import { AgGridVue } from "ag-grid-vue3";
@@ -40,6 +48,7 @@ export default {
       sortable: true,
       filter: true,
       flex: 1,
+      editable: true,
     };
 
     // Example load data from sever
