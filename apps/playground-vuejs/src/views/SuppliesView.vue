@@ -5,6 +5,6 @@ import AgGridTable from "@/components/AgGridTableComponent.vue";
 <template>
   <div class="supplies">
     <h1>Supplies</h1>
-    <AgGridTable></AgGridTable>
+    <AgGridTable gridTitle="Supplies"></AgGridTable>
   </div>
 </template>
