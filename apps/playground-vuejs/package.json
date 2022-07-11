@@ -6,9 +6,11 @@
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "format": "prettier --write ./src/**/*.js ./src/**/*.vue"
+    "format": "prettier --write ./**/*.js ./**/*.vue"
   },
   "dependencies": {
+    "ag-grid-community": "^28.0.2",
+    "ag-grid-vue3": "^28.0.0",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },
