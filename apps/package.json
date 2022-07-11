@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Manage the development of apps for this repository.",
   "scripts": {
-    "serve:playground": "serve --single ./app-playground/"
+    "serve:indexdb": "serve --single ./playground-indexdb/"
   },
   "author": "Shaun Luttin",
   "license": "MIT",
