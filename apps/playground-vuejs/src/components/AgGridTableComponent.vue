@@ -5,7 +5,6 @@
     :columnDefs="columnDefs"
     :rowData="rowData.value"
     :defaultColDef="defaultColDef"
-    :getRowId="getRowId"
     @grid-ready="onGridReady"
   ></ag-grid-vue>
   <small>{{ gridData.length }}</small>
@@ -37,15 +36,8 @@ const columnDefs = Object.keys(props.gridData[0])
   }))
   .concat([{ headerName: "Row ID", valueGetter: "node.id" }]);
 
-let api = null;
-
-const onGridReady = (event) => {
-  api = event.api;
+const onGridReady = () => {
   rowData.value = props.gridData;
-};
-
-const getRowId = ({ data }) => {
-  return data.supplyId;
 };
 
 const gridInsertRow = () => {
