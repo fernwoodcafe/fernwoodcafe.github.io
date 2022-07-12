@@ -1,3 +1,4 @@
+import { watch } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import setupDB from "../data/indexedDB-setup";
 import RecipesRepo from "../data/RecipesRepo";
@@ -42,19 +43,48 @@ const router = createRouter({
         recipesList,
       },
       children: [
-        {
-          path: "/recipes/:id",
-          name: "recipe",
+        ...[
+          {
+            path: "/recipes/Foo",
+            component: () => import("../views/RecipeView.vue"),
+            props: {
+              recipeId: "Foo",
+            },
+          },
+          {
+            path: "/recipes/Bar",
+            component: () => import("../views/RecipeView.vue"),
+            props: {
+              recipeId: "Bar",
+            },
+          },
+        ],
+        ...recipesList.items.map((x) => ({
+          path: "/recipes/Americano",
           component: () => import("../views/RecipeView.vue"),
-          props: (route) => ({
-            id: route.params.id,
-            suppliesList,
-            getRecipe,
-          }),
-        },
+        })),
       ],
     },
   ],
+});
+
+watch(recipesList, (_, updatedRecipesList) => {
+  console.log(
+    "recipesList",
+    // updatedRecipesList.items.length,
+    updatedRecipesList.items.map((x) => x)
+  );
+
+  updatedRecipesList.items.forEach((recipe) => {
+    console.log("recipe", recipe);
+    router.addRoute("recipes", {
+      path: `/recipes/${recipe.recipeId}`,
+      component: () => import("../views/RecipeView.vue"),
+      props: {
+        recipeId: recipe.recipeId,
+      },
+    });
+  });
 });
 
 export default router;

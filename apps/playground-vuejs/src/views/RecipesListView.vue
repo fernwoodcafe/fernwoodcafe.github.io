@@ -4,7 +4,7 @@
     <header>
       <nav>
         <li :key="item.id" v-for="item in recipesList.items">
-          <RouterLink :to="`/recipes/${item.id}`">{{
+          <RouterLink :to="`/recipes/${item.recipeId}`">{{
             item.recipeId
           }}</RouterLink>
         </li>
