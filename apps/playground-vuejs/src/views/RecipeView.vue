@@ -5,6 +5,7 @@
       gridTitle="Recipes"
       :gridData="recipe.supplies"
       :gridColumnDefs="gridColumnDefs"
+      @gridDataUpdate="onGridDataUpdated"
     ></AgGridRecipeComponent>
   </div>
 </template>
@@ -15,9 +16,15 @@ import AgSuppliesEditor from "@/components/AgSuppliesEditor.vue";
 const props = defineProps({
   recipe: Object,
   suppliesList: Object,
+  updateRecipe: Function,
 });
 
 console.log(props.suppliesList.items);
+
+const onGridDataUpdated = (data) => {
+  console.log("onGridDataUpdated", data);
+  // props.updateRecipe(data);
+};
 
 const gridColumnDefs = [
   {

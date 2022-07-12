@@ -1,5 +1,5 @@
 <template>
-  <button @click="onClickNew">New</button>
+  <button @click="onClickNew">Add Supply</button>
   <ag-grid-vue
     class="ag-theme-alpine"
     :readOnlyEdit="true"

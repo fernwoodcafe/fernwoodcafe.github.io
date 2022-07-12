@@ -13,7 +13,11 @@
 <script setup>
 import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
 
-const props = defineProps(["suppliesList", "insertSupply", "updateSupply"]);
+const props = defineProps({
+  suppliesList: Object,
+  insertSupply: Function,
+  updateSupply: Function,
+});
 
 const onGridDataUpdated = (data) => {
   console.log("onGridDataUpdated", data);
