@@ -3,6 +3,7 @@ import { $createOrUpdate, $readMany, $readSingle } from "./indexedDB-client";
 
 const recipesList = reactive({ items: [] });
 
+/** @param {IDBDatabase} db */
 export default (db) => ({
   async select() {
     $readMany(db, "recipes").then((items) => {
@@ -11,8 +12,13 @@ export default (db) => ({
 
     return recipesList;
   },
+  /**
+   * @param {string} id
+   * @returns {Promise<Recipe>}
+   */
   async single(id) {
     const result = reactive({
+      recipeId: "",
       supplies: [{}],
     });
 
@@ -22,10 +28,16 @@ export default (db) => ({
 
     return result;
   },
+  /**
+   * @param {any} item
+   */
   insert(item) {
     recipesList.items = recipesList.items.slice().concat([item]);
     $createOrUpdate(db, "recipes", [item]);
   },
+  /**
+   * @param {{ id: any; }} item
+   */
   update(item) {
     recipesList.items = recipesList.items.map((oldItem) =>
       oldItem.id == item.id ? item : oldItem
