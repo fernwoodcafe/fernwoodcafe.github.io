@@ -4,7 +4,8 @@ import RecipesRepo from "../data/RecipesRepo";
 import SuppliesRepo from "../data/SuppliesRepo";
 import HomeView from "../views/HomeView.vue";
 
-const suppliesList = reactive(SuppliesRepo.getAll());
+const supplies = SuppliesRepo.getAll();
+const suppliesList = reactive(supplies);
 const recipesList = reactive(RecipesRepo.getAll());
 
 const router = createRouter({

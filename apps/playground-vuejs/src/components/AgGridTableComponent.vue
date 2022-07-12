@@ -1,16 +1,20 @@
 <template>
-  <span>{{ gridTitle }}</span>
+  <button @click="gridInsertRow">New</button>
   <ag-grid-vue
     class="ag-theme-alpine"
-    :columnDefs="columnDefs.value"
+    :columnDefs="columnDefs"
     :rowData="rowData.value"
     :defaultColDef="defaultColDef"
+    :getRowId="getRowId"
+    @grid-ready="onGridReady"
   ></ag-grid-vue>
+  <small>{{ gridData.length }}</small>
+  <small>{{ gridTitle }}</small>
 </template>
 
 <script setup>
 import { AgGridVue } from "ag-grid-vue3";
-import { onMounted, reactive } from "vue";
+import { reactive } from "Vue";
 
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
@@ -18,7 +22,6 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 const props = defineProps(["gridTitle", "gridData"]);
 
 const rowData = reactive({});
-const columnDefs = reactive({});
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
@@ -28,13 +31,22 @@ const defaultColDef = {
   editable: true,
 };
 
-// Example load data from sever
-onMounted(() => {
+const columnDefs = Object.keys(props.gridData[0]).map((key) => ({
+  field: key,
+}));
+
+const onGridReady = () => {
   rowData.value = props.gridData;
-  columnDefs.value = Object.keys(props.gridData[0]).map((key) => ({
-    field: key,
-  }));
-});
+};
+
+const getRowId = ({ data }) => {
+  return data.supplyId;
+};
+
+const gridInsertRow = () => {
+  console.log("gridInsertRow");
+  props.gridInsertRow();
+};
 </script>
 
 <style>

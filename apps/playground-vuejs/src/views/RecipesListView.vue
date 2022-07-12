@@ -1,7 +1,7 @@
 <template>
   <div class="recipes">
     <h1>Recipes</h1>
-    <AgGridTable gridTitle="Recipes" :gridData="recipesList"></AgGridTable>
+    <AgGridTable gridTitle="Recipes" :gridData="suppliesList"></AgGridTable>
   </div>
 </template>
 
