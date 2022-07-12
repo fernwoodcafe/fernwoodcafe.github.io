@@ -3,21 +3,23 @@
     <h2>{{ recipe.recipeId }}</h2>
     <AgGridRecipeComponent
       gridTitle="Recipes"
-      :gridData="recipe.supplies"
-      :gridColumnDefs="gridColumnDefs"
+      :recipe="recipe"
+      :suppliesList="suppliesList"
       @gridDataUpdate="onGridDataUpdated"
     ></AgGridRecipeComponent>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import AgGridRecipeComponent from "@/components/AgGridRecipeComponent.vue";
-import AgSuppliesEditor from "@/components/AgSuppliesEditor.vue";
-const props = defineProps({
-  recipe: Object,
-  suppliesList: Object,
-  updateRecipe: Function,
-});
+
+type Props = {
+  recipe: CafeRecipe;
+  suppliesList: ReactiveArray<CafeSupply>;
+  updateRecipe: Function;
+};
+
+const props = defineProps<Props>();
 
 console.log(props.suppliesList.items);
 
@@ -25,23 +27,4 @@ const onGridDataUpdated = (data) => {
   console.log("onGridDataUpdated", data);
   // props.updateRecipe(data);
 };
-
-const gridColumnDefs = [
-  {
-    // @ts-ignore
-    field: "Supply",
-    cellEditor: AgSuppliesEditor,
-    cellEditorParams: {
-      supplySelectOptions: props.suppliesList.items.map((item) => ({
-        key: item.supplyId,
-        value: `${item.supplyId}`,
-      })),
-    },
-  },
-  {
-    // @ts-ignore
-    headerName: "Row Id",
-    valueGetter: "node.id",
-  },
-];
 </script>

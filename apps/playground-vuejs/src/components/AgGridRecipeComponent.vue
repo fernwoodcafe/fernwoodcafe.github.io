@@ -8,18 +8,23 @@
     @cell-edit-request="onCellEditRequest"
     @grid-ready="onGridReady"
   ></ag-grid-vue>
-  <small>{{ gridTitle }}</small>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import AgSuppliesEditor from "@/components/AgSuppliesEditor.vue";
 import { AgGridVue } from "ag-grid-vue3";
 import { nextTick } from "vue";
 
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
+type Props = {
+  recipe: CafeRecipe;
+  suppliesList: ReactiveArray<CafeSupply>;
+};
+
 const emit = defineEmits(["gridDataInsert", "gridDataUpdate"]);
-const props = defineProps(["gridTitle", "gridData", "gridColumnDefs"]);
+const props = defineProps<Props>();
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
@@ -52,11 +57,27 @@ const onCellEditRequest = (event) => {
 const onGridReady = ({ api }) => {
   gridApi = api;
 
-  rowData = props.gridData;
-  const columnDefs = props.gridColumnDefs;
+  const columnDefs = [
+    {
+      // @ts-ignore
+      field: "supplyId",
+      cellEditor: AgSuppliesEditor,
+      cellEditorParams: {
+        supplySelectOptions: props.suppliesList.items.map((item) => ({
+          key: item.supplyId,
+          value: `${item.supplyId}`,
+        })),
+      },
+    },
+    {
+      // @ts-ignore
+      headerName: "Row Id",
+      valueGetter: "node.id",
+    },
+  ];
 
   gridApi.setColumnDefs(columnDefs);
-  gridApi.setRowData(props.gridData);
+  gridApi.setRowData(props.recipe.supplies);
 };
 
 const onClickNew = () => {

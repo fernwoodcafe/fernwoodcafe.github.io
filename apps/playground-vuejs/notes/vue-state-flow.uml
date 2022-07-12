@@ -1,7 +1,4 @@
 @startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: Another authentication Response
+index -> RecipeView: (recipe, suppliesList)
+RecipeView -> AgSuppliesEditor: (suppliesList)
 @enduml

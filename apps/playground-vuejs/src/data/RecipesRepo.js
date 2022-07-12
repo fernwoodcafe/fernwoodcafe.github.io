@@ -7,40 +7,35 @@ import { reactive } from "vue";
 
 const recipesList = reactive({ items: [] });
 
-/** @param {IDBDatabase} db */
+/**
+ * @param {IDBDatabase} db
+ */
 export default (db) => ({
+  /**
+   * @returns {Promise<ReactiveArray<CafeRecipe>>}
+   */
   async select() {
-    $readMany(db, "recipes").then((items) => {
-      recipesList.items.push(...items);
-    });
-
+    const recipes = await $readMany(db, "recipes");
+    recipesList.items.push(...recipes);
     return recipesList;
   },
   /**
    * @param {string} id
-   * @returns {Promise<Recipe>}
+   * @returns {Promise<CafeRecipe>}
    */
   async single(id) {
-    const result = reactive({
-      recipeId: "",
-      supplies: [{}],
-    });
-
-    $readSingle(db, "recipes", id).then((item) => {
-      result.supplies = item.supplies;
-    });
-
-    return result;
+    var recipe = await $readSingle(db, "recipes", id);
+    return reactive(recipe);
   },
   /**
-   * @param {any} item
+   * @param {CafeRecipe} item
    */
   insert(item) {
     recipesList.items = recipesList.items.slice().concat([item]);
     $createOrUpdate(db, "recipes", [item]);
   },
   /**
-   * @param {{ id: any; }} item
+   * @param {CafeRecipe} item
    */
   update(item) {
     recipesList.items = recipesList.items.map((oldItem) =>
