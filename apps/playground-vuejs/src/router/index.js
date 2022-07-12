@@ -1,9 +1,6 @@
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
-const counterOuter = ref(0);
-const incrementOuter = () => counterOuter.value++;
 
 const suppliesList = reactive([
   {
@@ -29,18 +26,12 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
-      props: {
-        counterOuter,
-        incrementOuter,
-      },
     },
     {
       path: "/supplies",
       name: "supplies",
       component: () => import("../views/SuppliesView.vue"),
       props: {
-        counterOuter,
-        incrementOuter,
         suppliesList,
       },
     },
@@ -49,8 +40,6 @@ const router = createRouter({
       name: "recipes",
       component: () => import("../views/RecipesView.vue"),
       props: {
-        counterOuter,
-        incrementOuter,
         suppliesList,
       },
     },
