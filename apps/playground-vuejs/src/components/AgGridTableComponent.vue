@@ -2,8 +2,6 @@
   <button @click="onClickNew">New</button>
   <ag-grid-vue
     class="ag-theme-alpine"
-    :columnDefs="columnDefs"
-    :rowData="rowData.value"
     :defaultColDef="defaultColDef"
     @grid-ready="onGridReady"
   ></ag-grid-vue>
@@ -12,16 +10,13 @@
 
 <script setup>
 import { AgGridVue } from "ag-grid-vue3";
-import { nextTick, reactive } from "vue";
+import { nextTick } from "vue";
 
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
 const emits = defineEmits(["gridDataInsert"]);
 const props = defineProps(["gridTitle", "gridData"]);
-
-const rowData = reactive([]);
-const columnDefs = reactive([]);
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
@@ -32,24 +27,21 @@ const defaultColDef = {
 };
 
 let gridApi = null;
+let rowData = null;
 
 const onGridReady = ({ api }) => {
   gridApi = api;
 
   props.gridData.then((gridData) => {
-    rowData.value = gridData;
-    columnDefs.value = Object.keys(gridData[0])
+    rowData = gridData;
+    const columnDefs = Object.keys(gridData[0])
       .map((key) => ({
         field: key,
       }))
       .concat([{ headerName: "Row ID", valueGetter: "node.id" }]);
 
-    gridApi.setColumnDefs(columnDefs.value);
-
-    console.log(
-      JSON.stringify(rowData.value, null, 2),
-      JSON.stringify(columnDefs.value, null, 2)
-    );
+    gridApi.setColumnDefs(columnDefs);
+    gridApi.setRowData(gridData);
   });
 };
 
@@ -59,16 +51,16 @@ const onClickNew = () => {
     supplyId: "",
   };
 
-  const newRowData = rowData.value.slice().concat([emptyRow]);
+  const newRowData = rowData.slice().concat([emptyRow]);
 
-  rowData.value = newRowData;
+  gridApi.setRowData(newRowData);
 
   emits("gridDataInsert", emptyRow);
 
   nextTick(() => {
-    const newRowIndex = rowData.value.length - 1;
+    const newRowIndex = newRowData.length - 1;
 
-    gridApi.setFocusedCell(newRowIndex, "supplierId");
+    gridApi.setFocusedCell(newRowIndex, "supplyId");
 
     gridApi.startEditingCell({
       rowIndex: newRowIndex,
