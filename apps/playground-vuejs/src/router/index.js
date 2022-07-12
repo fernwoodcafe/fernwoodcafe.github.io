@@ -49,7 +49,9 @@ watch(recipesList, (_, updatedRecipesList) => {
     router.addRoute("recipes", {
       path: `/recipes/${recipe.recipeId}`,
       component: () => import("../views/RecipeView.vue"),
-      props: recipe,
+      props: {
+        recipe,
+      },
     });
   });
 });
