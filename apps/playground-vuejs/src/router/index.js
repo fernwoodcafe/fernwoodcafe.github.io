@@ -1,15 +1,20 @@
 import { reactive } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import setupDB from "../data/indexedDB-setup";
 import RecipesRepo from "../data/RecipesRepo";
 import SuppliesRepo from "../data/SuppliesRepo";
 import HomeView from "../views/HomeView.vue";
 
-const suppliesList = reactive(SuppliesRepo.select());
-const recipesList = reactive(RecipesRepo.select());
+const db = await setupDB();
+const suppliesRepo = SuppliesRepo(db);
+const recipesRepo = RecipesRepo(db);
+
+const suppliesList = reactive(suppliesRepo.select());
+const recipesList = reactive(recipesRepo.select());
 
 const insertSupply = (data) => {
   console.log("insertSupply", data);
-  SuppliesRepo.insert(data);
+  suppliesRepo.insert(data);
 };
 
 const router = createRouter({

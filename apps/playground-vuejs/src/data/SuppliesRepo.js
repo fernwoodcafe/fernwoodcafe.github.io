@@ -1,3 +1,5 @@
+import { $readMany } from "./indexedDB-client";
+
 const supplies = [
   {
     supplyId: "12 oz Cups",
@@ -9,11 +11,11 @@ const supplies = [
   },
 ];
 
-export default {
+export default (db) => ({
   select() {
-    return supplies;
+    return $readMany(db, "supplies");
   },
   insert(supply) {
     supplies.push(supply);
   },
-};
+});

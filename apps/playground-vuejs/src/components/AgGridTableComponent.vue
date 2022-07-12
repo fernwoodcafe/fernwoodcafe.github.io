@@ -7,7 +7,6 @@
     :defaultColDef="defaultColDef"
     @grid-ready="onGridReady"
   ></ag-grid-vue>
-  <small>{{ gridData.length }}</small>
   <small>{{ gridTitle }}</small>
 </template>
 
@@ -21,7 +20,8 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 const emits = defineEmits(["gridDataInsert"]);
 const props = defineProps(["gridTitle", "gridData"]);
 
-const rowData = reactive({});
+const rowData = reactive([]);
+const columnDefs = reactive([]);
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
@@ -31,19 +31,26 @@ const defaultColDef = {
   editable: true,
 };
 
-const columnDefs = Object.keys(props.gridData[0])
-  .map((key) => ({
-    field: key,
-  }))
-  .concat([{ headerName: "Row ID", valueGetter: "node.id" }]);
-
 let gridApi = null;
 
 const onGridReady = ({ api }) => {
-  rowData.value = props.gridData;
   gridApi = api;
 
-  console.log(gridApi);
+  props.gridData.then((gridData) => {
+    rowData.value = gridData;
+    columnDefs.value = Object.keys(gridData[0])
+      .map((key) => ({
+        field: key,
+      }))
+      .concat([{ headerName: "Row ID", valueGetter: "node.id" }]);
+
+    gridApi.setColumnDefs(columnDefs.value);
+
+    console.log(
+      JSON.stringify(rowData.value, null, 2),
+      JSON.stringify(columnDefs.value, null, 2)
+    );
+  });
 };
 
 const onClickNew = () => {

@@ -1,4 +1,4 @@
-export default {
+export default (db) => ({
   select() {
     return [
       {
@@ -9,4 +9,4 @@ export default {
       },
     ];
   },
-};
+});
