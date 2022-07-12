@@ -13,9 +13,12 @@ const options = props.params.values;
 const selectedOption = ref({});
 
 const getValue = () => {
-  console.log("getValue", selectedOption);
   return selectedOption.value;
 };
+
+defineExpose({
+  getValue,
+});
 </script>
 <style>
 select {
