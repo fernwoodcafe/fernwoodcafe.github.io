@@ -1,5 +1,5 @@
 <template>
-  <button @click="gridInsertRow">New</button>
+  <button @click="onClickNew">New</button>
   <ag-grid-vue
     class="ag-theme-alpine"
     :columnDefs="columnDefs"
@@ -18,6 +18,7 @@ import { reactive } from "vue";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
+const emits = defineEmits(["gridDataInsert"]);
 const props = defineProps(["gridTitle", "gridData"]);
 
 const rowData = reactive({});
@@ -40,15 +41,17 @@ const onGridReady = () => {
   rowData.value = props.gridData;
 };
 
-const gridInsertRow = () => {
-  const newData = rowData.value.slice().concat([
-    {
-      supplierId: Math.random().toString(),
-      supplyId: Math.random().toString(),
-    },
-  ]);
+const onClickNew = () => {
+  const emptyRow = {
+    supplierId: "",
+    supplyId: "",
+  };
 
-  rowData.value = newData;
+  const newRowData = rowData.value.slice().concat([emptyRow]);
+
+  rowData.value = newRowData;
+
+  emits("gridDataInsert", emptyRow);
 };
 </script>
 

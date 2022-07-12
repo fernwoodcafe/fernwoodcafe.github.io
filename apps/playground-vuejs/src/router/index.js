@@ -4,9 +4,13 @@ import RecipesRepo from "../data/RecipesRepo";
 import SuppliesRepo from "../data/SuppliesRepo";
 import HomeView from "../views/HomeView.vue";
 
-const supplies = SuppliesRepo.getAll();
-const suppliesList = reactive(supplies);
+const suppliesList = reactive(SuppliesRepo.getAll());
 const recipesList = reactive(RecipesRepo.getAll());
+
+const insertSupply = (data) => {
+  console.log("insertSupply", data);
+  suppliesList.push(data);
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +26,7 @@ const router = createRouter({
       component: () => import("../views/SuppliesListView.vue"),
       props: {
         suppliesList,
+        insertSupply,
       },
     },
     {
