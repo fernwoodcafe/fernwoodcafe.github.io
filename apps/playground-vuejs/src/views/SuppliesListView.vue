@@ -7,7 +7,6 @@
 
 <script setup>
 import AgGridTable from "@/components/AgGridTableComponent.vue";
-import { defineProps } from "vue";
 
 defineProps(["suppliesList"]);
 </script>

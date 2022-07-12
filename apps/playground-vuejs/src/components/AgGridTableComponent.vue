@@ -45,7 +45,6 @@ const getRowId = ({ data }) => {
 
 const gridInsertRow = () => {
   console.log("gridInsertRow");
-  props.gridInsertRow();
 };
 </script>
 
