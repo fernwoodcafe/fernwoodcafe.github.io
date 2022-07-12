@@ -14,7 +14,7 @@
 
 <script setup>
 import { AgGridVue } from "ag-grid-vue3";
-import { reactive } from "Vue";
+import { reactive } from "vue";
 
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
@@ -31,11 +31,16 @@ const defaultColDef = {
   editable: true,
 };
 
-const columnDefs = Object.keys(props.gridData[0]).map((key) => ({
-  field: key,
-}));
+const columnDefs = Object.keys(props.gridData[0])
+  .map((key) => ({
+    field: key,
+  }))
+  .concat([{ headerName: "Row ID", valueGetter: "node.id" }]);
 
-const onGridReady = () => {
+let api = null;
+
+const onGridReady = (event) => {
+  api = event.api;
   rowData.value = props.gridData;
 };
 
@@ -44,7 +49,14 @@ const getRowId = ({ data }) => {
 };
 
 const gridInsertRow = () => {
-  console.log("gridInsertRow");
+  const newData = rowData.value.slice().concat([
+    {
+      supplierId: Math.random().toString(),
+      supplyId: Math.random().toString(),
+    },
+  ]);
+
+  rowData.value = newData;
 };
 </script>
 
