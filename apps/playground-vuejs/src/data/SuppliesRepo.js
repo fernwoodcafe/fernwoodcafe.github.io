@@ -1,5 +1,5 @@
+import { $createOrUpdate, $readMany } from "@/data/indexedDB-client";
 import { reactive } from "vue";
-import { $createOrUpdate, $readMany } from "./indexedDB-client";
 
 const suppliesList = reactive({ items: [] });
 

@@ -1,4 +1,8 @@
-import { $createOrUpdate, $deleteDB, $migrateDB } from "./indexedDB-client.js";
+import {
+  $createOrUpdate,
+  $deleteDB,
+  $migrateDB,
+} from "@/data/indexedDB-client.js";
 
 const reset = false;
 

@@ -4,6 +4,9 @@
     "module": "es2022",
     "moduleResolution": "node",
     "checkJs": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

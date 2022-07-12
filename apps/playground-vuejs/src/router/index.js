@@ -1,8 +1,8 @@
+import setupDB from "@/data/indexedDB-setup";
+import RecipesRepo from "@/data/RecipesRepo";
+import SuppliesRepo from "@/data/SuppliesRepo";
 import { watch } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
-import setupDB from "../data/indexedDB-setup";
-import RecipesRepo from "../data/RecipesRepo";
-import SuppliesRepo from "../data/SuppliesRepo";
 
 const db = await setupDB();
 
