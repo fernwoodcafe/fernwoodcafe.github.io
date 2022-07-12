@@ -4,12 +4,12 @@ import RecipesRepo from "../data/RecipesRepo";
 import SuppliesRepo from "../data/SuppliesRepo";
 import HomeView from "../views/HomeView.vue";
 
-const suppliesList = reactive(SuppliesRepo.getAll());
-const recipesList = reactive(RecipesRepo.getAll());
+const suppliesList = reactive(SuppliesRepo.select());
+const recipesList = reactive(RecipesRepo.select());
 
 const insertSupply = (data) => {
   console.log("insertSupply", data);
-  suppliesList.push(data);
+  SuppliesRepo.insert(data);
 };
 
 const router = createRouter({

@@ -13,7 +13,7 @@
 
 <script setup>
 import { AgGridVue } from "ag-grid-vue3";
-import { reactive } from "vue";
+import { nextTick, reactive } from "vue";
 
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
@@ -37,8 +37,13 @@ const columnDefs = Object.keys(props.gridData[0])
   }))
   .concat([{ headerName: "Row ID", valueGetter: "node.id" }]);
 
-const onGridReady = () => {
+let gridApi = null;
+
+const onGridReady = ({ api }) => {
   rowData.value = props.gridData;
+  gridApi = api;
+
+  console.log(gridApi);
 };
 
 const onClickNew = () => {
@@ -52,6 +57,17 @@ const onClickNew = () => {
   rowData.value = newRowData;
 
   emits("gridDataInsert", emptyRow);
+
+  nextTick(() => {
+    const newRowIndex = rowData.value.length - 1;
+
+    gridApi.setFocusedCell(newRowIndex, "supplierId");
+
+    gridApi.startEditingCell({
+      rowIndex: newRowIndex,
+      colKey: "supplierId",
+    });
+  });
 };
 </script>
 

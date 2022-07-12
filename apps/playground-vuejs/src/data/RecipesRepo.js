@@ -1,5 +1,5 @@
 export default {
-  getAll() {
+  select() {
     return [
       {
         recipeId: "Americano",

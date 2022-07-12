@@ -10,7 +10,7 @@ const supplies = [
 ];
 
 export default {
-  getAll() {
+  select() {
     return supplies;
   },
   insert(supply) {
