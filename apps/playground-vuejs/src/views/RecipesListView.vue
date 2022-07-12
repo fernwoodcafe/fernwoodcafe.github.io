@@ -14,6 +14,16 @@
   </div>
 </template>
 
-<script setup>
-defineProps(["recipesList"]);
+<script setup lang="ts">
+type Recipe = {
+  id: string;
+  recipeId: string;
+};
+type Props = {
+  recipesList: {
+    items: Recipe[];
+  };
+};
+
+defineProps<Props>();
 </script>

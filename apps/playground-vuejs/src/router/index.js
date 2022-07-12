@@ -17,7 +17,7 @@ const insertSupply = suppliesRepo.insert;
 const updateSupply = suppliesRepo.update;
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: "/",
