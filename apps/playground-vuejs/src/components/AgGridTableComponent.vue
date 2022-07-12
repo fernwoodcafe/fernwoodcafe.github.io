@@ -1,9 +1,3 @@
-<!--
-  https://www.ag-grid.com/vue-data-grid
-  - [ ] Add one recipe (list of supplies).
-  - [ ] Pick from the supplies list in the recipes table.
-  - [ ] Save the recipe and its supplies in IndexedDB.
- -->
 <template>
   <span>{{ gridTitle }}</span>
   <ag-grid-vue

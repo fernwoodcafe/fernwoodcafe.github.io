@@ -1,9 +1,6 @@
 <template>
   <div class="home">
     <h1>Welcome</h1>
-    <button @click="incrementOuter()">
-      {{ counterOuter }}
-    </button>
   </div>
 </template>
 

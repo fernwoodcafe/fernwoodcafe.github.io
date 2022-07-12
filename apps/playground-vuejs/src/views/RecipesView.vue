@@ -2,9 +2,6 @@
   <div class="recipes">
     <h1>Recipes</h1>
     <AgGridTable gridTitle="Recipes" :gridData="suppliesList"></AgGridTable>
-    <button @click="incrementOuter()">
-      {{ counterOuter }}
-    </button>
   </div>
 </template>
 
