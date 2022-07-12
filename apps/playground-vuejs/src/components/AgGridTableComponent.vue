@@ -2,7 +2,10 @@
   <button @click="onClickNew">New</button>
   <ag-grid-vue
     class="ag-theme-alpine"
+    :readOnlyEdit="true"
     :defaultColDef="defaultColDef"
+    :getRowId="getRowId"
+    @cell-edit-request="onCellEditRequest"
     @grid-ready="onGridReady"
   ></ag-grid-vue>
   <small>{{ gridTitle }}</small>
@@ -29,16 +32,31 @@ const defaultColDef = {
 let gridApi = null;
 let rowData = null;
 
+const getRowId = ({ data }) => data.id;
+
+const onCellEditRequest = (event) => {
+  const rowIndex = event.rowIndex;
+  const data = event.data;
+  const field = event.colDef.field;
+  const newValue = event.newValue;
+  const newItem = { ...data };
+  newItem[field] = newValue;
+  rowData = rowData.map((oldItem, index) =>
+    index == rowIndex ? newItem : oldItem
+  );
+  gridApi.setRowData(rowData);
+};
+
 const onGridReady = ({ api }) => {
   gridApi = api;
 
   props.gridData.then((gridData) => {
     rowData = gridData;
     const columnDefs = Object.keys(gridData[0])
+      .filter((key) => key != "id")
       .map((key) => ({
         field: key,
-      }))
-      .concat([{ headerName: "Row ID", valueGetter: "node.id" }]);
+      }));
 
     gridApi.setColumnDefs(columnDefs);
     gridApi.setRowData(gridData);
@@ -47,24 +65,25 @@ const onGridReady = ({ api }) => {
 
 const onClickNew = () => {
   const emptyRow = {
+    id: self.crypto.randomUUID(),
     supplierId: "",
     supplyId: "",
   };
 
-  const newRowData = rowData.slice().concat([emptyRow]);
+  rowData = rowData.slice().concat([emptyRow]);
 
-  gridApi.setRowData(newRowData);
+  gridApi.setRowData(rowData);
 
   emits("gridDataInsert", emptyRow);
 
   nextTick(() => {
-    const newRowIndex = newRowData.length - 1;
+    const newRowIndex = rowData.length - 1;
 
     gridApi.setFocusedCell(newRowIndex, "supplyId");
 
     gridApi.startEditingCell({
       rowIndex: newRowIndex,
-      colKey: "supplierId",
+      colKey: "supplyId",
     });
   });
 };

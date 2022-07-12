@@ -1,6 +1,6 @@
 import { $readMany } from "./indexedDB-client";
 
-const supplies = [
+let supplies = [
   {
     supplyId: "12 oz Cups",
     supplierId: "Green Munch",
