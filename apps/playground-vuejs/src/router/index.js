@@ -9,7 +9,7 @@ const db = await setupDB();
 const suppliesRepo = SuppliesRepo(db);
 const recipesRepo = RecipesRepo(db);
 
-const recipesList = [];
+const recipesList = reactive({ items: [] });
 const suppliesList = reactive({ items: [] });
 
 recipesRepo.select();
@@ -54,11 +54,18 @@ const router = createRouter({
       name: "recipes",
       component: () => import("../views/RecipesListView.vue"),
       props: {
-        suppliesList,
         recipesList,
-        insertSupply,
-        updateSupply,
       },
+      children: [
+        {
+          path: "/recipes/:id",
+          name: "recipe",
+          component: () => import("../views/RecipeView.vue"),
+          props: {
+            suppliesList,
+          },
+        },
+      ],
     },
   ],
 });

@@ -73,8 +73,6 @@ const onGridReady = ({ api }) => {
 const onClickNew = () => {
   const emptyRow = {
     id: self.crypto.randomUUID(),
-    supplierId: "",
-    supplyId: "",
   };
 
   rowData = rowData.slice().concat([emptyRow]);
