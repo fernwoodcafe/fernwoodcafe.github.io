@@ -1,17 +1,17 @@
 <template>
   <div class="supplies">
     <h1>Supplies</h1>
-    <AgGridTable
+    <AgGridSuppliesComponent
       gridTitle="Supplies"
       :gridData="suppliesList.items"
       @gridDataInsert="onGridDataInserted"
       @gridDataUpdate="onGridDataUpdated"
-    ></AgGridTable>
+    ></AgGridSuppliesComponent>
   </div>
 </template>
 
 <script setup>
-import AgGridTable from "@/components/AgGridTableComponent.vue";
+import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
 
 const props = defineProps(["suppliesList", "insertSupply", "updateSupply"]);
 

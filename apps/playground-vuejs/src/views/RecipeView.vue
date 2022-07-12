@@ -1,11 +1,14 @@
 <template>
   <div class="recipes">
     <h2>{{ recipe.recipeId }}</h2>
-    <AgGridTable gridTitle="Recipes" :gridData="recipe.supplies"></AgGridTable>
+    <AgGridRecipeComponent
+      gridTitle="Recipes"
+      :gridData="recipe.supplies"
+    ></AgGridRecipeComponent>
   </div>
 </template>
 
 <script setup>
-import AgGridTable from "@/components/AgGridTableComponent.vue";
+import AgGridRecipeComponent from "@/components/AgGridRecipeComponent.vue";
 const props = defineProps(["recipe"]);
 </script>
