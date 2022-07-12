@@ -8,6 +8,8 @@ import { ref } from "vue";
 
 const props = defineProps(["params"]);
 
+console.log(props);
+
 const options = props.params.supplySelectOptions;
 
 const selectedOption = ref({});

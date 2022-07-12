@@ -2,7 +2,6 @@
   <div class="supplies">
     <h1>Supplies</h1>
     <AgGridSuppliesComponent
-      gridTitle="Supplies"
       :gridData="suppliesList.items"
       @gridDataInsert="onGridDataInserted"
       @gridDataUpdate="onGridDataUpdated"

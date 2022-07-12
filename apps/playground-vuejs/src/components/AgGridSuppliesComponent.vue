@@ -8,7 +8,6 @@
     @cell-edit-request="onCellEditRequest"
     @grid-ready="onGridReady"
   ></ag-grid-vue>
-  <small>{{ gridTitle }}</small>
 </template>
 
 <script setup>
@@ -19,7 +18,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
 const emit = defineEmits(["gridDataInsert", "gridDataUpdate"]);
-const props = defineProps(["gridTitle", "gridData"]);
+const props = defineProps(["gridData"]);
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
