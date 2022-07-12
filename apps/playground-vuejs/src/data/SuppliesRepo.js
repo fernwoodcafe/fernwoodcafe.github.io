@@ -1,21 +1,10 @@
-import { $readMany } from "./indexedDB-client";
-
-let supplies = [
-  {
-    supplyId: "12 oz Cups",
-    supplierId: "Green Munch",
-  },
-  {
-    supplyId: "Espresso Beans",
-    supplierId: "Drumroasters",
-  },
-];
+import { $createOrUpdate, $readMany } from "./indexedDB-client";
 
 export default (db) => ({
-  select() {
+  async select() {
     return $readMany(db, "supplies");
   },
-  insert(supply) {
-    supplies.push(supply);
+  insertOrUpdate(supply) {
+    $createOrUpdate(db, "supplies", [supply]);
   },
 });

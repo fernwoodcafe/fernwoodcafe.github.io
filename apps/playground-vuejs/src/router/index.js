@@ -9,12 +9,26 @@ const db = await setupDB();
 const suppliesRepo = SuppliesRepo(db);
 const recipesRepo = RecipesRepo(db);
 
-const suppliesList = reactive(suppliesRepo.select());
-const recipesList = reactive(recipesRepo.select());
+const recipesList = [];
+const suppliesList = reactive({ items: [] });
+
+recipesRepo.select();
+suppliesRepo.select().then((items) => {
+  suppliesList.items.push(...items);
+});
 
 const insertSupply = (data) => {
   console.log("insertSupply", data);
-  suppliesRepo.insert(data);
+  suppliesList.items = suppliesList.items.slice().concat([data]);
+  suppliesRepo.insertOrUpdate(data);
+};
+
+const updateSupply = (data) => {
+  console.log("updateSupply", data);
+  suppliesList.items = suppliesList.items.map((oldItem) =>
+    oldItem.id == data.id ? data : oldItem
+  );
+  suppliesRepo.insertOrUpdate(data);
 };
 
 const router = createRouter({
@@ -32,6 +46,7 @@ const router = createRouter({
       props: {
         suppliesList,
         insertSupply,
+        updateSupply,
       },
     },
     {
@@ -41,6 +56,8 @@ const router = createRouter({
       props: {
         suppliesList,
         recipesList,
+        insertSupply,
+        updateSupply,
       },
     },
   ],

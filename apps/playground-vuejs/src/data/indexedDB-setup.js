@@ -1,13 +1,14 @@
-import { $createOrUpdate, $migrateDB } from "./indexedDB-client.js";
+import { $createOrUpdate, $deleteDB, $migrateDB } from "./indexedDB-client.js";
 
 export default async () => {
+  if (true) {
+    $deleteDB("restaurantDB"); // optional reset
+  }
+
   const db = await $migrateDB("restaurantDB", [
     {
       message: "initial migration",
-      operations: [
-        (db) => db.createObjectStore("supplies", { keyPath: "supplyId" }),
-        (db) => db.createObjectStore("recipes", { keyPath: "recipeId" }),
-      ],
+      operations: [(db) => db.createObjectStore("supplies", { keyPath: "id" })],
     },
   ]);
 

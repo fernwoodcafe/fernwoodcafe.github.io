@@ -18,7 +18,7 @@ import { nextTick } from "vue";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
-const emits = defineEmits(["gridDataInsert"]);
+const emit = defineEmits(["gridDataInsert", "gridDataUpdate"]);
 const props = defineProps(["gridTitle", "gridData"]);
 
 // DefaultColDef sets props common to all Columns
@@ -39,28 +39,35 @@ const onCellEditRequest = (event) => {
   const data = event.data;
   const field = event.colDef.field;
   const newValue = event.newValue;
-  const newItem = { ...data };
-  newItem[field] = newValue;
+  const updatedItem = { ...data };
+  updatedItem[field] = newValue;
   rowData = rowData.map((oldItem, index) =>
-    index == rowIndex ? newItem : oldItem
+    index == rowIndex ? updatedItem : oldItem
   );
   gridApi.setRowData(rowData);
+
+  emit("gridDataUpdate", updatedItem);
 };
 
 const onGridReady = ({ api }) => {
   gridApi = api;
 
-  props.gridData.then((gridData) => {
-    rowData = gridData;
-    const columnDefs = Object.keys(gridData[0])
-      .filter((key) => key != "id")
-      .map((key) => ({
-        field: key,
-      }));
+  rowData = props.gridData;
 
-    gridApi.setColumnDefs(columnDefs);
-    gridApi.setRowData(gridData);
-  });
+  const columnDefs = Object.keys(props.gridData[0])
+    .filter((key) => key != "id")
+    .map((key) => ({
+      field: key,
+    }))
+    .concat([
+      {
+        headerName: "Row Id",
+        valueGetter: "node.id",
+      },
+    ]);
+
+  gridApi.setColumnDefs(columnDefs);
+  gridApi.setRowData(props.gridData);
 };
 
 const onClickNew = () => {
@@ -74,7 +81,7 @@ const onClickNew = () => {
 
   gridApi.setRowData(rowData);
 
-  emits("gridDataInsert", emptyRow);
+  emit("gridDataInsert", emptyRow);
 
   nextTick(() => {
     const newRowIndex = rowData.length - 1;
