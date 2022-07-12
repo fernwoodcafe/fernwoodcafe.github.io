@@ -49,6 +49,7 @@ recipesList.items.forEach((recipe) => {
     component: () => import("../views/RecipeView.vue"),
     props: {
       recipe,
+      suppliesList,
     },
   });
 });

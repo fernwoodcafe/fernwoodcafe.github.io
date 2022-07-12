@@ -12,7 +12,6 @@
 </template>
 
 <script setup>
-import AgSuppliesEditor from "@/components/AgSuppliesEditor.vue";
 import { AgGridVue } from "ag-grid-vue3";
 import { nextTick } from "vue";
 
@@ -20,7 +19,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
 const emit = defineEmits(["gridDataInsert", "gridDataUpdate"]);
-const props = defineProps(["gridTitle", "gridData"]);
+const props = defineProps(["gridTitle", "gridData", "gridColumnDefs"]);
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
@@ -54,31 +53,7 @@ const onGridReady = ({ api }) => {
   gridApi = api;
 
   rowData = props.gridData;
-
-  const columnDefs = [
-    {
-      // @ts-ignore
-      field: "FooBarBaz",
-      cellEditor: AgSuppliesEditor,
-      cellEditorParams: {
-        values: [
-          {
-            key: 9,
-            value: "Nine",
-          },
-          {
-            key: 10,
-            value: "Ten",
-          },
-        ],
-      },
-    },
-    {
-      // @ts-ignore
-      headerName: "Row Id",
-      valueGetter: "node.id",
-    },
-  ];
+  const columnDefs = props.gridColumnDefs;
 
   gridApi.setColumnDefs(columnDefs);
   gridApi.setRowData(props.gridData);

@@ -8,13 +8,11 @@ import { ref } from "vue";
 
 const props = defineProps(["params"]);
 
-const options = props.params.values;
+const options = props.params.supplySelectOptions;
 
 const selectedOption = ref({});
 
-const getValue = () => {
-  return selectedOption.value;
-};
+const getValue = () => selectedOption.value;
 
 defineExpose({
   getValue,
