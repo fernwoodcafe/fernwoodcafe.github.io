@@ -1,4 +1,5 @@
 type Recipe = {
+  id: string;
   recipeId: string;
-  supplies: any[];
+  supplies: Supply[];
 };
