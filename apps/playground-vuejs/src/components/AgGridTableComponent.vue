@@ -61,6 +61,7 @@ const onGridReady = ({ api }) => {
     }))
     .concat([
       {
+        // @ts-ignore
         headerName: "Row Id",
         valueGetter: "node.id",
       },

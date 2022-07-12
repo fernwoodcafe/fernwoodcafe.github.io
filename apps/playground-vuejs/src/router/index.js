@@ -1,4 +1,3 @@
-import { reactive } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import setupDB from "../data/indexedDB-setup";
 import RecipesRepo from "../data/RecipesRepo";
@@ -6,30 +5,16 @@ import SuppliesRepo from "../data/SuppliesRepo";
 import HomeView from "../views/HomeView.vue";
 
 const db = await setupDB();
-const suppliesRepo = SuppliesRepo(db);
+
 const recipesRepo = RecipesRepo(db);
+const recipesList = await recipesRepo.select();
+const getRecipe = recipesRepo.single;
 
-const recipesList = reactive({ items: [] });
-const suppliesList = reactive({ items: [] });
-
-recipesRepo.select();
-suppliesRepo.select().then((items) => {
-  suppliesList.items.push(...items);
-});
-
-const insertSupply = (data) => {
-  console.log("insertSupply", data);
-  suppliesList.items = suppliesList.items.slice().concat([data]);
-  suppliesRepo.insertOrUpdate(data);
-};
-
-const updateSupply = (data) => {
-  console.log("updateSupply", data);
-  suppliesList.items = suppliesList.items.map((oldItem) =>
-    oldItem.id == data.id ? data : oldItem
-  );
-  suppliesRepo.insertOrUpdate(data);
-};
+// TODO: Why not pass the whole repo in as props? Might save boilerplate.
+const suppliesRepo = SuppliesRepo(db);
+const suppliesList = await suppliesRepo.select();
+const insertSupply = suppliesRepo.insert;
+const updateSupply = suppliesRepo.update;
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,9 +46,11 @@ const router = createRouter({
           path: "/recipes/:id",
           name: "recipe",
           component: () => import("../views/RecipeView.vue"),
-          props: {
+          props: (route) => ({
+            id: route.params.id,
             suppliesList,
-          },
+            getRecipe,
+          }),
         },
       ],
     },
