@@ -17,3 +17,8 @@ const getValue = () => {
   return selectedOption.value;
 };
 </script>
+<style>
+select {
+  width: 100%;
+}
+</style>
