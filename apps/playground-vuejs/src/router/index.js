@@ -1,23 +1,11 @@
 import { reactive } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import RecipesRepo from "../data/RecipesRepo";
+import SuppliesRepo from "../data/SuppliesRepo";
 import HomeView from "../views/HomeView.vue";
 
-const suppliesList = reactive([
-  {
-    supplierId: "Country Grocer",
-    itemId: "Cheese",
-    cost: 10,
-    totalUnits: 10,
-    units: "grams",
-  },
-  {
-    supplierId: "Cysco",
-    itemId: "Cheese",
-    cost: 10,
-    totalUnits: 10,
-    units: "grams",
-  },
-]);
+const suppliesList = reactive(SuppliesRepo.getAll());
+const recipesList = reactive(RecipesRepo.getAll());
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +18,7 @@ const router = createRouter({
     {
       path: "/supplies",
       name: "supplies",
-      component: () => import("../views/SuppliesView.vue"),
+      component: () => import("../views/SuppliesListView.vue"),
       props: {
         suppliesList,
       },
@@ -38,9 +26,10 @@ const router = createRouter({
     {
       path: "/recipes",
       name: "recipes",
-      component: () => import("../views/RecipesView.vue"),
+      component: () => import("../views/RecipesListView.vue"),
       props: {
         suppliesList,
+        recipesList,
       },
     },
   ],

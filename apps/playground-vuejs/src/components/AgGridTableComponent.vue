@@ -12,8 +12,8 @@
 import { AgGridVue } from "ag-grid-vue3";
 import { onMounted, reactive } from "vue";
 
-import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
-import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
+import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
+import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
 const props = defineProps(["gridTitle", "gridData"]);
 

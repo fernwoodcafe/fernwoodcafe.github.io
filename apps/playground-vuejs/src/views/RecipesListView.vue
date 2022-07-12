@@ -1,7 +1,7 @@
 <template>
   <div class="recipes">
     <h1>Recipes</h1>
-    <AgGridTable gridTitle="Recipes" :gridData="suppliesList"></AgGridTable>
+    <AgGridTable gridTitle="Recipes" :gridData="recipesList"></AgGridTable>
   </div>
 </template>
 
@@ -9,5 +9,5 @@
 import AgGridTable from "@/components/AgGridTableComponent.vue";
 import { defineProps } from "vue";
 
-defineProps(["suppliesList"]);
+defineProps(["suppliesList", "recipesList"]);
 </script>
