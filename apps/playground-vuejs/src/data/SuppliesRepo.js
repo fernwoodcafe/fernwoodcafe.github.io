@@ -5,7 +5,7 @@ const suppliesList = reactive({ items: [] });
 
 export default (db) => ({
   async select() {
-    $readMany(db, "supplies").then((items) => {
+    await $readMany(db, "supplies").then((items) => {
       suppliesList.items.push(...items);
     });
 

@@ -1,7 +1,6 @@
 import setupDB from "@/data/indexedDB-setup";
 import RecipesRepo from "@/data/RecipesRepo";
 import SuppliesRepo from "@/data/SuppliesRepo";
-import { watch } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const db = await setupDB();
@@ -44,15 +43,13 @@ const router = createRouter({
   ],
 });
 
-watch(recipesList, (_, updatedRecipesList) => {
-  updatedRecipesList.items.forEach((recipe) => {
-    router.addRoute("recipes", {
-      path: `/recipes/${recipe.recipeId}`,
-      component: () => import("../views/RecipeView.vue"),
-      props: {
-        recipe,
-      },
-    });
+recipesList.items.forEach((recipe) => {
+  router.addRoute("recipes", {
+    path: `/recipes/${recipe.recipeId}`,
+    component: () => import("../views/RecipeView.vue"),
+    props: {
+      recipe,
+    },
   });
 });
 
