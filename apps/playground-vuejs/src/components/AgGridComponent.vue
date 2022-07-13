@@ -1,5 +1,4 @@
 <template>
-  <button @click="onClickNew">Add Supply</button>
   <ag-grid-vue
     class="ag-theme-alpine"
     :defaultColDef="defaultColDef"
@@ -9,15 +8,19 @@
   ></ag-grid-vue>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { AgGridVue } from "ag-grid-vue3";
-import { nextTick } from "vue";
+import { watch } from "vue";
 
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
-const emit = defineEmits(["gridDataInsert", "gridDataUpdate"]);
-const props = defineProps(["gridData"]);
+type Props = {
+  gridData: ReactiveArray<object>;
+};
+
+const emit = defineEmits(["gridDataUpdate"]);
+const props = defineProps<Props>();
 
 // DefaultColDef sets props common to all Columns
 const defaultColDef = {
@@ -27,9 +30,6 @@ const defaultColDef = {
   editable: true,
 };
 
-let gridApi = null;
-let rowData = null;
-
 const getRowId = ({ data }) => data.id;
 
 const onCellValueChanged = (event) => {
@@ -37,38 +37,15 @@ const onCellValueChanged = (event) => {
 };
 
 const onGridReady = ({ api }) => {
-  gridApi = api;
-
-  rowData = props.gridData;
-
-  const columnDefs = Object.keys(props.gridData[0]).map((key) => ({
+  const columnDefs = Object.keys(props.gridData.items[0]).map((key) => ({
     field: key,
   }));
 
-  gridApi.setColumnDefs(columnDefs);
-  gridApi.setRowData(props.gridData);
-};
+  api.setColumnDefs(columnDefs);
+  api.setRowData(props.gridData.items);
 
-const onClickNew = () => {
-  const emptyRow = {
-    id: self.crypto.randomUUID(),
-  };
-
-  rowData = rowData.slice().concat([emptyRow]);
-
-  gridApi.setRowData(rowData);
-
-  emit("gridDataInsert", emptyRow);
-
-  nextTick(() => {
-    const newRowIndex = rowData.length - 1;
-
-    gridApi.setFocusedCell(newRowIndex, "supplyId");
-
-    gridApi.startEditingCell({
-      rowIndex: newRowIndex,
-      colKey: "supplyId",
-    });
+  watch(props.gridData, () => {
+    api.setRowData(props.gridData.items);
   });
 };
 </script>

@@ -2,21 +2,22 @@
   <div class="supplies">
     <h1>Supplies</h1>
     <AgGridSuppliesComponent
-      :gridData="suppliesList.items"
+      :suppliesList="suppliesList"
       @gridDataInsert="onGridDataInserted"
       @gridDataUpdate="onGridDataUpdated"
     ></AgGridSuppliesComponent>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
 
-const props = defineProps({
-  suppliesList: Object,
-  insertSupply: Function,
-  updateSupply: Function,
-});
+type Props = {
+  suppliesList: ReactiveArray<CafeSupply>;
+  insertSupply: Function;
+  updateSupply: Function;
+};
+const props = defineProps<Props>();
 
 const onGridDataUpdated = (data) => {
   console.log("onGridDataUpdated", data);
