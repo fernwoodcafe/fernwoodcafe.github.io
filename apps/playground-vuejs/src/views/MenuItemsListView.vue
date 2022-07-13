@@ -1,7 +1,7 @@
 <template>
   <h1>Menu Items</h1>
   <nav>
-    <li :key="item.id" v-for="item in menuItemList.items">
+    <li :key="item.id" v-for="item in menuItemsList.items">
       <RouterLink :to="`/menu-items/${item.menuItemId}`">{{
         item.menuItemId
       }}</RouterLink>
@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 type Props = {
-  menuItemList: ReactiveArray<CafeMenuItem>;
+  menuItemsList: ReactiveArray<CafeMenuItem>;
 };
 
 defineProps<Props>();
