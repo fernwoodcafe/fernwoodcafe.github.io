@@ -12,12 +12,14 @@
 import { AgGridVue } from "ag-grid-vue3";
 import { watch } from "vue";
 
+import { ColDef, GridOptions } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
 type Props = {
   gridData: ReactiveArray<object>;
   gridColumns: Array<string>;
+  gridColumnDefs?: Array<ColDef>;
 };
 
 type Emits = {
@@ -41,18 +43,36 @@ const onCellValueChanged = (event) => {
   emit("gridDataUpdate", event.data);
 };
 
-const onGridReady = ({ api }) => {
+const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
-  const columnDefs = props.gridColumns.map((key) => ({
-    field: key,
-  }));
+  const columnDefs = props.gridColumns.map((field) => {
+    const def = props.gridColumnDefs?.find((def) => def.field == field);
+    if (def) {
+      // Complex Column.
+      console.log("complex", def);
+      return def;
+    }
+
+    // Simple Column.
+    return {
+      field,
+    };
+  });
 
   api.setColumnDefs(columnDefs);
   api.setRowData(props.gridData.items);
 
+  let gridDataLength = props.gridData.items.length;
   watch(props.gridData, () => {
-    api.setRowData(props.gridData.items);
+    // We check the length, because we use this only to
+    // insert new records (not to update existing records).
+    // In the future, we might do a more thorough check e.g.
+    // for same ids.
+    if (props.gridData.items.length != gridDataLength) {
+      api.setRowData(props.gridData.items);
+      gridDataLength = props.gridData.items.length;
+    }
   });
 };
 </script>

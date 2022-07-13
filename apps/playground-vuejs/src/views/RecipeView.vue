@@ -1,9 +1,8 @@
 <template>
-  <h2>{{ recipe.recipeId }}</h2>
+  <button @click="onClickNewIngredient">New Ingredient</button>
   <AgGridRecipeComponent
     :recipe="recipe"
     :suppliesList="suppliesList"
-    @gridDataUpdate="onGridDataUpdated"
   ></AgGridRecipeComponent>
 </template>
 
@@ -17,9 +16,5 @@ type Props = {
 
 const props = defineProps<Props>();
 
-console.log(props.suppliesList.items);
-
-const onGridDataUpdated = (data) => {
-  console.log("onGridDataUpdated", data);
-};
+const onClickNewIngredient = () => {};
 </script>
