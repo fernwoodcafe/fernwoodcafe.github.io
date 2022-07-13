@@ -2,11 +2,10 @@
   <button @click="onClickNew">Add Supply</button>
   <ag-grid-vue
     class="ag-theme-alpine"
-    :readOnlyEdit="true"
     :defaultColDef="defaultColDef"
     :getRowId="getRowId"
-    @cell-edit-request="onCellEditRequest"
     @grid-ready="onGridReady"
+    @cell-value-changed="onCellValueChanged"
   ></ag-grid-vue>
 </template>
 
@@ -33,19 +32,8 @@ let rowData = null;
 
 const getRowId = ({ data }) => data.id;
 
-const onCellEditRequest = (event) => {
-  const rowIndex = event.rowIndex;
-  const data = event.data;
-  const field = event.colDef.field;
-  const newValue = event.newValue;
-  const updatedItem = { ...data };
-  updatedItem[field] = newValue;
-  rowData = rowData.map((oldItem, index) =>
-    index == rowIndex ? updatedItem : oldItem
-  );
-  gridApi.setRowData(rowData);
-
-  emit("gridDataUpdate", updatedItem);
+const onCellValueChanged = (event) => {
+  emit("gridDataUpdate", event.data);
 };
 
 const onGridReady = ({ api }) => {
