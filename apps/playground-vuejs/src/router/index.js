@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from "vue-router";
 const db = await setupDB();
 
 const menuItemRepo = MenuItemRepo(db);
-const menuItemList = await menuItemRepo.select();
+const menuItemsList = await menuItemRepo.select();
 
 const suppliesRepo = SuppliesRepo(db);
 const suppliesList = await suppliesRepo.select();
@@ -31,17 +31,17 @@ const router = createRouter({
     {
       path: "/menu-items",
       name: "menuItems",
-      component: () => import("../views/MenuItemListView.vue"),
+      component: () => import("../views/MenuItemsListView.vue"),
       props: {
-        menuItemList: menuItemList,
+        menuItemsList,
       },
       children: [
         // @ts-ignore
         {
           path: "/menu-items",
-          redirect: `/menu-items/${menuItemList.items[0].menuItemId}`,
+          redirect: `/menu-items/${menuItemsList.items[0].menuItemId}`,
         },
-        ...menuItemList.items.map((menuItem) => ({
+        ...menuItemsList.items.map((menuItem) => ({
           path: `/menu-items/${menuItem.menuItemId}`,
           component: () => import("../views/MenuItemView.vue"),
           props: {
