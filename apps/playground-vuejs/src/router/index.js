@@ -35,23 +35,25 @@ const router = createRouter({
       props: {
         menuItemList: menuItemList,
       },
+      children: [
+        // @ts-ignore
+        {
+          path: "/menu-items",
+          redirect: `/menu-items/${menuItemList.items[0].menuItemId}`,
+        },
+        ...menuItemList.items.map((menuItem) => ({
+          path: `/menu-items/${menuItem.menuItemId}`,
+          component: () => import("../views/MenuItemView.vue"),
+          props: {
+            menuItem,
+            suppliesList,
+            updateMenuItem: menuItemRepo.update,
+            insertMenuItem: menuItemRepo.insert,
+          },
+        })),
+      ],
     },
   ],
-});
-
-const menuItemRoutes = menuItemList.items.map((menuItem) => ({
-  path: `/menuItems/${menuItem.menuItemId}`,
-  component: () => import("../views/MenuItemView.vue"),
-  props: {
-    menuItem,
-    suppliesList,
-    updateMenuItem: menuItemRepo.update,
-    insertMenuItem: menuItemRepo.insert,
-  },
-}));
-
-menuItemRoutes.forEach((route) => {
-  router.addRoute("menuItems", route);
 });
 
 export default router;

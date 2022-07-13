@@ -2,7 +2,7 @@
   <h1>Menu Items</h1>
   <nav>
     <li :key="item.id" v-for="item in menuItemList.items">
-      <RouterLink :to="`/menuItems/${item.menuItemId}`">{{
+      <RouterLink :to="`/menu-items/${item.menuItemId}`">{{
         item.menuItemId
       }}</RouterLink>
     </li>
