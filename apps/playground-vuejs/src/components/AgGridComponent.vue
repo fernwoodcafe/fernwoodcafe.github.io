@@ -17,6 +17,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 
 type Props = {
   gridData: ReactiveArray<object>;
+  gridColumns: Array<string>;
 };
 
 type Emits = {
@@ -41,7 +42,9 @@ const onCellValueChanged = (event) => {
 };
 
 const onGridReady = ({ api }) => {
-  const columnDefs = Object.keys(props.gridData.items[0]).map((key) => ({
+  console.log("onGridReady", props.gridData.items);
+
+  const columnDefs = props.gridColumns.map((key) => ({
     field: key,
   }));
 

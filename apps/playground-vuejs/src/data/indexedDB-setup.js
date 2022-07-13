@@ -27,13 +27,13 @@ export default async () => {
         id: self.crypto.randomUUID(),
         supplyId: "3 ounce cups",
         unitSize: "cup",
-        costPerUnitDollars: 10,
+        unitCost: 10,
       },
       {
         id: self.crypto.randomUUID(),
         supplyId: "8 ounce cups",
         unitSize: "cup",
-        costPerUnitDollars: 10,
+        unitCost: 10,
       },
     ]);
 

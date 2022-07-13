@@ -1,7 +1,8 @@
 <template>
-  <button @click="onClick">New</button>
+  <button @click="onClickNewSupply">New Supply</button>
   <AgGridComponent
     :gridData="suppliesList"
+    :gridColumns="['supplyId', 'id', 'unitSize', 'unitCost']"
     @gridDataUpdate="updateSupply"
   ></AgGridComponent>
 </template>
@@ -17,7 +18,7 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const onClick = () => {
+const onClickNewSupply = () => {
   const supply = {
     id: self.crypto.randomUUID(),
     supplyId: "",

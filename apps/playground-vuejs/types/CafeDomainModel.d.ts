@@ -1,6 +1,8 @@
 type CafeSupply = {
   id: string;
   supplyId: string;
+  unitSize: string;
+  unitCost: number;
 };
 
 type CafeRecipe = {
