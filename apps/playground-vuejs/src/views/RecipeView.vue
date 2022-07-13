@@ -1,12 +1,10 @@
 <template>
-  <div class="recipes">
-    <h2>{{ recipe.recipeId }}</h2>
-    <AgGridRecipeComponent
-      :recipe="recipe"
-      :suppliesList="suppliesList"
-      @gridDataUpdate="onGridDataUpdated"
-    ></AgGridRecipeComponent>
-  </div>
+  <h2>{{ recipe.recipeId }}</h2>
+  <AgGridRecipeComponent
+    :recipe="recipe"
+    :suppliesList="suppliesList"
+    @gridDataUpdate="onGridDataUpdated"
+  ></AgGridRecipeComponent>
 </template>
 
 <script setup lang="ts">

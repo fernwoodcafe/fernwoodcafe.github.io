@@ -6,6 +6,7 @@
     "target": "esnext",
     "checkJs": true,
     "noEmit": true,
+    "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"]
     }

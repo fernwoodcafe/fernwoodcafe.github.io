@@ -9,19 +9,13 @@ CafeRecipe
         }}</RouterLink>
       </li>
     </nav>
-    <RouterView />
+    <RouterView :key="$route.fullPath" />
   </div>
 </template>
 
 <script setup lang="ts">
-type Recipe = {
-  id: string;
-  recipeId: string;
-};
 type Props = {
-  recipesList: {
-    items: Recipe[];
-  };
+  recipesList: ReactiveArray<CafeRecipe>;
 };
 
 defineProps<Props>();

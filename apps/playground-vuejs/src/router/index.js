@@ -39,15 +39,17 @@ const router = createRouter({
   ],
 });
 
-recipesList.items.forEach((recipe) => {
-  router.addRoute("recipes", {
-    path: `/recipes/${recipe.recipeId}`,
-    component: () => import("../views/RecipeView.vue"),
-    props: {
-      recipe,
-      suppliesList,
-    },
-  });
+const recipeRoutes = recipesList.items.map((recipe) => ({
+  path: `/recipes/${recipe.recipeId}`,
+  component: () => import("../views/RecipeView.vue"),
+  props: {
+    recipe,
+    suppliesList,
+  },
+}));
+
+recipeRoutes.forEach((route) => {
+  router.addRoute("recipes", route);
 });
 
 export default router;
