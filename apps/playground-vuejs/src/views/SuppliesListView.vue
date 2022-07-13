@@ -12,14 +12,17 @@ import AgGridComponent from "@/components/AgGridComponent.vue";
 type Props = {
   suppliesList: ReactiveArray<CafeSupply>;
   updateSupply: (data: any) => Promise<void>;
+  insertSupply: (data: any) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
 const onClick = () => {
-  props.suppliesList.items.push({
+  const supply = {
     id: self.crypto.randomUUID(),
     supplyId: "",
-  });
+  };
+
+  props.insertSupply(supply);
 };
 </script>

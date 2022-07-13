@@ -25,6 +25,7 @@ const router = createRouter({
       props: {
         suppliesList,
         updateSupply: suppliesRepo.update,
+        insertSupply: suppliesRepo.insert,
       },
     },
     {
