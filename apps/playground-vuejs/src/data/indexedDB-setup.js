@@ -16,7 +16,7 @@ export default async () => {
       message: "initial migration",
       operations: [
         (db) => db.createObjectStore("supplies", { keyPath: "id" }),
-        (db) => db.createObjectStore("recipes", { keyPath: "id" }),
+        (db) => db.createObjectStore("menuItems", { keyPath: "id" }),
       ],
     },
   ]);
@@ -37,11 +37,11 @@ export default async () => {
       },
     ]);
 
-    await $createOrUpdate(db, "recipes", [
+    await $createOrUpdate(db, "menuItems", [
       {
         id: self.crypto.randomUUID(),
-        recipeId: "Espresso",
-        supplies: [
+        menuItemId: "Espresso",
+        ingredients: [
           {
             id: self.crypto.randomUUID(),
             supplyId: "3 ounce cups",
@@ -50,8 +50,8 @@ export default async () => {
       },
       {
         id: self.crypto.randomUUID(),
-        recipeId: "Americano",
-        supplies: [
+        menuItemId: "Americano",
+        ingredients: [
           {
             id: self.crypto.randomUUID(),
             supplyId: "8 ounce cups",

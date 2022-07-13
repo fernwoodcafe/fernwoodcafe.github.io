@@ -1,12 +1,12 @@
 import setupDB from "@/data/indexedDB-setup";
-import RecipesRepo from "@/data/RecipesRepo";
+import MenuItemRepo from "@/data/MenuItemRepo";
 import SuppliesRepo from "@/data/SuppliesRepo";
 import { createRouter, createWebHistory } from "vue-router";
 
 const db = await setupDB();
 
-const recipesRepo = RecipesRepo(db);
-const recipesList = await recipesRepo.select();
+const menuItemRepo = MenuItemRepo(db);
+const menuItemList = await menuItemRepo.select();
 
 const suppliesRepo = SuppliesRepo(db);
 const suppliesList = await suppliesRepo.select();
@@ -29,27 +29,27 @@ const router = createRouter({
       },
     },
     {
-      path: "/recipes",
-      name: "recipes",
-      component: () => import("../views/RecipesListView.vue"),
+      path: "/menu-items",
+      name: "menuItems",
+      component: () => import("../views/MenuItemListView.vue"),
       props: {
-        recipesList,
+        menuItemList: menuItemList,
       },
     },
   ],
 });
 
-const recipeRoutes = recipesList.items.map((recipe) => ({
-  path: `/recipes/${recipe.recipeId}`,
-  component: () => import("../views/RecipeView.vue"),
+const menuItemRoutes = menuItemList.items.map((menuItem) => ({
+  path: `/menuItems/${menuItem.menuItemId}`,
+  component: () => import("../views/MenuItemView.vue"),
   props: {
-    recipe,
+    menuItem: menuItem,
     suppliesList,
   },
 }));
 
-recipeRoutes.forEach((route) => {
-  router.addRoute("recipes", route);
+menuItemRoutes.forEach((route) => {
+  router.addRoute("menuItems", route);
 });
 
 export default router;
