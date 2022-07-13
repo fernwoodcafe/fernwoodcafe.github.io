@@ -5,10 +5,19 @@ type CafeSupply = {
   unitCost: number;
 };
 
-type CafeMenuItemIngredient = {};
+type CafeMenuItemIngredient = {
+  id: string;
+  supplyId: string;
+};
+
+type CafeMenuItemPackaging = {
+  id: string;
+  supplyId: string;
+};
 
 type CafeMenuItem = {
   id: string;
   menuItemId: string;
   ingredients: CafeMenuItemIngredient[];
+  packaging: CafeMenuItemPackaging[];
 };

@@ -63,15 +63,14 @@ const onGridReady = ({ api }: GridOptions) => {
   api.setColumnDefs(columnDefs);
   api.setRowData(props.gridData.items);
 
-  let gridDataLength = props.gridData.items.length;
-  watch(props.gridData, () => {
-    // We check the length, because we use this only to
-    // insert new records (not to update existing records).
-    // In the future, we might do a more thorough check e.g.
+  let oldGridDataLength = props.gridData.items.length;
+  watch(props.gridData, (newGridData) => {
+    // We check the length, because we use this only to insert new records (not to
+    // update existing records). In the future, we might do a more thorough check e.g.
     // for same ids.
-    if (props.gridData.items.length != gridDataLength) {
+    if (newGridData.items.length != oldGridDataLength) {
       api.setRowData(props.gridData.items);
-      gridDataLength = props.gridData.items.length;
+      oldGridDataLength = props.gridData.items.length;
     }
   });
 };

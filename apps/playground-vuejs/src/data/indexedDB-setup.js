@@ -41,20 +41,32 @@ export default async () => {
       {
         id: self.crypto.randomUUID(),
         menuItemId: "Espresso",
-        ingredients: [
+        packaging: [
           {
             id: self.crypto.randomUUID(),
             supplyId: "3 ounce cups",
+          },
+        ],
+        ingredients: [
+          {
+            id: self.crypto.randomUUID(),
+            supplyId: "espressoBeans",
           },
         ],
       },
       {
         id: self.crypto.randomUUID(),
         menuItemId: "Americano",
-        ingredients: [
+        packaging: [
           {
             id: self.crypto.randomUUID(),
             supplyId: "8 ounce cups",
+          },
+        ],
+        ingredients: [
+          {
+            id: self.crypto.randomUUID(),
+            supplyId: "espressoBeans",
           },
         ],
       },

@@ -1,4 +1,5 @@
 <template>
+  <h1>Supplies</h1>
   <button @click="onClickNewSupply">New Supply</button>
   <AgGridComponent
     :gridData="suppliesList"
