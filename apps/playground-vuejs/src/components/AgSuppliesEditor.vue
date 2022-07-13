@@ -1,20 +1,30 @@
 <template>
   <select v-model="selectedOption">
-    <option v-for="item in options" :value="item.key">{{ item.value }}</option>
+    <option v-for="option in params.options" :value="option.value">
+      {{ option.label }}
+    </option>
   </select>
 </template>
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ICellEditorParams } from "ag-grid-community";
+import { OptionHTMLAttributes, ref } from "vue";
 
-const props = defineProps(["params"]);
+type Props = {
+  params: ICellEditorParams<any, OptionHTMLAttributes> & {
+    options: OptionHTMLAttributes[];
+  };
+};
 
-console.log(props);
+const props = defineProps<Props>();
 
-const options = props.params.supplySelectOptions;
+const selectedOption = ref(props.params.value);
 
-const selectedOption = ref({});
+console.log(selectedOption);
 
-const getValue = () => selectedOption.value;
+const getValue = () => {
+  console.log("getValue", selectedOption);
+  return selectedOption.value;
+};
 
 defineExpose({
   getValue,
