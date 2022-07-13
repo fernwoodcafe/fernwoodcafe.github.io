@@ -82,34 +82,37 @@ export const $createOrUpdate = (db, objectStoreName, objects) =>
       throw Error("We do not yet support keyPath arrays.");
     }
 
-    objects.forEach((obj) => {
-      const keyValue = obj[keyPath];
-      const readRequest = objectStore.get(keyValue);
-      readRequest.onsuccess = function (event) {
-        console.log("success", event, readRequest);
-        const result = readRequest.result;
-        resolve(result);
-      };
+    objects
+      .map((obj) =>
+        // Clone manually to handle the exception that we receive with Proxy objects.
+        // Uncaught DOMException: Failed to execute 'put' on 'IDBObjectStore': #<Object> could not be cloned.
+        JSON.parse(JSON.stringify(obj))
+      )
+      .forEach((obj) => {
+        const keyValue = obj[keyPath];
+        const readRequest = objectStore.get(keyValue);
+        readRequest.onsuccess = function (event) {
+          console.log("readRequest.success", event, readRequest);
+          const result = readRequest.result;
+          resolve(result);
+        };
 
-      readRequest.onsuccess = (event) => {
-        const result = readRequest.result;
-        if (result) {
-          // Clone manually to handle the exception that we receive with Proxy objects.
-          // Uncaught DOMException: Failed to execute 'put' on 'IDBObjectStore': #<Object> could not be cloned.
-          const clone = JSON.parse(JSON.stringify(obj));
-          const updateRequest = objectStore.put(clone);
+        readRequest.onsuccess = (event) => {
+          const result = readRequest.result;
+          if (result) {
+            const updateRequest = objectStore.put(obj);
 
-          updateRequest.onsuccess = (event) => {
-            console.log("success", event);
-          };
-        } else {
-          const createRequest = objectStore.add(obj);
-          createRequest.onsuccess = (event) => {
-            console.log("success", event);
-          };
-        }
-      };
-    });
+            updateRequest.onsuccess = (event) => {
+              console.log("updateRequest.success", event);
+            };
+          } else {
+            const createRequest = objectStore.add(obj);
+            createRequest.onsuccess = (event) => {
+              console.log("createRequest.success", event);
+            };
+          }
+        };
+      });
   });
 
 /**

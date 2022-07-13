@@ -3,6 +3,7 @@
     :gridData="menuItemSupplies"
     :gridColumns="['supplyId', 'unitQuantity']"
     :gridColumnDefs="columnDefs"
+    @gridDataUpdate="onGridDataUpdate"
   ></AgGridComponent>
 </template>
 
@@ -16,13 +17,20 @@ type Props = {
   suppliesList: ReactiveArray<CafeSupply>;
 };
 
+type Emits = {
+  (e: "gridDataUpdate", data: any): void;
+};
+
+const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
+
+const onGridDataUpdate = (data) => emit("gridDataUpdate", data);
 
 const menuItemSupplies = reactive({
   items: props.menuItem.ingredients.concat(props.menuItem.packaging),
 });
 
-watch(props.menuItem, (newMenuItem, oldMenuItem) => {
+watch(props.menuItem, (newMenuItem) => {
   const oldItems = new Set(menuItemSupplies.items);
   const newItems = new Set([
     ...newMenuItem.ingredients,

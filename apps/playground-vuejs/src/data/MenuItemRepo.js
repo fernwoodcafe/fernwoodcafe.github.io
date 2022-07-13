@@ -38,6 +38,8 @@ export default (db) => ({
    * @param {CafeMenuItem} item
    */
   update(item) {
+    console.log("update", item);
+
     menuItemsList.items = menuItemsList.items.map((oldItem) =>
       oldItem.id == item.id ? item : oldItem
     );

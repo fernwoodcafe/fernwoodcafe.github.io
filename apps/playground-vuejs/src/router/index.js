@@ -34,8 +34,6 @@ const router = createRouter({
       component: () => import("../views/MenuItemListView.vue"),
       props: {
         menuItemList: menuItemList,
-        updateMenuItem: menuItemRepo.update,
-        insertMenuItem: menuItemRepo.insert,
       },
     },
   ],
@@ -45,8 +43,10 @@ const menuItemRoutes = menuItemList.items.map((menuItem) => ({
   path: `/menuItems/${menuItem.menuItemId}`,
   component: () => import("../views/MenuItemView.vue"),
   props: {
-    menuItem: menuItem,
+    menuItem,
     suppliesList,
+    updateMenuItem: menuItemRepo.update,
+    insertMenuItem: menuItemRepo.insert,
   },
 }));
 

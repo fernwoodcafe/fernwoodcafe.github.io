@@ -5,6 +5,7 @@
   <AgGridMenuItemComponent
     :menuItem="menuItem"
     :suppliesList="suppliesList"
+    @gridDataUpdate="onGridDataUpdated"
   ></AgGridMenuItemComponent>
 </template>
 
@@ -14,9 +15,22 @@ import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
 type Props = {
   menuItem: CafeMenuItem;
   suppliesList: ReactiveArray<CafeSupply>;
+  updateMenuItem: (data: any) => Promise<void>;
+  insertMenuItem: (data: any) => Promise<void>;
 };
 
 const props = defineProps<Props>();
+
+const onGridDataUpdated = (data) => {
+  const index = props.menuItem.ingredients.findIndex(
+    (item) => item.id == data.id
+  );
+
+  console.log(index, data);
+  props.menuItem.ingredients[index] = data;
+
+  props.updateMenuItem(props.menuItem);
+};
 
 const onClickNewIngredient = () => {
   const ingredient = {
@@ -26,6 +40,8 @@ const onClickNewIngredient = () => {
   };
 
   props.menuItem.ingredients.push(ingredient);
+
+  props.updateMenuItem(props.menuItem);
 };
 
 const onClickNewPackaging = () => {
@@ -36,5 +52,7 @@ const onClickNewPackaging = () => {
   };
 
   props.menuItem.packaging.push(packaging);
+
+  props.updateMenuItem(props.menuItem);
 };
 </script>
