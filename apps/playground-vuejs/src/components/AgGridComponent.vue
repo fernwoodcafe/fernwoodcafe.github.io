@@ -19,7 +19,11 @@ type Props = {
   gridData: ReactiveArray<object>;
 };
 
-const emit = defineEmits(["gridDataUpdate"]);
+type Emits = {
+  (e: "gridDataUpdate", data: any): void;
+};
+
+const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
 // DefaultColDef sets props common to all Columns

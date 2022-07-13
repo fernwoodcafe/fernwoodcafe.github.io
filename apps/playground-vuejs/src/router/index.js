@@ -7,13 +7,9 @@ const db = await setupDB();
 
 const recipesRepo = RecipesRepo(db);
 const recipesList = await recipesRepo.select();
-const getRecipe = recipesRepo.single;
 
-// TODO: Why not pass the whole repo in as props? Might save boilerplate.
 const suppliesRepo = SuppliesRepo(db);
 const suppliesList = await suppliesRepo.select();
-const insertSupply = suppliesRepo.insert;
-const updateSupply = suppliesRepo.update;
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,8 +24,7 @@ const router = createRouter({
       component: () => import("../views/SuppliesListView.vue"),
       props: {
         suppliesList,
-        insertSupply,
-        updateSupply,
+        updateSupply: suppliesRepo.update,
       },
     },
     {

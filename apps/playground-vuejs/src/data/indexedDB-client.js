@@ -94,7 +94,11 @@ export const $createOrUpdate = (db, objectStoreName, objects) =>
       readRequest.onsuccess = (event) => {
         const result = readRequest.result;
         if (result) {
-          const updateRequest = objectStore.put(obj);
+          // Clone manually to handle the exception that we receive with Proxy objects.
+          // Uncaught DOMException: Failed to execute 'put' on 'IDBObjectStore': #<Object> could not be cloned.
+          const clone = JSON.parse(JSON.stringify(obj));
+          const updateRequest = objectStore.put(clone);
+
           updateRequest.onsuccess = (event) => {
             console.log("success", event);
           };

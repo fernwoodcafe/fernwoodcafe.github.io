@@ -17,18 +17,21 @@ export default (db) => ({
   },
   /**
    * @param {CafeSupply} item
+   * @returns {Promise<void>}
    */
   insert(item) {
     suppliesList.items = suppliesList.items.slice().concat([item]);
-    $createOrUpdate(db, "supplies", [item]);
+    return $createOrUpdate(db, "supplies", [item]);
   },
   /**
    * @param {CafeSupply} item
+   * @returns {Promise<void>}
    */
   update(item) {
     suppliesList.items = suppliesList.items.map((oldItem) =>
       oldItem.id == item.id ? item : oldItem
     );
-    $createOrUpdate(db, "supplies", [item]);
+
+    return $createOrUpdate(db, "supplies", [item]);
   },
 });

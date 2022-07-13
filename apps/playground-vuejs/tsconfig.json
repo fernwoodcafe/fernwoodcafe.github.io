@@ -1,7 +1,11 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
+    "lib": ["ESNext", "dom"],
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext",
     "checkJs": true,
+    "noEmit": true,
     "paths": {
       "@/*": ["./src/*"]
     }

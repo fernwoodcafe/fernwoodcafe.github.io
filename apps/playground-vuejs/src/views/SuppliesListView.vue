@@ -1,31 +1,25 @@
 <template>
-  <div class="supplies">
-    <h1>Supplies</h1>
-    <AgGridSuppliesComponent
-      :suppliesList="suppliesList"
-      @gridDataInsert="onGridDataInserted"
-      @gridDataUpdate="onGridDataUpdated"
-    ></AgGridSuppliesComponent>
-  </div>
+  <button @click="onClick">New</button>
+  <AgGridComponent
+    :gridData="suppliesList"
+    @gridDataUpdate="updateSupply"
+  ></AgGridComponent>
 </template>
 
 <script setup lang="ts">
-import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
+import AgGridComponent from "@/components/AgGridComponent.vue";
 
 type Props = {
   suppliesList: ReactiveArray<CafeSupply>;
-  insertSupply: Function;
-  updateSupply: Function;
+  updateSupply: (data: any) => Promise<void>;
 };
+
 const props = defineProps<Props>();
 
-const onGridDataUpdated = (data) => {
-  console.log("onGridDataUpdated", data);
-  props.updateSupply(data);
-};
-
-const onGridDataInserted = (data) => {
-  console.log("onGridDataInserted", data);
-  props.insertSupply(data);
+const onClick = () => {
+  props.suppliesList.items.push({
+    id: self.crypto.randomUUID(),
+    supplyId: "",
+  });
 };
 </script>
