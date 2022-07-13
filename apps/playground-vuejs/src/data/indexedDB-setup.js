@@ -4,7 +4,7 @@ import {
   $migrateDB,
 } from "@/data/indexedDB-client.js";
 
-const resetPrototype = false;
+const resetPrototype = true;
 
 export default async () => {
   if (resetPrototype) {
@@ -35,6 +35,12 @@ export default async () => {
         unitSize: "cup",
         unitCost: 10,
       },
+      {
+        id: self.crypto.randomUUID(),
+        supplyId: "Espresso Beans",
+        unitSize: "grams",
+        unitCost: 10,
+      },
     ]);
 
     await $createOrUpdate(db, "menuItems", [
@@ -51,7 +57,7 @@ export default async () => {
         ingredients: [
           {
             id: self.crypto.randomUUID(),
-            supplyId: "espressoBeans",
+            supplyId: "Espresso Beans",
             unitQuantity: 0,
           },
         ],
@@ -69,7 +75,7 @@ export default async () => {
         ingredients: [
           {
             id: self.crypto.randomUUID(),
-            supplyId: "espressoBeans",
+            supplyId: "Espresso Beans",
             unitQuantity: 0,
           },
         ],

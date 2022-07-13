@@ -22,12 +22,21 @@ type Props = {
 const props = defineProps<Props>();
 
 const onGridDataUpdated = (data) => {
-  const index = props.menuItem.ingredients.findIndex(
+  const ingredientIndex = props.menuItem.ingredients.findIndex(
     (item) => item.id == data.id
   );
 
-  console.log(index, data);
-  props.menuItem.ingredients[index] = data;
+  if (ingredientIndex > 0) {
+    props.menuItem.ingredients[ingredientIndex] = data;
+  }
+
+  const packagingIndex = props.menuItem.packaging.findIndex(
+    (item) => item.id == data.id
+  );
+
+  if (packagingIndex > 0) {
+    props.menuItem.packaging[packagingIndex] = data;
+  }
 
   props.updateMenuItem(props.menuItem);
 };
@@ -35,7 +44,7 @@ const onGridDataUpdated = (data) => {
 const onClickNewIngredient = () => {
   const ingredient = {
     id: self.crypto.randomUUID(),
-    supplyId: "TODO Give this ingredient a name.",
+    supplyId: "TODO Select ingredient.",
     unitQuantity: 0,
   };
 
@@ -47,7 +56,7 @@ const onClickNewIngredient = () => {
 const onClickNewPackaging = () => {
   const packaging = {
     id: self.crypto.randomUUID(),
-    supplyId: "TODO Give this packaging a name.",
+    supplyId: "TODO Select packaging.",
     unitQuantity: 0,
   };
 
