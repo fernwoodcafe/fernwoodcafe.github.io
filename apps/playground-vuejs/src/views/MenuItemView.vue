@@ -21,7 +21,8 @@ const props = defineProps<Props>();
 const onClickNewIngredient = () => {
   const ingredient = {
     id: self.crypto.randomUUID(),
-    supplyId: "",
+    supplyId: "TODO Give this ingredient a name.",
+    unitQuantity: 0,
   };
 
   props.menuItem.ingredients.push(ingredient);
@@ -30,7 +31,8 @@ const onClickNewIngredient = () => {
 const onClickNewPackaging = () => {
   const packaging = {
     id: self.crypto.randomUUID(),
-    supplyId: "",
+    supplyId: "TODO Give this packaging a name.",
+    unitQuantity: 0,
   };
 
   props.menuItem.packaging.push(packaging);

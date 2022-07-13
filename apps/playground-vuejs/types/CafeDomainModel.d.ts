@@ -13,6 +13,7 @@ type CafeMenuItemIngredient = {
 type CafeMenuItemPackaging = {
   id: string;
   supplyId: string;
+  unitQuantity: number;
 };
 
 type CafeMenuItem = {
