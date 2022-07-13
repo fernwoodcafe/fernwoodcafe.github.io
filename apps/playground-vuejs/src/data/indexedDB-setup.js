@@ -43,7 +43,7 @@ export default async () => {
         recipeId: "Espresso",
         supplies: [
           {
-            id: "1",
+            id: self.crypto.randomUUID(),
             supplyId: "3 ounce cups",
           },
         ],
@@ -53,7 +53,7 @@ export default async () => {
         recipeId: "Americano",
         supplies: [
           {
-            id: "2",
+            id: self.crypto.randomUUID(),
             supplyId: "8 ounce cups",
           },
         ],

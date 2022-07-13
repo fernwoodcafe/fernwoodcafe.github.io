@@ -53,18 +53,9 @@ const onGridReady = ({ api }) => {
 
   rowData = props.gridData;
 
-  const columnDefs = Object.keys(props.gridData[0])
-    .filter((key) => key != "id")
-    .map((key) => ({
-      field: key,
-    }))
-    .concat([
-      {
-        // @ts-ignore
-        headerName: "Row Id",
-        valueGetter: "node.id",
-      },
-    ]);
+  const columnDefs = Object.keys(props.gridData[0]).map((key) => ({
+    field: key,
+  }));
 
   gridApi.setColumnDefs(columnDefs);
   gridApi.setRowData(props.gridData);
