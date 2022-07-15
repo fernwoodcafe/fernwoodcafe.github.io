@@ -4,7 +4,7 @@ import {
   $migrateDB,
 } from "@/data/indexedDB-client.js";
 
-const resetPrototype = true;
+const resetPrototype = false;
 
 export default async () => {
   if (resetPrototype) {
