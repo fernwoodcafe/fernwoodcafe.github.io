@@ -1,5 +1,5 @@
 :root {
-  --color-primary-light: #b7d152;
+  --color-primary-light: #d4dfd1;
   --color-primary-mid: #7c9b39;
   --color-primary-dark: #5c7f23;
   --color-secondary-dark: #714c40;
@@ -82,7 +82,6 @@ dl > dd {
 main nav {
   display: flex;
   flex-direction: row;
-  column-gap: 5px;
 }
 
 main nav a {
@@ -90,11 +89,21 @@ main nav a {
   margin-top: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-radius: 5px;
   font-weight: 600;
+  border:1px solid white;
   background-image: linear-gradient(to bottom, var(--color-primary-dark), var(--color-primary-mid));
   text-align: center;
   flex-grow: 1;
+}
+
+main nav a:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+main nav a:last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 main nav a:hover {
