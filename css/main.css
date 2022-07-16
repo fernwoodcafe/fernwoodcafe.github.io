@@ -108,7 +108,6 @@ figure {
   display: inline-block;
   padding: 5px;
   margin: 5px;
-
   border: thin solid var(--color-secondary-light);
   border-radius: 5px;
 }
@@ -124,6 +123,32 @@ figure figcaption {
   text-align: center;
   background-color: var(--color-primary-dark);
   color: white;
+}
+
+figure figcaption a {
+  color:white;
+  text-decoration: underline;
+}
+
+figure figcaption a:hover {
+  color:#d3adc5;
+}
+
+figure ul {
+  border:none;
+  columns:unset;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-wrap: wrap;
+  column-gap:5px;
+  row-gap:5px;
+}
+
+figure ul li {
+  padding:0px;
+  margin:0px;
+  flex: 1 1 45%;
 }
 
 ul {
@@ -145,9 +170,9 @@ ul > li {
   break-inside: avoid-column;
 }
 
-/* 
+/*
   Single Page Navigation
-  See https://css-tricks.com/a-whole-website-in-a-single-html-file/ 
+  See https://css-tricks.com/a-whole-website-in-a-single-html-file/
   See also https://john-doe.neocities.org/
 */
 
@@ -212,3 +237,4 @@ article#home {
     transform: translate(1.5rem,1.5rem);
     z-index:1;
 }
+
