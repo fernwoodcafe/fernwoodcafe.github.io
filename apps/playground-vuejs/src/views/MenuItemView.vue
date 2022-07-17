@@ -1,7 +1,15 @@
 <template>
   <h2>{{ menuItem.menuItemName }}</h2>
-  <p>Total Cost {{ formatMoney(menuItemTotalCost) }}</p>
-  <p>Reommended Price {{ formatMoney(menuItemRecommendedPrice) }}</p>
+  <dl>
+    <div>
+      <dt>Total Cost</dt>
+      <dd>{{ formatMoney(menuItemTotalCost) }}</dd>
+    </div>
+    <div>
+      <dt>Recommended Menu Price</dt>
+      <dd>{{ formatMoney(menuItemRecommendedPrice) }}</dd>
+    </div>
+  </dl>
 
   <form @submit.prevent>
     <fieldset>
@@ -132,5 +140,26 @@ form {
 }
 fieldset {
   flex-basis: 50%;
+}
+
+dl {
+  font-size: 1rem;
+  line-height: 1.2rem;
+  padding: 10px;
+  border: thin solid gray;
+}
+
+dl div {
+  display: flex;
+  justify-content: flex-start;
+}
+
+dl div dt {
+  font-weight: 500;
+  flex: 0 0 28%;
+}
+
+dl div dd {
+  flex: 0 0 25%;
 }
 </style>
