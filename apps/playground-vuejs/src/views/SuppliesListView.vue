@@ -39,6 +39,8 @@ const onClickNewSupply = () => {
       supplyUnits: "",
       supplyName: `New Supply ${props.suppliesList.items.length}`,
       supplyType: "ingredient",
+      percentWaste: 0,
+      hasPST: false,
       purchaseQuantity: 0,
       purchasePriceBeforeTax: 0,
     },
