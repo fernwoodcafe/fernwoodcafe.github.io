@@ -1,11 +1,11 @@
 <template>
   <select v-model="selectedOption">
-    <option disabled :value="{}">Please select one</option>
+    <option disabled :value="null">Please select one</option>
     <option v-for="option in options" :value="option">
       {{ option[labelKey] }}
     </option>
   </select>
-  <button @click="onClick">
+  <button v-if="selectedOption" @click="onClick">
     Add Ingredient - {{ selectedOption[labelKey] }}
   </button>
 </template>
@@ -17,7 +17,7 @@ type Props = {
   labelKey: string;
 };
 
-const selectedOption = ref({});
+const selectedOption = ref(null);
 
 defineProps<Props>();
 
