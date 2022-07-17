@@ -19,10 +19,20 @@
           {{ option.supplyName }}
         </option>
       </select>
-      <button @click="onClickNewIngredient">
-        Add Ingredient - {{ selectedIngredient.supplyName }}
-      </button>
+      <!-- <FrcSelectOption
+        :selectedOption="selectedIngredient"
+        :options="
+          ingredientOptions.map((item) => ({
+            value: item,
+            label: item.supplyName,
+          }))
+        "
+        :onClickSubmit="onClickNewIngredient"
+      ></FrcSelectOption> -->
     </fieldset>
+    <button @click="onClickNewIngredient">
+      Add Ingredient - {{ selectedIngredient.supplyName }}
+    </button>
     <fieldset>
       <select v-model="selectedPackaging">
         <option disabled :value="{}">Please select one</option>
@@ -116,7 +126,10 @@ const calculateMenuItemTotalCost = () =>
         (s) => s.uniqueId == menuItemSupply.supplyUniqueId
       );
 
-      const unitPrice = target.purchasePriceBeforeTax / target.purchaseQuantity;
+      const unitPrice =
+        target == null
+          ? 0
+          : target.purchasePriceBeforeTax / target.purchaseQuantity;
 
       return {
         unitPrice,
