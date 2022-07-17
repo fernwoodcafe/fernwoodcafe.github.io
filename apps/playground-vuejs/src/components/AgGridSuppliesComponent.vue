@@ -8,6 +8,7 @@
       'purchaseQuantity',
       'purchasePriceBeforeTax',
       'percentWaste',
+      'hasPST',
       'unitCost',
     ]"
     :gridColumnDefs="columnDefs"
@@ -17,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import AgCheckboxEditor from "@/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { formatMoney, formatPercent } from "@/formatters";
@@ -72,6 +74,10 @@ const columnDefs = [
       formatPercent(params.value),
     valueGetter: ({ data }: ValueGetterParams<Supply>) =>
       data.percentWaste / 100,
+  },
+  {
+    field: "hasPST",
+    cellEditor: AgCheckboxEditor,
   },
   {
     field: "unitCost",

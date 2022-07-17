@@ -7,4 +7,5 @@ export type Supply = DomainEntity & {
   purchaseQuantity: number;
   purchasePriceBeforeTax: number;
   percentWaste: number;
+  hasPST: boolean;
 };
