@@ -56,17 +56,17 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const selectedIngredient = ref<Supply>({});
+const selectedIngredient = ref<Partial<Supply>>({});
 const ingredientOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "ingredient"
 );
 
-const selectedPackaging = ref<Supply>({});
+const selectedPackaging = ref<Partial<Supply>>({});
 const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addSupply = (supply: Supply) => {
+const addSupply = (supply: Partial<Supply>) => {
   const menuItemSupply = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,

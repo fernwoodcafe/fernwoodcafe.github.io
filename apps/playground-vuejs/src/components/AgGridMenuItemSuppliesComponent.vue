@@ -68,7 +68,7 @@ const columnDefs = [
         targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity
       );
 
-      return `${data.supplyName} @ ${costPerUnit} per ${targetSupply.supplyUnits}`;
+      return `${targetSupply.supplyName} @ ${costPerUnit} per ${targetSupply.supplyUnits}`;
     },
   },
   {
