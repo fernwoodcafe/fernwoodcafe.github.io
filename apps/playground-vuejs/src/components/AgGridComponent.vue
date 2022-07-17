@@ -37,7 +37,7 @@ const defaultColDef = {
   editable: true,
 };
 
-const getRowId = ({ data }) => data.id;
+const getRowId = ({ data }) => data.uniqueId;
 
 const onCellValueChanged = (event) => {
   emit("gridDataUpdate", event.data);

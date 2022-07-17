@@ -18,15 +18,16 @@ export type DomainEventTypes =
   | "menu_item_created"
   | "menu_item_updated";
 
-export type DomainCommand = {
+export type DomainCommand<T = any> = {
   type: DomainCommandTypes;
-  payload: Record<string, any>;
+  payload: T;
   meta?: Record<string, any>;
 };
 
-export type DomainEvent = {
+export type DomainEvent<T = any> = {
+  eventIndex: number;
   type: DomainEventTypes;
-  payload: Record<string, any>;
+  payload: T;
   meta?: Record<string, any>;
 };
 

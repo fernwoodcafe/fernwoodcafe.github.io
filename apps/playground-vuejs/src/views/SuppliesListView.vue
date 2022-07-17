@@ -12,8 +12,10 @@
 import AgGridComponent from "@/components/AgGridComponent.vue";
 
 type Props = {
-  suppliesList: ReactiveArray<CafeDomSupplypply>;
-  sendCommand: (Command: CafeDomain.DomainCommand) => Promise<void>;
+  suppliesList: ReactiveArray<CafeDomain.Supply>;
+  sendCommand: (
+    Command: CafeDomain.DomainCommand<CafeDomain.Supply>
+  ) => Promise<void>;
 };
 
 const props = defineProps<Props>();
@@ -29,7 +31,11 @@ const onClickNewSupply = () => {
   props.sendCommand({
     type: "create_supply",
     payload: {
+      uniqueId: crypto.randomUUID(),
+      unitCost: 0,
+      unitSize: "",
       supplyName: "",
+      supplyType: "ingredient",
     },
   });
 };

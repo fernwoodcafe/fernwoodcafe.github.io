@@ -4,7 +4,7 @@ import { $create, $readMany } from "@/data/indexedDB-client";
  */
 export default (db) => ({
   /**
-   * @param {CafeDomain.DomainEvent} event
+   * @param {CafeDomain.DomainEvent<any>} event
    */
   async insert(event) {
     await $create(db, "domainEvents", [event]);
@@ -12,7 +12,10 @@ export default (db) => ({
     return event;
   },
   /**
-   * @returns {Promise<CafeDomain.DomainEvent[]>}
+   * @returns {Promise<CafeDomain.DomainEvent<CafeDomain.DomainEvent>[]>}
    */
-  select: () => $readMany(db, "domainEvents"),
+  select: () =>
+    $readMany(db, "domainEvents").then((events) =>
+      events.sort((a, b) => a.eventIndex < b.eventIndex)
+    ),
 });

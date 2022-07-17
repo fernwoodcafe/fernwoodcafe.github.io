@@ -1,19 +1,32 @@
 /**
  * @param {any} suppliesList
- * @param {CafeDomain.DomainEvent[]} events
+ * @param {CafeDomain.DomainEvent<any>[]} events
  */
 export default (suppliesList, ...events) => {
   events.forEach((event) => {
-    console.log("materializeSupplies", event.type, event.payload);
+    console.log(
+      "materializeSupplies",
+      event.eventIndex,
+      event.type,
+      event.payload
+    );
+
     if (event.type == "supply_created") {
       suppliesList.items.push(event.payload);
     }
 
     if (event.type == "supply_updated") {
       suppliesList.items = suppliesList.items.map((oldItem) =>
-        oldItem.id == event.payload.id ? event.payload : oldItem
+        oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
       );
     }
+
+    console.log(
+      "materializedSupplyList",
+      JSON.stringify(suppliesList.items),
+      null,
+      2
+    );
   });
 
   return suppliesList;
