@@ -54,7 +54,7 @@ const columnDefs = [
     field: "supplyUnits",
     cellEditor: AgSelectEditor,
     cellEditorParams: {
-      options: ["gram", "litre", "item"].map((option) => ({
+      options: ["gram", "litre", "ounce", "item"].map((option) => ({
         value: option,
         label: option,
       })),
