@@ -61,6 +61,11 @@ const columnDefs = [
     },
   },
   {
+    field: "purchasePriceBeforeTax",
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+      formatMoney(params.value),
+  },
+  {
     field: "unitCost",
     valueGetter: ({ data }: ValueGetterParams<Supply>) =>
       data.purchasePriceBeforeTax / data.purchaseQuantity,
