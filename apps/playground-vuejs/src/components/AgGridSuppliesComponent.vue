@@ -4,7 +4,7 @@
     :gridColumns="[
       'supplyName',
       'supplyType',
-      'unitSize',
+      'supplyUnits',
       'purchaseQuantity',
       'purchasePriceBeforeTax',
       'unitCost',
@@ -20,6 +20,7 @@ import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { Supply } from "@/types/CafeDomain";
 import { ValueFormatterParams, ValueGetterParams } from "ag-grid-community";
+import formatMoney from "./formatMoney";
 
 type Props = {
   suppliesList: ReactiveArray<Supply>;
@@ -50,10 +51,10 @@ const columnDefs = [
     },
   },
   {
-    field: "unitSize",
+    field: "supplyUnits",
     cellEditor: AgSelectEditor,
     cellEditorParams: {
-      options: ["grams", "litres", "item"].map((option) => ({
+      options: ["gram", "litre", "item"].map((option) => ({
         value: option,
         label: option,
       })),
@@ -61,10 +62,10 @@ const columnDefs = [
   },
   {
     field: "unitCost",
-    valueGetter: (params: ValueGetterParams<Supply>) =>
-      params.data.purchasePriceBeforeTax / params.data.purchaseQuantity,
+    valueGetter: ({ data }: ValueGetterParams<Supply>) =>
+      data.purchasePriceBeforeTax / data.purchaseQuantity,
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
-      isNaN(params.value) ? "-" : `$  ${params.value}`,
+      formatMoney(params.value),
   },
 ];
 </script>

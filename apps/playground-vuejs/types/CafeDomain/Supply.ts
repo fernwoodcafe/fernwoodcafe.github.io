@@ -3,7 +3,7 @@ import { DomainEntity } from ".";
 export type Supply = DomainEntity & {
   supplyName: string;
   supplyType: "packaging" | "ingredient";
-  unitSize: string;
+  supplyUnits: string;
   purchaseQuantity: number;
   purchasePriceBeforeTax: number;
 };

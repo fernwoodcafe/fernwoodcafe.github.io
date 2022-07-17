@@ -37,7 +37,7 @@ const onClickNewSupply = () => {
     payload: {
       uniqueId: crypto.randomUUID(),
       unitCost: 0,
-      unitSize: "",
+      supplyUnits: "",
       supplyName: "",
       supplyType: "ingredient",
     },

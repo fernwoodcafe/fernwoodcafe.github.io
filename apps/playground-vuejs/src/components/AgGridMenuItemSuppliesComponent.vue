@@ -1,7 +1,7 @@
 <template>
   <AgGridComponent
     :gridData="menuItemSupplies"
-    :gridColumns="['supplyName']"
+    :gridColumns="['supplyDetails', 'supplyQuantity', 'supplyCost']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemSupplyUpdated"
     @gridRowDelete="onMenuItemSupplyDeleted"
@@ -12,7 +12,9 @@
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
+import { ValueFormatterParams, ValueGetterParams } from "ag-grid-community";
 import { reactive, watch } from "vue";
+import formatMoney from "./formatMoney";
 
 type Props = {
   menuItem: MenuItem;
@@ -49,16 +51,41 @@ watch(props.menuItem, (newMenuItem) => {
 
 const columnDefs = [
   {
-    field: "supplyName",
-    // We have this in an ag-specific component because
-    // this part has an ag- specific implementation.
+    field: "supplyDetails",
     cellEditor: AgSelectEditor,
     cellEditorParams: {
       options: props.suppliesList.items.map((item) => ({
-        value: item.supplyName,
+        value: `${item.supplyName}`,
         label: `${item.supplyName}`,
       })),
     },
+    valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
+      const targetSupply = props.suppliesList.items.find(
+        (supply) => supply.uniqueId == data.supplyUniqueId
+      );
+
+      const costPerUnit =
+        targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity;
+
+      return `${data.supplyName} @ ${formatMoney(
+        costPerUnit / targetSupply.purchaseQuantity
+      )}`;
+    },
+  },
+  {
+    field: "supplyCost",
+    valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
+      const targetSupply = props.suppliesList.items.find(
+        (supply) => supply.uniqueId == data.supplyUniqueId
+      );
+
+      return (
+        data.supplyQuantity *
+        (targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity)
+      );
+    },
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+      formatMoney(params.value),
   },
 ];
 </script>
