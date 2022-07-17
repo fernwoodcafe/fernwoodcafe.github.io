@@ -3,7 +3,7 @@
     :gridData="menuItemSupplies"
     :gridColumns="['supplyId', 'unitQuantity']"
     :gridColumnDefs="columnDefs"
-    @gridDataUpdate="onGridDataUpdate"
+    @gridDataUpdate="onMenuItemUpdated"
   ></AgGridComponent>
 </template>
 
@@ -18,13 +18,13 @@ type Props = {
 };
 
 type Emits = {
-  (e: "gridDataUpdate", data: any): void;
+  (e: "menuItemUpdated", data: any): void;
 };
 
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-const onGridDataUpdate = (data) => emit("gridDataUpdate", data);
+const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 
 const menuItemSupplies = reactive({
   items: props.menuItem.ingredients.concat(props.menuItem.packaging),

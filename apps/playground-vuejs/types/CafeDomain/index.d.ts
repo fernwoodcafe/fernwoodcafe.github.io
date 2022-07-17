@@ -4,15 +4,15 @@ import { MenuItemPackaging } from "./MenuItemPackaging";
 import { MenuItemSupply } from "./MenuItemSupply";
 
 type DomainCommandTypes =
-  | "create_new_supply"
+  | "create_supply"
   | "update_supply"
-  | "create_new_menu_item"
+  | "create_menu_item"
   | "update_menu_item";
 
 type DomainEventTypes =
-  | "new_supply_created"
+  | "supply_created"
   | "supply_updated"
-  | "new_menu_item_created"
+  | "menu_item_created"
   | "menu_item_updated";
 
 export type DomainCommand = {

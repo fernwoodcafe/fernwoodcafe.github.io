@@ -5,7 +5,7 @@
 export default (suppliesList, ...events) => {
   events.forEach((event) => {
     console.log("materializeSupplies", event);
-    if (event.type == "new_supply_created") {
+    if (event.type == "supply_created") {
       suppliesList.items.push(event.payload);
     }
 

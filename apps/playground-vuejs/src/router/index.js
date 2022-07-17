@@ -21,6 +21,17 @@ export const suppliesList = await materializeSupplies(
   ...domainEvents
 );
 
+const buildMenuItemChildRoutes = () =>
+  menuItemsList.items.map((menuItem) => ({
+    path: `/menu-items/${menuItem.menuItemId}`,
+    component: () => import("../views/MenuItemView.vue"),
+    props: {
+      menuItem,
+      suppliesList,
+      sendCommand: handleCommand,
+    },
+  }));
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -45,31 +56,17 @@ const router = createRouter({
         menuItemsList,
         sendCommand: handleCommand,
       },
-      children: menuItemsList.items.map((menuItem) => ({
-        path: `/menu-items/${menuItem.menuItemId}`,
-        component: () => import("../views/MenuItemView.vue"),
-        props: {
-          menuItem,
-          suppliesList,
-        },
-      })),
+      children: buildMenuItemChildRoutes(),
     },
   ],
 });
 
 watch(menuItemsList, () => {
   const routeData = router.options.routes.find(
-    (route) => route.name == "menuItems"
+    ({ name }) => name == "menuItems"
   );
 
-  routeData.children = menuItemsList.items.map((menuItem) => ({
-    path: `/menu-items/${menuItem.menuItemId}`,
-    component: () => import("../views/MenuItemView.vue"),
-    props: {
-      menuItem,
-      suppliesList,
-    },
-  }));
+  routeData.children = buildMenuItemChildRoutes();
 
   router.addRoute(routeData);
 });

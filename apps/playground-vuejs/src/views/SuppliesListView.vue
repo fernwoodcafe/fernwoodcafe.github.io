@@ -4,7 +4,7 @@
   <AgGridComponent
     :gridData="suppliesList"
     :gridColumns="['supplyId', 'id', 'unitSize', 'unitCost']"
-    @gridDataUpdate="onGridDataUpdate"
+    @gridDataUpdate="onSupplyUpdated"
   ></AgGridComponent>
 </template>
 
@@ -18,7 +18,7 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const onGridDataUpdate = (gridDataRow) => {
+const onSupplyUpdated = (gridDataRow) => {
   props.sendCommand({
     type: "update_supply",
     payload: gridDataRow,
@@ -27,7 +27,7 @@ const onGridDataUpdate = (gridDataRow) => {
 
 const onClickNewSupply = () => {
   props.sendCommand({
-    type: "create_new_supply",
+    type: "create_supply",
     payload: {
       id: self.crypto.randomUUID(),
       supplyId: "",

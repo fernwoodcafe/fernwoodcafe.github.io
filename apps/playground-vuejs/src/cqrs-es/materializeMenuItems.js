@@ -5,7 +5,7 @@
 export default (menuItemsList, ...events) => {
   events.forEach((event) => {
     console.log("materializeMenuItems", event);
-    if (event.type == "new_menu_item_created") {
+    if (event.type == "menu_item_created") {
       menuItemsList.items.push(event.payload);
     }
 

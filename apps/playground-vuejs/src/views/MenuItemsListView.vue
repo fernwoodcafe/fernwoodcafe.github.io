@@ -31,7 +31,7 @@ const newMenuItem: CafeDomain.MenuItem = {
 
 const onClickNewMenuItem = () => {
   props.sendCommand({
-    type: "create_new_menu_item",
+    type: "create_menu_item",
     payload: {
       id: self.crypto.randomUUID(),
       ...newMenuItem,
