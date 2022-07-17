@@ -42,6 +42,7 @@ const defaultColDef: ColDef = {
   singleClickEdit: true,
   wrapHeaderText: true,
   autoHeaderHeight: true,
+  resizable: true,
 };
 
 const getRowId = ({ data }) => data.uniqueId;
