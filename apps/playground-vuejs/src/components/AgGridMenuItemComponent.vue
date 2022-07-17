@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
-import AgSuppliesEditor from "@/components/AgSuppliesEditor.vue";
+import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { reactive, watch } from "vue";
 
 type Props = {
@@ -48,7 +48,7 @@ const columnDefs = [
     field: "supplyName",
     // We have this in an ag-specific component because
     // this part has an ag- specific implementation.
-    cellEditor: AgSuppliesEditor,
+    cellEditor: AgSelectEditor,
     cellEditorParams: {
       options: props.suppliesList.items.map((item) => ({
         value: item.supplyName,

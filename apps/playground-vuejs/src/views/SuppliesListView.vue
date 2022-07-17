@@ -1,15 +1,14 @@
 <template>
   <h1>Supplies</h1>
   <button @click="onClickNewSupply">New Supply</button>
-  <AgGridComponent
-    :gridData="suppliesList"
-    :gridColumns="['supplyName', 'unitSize', 'unitCost']"
-    @gridDataUpdate="onSupplyUpdated"
-  ></AgGridComponent>
+  <AgGridSupplyComponent
+    :suppliesList="suppliesList"
+    @supplyUpdated="onSupplyUpdated"
+  ></AgGridSupplyComponent>
 </template>
 
 <script setup lang="ts">
-import AgGridComponent from "@/components/AgGridComponent.vue";
+import AgGridSupplyComponent from "@/components/AgGridSupplyComponent.vue";
 
 type Props = {
   suppliesList: ReactiveArray<CafeDomain.Supply>;

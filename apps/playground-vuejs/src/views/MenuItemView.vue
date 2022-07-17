@@ -12,6 +12,17 @@
         Add Ingredient - {{ selectedIngredient.supplyName }}
       </button>
     </fieldset>
+    <fieldset>
+      <select v-model="selectedPackaging">
+        <option disabled :value="{}">Please select one</option>
+        <option v-for="option in packagingOptions" :value="option">
+          {{ option.supplyName }}
+        </option>
+      </select>
+      <button @click="onClickNewPackaging">
+        Add Packaging - {{ selectedPackaging.supplyName }}
+      </button>
+    </fieldset>
   </form>
   <AgGridMenuItemComponent
     :menuItem="menuItem"
@@ -35,7 +46,12 @@ const props = defineProps<Props>();
 
 const selectedIngredient = ref<CafeDomain.Supply>({});
 const ingredientOptions = props.suppliesList.items.filter(
-  (s) => s.supplyType == "ingredient"
+  (s) => s.supplyType.toLocaleLowerCase() == "ingredient"
+);
+
+const selectedPackaging = ref<CafeDomain.Supply>({});
+const packagingOptions = props.suppliesList.items.filter(
+  (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
 const onMenuItemUpdated = (data) => {
@@ -45,15 +61,11 @@ const onMenuItemUpdated = (data) => {
   });
 };
 
-const onClickNewIngredient = () => {
-  console.log("onClickNewIngredient");
-
-  if (selectedIngredient == null) return;
-
+const addSupply = (supply: CafeDomain.Supply) => {
   const menuItemSupply = {
     uniqueId: crypto.randomUUID(),
-    supplyUniqueId: selectedIngredient.value.uniqueId,
-    supplyName: selectedIngredient.value.supplyName,
+    supplyUniqueId: supply.uniqueId,
+    supplyName: supply.supplyName,
   };
 
   props.menuItem.menuItemSupplies.push(menuItemSupply);
@@ -64,5 +76,15 @@ const onClickNewIngredient = () => {
   });
 };
 
-const onClickNewPackaging = () => {};
+const onClickNewIngredient = () => {
+  if (selectedIngredient.value == null) return;
+
+  addSupply(selectedIngredient.value);
+};
+
+const onClickNewPackaging = () => {
+  if (selectedPackaging.value == null) return;
+
+  addSupply(selectedPackaging.value);
+};
 </script>
