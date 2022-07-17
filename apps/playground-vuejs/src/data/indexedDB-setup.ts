@@ -2,7 +2,7 @@ import { $deleteDB, $migrateDB } from "@/data/indexedDB-client.js";
 
 const resetPrototype = false;
 
-export default async () => {
+export default async (): Promise<IDBDatabase> => {
   if (resetPrototype) {
     $deleteDB("restaurantDB");
   }

@@ -15,6 +15,12 @@ export default (menuItemsList, ...events) => {
         oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
       );
     }
+
+    if (event.type == "menu_item_deleted") {
+      menuItemsList.items = menuItemsList.items.filter(
+        (item) => item.uniqueId != event.payload.uniqueId
+      );
+    }
   });
 
   return menuItemsList;

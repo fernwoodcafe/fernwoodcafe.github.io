@@ -59,11 +59,10 @@ export const $readMany = (db, objectStoreName) =>
     };
   });
 
-/**
- * @param {string} [databaseName]
- * @param {{ operations: ((db: IDBDatabase)=> any)[], message: string }[]} [migrations]
- */
-export const $migrateDB = (databaseName, migrations) =>
+export const $migrateDB = (
+  databaseName: string,
+  migrations: any[]
+): Promise<IDBDatabase> =>
   new Promise(async (resolve, reject) => {
     const databases = await indexedDB.databases();
     const findResult = databases.find((x) => x.name == databaseName);

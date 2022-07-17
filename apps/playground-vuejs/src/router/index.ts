@@ -4,7 +4,7 @@ import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
 import { reactive, watch } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
-import { handleCommand } from "../cqrs-es/handleCommand";
+import handleCommand from "../cqrs-es/handleCommand";
 
 const db = await setupDB();
 

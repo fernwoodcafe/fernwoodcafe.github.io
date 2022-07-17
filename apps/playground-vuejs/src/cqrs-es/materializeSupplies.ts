@@ -4,12 +4,7 @@
  */
 export default (suppliesList, ...events) => {
   events.forEach((event) => {
-    console.log(
-      "materializeSupplies",
-      event.eventIndex,
-      event.type,
-      event.payload
-    );
+    console.log("materializeSupplies", event.type);
 
     if (event.type == "supply_created") {
       suppliesList.items.push(event.payload);
@@ -26,13 +21,6 @@ export default (suppliesList, ...events) => {
         (item) => item.uniqueId != event.payload.uniqueId
       );
     }
-
-    console.log(
-      "materializedSupplyList",
-      JSON.stringify(suppliesList.items),
-      null,
-      2
-    );
   });
 
   return suppliesList;

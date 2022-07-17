@@ -28,6 +28,7 @@
     :menuItem="menuItem"
     :suppliesList="suppliesList"
     @menuItemUpdated="onMenuItemUpdated"
+    @menuItemDeleted="onMenuItemDeleted"
   ></AgGridMenuItemComponent>
 </template>
 
@@ -79,12 +80,17 @@ const onClickNewPackaging = () => {
   addSupply(selectedPackaging.value);
 };
 
-const onMenuItemUpdated = (data) => {
+const onMenuItemUpdated = (data: CafeDomain.MenuItem) =>
   props.sendCommand({
     type: "update_menu_item",
     payload: data,
   });
-};
+
+const onMenuItemDeleted = (data: CafeDomain.MenuItem) =>
+  props.sendCommand({
+    type: "delete_menu_item",
+    payload: data,
+  });
 </script>
 
 <style>
