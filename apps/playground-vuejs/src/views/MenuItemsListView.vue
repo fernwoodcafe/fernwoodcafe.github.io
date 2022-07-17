@@ -30,7 +30,7 @@ const onClickNewMenuItem = () => {
     type: "create_menu_item",
     payload: {
       uniqueId: crypto.randomUUID(),
-      menuItemName: "TODO",
+      menuItemName: `New Menu Item ${menuItemsList.items.length}`,
       menuItemSupplies: [],
     },
   });
