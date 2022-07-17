@@ -5,22 +5,17 @@ html {
 body {
   width:1200px;
   margin:auto;
-}
-
-nav {
-  margin-top:20px;
-}
-
-nav li {
-  display: inline;
-  margin:0;
-}
-
-nav li a {
-  margin:0;
-  text-decoration: none;
-  background-color: gray;
   padding:20px;
-  color:white;
+}
 
+form {
+}
+
+nav ul {
+}
+
+nav ul li {
+}
+
+nav ul li a {
 }

@@ -1,16 +1,20 @@
 <template>
   <h1>Menu Items</h1>
   <form>
-    <input placeholder="Menu Item Id" v-model="newMenuItem.menuItemId" />
+    <input placeholder="Menu Item Name" v-model="newMenuItem.menuItemName" />
     <button @click="onClickNewMenuItem">New Menu Item</button>
   </form>
+
   <nav>
-    <li :key="item.id" v-for="item in menuItemsList.items">
-      <RouterLink :to="`/menu-items/${item.menuItemId}`">{{
-        item.menuItemId
-      }}</RouterLink>
-    </li>
+    <ul>
+      <li :key="item.id" v-for="item in menuItemsList.items">
+        <RouterLink :to="`/menu-items/${item.menuItemName}`">{{
+          item.menuItemName
+        }}</RouterLink>
+      </li>
+    </ul>
   </nav>
+
   <RouterView :key="$route.fullPath" />
 </template>
 
@@ -23,8 +27,7 @@ type Props = {
 const props = defineProps<Props>();
 
 const newMenuItem: CafeDomain.MenuItem = {
-  id: "",
-  menuItemId: "",
+  menuItemName: "",
   ingredients: [],
   packaging: [],
 };
@@ -32,10 +35,7 @@ const newMenuItem: CafeDomain.MenuItem = {
 const onClickNewMenuItem = () => {
   props.sendCommand({
     type: "create_menu_item",
-    payload: {
-      id: self.crypto.randomUUID(),
-      ...newMenuItem,
-    },
+    payload: newMenuItem,
   });
 };
 </script>

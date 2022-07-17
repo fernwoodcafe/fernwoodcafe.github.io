@@ -5,7 +5,6 @@ import { domainEventsRepo, menuItemsList, suppliesList } from "../router/index";
 export async function handleCommand(command) {
   if (command.type == "create_menu_item") {
     const event = await domainEventsRepo.insert({
-      id: self.crypto.randomUUID(),
       type: "menu_item_created",
       payload: command.payload,
     });
@@ -15,7 +14,6 @@ export async function handleCommand(command) {
 
   if (command.type == "update_menu_item") {
     const event = await domainEventsRepo.insert({
-      id: self.crypto.randomUUID(),
       type: "menu_item_updated",
       payload: command.payload,
     });
@@ -25,7 +23,6 @@ export async function handleCommand(command) {
 
   if (command.type == "create_supply") {
     const event = await domainEventsRepo.insert({
-      id: self.crypto.randomUUID(),
       type: "supply_created",
       payload: command.payload,
     });
@@ -35,7 +32,6 @@ export async function handleCommand(command) {
 
   if (command.type == "update_supply") {
     const event = await domainEventsRepo.insert({
-      id: self.crypto.randomUUID(),
       type: "supply_updated",
       payload: command.payload,
     });

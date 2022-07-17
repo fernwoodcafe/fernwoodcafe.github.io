@@ -23,7 +23,7 @@ export const suppliesList = await materializeSupplies(
 
 const buildMenuItemChildRoutes = () =>
   menuItemsList.items.map((menuItem) => ({
-    path: `/menu-items/${menuItem.menuItemId}`,
+    path: `/menu-items/${menuItem.menuItemName}`,
     component: () => import("../views/MenuItemView.vue"),
     props: {
       menuItem,

@@ -1,15 +1,18 @@
 import { MenuItem } from "./MenuItem";
-import { MenuItemIngredient } from "./MenuItemIngredient";
-import { MenuItemPackaging } from "./MenuItemPackaging";
 import { MenuItemSupply } from "./MenuItemSupply";
+import { Supply } from "./Supply";
 
-type DomainCommandTypes =
+export type DomainEntity = {
+  uniqueId: string;
+};
+
+export type DomainCommandTypes =
   | "create_supply"
   | "update_supply"
   | "create_menu_item"
   | "update_menu_item";
 
-type DomainEventTypes =
+export type DomainEventTypes =
   | "supply_created"
   | "supply_updated"
   | "menu_item_created"
@@ -22,12 +25,11 @@ export type DomainCommand = {
 };
 
 export type DomainEvent = {
-  id: string;
   type: DomainEventTypes;
   payload: Record<string, any>;
   meta?: Record<string, any>;
 };
 
-export { MenuItem, MenuItemIngredient, MenuItemPackaging, MenuItemSupply };
+export { MenuItem, MenuItemSupply, Supply };
 
 export as namespace CafeDomain;

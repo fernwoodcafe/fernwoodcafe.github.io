@@ -1,9 +1,7 @@
-import { MenuItemIngredient } from "./MenuItemIngredient";
-import { MenuItemPackaging } from "./MenuItemPackaging";
+import { DomainEntity } from ".";
+import { MenuItemSupply } from "./MenuItemSupply";
 
-export type MenuItem = {
-  id: string;
-  menuItemId: string;
-  ingredients: MenuItemIngredient[];
-  packaging: MenuItemPackaging[];
+export type MenuItem = DomainEntity & {
+  menuItemName: string;
+  menuItemSupplies: MenuItemSupply[];
 };

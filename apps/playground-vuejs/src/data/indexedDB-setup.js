@@ -1,6 +1,6 @@
 import { $deleteDB, $migrateDB } from "@/data/indexedDB-client.js";
 
-const resetPrototype = true;
+const resetPrototype = false;
 
 export default async () => {
   if (resetPrototype) {
@@ -11,7 +11,11 @@ export default async () => {
     {
       message: "introduce events",
       operations: [
-        (db) => db.createObjectStore("domainEvents", { keyPath: "id" }),
+        (db) =>
+          db.createObjectStore("domainEvents", {
+            keyPath: "eventIndex",
+            autoIncrement: true,
+          }),
       ],
     },
   ]);

@@ -1,7 +1,7 @@
 <template>
   <AgGridComponent
     :gridData="menuItemSupplies"
-    :gridColumns="['supplyId', 'unitQuantity']"
+    :gridColumns="['supplyName', 'unitQuantity']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemUpdated"
   ></AgGridComponent>
@@ -14,7 +14,7 @@ import { reactive, watch } from "vue";
 
 type Props = {
   menuItem: CafeDomain.MenuItem;
-  suppliesList: ReactiveArray<CafeDomain.MenuItemSupply>;
+  suppliesList: ReactiveArray<CafeDomain.Supply>;
 };
 
 type Emits = {
@@ -27,15 +27,12 @@ const props = defineProps<Props>();
 const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 
 const menuItemSupplies = reactive({
-  items: props.menuItem.ingredients.concat(props.menuItem.packaging),
+  items: props.menuItem.supplies,
 });
 
 watch(props.menuItem, (newMenuItem) => {
   const oldItems = new Set(menuItemSupplies.items);
-  const newItems = new Set([
-    ...newMenuItem.ingredients,
-    ...newMenuItem.packaging,
-  ]);
+  const newItems = new Set(newMenuItem.supplies);
 
   // This machinery lets us add to the top/bottom instead of the middle.
   const addedItems = [...newItems].filter((item) => !oldItems.has(item));
@@ -48,14 +45,14 @@ watch(props.menuItem, (newMenuItem) => {
 
 const columnDefs = [
   {
-    field: "supplyId",
+    field: "supplyName",
     // We have this in an ag-specific component because
     // this part has an ag- specific implementation.
     cellEditor: AgSuppliesEditor,
     cellEditorParams: {
       options: props.suppliesList.items.map((item) => ({
-        value: item.supplyId,
-        label: `${item.supplyId}`,
+        value: item.supplyName,
+        label: `${item.supplyName}`,
       })),
     },
   },
