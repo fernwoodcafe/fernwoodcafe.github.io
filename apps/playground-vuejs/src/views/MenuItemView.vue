@@ -1,5 +1,8 @@
 <template>
   <h2>{{ menuItem.menuItemName }}</h2>
+  <p>Total Cost {{ formatMoney(menuItemTotalCost) }}</p>
+  <p>Reommended Price {{ formatMoney(menuItemRecommendedPrice) }}</p>
+
   <form @submit.prevent>
     <fieldset>
       <select v-model="selectedIngredient">
@@ -34,6 +37,7 @@
 
 <script setup lang="ts">
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
+import formatMoney from "@/components/formatMoney";
 import { suppliesList } from "@/router";
 import {
   DomainCommand,
@@ -96,6 +100,27 @@ const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
     type: "remove_supply_from_menu_item",
     payload: data,
   });
+
+const menuItemTotalCost = props.menuItem.menuItemSupplies
+  .map((menuItemSupply) => {
+    const target = props.suppliesList.items.find(
+      (s) => s.uniqueId == menuItemSupply.supplyUniqueId
+    );
+
+    const unitPrice = target.purchasePriceBeforeTax / target.purchaseQuantity;
+
+    return {
+      unitPrice,
+      ...menuItemSupply,
+    };
+  })
+  .reduce(
+    // TODO parseInt earlier.
+    (acc, next) => acc + parseInt(next.supplyQuantity) * next.unitPrice,
+    0
+  );
+
+const menuItemRecommendedPrice = menuItemTotalCost * 3.5;
 </script>
 
 <style>

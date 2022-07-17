@@ -8,14 +8,37 @@ body {
   padding:20px;
 }
 
-form {
+/* Tables */
+
+table {
+  border: 0;
 }
 
-nav ul {
+table th, table td {
+  border: 0;
+  border-bottom: 1px solid #acc;
+  padding: 4px;
+  vertical-align: top;
 }
 
-nav ul li {
+table th li, table td li {
+  margin: 0 0 0 1.5em;
 }
 
-nav ul li a {
+table caption, table th {
+  text-align: left;
+  color: #450b09;
+}
+
+table th {
+  font-weight: bold;
+}
+
+table td {
+  vertical-align: top;
+  padding: 0.25em 1.25em 0.25em 0em;
+}
+
+table tr, table tbody {
+  border: 0px;
 }
