@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 type Props = {
-  menuItemsList: ReactiveArray<CafeMenuItem>;
+  menuItemsList: ReactiveArray<CafeDomain.MenuItem>;
 };
 
 defineProps<Props>();

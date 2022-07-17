@@ -13,8 +13,8 @@ import AgSuppliesEditor from "@/components/AgSuppliesEditor.vue";
 import { reactive, watch } from "vue";
 
 type Props = {
-  menuItem: CafeMenuItem;
-  suppliesList: ReactiveArray<CafeSupply>;
+  menuItem: CafeDomain.MenuItem;
+  suppliesList: ReactiveArray<CafeDomain.MenuItemSupply>;
 };
 
 type Emits = {

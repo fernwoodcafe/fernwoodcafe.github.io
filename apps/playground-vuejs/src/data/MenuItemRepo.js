@@ -12,7 +12,7 @@ const menuItemsList = reactive({ items: [] });
  */
 export default (db) => ({
   /**
-   * @returns {Promise<ReactiveArray<CafeMenuItem>>}
+   * @returns {Promise<ReactiveArray<CafeDomain.MenuItem>>}
    */
   async select() {
     const menuItems = await $readMany(db, "menuItems");
@@ -21,21 +21,21 @@ export default (db) => ({
   },
   /**
    * @param {string} id
-   * @returns {Promise<CafeMenuItem>}
+   * @returns {Promise<CafeDomain.MenuItem>}
    */
   async single(id) {
     var recipe = await $readSingle(db, "menuItems", id);
     return reactive(recipe);
   },
   /**
-   * @param {CafeMenuItem} item
+   * @param {CafeDomain.MenuItem} item
    */
   insert(item) {
     menuItemsList.items = menuItemsList.items.slice().concat([item]);
     $createOrUpdate(db, "menuItems", [item]);
   },
   /**
-   * @param {CafeMenuItem} item
+   * @param {CafeDomain.MenuItem} item
    */
   update(item) {
     console.log("update", item);

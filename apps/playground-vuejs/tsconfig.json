@@ -8,7 +8,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/types/*": ["./types/*"]
     }
   }
 }

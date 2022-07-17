@@ -1,6 +1,7 @@
+import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
 import MenuItemRepo from "@/data/MenuItemRepo";
-import SuppliesRepo from "@/data/SuppliesRepo";
+import SuppliesMaterializer from "@/data/SuppliesMaterializer";
 import { createRouter, createWebHistory } from "vue-router";
 
 const db = await setupDB();
@@ -8,8 +9,31 @@ const db = await setupDB();
 const menuItemRepo = MenuItemRepo(db);
 const menuItemsList = await menuItemRepo.select();
 
-const suppliesRepo = SuppliesRepo(db);
-const suppliesList = await suppliesRepo.select();
+const suppliesMaterializer = SuppliesMaterializer(db);
+const suppliesList = await suppliesMaterializer.select();
+
+const domainEventsRepo = DomainEventsRepo(db);
+const sendCommand = async (command) => {
+  if (command.type == "CREATE_NEW_SUPPLY") {
+    const event = domainEventsRepo.insert({
+      id: self.crypto.randomUUID(),
+      type: "NEW_SUPPLY_CREATED",
+      payload: command.payload,
+    });
+
+    suppliesMaterializer.materialize(event);
+  }
+
+  if (command.type == "UPDATE_SUPPLY") {
+    const event = domainEventsRepo.insert({
+      id: self.crypto.randomUUID(),
+      type: "SUPPLY_UPDATED",
+      payload: command.payload,
+    });
+
+    suppliesMaterializer.materialize(event);
+  }
+};
 
 const router = createRouter({
   history: createWebHistory(),
@@ -24,8 +48,7 @@ const router = createRouter({
       component: () => import("../views/SuppliesListView.vue"),
       props: {
         suppliesList,
-        updateSupply: suppliesRepo.update,
-        insertSupply: suppliesRepo.insert,
+        sendCommand,
       },
     },
     {

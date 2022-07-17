@@ -4,7 +4,7 @@
   <AgGridComponent
     :gridData="suppliesList"
     :gridColumns="['supplyId', 'id', 'unitSize', 'unitCost']"
-    @gridDataUpdate="updateSupply"
+    @gridDataUpdate="onGridDataUpdate"
   ></AgGridComponent>
 </template>
 
@@ -12,19 +12,26 @@
 import AgGridComponent from "@/components/AgGridComponent.vue";
 
 type Props = {
-  suppliesList: ReactiveArray<CafeSupply>;
-  updateSupply: (data: any) => Promise<void>;
-  insertSupply: (data: any) => Promise<void>;
+  suppliesList: ReactiveArray<CafeDomain.MenuItemSupply>;
+  sendCommand: (Command: CafeDomain.DomainCommand) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
-const onClickNewSupply = () => {
-  const supply = {
-    id: self.crypto.randomUUID(),
-    supplyId: "",
-  };
+const onGridDataUpdate = (gridDataRow) => {
+  props.sendCommand({
+    type: "UPDATE_SUPPLY",
+    payload: gridDataRow,
+  });
+};
 
-  props.insertSupply(supply);
+const onClickNewSupply = () => {
+  props.sendCommand({
+    type: "CREATE_NEW_SUPPLY",
+    payload: {
+      id: self.crypto.randomUUID(),
+      supplyId: "",
+    },
+  });
 };
 </script>

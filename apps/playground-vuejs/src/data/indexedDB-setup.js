@@ -19,6 +19,12 @@ export default async () => {
         (db) => db.createObjectStore("menuItems", { keyPath: "id" }),
       ],
     },
+    {
+      message: "introduce events",
+      operations: [
+        (db) => db.createObjectStore("domainEvents", { keyPath: "id" }),
+      ],
+    },
   ]);
 
   if (resetPrototype) {

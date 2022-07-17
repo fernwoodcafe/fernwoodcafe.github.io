@@ -13,8 +13,8 @@
 import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
 
 type Props = {
-  menuItem: CafeMenuItem;
-  suppliesList: ReactiveArray<CafeSupply>;
+  menuItem: CafeDomain.MenuItem;
+  suppliesList: ReactiveArray<CafeDomain.MenuItemSupply>;
   updateMenuItem: (data: any) => Promise<void>;
   insertMenuItem: (data: any) => Promise<void>;
 };
