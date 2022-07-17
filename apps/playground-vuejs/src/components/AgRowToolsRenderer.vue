@@ -1,7 +1,6 @@
 <template>
   <form @submit.prevent>
     <button @click="onDeleteClick">Delete</button>
-    <button @click="onEditClick">Edit</button>
   </form>
 </template>
 <script setup lang="ts">
@@ -13,10 +12,6 @@ type Props = {
 };
 
 const props = defineProps<Props>();
-
-const onEditClick = () => {
-  window.alert("Not implemented yet!");
-};
 
 const onDeleteClick = () => {
   props.params.onDeleteClick(props.params.node.data);
