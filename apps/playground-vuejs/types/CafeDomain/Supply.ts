@@ -4,5 +4,6 @@ export type Supply = DomainEntity & {
   supplyName: string;
   supplyType: "packaging" | "ingredient";
   unitSize: string;
-  unitCost: number;
+  purchaseQuantity: number;
+  purchasePriceBeforeTax: number;
 };
