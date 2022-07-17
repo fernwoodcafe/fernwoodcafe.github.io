@@ -11,6 +11,18 @@ export default (
       menuItemsList.items.push(event.payload);
     }
 
+    if (event.type == "menu_item_updated") {
+      menuItemsList.items = menuItemsList.items.map((oldItem) =>
+        oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
+      );
+    }
+
+    if (event.type == "menu_item_deleted") {
+      menuItemsList.items = menuItemsList.items.filter(
+        (item) => item.uniqueId != event.payload.uniqueId
+      );
+    }
+
     if (event.type == "supply_added_to_menu_item") {
       menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
         menuItem.uniqueId == event.payload.menuItemUniqueId

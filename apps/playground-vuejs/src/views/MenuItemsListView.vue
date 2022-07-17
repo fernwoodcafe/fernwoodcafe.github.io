@@ -5,20 +5,17 @@
     <button>New Menu Item - {{ newMenuItemName }}</button>
   </form>
 
-  <nav>
-    <ul>
-      <li :key="item.uniqueId" v-for="item in menuItemsList.items">
-        <RouterLink :to="`/menu-items/${item.menuItemName}`">{{
-          item.menuItemName
-        }}</RouterLink>
-      </li>
-    </ul>
-  </nav>
+  <AgGridMenuItemsComponent
+    :menuItemsList="menuItemsList"
+    @menuItemUpdated="onMenuItemUpdated"
+    @menuItemDeleted="onMenuItemDeleted"
+  ></AgGridMenuItemsComponent>
 
   <RouterView :key="$route.fullPath" />
 </template>
 
 <script setup lang="ts">
+import AgGridMenuItemsComponent from "@/components/AgGridMenuItemsComponent.vue";
 import { DomainCommand, MenuItem } from "@/types/CafeDomain";
 import { ref } from "vue";
 
@@ -42,4 +39,16 @@ const onClickNewMenuItem = () => {
     },
   });
 };
+
+const onMenuItemUpdated = (menuItem: MenuItem) =>
+  props.sendCommand({
+    type: "update_menu_item",
+    payload: menuItem,
+  });
+
+const onMenuItemDeleted = (menuItem: MenuItem) =>
+  props.sendCommand({
+    type: "delete_menu_item",
+    payload: menuItem,
+  });
 </script>

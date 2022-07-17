@@ -14,6 +14,20 @@ export default async function (command: DomainCommand) {
     });
   }
 
+  if (command.type == "update_menu_item") {
+    eventResult = await domainEventsRepo.insert({
+      type: "menu_item_updated",
+      payload: command.payload,
+    });
+  }
+
+  if (command.type == "delete_menu_item") {
+    eventResult = await domainEventsRepo.insert({
+      type: "menu_item_deleted",
+      payload: command.payload,
+    });
+  }
+
   if (command.type == "add_supply_to_menu_item") {
     eventResult = await domainEventsRepo.insert({
       type: "supply_added_to_menu_item",

@@ -20,12 +20,7 @@ const props = defineProps<Props>();
 
 const selectedOption = ref(props.params.value);
 
-console.log(selectedOption);
-
-const getValue = () => {
-  console.log("getValue", selectedOption);
-  return selectedOption.value;
-};
+const getValue = () => selectedOption.value;
 
 defineExpose({
   getValue,
