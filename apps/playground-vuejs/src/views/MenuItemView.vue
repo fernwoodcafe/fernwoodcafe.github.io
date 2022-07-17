@@ -63,11 +63,9 @@ const addSupply = (supply: CafeDomain.Supply) => {
     supplyName: supply.supplyName,
   };
 
-  props.menuItem.menuItemSupplies.push(menuItemSupply);
-
   props.sendCommand({
-    type: "update_menu_item",
-    payload: props.menuItem,
+    type: "add_supply_to_menu_item",
+    payload: menuItemSupply,
   });
 };
 
@@ -83,13 +81,13 @@ const onClickNewPackaging = () => {
 
 const onMenuItemSupplyUpdated = (data: CafeDomain.MenuItemSupply) =>
   props.sendCommand({
-    type: "update_menu_item_supply",
+    type: "update_supply_on_menu_item",
     payload: data,
   });
 
 const onMenuItemSupplyDeleted = (data: CafeDomain.MenuItemSupply) =>
   props.sendCommand({
-    type: "delete_menu_item_supply",
+    type: "remove_supply_from_menu_item",
     payload: data,
   });
 </script>

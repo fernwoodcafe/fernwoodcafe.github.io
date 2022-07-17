@@ -13,23 +13,23 @@ export default async function (command: CafeDomain.DomainCommand) {
     });
   }
 
-  if (command.type == "update_menu_item") {
+  if (command.type == "add_supply_to_menu_item") {
     eventResult = await domainEventsRepo.insert({
-      type: "menu_item_updated",
+      type: "supply_added_to_menu_item",
       payload: command.payload,
     });
   }
 
-  if (command.type == "update_menu_item_supply") {
+  if (command.type == "update_supply_on_menu_item") {
     eventResult = await domainEventsRepo.insert({
-      type: "menu_item_supply_updated",
+      type: "supply_updated_on_menu_item",
       payload: command.payload,
     });
   }
 
-  if (command.type == "delete_menu_item_supply") {
+  if (command.type == "remove_supply_from_menu_item") {
     eventResult = await domainEventsRepo.insert({
-      type: "menu_item_supply_deleted",
+      type: "supply_removed_from_menu_item",
       payload: command.payload,
     });
   }

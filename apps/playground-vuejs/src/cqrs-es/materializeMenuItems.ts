@@ -10,14 +10,19 @@ export default (menuItemsList, ...events: CafeDomain.DomainEvent[]) => {
       menuItemsList.items.push(event.payload);
     }
 
-    // TODO Consider replacing this one with menu_item_supply_added.
-    if (event.type == "menu_item_updated") {
-      menuItemsList.items = menuItemsList.items.map((oldItem) =>
-        oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
+    if (event.type == "supply_added_to_menu_item") {
+      menuItemsList.items = menuItemsList.items.map(
+        (menuItem: CafeDomain.MenuItem) =>
+          menuItem.uniqueId == event.payload.menuItemUniqueId
+            ? (() => {
+                menuItem.menuItemSupplies.push(event.payload);
+                return menuItem;
+              })()
+            : menuItem
       );
     }
 
-    if (event.type == "menu_item_supply_updated") {
+    if (event.type == "supply_updated_on_menu_item") {
       menuItemsList.items = menuItemsList.items.map(
         (menuItem: CafeDomain.MenuItem) =>
           menuItem.uniqueId == event.payload.menuItemUniqueId
@@ -35,7 +40,7 @@ export default (menuItemsList, ...events: CafeDomain.DomainEvent[]) => {
       );
     }
 
-    if (event.type == "menu_item_supply_deleted") {
+    if (event.type == "supply_removed_from_menu_item") {
       menuItemsList.items = menuItemsList.items.map(
         (menuItem: CafeDomain.MenuItem) =>
           menuItem.uniqueId == event.payload.menuItemUniqueId
