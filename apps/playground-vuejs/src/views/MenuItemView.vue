@@ -46,7 +46,6 @@
 <script setup lang="ts">
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
 import formatMoney from "@/components/formatMoney";
-import { suppliesList } from "@/router";
 import {
   DomainCommand,
   MenuItem,
