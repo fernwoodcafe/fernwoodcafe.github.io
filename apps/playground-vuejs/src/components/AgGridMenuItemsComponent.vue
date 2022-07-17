@@ -33,7 +33,6 @@ const onMenuItemDeleted = (data) => emit("menuItemDeleted", data);
 const columnDefs = [
   {
     field: "menuItemName",
-    editable: false,
     cellRenderer: AgRouterLinkRenderer,
   },
 ];

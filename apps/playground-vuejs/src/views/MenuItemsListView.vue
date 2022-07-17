@@ -1,10 +1,6 @@
 <template>
   <h1>Menu Items</h1>
-  <form @submit.prevent="onClickNewMenuItem">
-    <input placeholder="New Menu Item Name" v-model="newMenuItemName" />
-    <button>New Menu Item - {{ newMenuItemName }}</button>
-  </form>
-
+  <button @click="onClickNewMenuItem">New Menu Item</button>
   <AgGridMenuItemsComponent
     :menuItemsList="menuItemsList"
     @menuItemUpdated="onMenuItemUpdated"
@@ -34,21 +30,25 @@ const onClickNewMenuItem = () => {
     type: "create_menu_item",
     payload: {
       uniqueId: crypto.randomUUID(),
-      menuItemName: newMenuItemName.value,
+      menuItemName: "TODO",
       menuItemSupplies: [],
     },
   });
 };
 
-const onMenuItemUpdated = (menuItem: MenuItem) =>
+const onMenuItemUpdated = (menuItem: MenuItem) => {
+  console.log("onMenuItemUpdated", newMenuItemName);
   props.sendCommand({
     type: "update_menu_item",
     payload: menuItem,
   });
+};
 
-const onMenuItemDeleted = (menuItem: MenuItem) =>
+const onMenuItemDeleted = (menuItem: MenuItem) => {
+  console.log("onMenuItemDeleted", newMenuItemName);
   props.sendCommand({
     type: "delete_menu_item",
     payload: menuItem,
   });
+};
 </script>
