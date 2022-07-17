@@ -4,6 +4,8 @@ import { domainEventsRepo, menuItemsList } from "../router/index";
 export default async function (command: CafeDomain.DomainCommand) {
   let eventResult = null;
 
+  console.log(command.type, command.payload);
+
   if (command.type == "create_menu_item") {
     eventResult = await domainEventsRepo.insert({
       type: "menu_item_created",
@@ -18,9 +20,16 @@ export default async function (command: CafeDomain.DomainCommand) {
     });
   }
 
-  if (command.type == "delete_menu_item") {
+  if (command.type == "update_menu_item_supply") {
     eventResult = await domainEventsRepo.insert({
-      type: "menu_item_deleted",
+      type: "menu_item_supply_updated",
+      payload: command.payload,
+    });
+  }
+
+  if (command.type == "delete_menu_item_supply") {
+    eventResult = await domainEventsRepo.insert({
+      type: "menu_item_supply_deleted",
       payload: command.payload,
     });
   }

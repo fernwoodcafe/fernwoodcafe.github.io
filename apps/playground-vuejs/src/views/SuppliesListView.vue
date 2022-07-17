@@ -1,15 +1,15 @@
 <template>
   <h1>Supplies</h1>
   <button @click="onClickNewSupply">New Supply</button>
-  <AgGridSupplyComponent
+  <AgGridSuppliesComponent
     :suppliesList="suppliesList"
     @supplyUpdated="onSupplyUpdated"
     @supplyDeleted="onSupplyDeleted"
-  ></AgGridSupplyComponent>
+  ></AgGridSuppliesComponent>
 </template>
 
 <script setup lang="ts">
-import AgGridSupplyComponent from "@/components/AgGridSupplyComponent.vue";
+import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
 
 type Props = {
   suppliesList: ReactiveArray<CafeDomain.Supply>;

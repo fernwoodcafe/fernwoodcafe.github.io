@@ -24,16 +24,16 @@
       </button>
     </fieldset>
   </form>
-  <AgGridMenuItemComponent
+  <AgGridMenuItemSuppliesComponent
     :menuItem="menuItem"
     :suppliesList="suppliesList"
-    @menuItemUpdated="onMenuItemUpdated"
-    @menuItemDeleted="onMenuItemDeleted"
-  ></AgGridMenuItemComponent>
+    @menuItemSupplyUpdated="onMenuItemSupplyUpdated"
+    @menuItemSupplyDeleted="onMenuItemSupplyDeleted"
+  ></AgGridMenuItemSuppliesComponent>
 </template>
 
 <script setup lang="ts">
-import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
+import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
 import { suppliesList } from "@/router";
 import { ref } from "vue";
 
@@ -58,6 +58,7 @@ const packagingOptions = props.suppliesList.items.filter(
 const addSupply = (supply: CafeDomain.Supply) => {
   const menuItemSupply = {
     uniqueId: crypto.randomUUID(),
+    menuItemUniqueId: props.menuItem.uniqueId,
     supplyUniqueId: supply.uniqueId,
     supplyName: supply.supplyName,
   };
@@ -80,15 +81,15 @@ const onClickNewPackaging = () => {
   addSupply(selectedPackaging.value);
 };
 
-const onMenuItemUpdated = (data: CafeDomain.MenuItem) =>
+const onMenuItemSupplyUpdated = (data: CafeDomain.MenuItemSupply) =>
   props.sendCommand({
-    type: "update_menu_item",
+    type: "update_menu_item_supply",
     payload: data,
   });
 
-const onMenuItemDeleted = (data: CafeDomain.MenuItem) =>
+const onMenuItemSupplyDeleted = (data: CafeDomain.MenuItemSupply) =>
   props.sendCommand({
-    type: "delete_menu_item",
+    type: "delete_menu_item_supply",
     payload: data,
   });
 </script>

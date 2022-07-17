@@ -12,7 +12,8 @@ export type DomainCommandTypes =
   | "delete_supply"
   | "create_menu_item"
   | "update_menu_item"
-  | "delete_menu_item";
+  | "update_menu_item_supply"
+  | "delete_menu_item_supply";
 
 export type DomainEventTypes =
   | "supply_created"
@@ -20,7 +21,8 @@ export type DomainEventTypes =
   | "supply_deleted"
   | "menu_item_created"
   | "menu_item_updated"
-  | "menu_item_deleted";
+  | "menu_item_supply_updated"
+  | "menu_item_supply_deleted";
 
 export type DomainCommand<T = any> = {
   type: DomainCommandTypes;
