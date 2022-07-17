@@ -2,14 +2,16 @@
   <h2>{{ menuItem.menuItemId }}</h2>
   <button @click="onClickNewIngredient">Add Ingredient</button>
   <button @click="onClickNewPackaging">Add Packaging</button>
-  <!-- <AgGridMenuItemComponent
+  <AgGridMenuItemComponent
     :menuItem="menuItem"
     :suppliesList="suppliesList"
     @gridDataUpdate="onGridDataUpdated"
-  ></AgGridMenuItemComponent> -->
+  ></AgGridMenuItemComponent>
 </template>
 
 <script setup lang="ts">
+import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
+
 type Props = {
   menuItem: CafeDomain.MenuItem;
   suppliesList: ReactiveArray<CafeDomain.MenuItemSupply>;
