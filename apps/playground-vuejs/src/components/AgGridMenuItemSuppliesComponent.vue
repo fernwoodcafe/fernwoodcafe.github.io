@@ -64,12 +64,11 @@ const columnDefs = [
         (supply) => supply.uniqueId == data.supplyUniqueId
       );
 
-      const costPerUnit =
-        targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity;
+      const costPerUnit = formatMoney(
+        targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity
+      );
 
-      return `${data.supplyName} @ ${formatMoney(
-        costPerUnit / targetSupply.purchaseQuantity
-      )}`;
+      return `${data.supplyName} @ ${costPerUnit} per ${targetSupply.supplyUnits}`;
     },
   },
   {
