@@ -43,16 +43,20 @@ const columnDefs = [
     field: "supplyType",
     cellEditor: AgSelectEditor,
     cellEditorParams: {
-      options: [
-        {
-          value: "ingredient",
-          label: "ingredient",
-        },
-        {
-          value: "packaging",
-          label: "packaging",
-        },
-      ],
+      options: ["ingredient", "packaging"].map((option) => ({
+        value: option,
+        label: option,
+      })),
+    },
+  },
+  {
+    field: "unitSize",
+    cellEditor: AgSelectEditor,
+    cellEditorParams: {
+      options: ["grams", "litres", "item"].map((option) => ({
+        value: option,
+        label: option,
+      })),
     },
   },
   {
