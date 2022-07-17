@@ -1,8 +1,9 @@
-/**
- * @param {any} menuItemsList
- * @param {CafeDomain.DomainEvent[]} events
- */
-export default (menuItemsList, ...events: CafeDomain.DomainEvent[]) => {
+import { DomainEvent, MenuItem, MenuItemSupply } from "@/types/CafeDomain";
+
+export default (
+  menuItemsList: ReactiveArray<MenuItem>,
+  ...events: DomainEvent[]
+) => {
   events.forEach((event) => {
     console.log("materializeMenuItems", event);
 
@@ -11,47 +12,44 @@ export default (menuItemsList, ...events: CafeDomain.DomainEvent[]) => {
     }
 
     if (event.type == "supply_added_to_menu_item") {
-      menuItemsList.items = menuItemsList.items.map(
-        (menuItem: CafeDomain.MenuItem) =>
-          menuItem.uniqueId == event.payload.menuItemUniqueId
-            ? (() => {
-                menuItem.menuItemSupplies.push(event.payload);
-                return menuItem;
-              })()
-            : menuItem
+      menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
+        menuItem.uniqueId == event.payload.menuItemUniqueId
+          ? (() => {
+              menuItem.menuItemSupplies.push(event.payload);
+              return menuItem;
+            })()
+          : menuItem
       );
     }
 
     if (event.type == "supply_updated_on_menu_item") {
-      menuItemsList.items = menuItemsList.items.map(
-        (menuItem: CafeDomain.MenuItem) =>
-          menuItem.uniqueId == event.payload.menuItemUniqueId
-            ? (() => {
-                menuItem.menuItemSupplies = menuItem.menuItemSupplies.map(
-                  (menuItemSupply: CafeDomain.MenuItemSupply) => {
-                    return menuItemSupply.uniqueId == event.payload.uniqueId
-                      ? event.payload
-                      : menuItemSupply;
-                  }
-                );
-                return menuItem;
-              })()
-            : menuItem
+      menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
+        menuItem.uniqueId == event.payload.menuItemUniqueId
+          ? (() => {
+              menuItem.menuItemSupplies = menuItem.menuItemSupplies.map(
+                (menuItemSupply: MenuItemSupply) => {
+                  return menuItemSupply.uniqueId == event.payload.uniqueId
+                    ? event.payload
+                    : menuItemSupply;
+                }
+              );
+              return menuItem;
+            })()
+          : menuItem
       );
     }
 
     if (event.type == "supply_removed_from_menu_item") {
-      menuItemsList.items = menuItemsList.items.map(
-        (menuItem: CafeDomain.MenuItem) =>
-          menuItem.uniqueId == event.payload.menuItemUniqueId
-            ? (() => {
-                menuItem.menuItemSupplies = menuItem.menuItemSupplies.filter(
-                  (menuItemSupply: CafeDomain.MenuItemSupply) =>
-                    menuItemSupply.uniqueId != event.payload.uniqueId
-                );
-                return menuItem;
-              })()
-            : menuItem
+      menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
+        menuItem.uniqueId == event.payload.menuItemUniqueId
+          ? (() => {
+              menuItem.menuItemSupplies = menuItem.menuItemSupplies.filter(
+                (menuItemSupply: MenuItemSupply) =>
+                  menuItemSupply.uniqueId != event.payload.uniqueId
+              );
+              return menuItem;
+            })()
+          : menuItem
       );
     }
   });

@@ -1,7 +1,8 @@
 import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
+import { DomainCommand } from "@/types/CafeDomain";
 import { domainEventsRepo, menuItemsList } from "../router/index";
 
-export default async function (command: CafeDomain.DomainCommand) {
+export default async function (command: DomainCommand) {
   let eventResult = null;
 
   console.log(command.type, command.payload);

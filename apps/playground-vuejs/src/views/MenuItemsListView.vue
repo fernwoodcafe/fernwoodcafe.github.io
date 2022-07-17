@@ -19,13 +19,12 @@
 </template>
 
 <script setup lang="ts">
+import { DomainCommand, MenuItem } from "@/types/CafeDomain";
 import { ref } from "vue";
 
 type Props = {
-  menuItemsList: ReactiveArray<CafeDomain.MenuItem>;
-  sendCommand: (
-    Command: CafeDomain.DomainCommand<CafeDomain.MenuItem>
-  ) => Promise<void>;
+  menuItemsList: ReactiveArray<MenuItem>;
+  sendCommand: (Command: DomainCommand<MenuItem>) => Promise<void>;
 };
 
 const props = defineProps<Props>();

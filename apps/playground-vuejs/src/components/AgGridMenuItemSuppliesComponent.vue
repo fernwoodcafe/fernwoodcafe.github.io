@@ -11,16 +11,17 @@
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
+import { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
 import { reactive, watch } from "vue";
 
 type Props = {
-  menuItem: CafeDomain.MenuItem;
-  suppliesList: ReactiveArray<CafeDomain.Supply>;
+  menuItem: MenuItem;
+  suppliesList: ReactiveArray<Supply>;
 };
 
 type Emits = {
-  (e: "menuItemSupplyUpdated", data: CafeDomain.MenuItemSupply): void;
-  (e: "menuItemSupplyDeleted", data: CafeDomain.MenuItemSupply): void;
+  (e: "menuItemSupplyUpdated", data: MenuItemSupply): void;
+  (e: "menuItemSupplyDeleted", data: MenuItemSupply): void;
 };
 
 const emit = defineEmits<Emits>();

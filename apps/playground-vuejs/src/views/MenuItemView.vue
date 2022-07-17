@@ -35,27 +35,33 @@
 <script setup lang="ts">
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
 import { suppliesList } from "@/router";
+import {
+  DomainCommand,
+  MenuItem,
+  MenuItemSupply,
+  Supply,
+} from "@/types/CafeDomain";
 import { ref } from "vue";
 
 type Props = {
-  menuItem: CafeDomain.MenuItem;
-  suppliesList: ReactiveArray<CafeDomain.Supply>;
-  sendCommand: (Command: CafeDomain.DomainCommand) => Promise<void>;
+  menuItem: MenuItem;
+  suppliesList: ReactiveArray<Supply>;
+  sendCommand: (Command: DomainCommand) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
-const selectedIngredient = ref<CafeDomain.Supply>({});
+const selectedIngredient = ref<Supply>({});
 const ingredientOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "ingredient"
 );
 
-const selectedPackaging = ref<CafeDomain.Supply>({});
+const selectedPackaging = ref<Supply>({});
 const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addSupply = (supply: CafeDomain.Supply) => {
+const addSupply = (supply: Supply) => {
   const menuItemSupply = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,
@@ -79,13 +85,13 @@ const onClickNewPackaging = () => {
   addSupply(selectedPackaging.value);
 };
 
-const onMenuItemSupplyUpdated = (data: CafeDomain.MenuItemSupply) =>
+const onMenuItemSupplyUpdated = (data: MenuItemSupply) =>
   props.sendCommand({
     type: "update_supply_on_menu_item",
     payload: data,
   });
 
-const onMenuItemSupplyDeleted = (data: CafeDomain.MenuItemSupply) =>
+const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
   props.sendCommand({
     type: "remove_supply_from_menu_item",
     payload: data,

@@ -1,4 +1,6 @@
-export default (suppliesList, ...events: CafeDomain.DomainEvent[]) => {
+import { DomainEvent } from "@/types/CafeDomain";
+
+export default (suppliesList, ...events: DomainEvent[]) => {
   events.forEach((event) => {
     console.log("materializeSupplies", event.type);
 

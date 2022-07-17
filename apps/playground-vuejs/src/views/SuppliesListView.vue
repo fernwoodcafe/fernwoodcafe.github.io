@@ -10,23 +10,22 @@
 
 <script setup lang="ts">
 import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
+import { DomainCommand, Supply } from "@/types/CafeDomain";
 
 type Props = {
-  suppliesList: ReactiveArray<CafeDomain.Supply>;
-  sendCommand: (
-    Command: CafeDomain.DomainCommand<CafeDomain.Supply>
-  ) => Promise<void>;
+  suppliesList: ReactiveArray<Supply>;
+  sendCommand: (Command: DomainCommand<Supply>) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
-const onSupplyUpdated = (supply: CafeDomain.Supply) =>
+const onSupplyUpdated = (supply: Supply) =>
   props.sendCommand({
     type: "update_supply",
     payload: supply,
   });
 
-const onSupplyDeleted = (supply: CafeDomain.Supply) =>
+const onSupplyDeleted = (supply: Supply) =>
   props.sendCommand({
     type: "delete_supply",
     payload: supply,

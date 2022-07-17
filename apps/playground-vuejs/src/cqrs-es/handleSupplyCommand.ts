@@ -1,7 +1,8 @@
 import materializeSupplies from "@/cqrs-es/materializeSupplies";
+import { DomainCommand } from "@/types/CafeDomain";
 import { domainEventsRepo, suppliesList } from "../router/index";
 
-export default async function (command: CafeDomain.DomainCommand) {
+export default async function (command: DomainCommand) {
   let eventResult = null;
 
   if (command.type == "create_supply") {
