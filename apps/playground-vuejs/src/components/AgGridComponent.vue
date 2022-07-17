@@ -1,14 +1,13 @@
 <template>
-  <ag-grid-vue
+  <AgGridVue
     class="ag-theme-alpine"
-    :singleClickEdit="true"
     :stopEditingWhenCellsLoseFocus="true"
     :defaultColDef="defaultColDef"
     :getRowId="getRowId"
     @grid-ready="onGridReady"
     @cell-value-changed="onCellValueChanged"
     @model-updated="onModelUpdated"
-  ></ag-grid-vue>
+  ></AgGridVue>
 </template>
 
 <script setup lang="ts">
@@ -35,11 +34,14 @@ const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
 // DefaultColDef sets props common to all Columns
-const defaultColDef = {
+const defaultColDef: ColDef = {
   sortable: true,
   filter: true,
   flex: 1,
   editable: true,
+  singleClickEdit: true,
+  wrapHeaderText: true,
+  autoHeaderHeight: true,
 };
 
 const getRowId = ({ data }) => data.uniqueId;

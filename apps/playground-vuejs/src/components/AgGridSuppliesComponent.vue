@@ -23,7 +23,11 @@ import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { formatMoney, formatPercent } from "@/formatters";
 import { Supply } from "@/types/CafeDomain";
-import { ValueFormatterParams, ValueGetterParams } from "ag-grid-community";
+import {
+  ColDef,
+  ValueFormatterParams,
+  ValueGetterParams,
+} from "ag-grid-community";
 
 type Props = {
   suppliesList: ReactiveArray<Supply>;
@@ -42,7 +46,7 @@ const onSupplyUpdated = (data) => emit("supplyUpdated", data);
 
 const onSupplyDeleted = (data) => emit("supplyDeleted", data);
 
-const columnDefs = [
+const columnDefs: ColDef[] = [
   {
     field: "supplyType",
     cellEditor: AgSelectEditor,
@@ -65,6 +69,7 @@ const columnDefs = [
   },
   {
     field: "purchasePriceBeforeTax",
+    headerName: "Purchase Price before Tax",
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatMoney(params.value),
   },
@@ -81,6 +86,8 @@ const columnDefs = [
   },
   {
     field: "unitCost",
+    headerName: "Unit Cost (Calculated)",
+    editable: false,
     valueGetter: ({ data }: ValueGetterParams<Supply>) =>
       data.purchasePriceBeforeTax / data.purchaseQuantity,
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
