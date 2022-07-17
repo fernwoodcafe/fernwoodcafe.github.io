@@ -1,11 +1,8 @@
 <template>
   <h1>Menu Items</h1>
-  <form>
-    <input
-      placeholder="New Menu Item Name"
-      v-model="newMenuItem.menuItemName"
-    />
-    <button @click="onClickNewMenuItem">New Menu Item</button>
+  <form @submit.prevent="onClickNewMenuItem">
+    <input placeholder="New Menu Item Name" v-model="newMenuItemName" />
+    <button>New Menu Item - {{ newMenuItemName }}</button>
   </form>
 
   <nav>
@@ -22,23 +19,28 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
 type Props = {
   menuItemsList: ReactiveArray<CafeDomain.MenuItem>;
-  sendCommand: (Command: CafeDomain.DomainCommand) => Promise<void>;
+  sendCommand: (
+    Command: CafeDomain.DomainCommand<CafeDomain.MenuItem>
+  ) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
-const newMenuItem: CafeDomain.MenuItem = {
-  uniqueId: crypto.randomUUID(),
-  menuItemName: "",
-  menuItemSupplies: [],
-};
+const newMenuItemName = ref("");
 
 const onClickNewMenuItem = () => {
+  console.log("onClickNewMenuItem", newMenuItemName);
   props.sendCommand({
     type: "create_menu_item",
-    payload: newMenuItem,
+    payload: {
+      uniqueId: crypto.randomUUID(),
+      menuItemName: newMenuItemName.value,
+      menuItemSupplies: [],
+    },
   });
 };
 </script>

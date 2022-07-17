@@ -2,7 +2,7 @@ import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
 import materializeSupplies from "@/cqrs-es/materializeSupplies";
 import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { handleCommand } from "../cqrs-es/handleCommand";
 
@@ -20,6 +20,17 @@ export const suppliesList = await materializeSupplies(
   reactive({ items: [] }),
   ...domainEvents
 );
+
+const buildMenuItemChildRoutes = () =>
+  menuItemsList.items.map((menuItem) => ({
+    path: `/menu-items/${menuItem.menuItemName}`,
+    component: () => import("../views/MenuItemView.vue"),
+    props: {
+      menuItem,
+      suppliesList,
+      sendCommand: handleCommand,
+    },
+  }));
 
 const router = createRouter({
   history: createWebHistory(),
@@ -45,17 +56,19 @@ const router = createRouter({
         menuItemsList,
         sendCommand: handleCommand,
       },
-      children: menuItemsList.items.map((menuItem) => ({
-        path: `/menu-items/${menuItem.menuItemName}`,
-        component: () => import("../views/MenuItemView.vue"),
-        props: {
-          menuItem,
-          suppliesList,
-          sendCommand: handleCommand,
-        },
-      })),
+      children: buildMenuItemChildRoutes(),
     },
   ],
+});
+
+watch(menuItemsList, () => {
+  const routeData = router.options.routes.find(
+    ({ name }) => name == "menuItems"
+  );
+
+  routeData.children = buildMenuItemChildRoutes();
+
+  router.addRoute(routeData);
 });
 
 export default router;

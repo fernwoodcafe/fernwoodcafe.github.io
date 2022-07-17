@@ -1,21 +1,16 @@
 <template>
   <h2>{{ menuItem.menuItemName }}</h2>
-  <form>
+  <form @submit.prevent>
     <fieldset>
-      <select v-model="selectedIngredientId">
-        <option v-for="option in ingredientOptions" :value="option.uniqueId">
+      <select v-model="selectedIngredient">
+        <option disabled :value="{}">Please select one</option>
+        <option v-for="option in ingredientOptions" :value="option">
           {{ option.supplyName }}
         </option>
       </select>
-      <button @click="onClickNewIngredient">Add Ingredient</button>
-    </fieldset>
-    <fieldset>
-      <select v-model="selectedPackaging">
-        <option v-for="option in packagingOptions" :value="option.uniqueId">
-          {{ option.supplyName }}
-        </option>
-      </select>
-      <button @click="onClickNewPackaging">Add Packaging</button>
+      <button @click="onClickNewIngredient">
+        Add Ingredient - {{ selectedIngredient.supplyName }}
+      </button>
     </fieldset>
   </form>
   <AgGridMenuItemComponent
@@ -28,6 +23,7 @@
 <script setup lang="ts">
 import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
 import { suppliesList } from "@/router";
+import { ref } from "vue";
 
 type Props = {
   menuItem: CafeDomain.MenuItem;
@@ -37,14 +33,9 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const selectedIngredientId = props.suppliesList.items[0]?.uniqueId;
+const selectedIngredient = ref<CafeDomain.Supply>({});
 const ingredientOptions = props.suppliesList.items.filter(
   (s) => s.supplyType == "ingredient"
-);
-
-const selectedPackaging = null;
-const packagingOptions = props.suppliesList.items.filter(
-  (s) => s.supplyType == "packaging"
 );
 
 const onMenuItemUpdated = (data) => {
@@ -55,13 +46,17 @@ const onMenuItemUpdated = (data) => {
 };
 
 const onClickNewIngredient = () => {
-  if (selectedIngredientId == null) return;
+  console.log("onClickNewIngredient");
 
-  const selectedIngredient = suppliesList.items.find(
-    (s) => s.uniqueId == selectedIngredientId
-  );
+  if (selectedIngredient == null) return;
 
-  props.menuItem.menuItemSupplies.push(selectedIngredient);
+  const menuItemSupply = {
+    uniqueId: crypto.randomUUID(),
+    supplyUniqueId: selectedIngredient.value.uniqueId,
+    supplyName: selectedIngredient.value.supplyName,
+  };
+
+  props.menuItem.menuItemSupplies.push(menuItemSupply);
 
   props.sendCommand({
     type: "update_menu_item",
