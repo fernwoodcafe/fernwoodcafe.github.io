@@ -4,6 +4,7 @@
   <AgGridSupplyComponent
     :suppliesList="suppliesList"
     @supplyUpdated="onSupplyUpdated"
+    @supplyDeleted="onSupplyDeleted"
   ></AgGridSupplyComponent>
 </template>
 
@@ -19,12 +20,17 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const onSupplyUpdated = (gridDataRow) => {
+const onSupplyUpdated = (supply: CafeDomain.Supply) =>
   props.sendCommand({
     type: "update_supply",
-    payload: gridDataRow,
+    payload: supply,
   });
-};
+
+const onSupplyDeleted = (supply: CafeDomain.Supply) =>
+  props.sendCommand({
+    type: "delete_supply",
+    payload: supply,
+  });
 
 const onClickNewSupply = () => {
   props.sendCommand({

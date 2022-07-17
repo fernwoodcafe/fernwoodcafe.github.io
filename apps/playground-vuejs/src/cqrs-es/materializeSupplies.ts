@@ -21,6 +21,12 @@ export default (suppliesList, ...events) => {
       );
     }
 
+    if (event.type == "supply_deleted") {
+      suppliesList.items = suppliesList.items.filter(
+        (item) => item.uniqueId != event.payload.uniqueId
+      );
+    }
+
     console.log(
       "materializedSupplyList",
       JSON.stringify(suppliesList.items),

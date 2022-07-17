@@ -38,4 +38,13 @@ export async function handleCommand(command) {
 
     materializeSupplies(suppliesList, event);
   }
+
+  if (command.type == "delete_supply") {
+    const event = await domainEventsRepo.insert({
+      type: "supply_deleted",
+      payload: command.payload,
+    });
+
+    materializeSupplies(suppliesList, event);
+  }
 }

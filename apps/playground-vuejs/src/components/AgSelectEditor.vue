@@ -1,5 +1,6 @@
 <template>
   <select v-model="selectedOption">
+    <option disabled :value="{}">Please select one</option>
     <option v-for="option in params.options" :value="option.value">
       {{ option.label }}
     </option>

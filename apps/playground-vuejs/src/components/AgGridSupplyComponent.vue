@@ -1,9 +1,10 @@
 <template>
   <AgGridComponent
     :gridData="suppliesList"
-    :gridColumns="['supplyName', 'supplyType', 'unitSize', 'unitCost', 'tools']"
+    :gridColumns="['supplyName', 'supplyType', 'unitSize', 'unitCost']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onSupplyUpdated"
+    @gridRowDelete="onSupplyDeleted"
   ></AgGridComponent>
 </template>
 
@@ -16,7 +17,8 @@ type Props = {
 };
 
 type Emits = {
-  (e: "supplyUpdated", data: any): void;
+  (e: "supplyUpdated", data: CafeDomain.Supply): void;
+  (e: "supplyDeleted", data: CafeDomain.Supply): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -24,6 +26,8 @@ const emit = defineEmits<Emits>();
 defineProps<Props>();
 
 const onSupplyUpdated = (data) => emit("supplyUpdated", data);
+
+const onSupplyDeleted = (data) => emit("supplyDeleted", data);
 
 const columnDefs = [
   {
@@ -34,12 +38,12 @@ const columnDefs = [
     cellEditorParams: {
       options: [
         {
-          value: "Ingredient",
-          label: "Ingredient",
+          value: "ingredient",
+          label: "ingredient",
         },
         {
-          value: "Packaging",
-          label: "Packaging",
+          value: "packaging",
+          label: "packaging",
         },
       ],
     },

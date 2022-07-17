@@ -9,12 +9,14 @@ export type DomainEntity = {
 export type DomainCommandTypes =
   | "create_supply"
   | "update_supply"
+  | "delete_supply"
   | "create_menu_item"
   | "update_menu_item";
 
 export type DomainEventTypes =
   | "supply_created"
   | "supply_updated"
+  | "supply_deleted"
   | "menu_item_created"
   | "menu_item_updated";
 

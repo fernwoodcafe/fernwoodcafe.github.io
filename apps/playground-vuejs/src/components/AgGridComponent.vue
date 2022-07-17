@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import AgControlsRenderer from "@/components/AgControlsRenderer.vue";
+import AgRowToolsRenderer from "@/components/AgRowToolsRenderer.vue";
 import { AgGridVue } from "ag-grid-vue3";
 
 import { watch } from "vue";
@@ -28,6 +28,7 @@ type Props = {
 
 type Emits = {
   (e: "gridDataUpdate", data: any): void;
+  (e: "gridRowDelete", data: any): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -44,6 +45,7 @@ const defaultColDef = {
 const getRowId = ({ data }) => data.uniqueId;
 
 const onCellValueChanged = (event) => {
+  console.log("onCellValueChanged");
   emit("gridDataUpdate", event.data);
 };
 
@@ -66,11 +68,14 @@ const onGridReady = ({ api }: GridOptions) => {
     })
     .concat([
       {
-        field: "tools",
-        // We have this in an ag-specific component because
-        // this part has an ag- specific implementation.
-        cellRenderer: AgControlsRenderer,
+        field: "actions",
         editable: false,
+        cellRenderer: AgRowToolsRenderer,
+        cellRendererParams: {
+          onDeleteClick: (rowData) => {
+            emit("gridRowDelete", rowData);
+          },
+        },
       },
     ]);
 
