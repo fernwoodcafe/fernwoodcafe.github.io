@@ -54,13 +54,6 @@ const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const onMenuItemUpdated = (data) => {
-  props.sendCommand({
-    type: "update_menu_item",
-    payload: data,
-  });
-};
-
 const addSupply = (supply: CafeDomain.Supply) => {
   const menuItemSupply = {
     uniqueId: crypto.randomUUID(),
@@ -78,13 +71,27 @@ const addSupply = (supply: CafeDomain.Supply) => {
 
 const onClickNewIngredient = () => {
   if (selectedIngredient.value == null) return;
-
   addSupply(selectedIngredient.value);
 };
 
 const onClickNewPackaging = () => {
   if (selectedPackaging.value == null) return;
-
   addSupply(selectedPackaging.value);
 };
+
+const onMenuItemUpdated = (data) => {
+  props.sendCommand({
+    type: "update_menu_item",
+    payload: data,
+  });
+};
 </script>
+
+<style>
+form {
+  display: flex;
+}
+fieldset {
+  flex-basis: 50%;
+}
+</style>

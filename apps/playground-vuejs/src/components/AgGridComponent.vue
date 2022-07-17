@@ -1,6 +1,8 @@
 <template>
   <ag-grid-vue
     class="ag-theme-alpine"
+    :singleClickEdit="true"
+    :stopEditingWhenCellsLoseFocus="true"
     :defaultColDef="defaultColDef"
     :getRowId="getRowId"
     @grid-ready="onGridReady"
@@ -9,7 +11,9 @@
 </template>
 
 <script setup lang="ts">
+import AgControlsRenderer from "@/components/AgControlsRenderer.vue";
 import { AgGridVue } from "ag-grid-vue3";
+
 import { watch } from "vue";
 
 import { ColDef, GridOptions } from "ag-grid-community";
@@ -46,19 +50,29 @@ const onCellValueChanged = (event) => {
 const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
-  const columnDefs = props.gridColumns.map((field) => {
-    const def = props.gridColumnDefs?.find((def) => def.field == field);
-    if (def) {
-      // Complex Column.
-      console.log("complex", def);
-      return def;
-    }
+  const columnDefs = props.gridColumns
+    .map((field) => {
+      const def = props.gridColumnDefs?.find((def) => def.field == field);
+      if (def) {
+        // Complex Column.
+        console.log("complex", def);
+        return def;
+      }
 
-    // Simple Column.
-    return {
-      field,
-    };
-  });
+      // Simple Column.
+      return {
+        field,
+      };
+    })
+    .concat([
+      {
+        field: "tools",
+        // We have this in an ag-specific component because
+        // this part has an ag- specific implementation.
+        cellRenderer: AgControlsRenderer,
+        editable: false,
+      },
+    ]);
 
   api.setColumnDefs(columnDefs);
   api.setRowData(props.gridData.items);
