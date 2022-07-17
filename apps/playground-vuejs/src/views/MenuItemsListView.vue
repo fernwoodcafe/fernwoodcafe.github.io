@@ -2,7 +2,7 @@
   <h1>Menu Items</h1>
   <button @click="onClickNewMenuItem">New Menu Item</button>
   <form>
-    <input v-model="newMenuItem.id" />
+    <input v-model="newMenuItem.menuItemId" />
   </form>
   <nav>
     <li :key="item.id" v-for="item in menuItemsList.items">
@@ -34,7 +34,7 @@ const onClickNewMenuItem = () => {
     type: "create_new_menu_item",
     payload: {
       id: self.crypto.randomUUID(),
-      menuItemId: newMenuItem.id,
+      ...newMenuItem,
     },
   });
 };

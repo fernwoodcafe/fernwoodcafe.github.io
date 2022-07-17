@@ -2,11 +2,11 @@
   <h2>{{ menuItem.menuItemId }}</h2>
   <button @click="onClickNewIngredient">Add Ingredient</button>
   <button @click="onClickNewPackaging">Add Packaging</button>
-  <AgGridMenuItemComponent
+  <!-- <AgGridMenuItemComponent
     :menuItem="menuItem"
     :suppliesList="suppliesList"
     @gridDataUpdate="onGridDataUpdated"
-  ></AgGridMenuItemComponent>
+  ></AgGridMenuItemComponent> -->
 </template>
 
 <script setup lang="ts">
@@ -18,23 +18,18 @@ type Props = {
 const props = defineProps<Props>();
 
 const onGridDataUpdated = (data) => {
-  // const ingredientIndex = props.menuItem.ingredients.findIndex(
-  //   (item) => item.id == data.id
-  // );
-
-  // if (ingredientIndex > 0) {
-  // props.menuItem.ingredients[ingredientIndex] = data;
-  // }
-
-  // const packagingIndex = props.menuItem.packaging.findIndex(
-  //   (item) => item.id == data.id
-  // );
-
-  // if (packagingIndex > 0) {
-  //   props.menuItem.packaging[packagingIndex] = data;
-  // }
-
-  props.updateMenuItem(props.menuItem);
+  const ingredientIndex = props.menuItem.ingredients.findIndex(
+    (item) => item.id == data.id
+  );
+  if (ingredientIndex > 0) {
+    props.menuItem.ingredients[ingredientIndex] = data;
+  }
+  const packagingIndex = props.menuItem.packaging.findIndex(
+    (item) => item.id == data.id
+  );
+  if (packagingIndex > 0) {
+    props.menuItem.packaging[packagingIndex] = data;
+  }
 };
 
 const onClickNewIngredient = () => {
@@ -44,9 +39,7 @@ const onClickNewIngredient = () => {
     unitQuantity: 0,
   };
 
-  // props.menuItem.ingredients.push(ingredient);
-
-  props.updateMenuItem(props.menuItem);
+  props.menuItem.ingredients.push(ingredient);
 };
 
 const onClickNewPackaging = () => {
@@ -57,7 +50,5 @@ const onClickNewPackaging = () => {
   };
 
   props.menuItem.packaging.push(packaging);
-
-  props.updateMenuItem(props.menuItem);
 };
 </script>

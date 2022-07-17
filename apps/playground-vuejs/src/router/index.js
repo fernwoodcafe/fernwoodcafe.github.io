@@ -1,56 +1,25 @@
+import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
+import materializeSupplies from "@/cqrs-es/materializeSupplies";
 import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
-import materializeMenuItems from "@/data/materializeMenuItems";
-import materializeSupplies from "@/data/materializeSupplies";
 import { reactive, watch } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import { handleCommand } from "../cqrs-es/handleCommand";
 
 const db = await setupDB();
 
-const domainEventsRepo = DomainEventsRepo(db);
+export const domainEventsRepo = DomainEventsRepo(db);
 const domainEvents = await domainEventsRepo.select();
 
-const menuItemsList = await materializeMenuItems(
+export const menuItemsList = await materializeMenuItems(
   reactive({ items: [] }),
   ...domainEvents
 );
 
-const suppliesList = await materializeSupplies(
+export const suppliesList = await materializeSupplies(
   reactive({ items: [] }),
   ...domainEvents
 );
-
-const sendCommand = async (command) => {
-  if (command.type == "create_new_menu_item") {
-    const event = await domainEventsRepo.insert({
-      id: self.crypto.randomUUID(),
-      type: "new_menu_item_created",
-      payload: command.payload,
-    });
-
-    materializeMenuItems(menuItemsList, event);
-  }
-
-  if (command.type == "create_new_supply") {
-    const event = await domainEventsRepo.insert({
-      id: self.crypto.randomUUID(),
-      type: "new_supply_created",
-      payload: command.payload,
-    });
-
-    materializeSupplies(suppliesList, event);
-  }
-
-  if (command.type == "update_supply") {
-    const event = await domainEventsRepo.insert({
-      id: self.crypto.randomUUID(),
-      type: "supply_updated",
-      payload: command.payload,
-    });
-
-    materializeSupplies(suppliesList, event);
-  }
-};
 
 const router = createRouter({
   history: createWebHistory(),
@@ -65,7 +34,7 @@ const router = createRouter({
       component: () => import("../views/SuppliesListView.vue"),
       props: {
         suppliesList,
-        sendCommand,
+        sendCommand: handleCommand,
       },
     },
     {
@@ -74,7 +43,7 @@ const router = createRouter({
       component: () => import("../views/MenuItemsListView.vue"),
       props: {
         menuItemsList,
-        sendCommand,
+        sendCommand: handleCommand,
       },
       children: menuItemsList.items.map((menuItem) => ({
         path: `/menu-items/${menuItem.menuItemId}`,
