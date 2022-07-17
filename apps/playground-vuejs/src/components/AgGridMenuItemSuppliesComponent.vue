@@ -72,6 +72,10 @@ const columnDefs = [
     },
   },
   {
+    field: "supplyQuantity",
+    valueParser: (params) => Number(params.newValue),
+  },
+  {
     field: "supplyCost",
     valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
       const targetSupply = props.suppliesList.items.find(

@@ -114,11 +114,7 @@ const menuItemTotalCost = props.menuItem.menuItemSupplies
       ...menuItemSupply,
     };
   })
-  .reduce(
-    // TODO parseInt earlier.
-    (acc, next) => acc + parseInt(next.supplyQuantity) * next.unitPrice,
-    0
-  );
+  .reduce((acc, next) => acc + next.supplyQuantity * next.unitPrice, 0);
 
 const menuItemRecommendedPrice = menuItemTotalCost * 3.5;
 </script>
