@@ -11,10 +11,10 @@
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
+import { formatMoney } from "@/formatters";
 import { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
 import { ValueFormatterParams, ValueGetterParams } from "ag-grid-community";
 import { reactive, watch } from "vue";
-import formatMoney from "./formatMoney";
 
 type Props = {
   menuItem: MenuItem;

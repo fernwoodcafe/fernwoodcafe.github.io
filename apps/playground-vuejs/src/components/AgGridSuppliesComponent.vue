@@ -7,6 +7,7 @@
       'supplyUnits',
       'purchaseQuantity',
       'purchasePriceBeforeTax',
+      'percentWaste',
       'unitCost',
     ]"
     :gridColumnDefs="columnDefs"
@@ -18,9 +19,9 @@
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
+import { formatMoney, formatPercent } from "@/formatters";
 import { Supply } from "@/types/CafeDomain";
 import { ValueFormatterParams, ValueGetterParams } from "ag-grid-community";
-import formatMoney from "./formatMoney";
 
 type Props = {
   suppliesList: ReactiveArray<Supply>;
@@ -64,6 +65,13 @@ const columnDefs = [
     field: "purchasePriceBeforeTax",
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatMoney(params.value),
+  },
+  {
+    field: "percentWaste",
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+      formatPercent(params.value),
+    valueGetter: ({ data }: ValueGetterParams<Supply>) =>
+      data.percentWaste / 100,
   },
   {
     field: "unitCost",

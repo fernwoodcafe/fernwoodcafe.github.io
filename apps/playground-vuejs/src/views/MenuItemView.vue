@@ -37,8 +37,8 @@
 
 <script setup lang="ts">
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
-import formatMoney from "@/components/formatMoney";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
+import formatMoney from "@/formatters/formatMoney";
 import {
   DomainCommand,
   MenuItem,

@@ -6,4 +6,5 @@ export type Supply = DomainEntity & {
   supplyUnits: string;
   purchaseQuantity: number;
   purchasePriceBeforeTax: number;
+  percentWaste: number;
 };
