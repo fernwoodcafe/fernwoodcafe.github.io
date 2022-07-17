@@ -24,12 +24,14 @@ export type DomainEventTypes =
   | "menu_item_supply_updated"
   | "menu_item_supply_deleted";
 
+// TODO Make these into a discriminated union to aid type narrowing.
 export type DomainCommand<T = any> = {
   type: DomainCommandTypes;
   payload: T;
   meta?: Record<string, any>;
 };
 
+// TODO Make these into a discriminated union to aid type narrowing.
 export type DomainEvent<T = any> = {
   eventIndex?: number; // autoincremented
   type: DomainEventTypes;

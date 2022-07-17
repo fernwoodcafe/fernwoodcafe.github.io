@@ -1,8 +1,4 @@
-/**
- * @param {any} suppliesList
- * @param {CafeDomain.DomainEvent<any>[]} events
- */
-export default (suppliesList, ...events) => {
+export default (suppliesList, ...events: CafeDomain.DomainEvent[]) => {
   events.forEach((event) => {
     console.log("materializeSupplies", event.type);
 
