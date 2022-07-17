@@ -7,6 +7,7 @@
     :getRowId="getRowId"
     @grid-ready="onGridReady"
     @cell-value-changed="onCellValueChanged"
+    @model-updated="onModelUpdated"
   ></ag-grid-vue>
 </template>
 
@@ -14,11 +15,10 @@
 import AgRowToolsRenderer from "@/components/AgRowToolsRenderer.vue";
 import { AgGridVue } from "ag-grid-vue3";
 
-import { watch } from "vue";
-
 import { ColDef, GridOptions } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
+import { watch } from "vue";
 
 type Props = {
   gridData: ReactiveArray<object>;
@@ -47,6 +47,10 @@ const getRowId = ({ data }) => data.uniqueId;
 const onCellValueChanged = (event) => {
   console.log("onCellValueChanged");
   emit("gridDataUpdate", event.data);
+};
+
+const onModelUpdated = (event) => {
+  console.log("onModelUpdated", event);
 };
 
 const onGridReady = ({ api }: GridOptions) => {
@@ -84,11 +88,15 @@ const onGridReady = ({ api }: GridOptions) => {
 
   let oldGridDataLength = props.gridData.items.length;
   watch(props.gridData, (newGridData) => {
-    // We check the length, because we use this only to insert new records (not to
-    // update existing records). In the future, we might do a more thorough check e.g.
-    // for same ids.
+    // Check the length to determine if we have new records.
     if (newGridData.items.length != oldGridDataLength) {
       api.setRowData(props.gridData.items);
+
+      const rowIndex = props.gridData.items.length - 1;
+      const colKey = columnDefs[0].field;
+
+      api.setFocusedCell(rowIndex, colKey);
+
       oldGridDataLength = props.gridData.items.length;
     }
   });

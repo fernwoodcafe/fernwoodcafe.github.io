@@ -36,10 +36,11 @@ const onClickNewSupply = () => {
     type: "create_supply",
     payload: {
       uniqueId: crypto.randomUUID(),
-      unitCost: 0,
       supplyUnits: "",
       supplyName: "",
       supplyType: "ingredient",
+      purchaseQuantity: 0,
+      purchasePriceBeforeTax: 0,
     },
   });
 };
