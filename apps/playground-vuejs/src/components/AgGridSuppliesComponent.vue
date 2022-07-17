@@ -20,8 +20,10 @@
 <script setup lang="ts">
 import AgCheckboxEditor from "@/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@/components/AgGridComponent.vue";
+import AgPercentEditor from "@/components/AgPercentEditor.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { formatMoney, formatPercent } from "@/formatters";
+import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
 import { Supply } from "@/types/CafeDomain";
 import {
   ColDef,
@@ -75,10 +77,9 @@ const columnDefs: ColDef[] = [
   },
   {
     field: "percentWaste",
+    cellEditor: AgPercentEditor,
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatPercent(params.value),
-    valueGetter: ({ data }: ValueGetterParams<Supply>) =>
-      data.percentWaste / 100,
   },
   {
     field: "hasPST",
@@ -89,7 +90,7 @@ const columnDefs: ColDef[] = [
     headerName: "Unit Cost (Calculated)",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<Supply>) =>
-      data.purchasePriceBeforeTax / data.purchaseQuantity,
+      calculatePerUnitSupplyCost(data),
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatMoney(params.value),
   },
