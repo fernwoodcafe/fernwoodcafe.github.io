@@ -13,26 +13,13 @@
 
   <form @submit.prevent>
     <fieldset>
-      <select v-model="selectedIngredient">
-        <option disabled :value="{}">Please select one</option>
-        <option v-for="option in ingredientOptions" :value="option">
-          {{ option.supplyName }}
-        </option>
-      </select>
-      <!-- <FrcSelectOption
+      <FrcSelectOption
         :selectedOption="selectedIngredient"
-        :options="
-          ingredientOptions.map((item) => ({
-            value: item,
-            label: item.supplyName,
-          }))
-        "
-        :onClickSubmit="onClickNewIngredient"
-      ></FrcSelectOption> -->
+        :options="ingredientOptions"
+        :labelKey="'supplyName'"
+        @submitSelect="onClickNewIngredient"
+      />
     </fieldset>
-    <button @click="onClickNewIngredient">
-      Add Ingredient - {{ selectedIngredient.supplyName }}
-    </button>
     <fieldset>
       <select v-model="selectedPackaging">
         <option disabled :value="{}">Please select one</option>
@@ -56,6 +43,7 @@
 <script setup lang="ts">
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
 import formatMoney from "@/components/formatMoney";
+import FrcSelectOption from "@/components/FrcSelectOption.vue";
 import {
   DomainCommand,
   MenuItem,
@@ -73,7 +61,6 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const selectedIngredient = ref<Partial<Supply>>({});
 const ingredientOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "ingredient"
 );
@@ -97,9 +84,9 @@ const addSupply = (supply: Partial<Supply>) => {
   });
 };
 
-const onClickNewIngredient = () => {
-  if (selectedIngredient.value == null) return;
-  addSupply(selectedIngredient.value);
+const onClickNewIngredient = (data) => {
+  console.log("onClickNewIngredient", JSON.stringify(data, undefined, 2));
+  addSupply(data);
 };
 
 const onClickNewPackaging = () => {

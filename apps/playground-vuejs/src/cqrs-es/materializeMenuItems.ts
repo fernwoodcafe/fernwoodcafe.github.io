@@ -24,6 +24,11 @@ export default (
     }
 
     if (event.type == "supply_added_to_menu_item") {
+      if (!event.payload.supplyUniqueId) {
+        console.warn("Missing supplyUniqueId", event.payload);
+        return;
+      }
+
       menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
         menuItem.uniqueId == event.payload.menuItemUniqueId
           ? (() => {
