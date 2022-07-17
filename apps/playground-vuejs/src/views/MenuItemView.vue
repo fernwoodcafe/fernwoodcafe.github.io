@@ -45,6 +45,7 @@ import {
   MenuItemSupply,
   Supply,
 } from "@/types/CafeDomain";
+import { computed } from "@vue/reactivity";
 import { ref } from "vue";
 
 type Props = {
@@ -101,22 +102,28 @@ const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
     payload: data,
   });
 
-const menuItemTotalCost = props.menuItem.menuItemSupplies
-  .map((menuItemSupply) => {
-    const target = props.suppliesList.items.find(
-      (s) => s.uniqueId == menuItemSupply.supplyUniqueId
-    );
+const calculateMenuItemTotalCost = () =>
+  props.menuItem.menuItemSupplies
+    .map((menuItemSupply) => {
+      const target = props.suppliesList.items.find(
+        (s) => s.uniqueId == menuItemSupply.supplyUniqueId
+      );
 
-    const unitPrice = target.purchasePriceBeforeTax / target.purchaseQuantity;
+      const unitPrice = target.purchasePriceBeforeTax / target.purchaseQuantity;
 
-    return {
-      unitPrice,
-      ...menuItemSupply,
-    };
-  })
-  .reduce((acc, next) => acc + next.supplyQuantity * next.unitPrice, 0);
+      return {
+        unitPrice,
+        ...menuItemSupply,
+      };
+    })
+    .reduce((acc, next) => acc + next.supplyQuantity * next.unitPrice, 0);
 
-const menuItemRecommendedPrice = menuItemTotalCost * 3.5;
+const calculateMenuItemRecommendedMarkup = () => menuItemTotalCost.value * 3.5;
+
+const menuItemTotalCost = computed(() => calculateMenuItemTotalCost());
+const menuItemRecommendedPrice = computed(() =>
+  calculateMenuItemRecommendedMarkup()
+);
 </script>
 
 <style>
