@@ -12,7 +12,7 @@ export default (menuItemsList, ...events) => {
 
     if (event.type == "menu_item_updated") {
       menuItemsList.items = menuItemsList.items.map((oldItem) =>
-        oldItem.menuItemId == event.payload.menuItemId ? event.payload : oldItem
+        oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
       );
     }
   });

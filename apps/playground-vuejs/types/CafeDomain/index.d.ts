@@ -25,7 +25,7 @@ export type DomainCommand<T = any> = {
 };
 
 export type DomainEvent<T = any> = {
-  eventIndex: number;
+  eventIndex?: number; // autoincremented
   type: DomainEventTypes;
   payload: T;
   meta?: Record<string, any>;
