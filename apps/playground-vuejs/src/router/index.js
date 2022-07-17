@@ -1,37 +1,54 @@
 import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
-import MenuItemRepo from "@/data/MenuItemRepo";
-import SuppliesMaterializer from "@/data/SuppliesMaterializer";
+import materializeMenuItems from "@/data/materializeMenuItems";
+import materializeSupplies from "@/data/materializeSupplies";
+import { reactive, watch } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const db = await setupDB();
 
-const menuItemRepo = MenuItemRepo(db);
-const menuItemsList = await menuItemRepo.select();
-
-const suppliesMaterializer = SuppliesMaterializer(db);
-const suppliesList = await suppliesMaterializer.select();
-
 const domainEventsRepo = DomainEventsRepo(db);
+const domainEvents = await domainEventsRepo.select();
+
+const menuItemsList = await materializeMenuItems(
+  reactive({ items: [] }),
+  ...domainEvents
+);
+
+const suppliesList = await materializeSupplies(
+  reactive({ items: [] }),
+  ...domainEvents
+);
+
 const sendCommand = async (command) => {
-  if (command.type == "CREATE_NEW_SUPPLY") {
-    const event = domainEventsRepo.insert({
+  if (command.type == "create_new_menu_item") {
+    const event = await domainEventsRepo.insert({
       id: self.crypto.randomUUID(),
-      type: "NEW_SUPPLY_CREATED",
+      type: "new_menu_item_created",
       payload: command.payload,
     });
 
-    suppliesMaterializer.materialize(event);
+    materializeMenuItems(menuItemsList, event);
   }
 
-  if (command.type == "UPDATE_SUPPLY") {
-    const event = domainEventsRepo.insert({
+  if (command.type == "create_new_supply") {
+    const event = await domainEventsRepo.insert({
       id: self.crypto.randomUUID(),
-      type: "SUPPLY_UPDATED",
+      type: "new_supply_created",
       payload: command.payload,
     });
 
-    suppliesMaterializer.materialize(event);
+    materializeSupplies(suppliesList, event);
+  }
+
+  if (command.type == "update_supply") {
+    const event = await domainEventsRepo.insert({
+      id: self.crypto.randomUUID(),
+      type: "supply_updated",
+      payload: command.payload,
+    });
+
+    materializeSupplies(suppliesList, event);
   }
 };
 
@@ -57,26 +74,35 @@ const router = createRouter({
       component: () => import("../views/MenuItemsListView.vue"),
       props: {
         menuItemsList,
+        sendCommand,
       },
-      children: [
-        // @ts-ignore
-        {
-          path: "/menu-items",
-          redirect: `/menu-items/${menuItemsList.items[0].menuItemId}`,
+      children: menuItemsList.items.map((menuItem) => ({
+        path: `/menu-items/${menuItem.menuItemId}`,
+        component: () => import("../views/MenuItemView.vue"),
+        props: {
+          menuItem,
+          suppliesList,
         },
-        ...menuItemsList.items.map((menuItem) => ({
-          path: `/menu-items/${menuItem.menuItemId}`,
-          component: () => import("../views/MenuItemView.vue"),
-          props: {
-            menuItem,
-            suppliesList,
-            updateMenuItem: menuItemRepo.update,
-            insertMenuItem: menuItemRepo.insert,
-          },
-        })),
-      ],
+      })),
     },
   ],
+});
+
+watch(menuItemsList, () => {
+  const routeData = router.options.routes.find(
+    (route) => route.name == "menuItems"
+  );
+
+  routeData.children = menuItemsList.items.map((menuItem) => ({
+    path: `/menu-items/${menuItem.menuItemId}`,
+    component: () => import("../views/MenuItemView.vue"),
+    props: {
+      menuItem,
+      suppliesList,
+    },
+  }));
+
+  router.addRoute(routeData);
 });
 
 export default router;

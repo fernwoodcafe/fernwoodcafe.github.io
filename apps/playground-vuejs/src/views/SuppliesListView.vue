@@ -20,14 +20,14 @@ const props = defineProps<Props>();
 
 const onGridDataUpdate = (gridDataRow) => {
   props.sendCommand({
-    type: "UPDATE_SUPPLY",
+    type: "update_supply",
     payload: gridDataRow,
   });
 };
 
 const onClickNewSupply = () => {
   props.sendCommand({
-    type: "CREATE_NEW_SUPPLY",
+    type: "create_new_supply",
     payload: {
       id: self.crypto.randomUUID(),
       supplyId: "",

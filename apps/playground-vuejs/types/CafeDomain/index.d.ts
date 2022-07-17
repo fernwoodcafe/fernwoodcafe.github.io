@@ -3,8 +3,17 @@ import { MenuItemIngredient } from "./MenuItemIngredient";
 import { MenuItemPackaging } from "./MenuItemPackaging";
 import { MenuItemSupply } from "./MenuItemSupply";
 
-type DomainCommandTypes = "CREATE_NEW_SUPPLY" | "UPDATE_SUPPLY";
-type DomainEventTypes = "NEW_SUPPLY_CREATED" | "SUPPLY_UPDATED";
+type DomainCommandTypes =
+  | "create_new_supply"
+  | "update_supply"
+  | "create_new_menu_item"
+  | "update_menu_item";
+
+type DomainEventTypes =
+  | "new_supply_created"
+  | "supply_updated"
+  | "new_menu_item_created"
+  | "menu_item_updated";
 
 export type DomainCommand = {
   type: DomainCommandTypes;

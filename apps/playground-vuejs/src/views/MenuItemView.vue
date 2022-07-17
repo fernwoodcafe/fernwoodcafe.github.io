@@ -10,33 +10,29 @@
 </template>
 
 <script setup lang="ts">
-import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
-
 type Props = {
   menuItem: CafeDomain.MenuItem;
   suppliesList: ReactiveArray<CafeDomain.MenuItemSupply>;
-  updateMenuItem: (data: any) => Promise<void>;
-  insertMenuItem: (data: any) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
 const onGridDataUpdated = (data) => {
-  const ingredientIndex = props.menuItem.ingredients.findIndex(
-    (item) => item.id == data.id
-  );
+  // const ingredientIndex = props.menuItem.ingredients.findIndex(
+  //   (item) => item.id == data.id
+  // );
 
-  if (ingredientIndex > 0) {
-    props.menuItem.ingredients[ingredientIndex] = data;
-  }
+  // if (ingredientIndex > 0) {
+  // props.menuItem.ingredients[ingredientIndex] = data;
+  // }
 
-  const packagingIndex = props.menuItem.packaging.findIndex(
-    (item) => item.id == data.id
-  );
+  // const packagingIndex = props.menuItem.packaging.findIndex(
+  //   (item) => item.id == data.id
+  // );
 
-  if (packagingIndex > 0) {
-    props.menuItem.packaging[packagingIndex] = data;
-  }
+  // if (packagingIndex > 0) {
+  //   props.menuItem.packaging[packagingIndex] = data;
+  // }
 
   props.updateMenuItem(props.menuItem);
 };
@@ -48,7 +44,7 @@ const onClickNewIngredient = () => {
     unitQuantity: 0,
   };
 
-  props.menuItem.ingredients.push(ingredient);
+  // props.menuItem.ingredients.push(ingredient);
 
   props.updateMenuItem(props.menuItem);
 };

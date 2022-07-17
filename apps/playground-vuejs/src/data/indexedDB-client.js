@@ -1,4 +1,13 @@
 /**
+ * @param {object} obj
+ * @return
+ */
+const cloneObject = (obj) =>
+  // Clone manually to handle the exception that we receive with Proxy objects.
+  // Uncaught DOMException: Failed to execute 'put' on 'IDBObjectStore': #<Object> could not be cloned.
+  JSON.parse(JSON.stringify(obj));
+
+/**
  * @param {IDBDatabase} db
  * @param {string} objectStoreName
  * @param {object[]} objects
@@ -19,124 +28,12 @@ export const $create = (db, objectStoreName, objects) =>
     };
 
     const objectStore = transaction.objectStore(objectStoreName);
-    objects.forEach((obj) => {
+    objects.map(cloneObject).forEach((obj) => {
       const request = objectStore.add(obj);
       request.onsuccess = (event) => {
         console.log("success", event);
       };
     });
-  });
-
-/**
- * @param {IDBDatabase} db
- * @param {string} objectStoreName
- * @param {object[]} objects
- */
-export const $update = (db, objectStoreName, objects) =>
-  new Promise((resolve, reject) => {
-    console.log("$update", objectStoreName);
-    const transaction = db.transaction(objectStoreName, "readwrite");
-
-    transaction.oncomplete = (event) => {
-      console.log("complete", event);
-      resolve();
-    };
-
-    transaction.onerror = (event) => {
-      console.log("error", event);
-      reject();
-    };
-
-    const objectStore = transaction.objectStore(objectStoreName);
-    objects.forEach((obj) => {
-      const request = objectStore.put(obj);
-      request.onsuccess = (event) => {
-        console.log("success", event);
-      };
-    });
-  });
-
-/**
- * @param {IDBDatabase} db
- * @param {string} objectStoreName
- * @param {object[]} objects
- */
-export const $createOrUpdate = (db, objectStoreName, objects) =>
-  new Promise((resolve, reject) => {
-    console.log("$createOrUpdate", objectStoreName);
-    const transaction = db.transaction(objectStoreName, "readwrite");
-    const objectStore = transaction.objectStore(objectStoreName);
-
-    transaction.oncomplete = (event) => {
-      console.log("complete", event);
-      resolve();
-    };
-
-    transaction.onerror = (event) => {
-      console.log("error", event);
-      reject();
-    };
-
-    const keyPath = objectStore.keyPath;
-    if (typeof keyPath != "string") {
-      throw Error("We do not yet support keyPath arrays.");
-    }
-
-    objects
-      .map((obj) =>
-        // Clone manually to handle the exception that we receive with Proxy objects.
-        // Uncaught DOMException: Failed to execute 'put' on 'IDBObjectStore': #<Object> could not be cloned.
-        JSON.parse(JSON.stringify(obj))
-      )
-      .forEach((obj) => {
-        const keyValue = obj[keyPath];
-        const readRequest = objectStore.get(keyValue);
-        readRequest.onsuccess = function (event) {
-          console.log("readRequest.success", event, readRequest);
-          const result = readRequest.result;
-          resolve(result);
-        };
-
-        readRequest.onsuccess = (event) => {
-          const result = readRequest.result;
-          if (result) {
-            const updateRequest = objectStore.put(obj);
-
-            updateRequest.onsuccess = (event) => {
-              console.log("updateRequest.success", event);
-            };
-          } else {
-            const createRequest = objectStore.add(obj);
-            createRequest.onsuccess = (event) => {
-              console.log("createRequest.success", event);
-            };
-          }
-        };
-      });
-  });
-
-/**
- * @param {IDBDatabase} db
- * @param {string} objectStoreName
- * @param {string} key
- */
-export const $readSingle = (db, objectStoreName, key) =>
-  new Promise((resolve, reject) => {
-    console.log("$readSingle", objectStoreName);
-    const transaction = db.transaction(objectStoreName, "readonly");
-    const objectStore = transaction.objectStore(objectStoreName);
-    const objectStoreRequest = objectStore.get(key);
-
-    objectStoreRequest.onsuccess = function (event) {
-      console.log("success", event, objectStoreRequest);
-      const result = objectStoreRequest.result;
-      resolve(result);
-    };
-
-    objectStoreRequest.onerror = function (event) {
-      console.log("error", event);
-      reject(event);
-    };
   });
 
 /**
@@ -161,10 +58,6 @@ export const $readMany = (db, objectStoreName) =>
       reject(event);
     };
   });
-
-export const $delete = () => {
-  throw new Error("Not implemented.");
-};
 
 /**
  * @param {string} [databaseName]
