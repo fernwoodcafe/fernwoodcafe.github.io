@@ -27,6 +27,7 @@
 
 <script setup lang="ts">
 import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
+import { suppliesList } from "@/router";
 
 type Props = {
   menuItem: CafeDomain.MenuItem;
@@ -36,7 +37,7 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const selectedIngredientId = props.suppliesList.items[0].uniqueId;
+const selectedIngredientId = props.suppliesList.items[0]?.uniqueId;
 const ingredientOptions = props.suppliesList.items.filter(
   (s) => s.supplyType == "ingredient"
 );
@@ -56,10 +57,11 @@ const onMenuItemUpdated = (data) => {
 const onClickNewIngredient = () => {
   if (selectedIngredientId == null) return;
 
-  props.menuItem.menuItemSupplies.push({
-    uniqueId: crypto.randomUUID(),
-    supplyUniqueId: selectedIngredientId,
-  });
+  const selectedIngredient = suppliesList.items.find(
+    (s) => s.uniqueId == selectedIngredientId
+  );
+
+  props.menuItem.menuItemSupplies.push(selectedIngredient);
 
   props.sendCommand({
     type: "update_menu_item",

@@ -1,7 +1,7 @@
 <template>
   <AgGridComponent
     :gridData="menuItemSupplies"
-    :gridColumns="['supplyUniqueId']"
+    :gridColumns="['supplyName']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemUpdated"
   ></AgGridComponent>
