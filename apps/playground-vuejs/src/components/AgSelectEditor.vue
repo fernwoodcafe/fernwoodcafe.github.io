@@ -26,7 +26,7 @@ defineExpose({
   getValue,
 });
 </script>
-<style>
+<style scoped>
 select {
   width: 100%;
 }

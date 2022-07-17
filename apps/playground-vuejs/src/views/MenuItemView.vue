@@ -12,20 +12,18 @@
   </dl>
 
   <form @submit.prevent>
-    <fieldset>
-      <FrcSelectOption
-        :options="ingredientOptions"
-        :labelKey="'supplyName'"
-        @submitSelect="onClickNewIngredient"
-      />
-    </fieldset>
-    <fieldset>
-      <FrcSelectOption
-        :options="packagingOptions"
-        :labelKey="'supplyName'"
-        @submitSelect="onClickNewPackaging"
-      />
-    </fieldset>
+    <FrcSelectOption
+      :title="'Ingredient'"
+      :options="ingredientOptions"
+      :optionKey="'supplyName'"
+      @submitSelect="onClickNewIngredient"
+    />
+    <FrcSelectOption
+      :title="'Packaging'"
+      :options="packagingOptions"
+      :optionKey="'supplyName'"
+      @submitSelect="onClickNewPackaging"
+    />
   </form>
   <AgGridMenuItemSuppliesComponent
     :menuItem="menuItem"

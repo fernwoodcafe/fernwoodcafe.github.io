@@ -1,6 +1,6 @@
 import { Supply } from "@/types/CafeDomain";
 
-const pst = 0.6;
+const pst = 0.06;
 
 export default (supply: Supply) => {
   const costAfterPST = supply.hasPST
