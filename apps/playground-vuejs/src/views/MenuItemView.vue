@@ -14,22 +14,17 @@
   <form @submit.prevent>
     <fieldset>
       <FrcSelectOption
-        :selectedOption="selectedIngredient"
         :options="ingredientOptions"
         :labelKey="'supplyName'"
         @submitSelect="onClickNewIngredient"
       />
     </fieldset>
     <fieldset>
-      <select v-model="selectedPackaging">
-        <option disabled :value="{}">Please select one</option>
-        <option v-for="option in packagingOptions" :value="option">
-          {{ option.supplyName }}
-        </option>
-      </select>
-      <button @click="onClickNewPackaging">
-        Add Packaging - {{ selectedPackaging.supplyName }}
-      </button>
+      <FrcSelectOption
+        :options="packagingOptions"
+        :labelKey="'supplyName'"
+        @submitSelect="onClickNewPackaging"
+      />
     </fieldset>
   </form>
   <AgGridMenuItemSuppliesComponent
@@ -84,15 +79,8 @@ const addSupply = (supply: Partial<Supply>) => {
   });
 };
 
-const onClickNewIngredient = (data) => {
-  console.log("onClickNewIngredient", JSON.stringify(data, undefined, 2));
-  addSupply(data);
-};
-
-const onClickNewPackaging = () => {
-  if (selectedPackaging.value == null) return;
-  addSupply(selectedPackaging.value);
-};
+const onClickNewIngredient = (data) => addSupply(data);
+const onClickNewPackaging = (data) => addSupply(data);
 
 const onMenuItemSupplyUpdated = (data: MenuItemSupply) =>
   props.sendCommand({
