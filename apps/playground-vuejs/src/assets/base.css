@@ -2,7 +2,25 @@ html {
   font-size:24px;
 }
 
+body {
+  width:1200px;
+  margin:auto;
+}
+
+nav {
+  margin-top:20px;
+}
+
 nav li {
   display: inline;
-  padding:10px;
+  margin:0;
+}
+
+nav li a {
+  margin:0;
+  text-decoration: none;
+  background-color: gray;
+  padding:20px;
+  color:white;
+
 }

@@ -1,6 +1,6 @@
 import { $deleteDB, $migrateDB } from "@/data/indexedDB-client.js";
 
-const resetPrototype = false;
+const resetPrototype = true;
 
 export default async () => {
   if (resetPrototype) {

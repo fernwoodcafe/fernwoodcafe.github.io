@@ -1,8 +1,8 @@
 <template>
   <h1>Menu Items</h1>
-  <button @click="onClickNewMenuItem">New Menu Item</button>
   <form>
-    <input v-model="newMenuItem.menuItemId" />
+    <input placeholder="Menu Item Id" v-model="newMenuItem.menuItemId" />
+    <button @click="onClickNewMenuItem">New Menu Item</button>
   </form>
   <nav>
     <li :key="item.id" v-for="item in menuItemsList.items">
