@@ -27,12 +27,12 @@ const props = defineProps<Props>();
 const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 
 const menuItemSupplies = reactive({
-  items: props.menuItem.supplies,
+  items: props.menuItem.menuItemSupplies,
 });
 
 watch(props.menuItem, (newMenuItem) => {
   const oldItems = new Set(menuItemSupplies.items);
-  const newItems = new Set(newMenuItem.supplies);
+  const newItems = new Set(newMenuItem.menuItemSupplies);
 
   // This machinery lets us add to the top/bottom instead of the middle.
   const addedItems = [...newItems].filter((item) => !oldItems.has(item));

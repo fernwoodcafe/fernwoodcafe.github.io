@@ -14,7 +14,7 @@ import AgGridMenuItemComponent from "@/components/AgGridMenuItemComponent.vue";
 
 type Props = {
   menuItem: CafeDomain.MenuItem;
-  suppliesList: ReactiveArray<CafeDomain.MenuItemSupply>;
+  suppliesList: ReactiveArray<CafeDomain.Supply>;
   sendCommand: (Command: CafeDomain.DomainCommand) => Promise<void>;
 };
 
@@ -23,33 +23,11 @@ const props = defineProps<Props>();
 const onMenuItemUpdated = (data) => {
   props.sendCommand({
     type: "update_menu_item",
-    payload: props.menuItem,
+    payload: data,
   });
 };
 
-const onClickNewIngredient = () => {
-  const menuItemSupplies = {
-    supplyUniqueId: "...",
-  };
+const onClickNewIngredient = () => {};
 
-  props.menuItem.menuItemSupplies.push(menuItemSupplies);
-
-  props.sendCommand({
-    type: "update_menu_item",
-    payload: props.menuItem,
-  });
-};
-
-const onClickNewPackaging = () => {
-  const packaging = {
-    supplyUniqueId: "...",
-  };
-
-  props.menuItem.menuItemSupplies.push(packaging);
-
-  props.sendCommand({
-    type: "update_menu_item",
-    payload: props.menuItem,
-  });
-};
+const onClickNewPackaging = () => {};
 </script>
