@@ -144,7 +144,7 @@ dl div {
 
 dl div dt {
   font-weight: 500;
-  flex: 0 0 28%;
+  flex: 0 0 32%;
 }
 
 dl div dd {

@@ -77,6 +77,8 @@ const columnDefs = [
   },
   {
     field: "supplyCost",
+    headerName: "Supply Cost (Calculated)",
+    editable: false,
     valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
       const targetSupply = props.suppliesList.items.find(
         (supply) => supply.uniqueId == data.supplyUniqueId

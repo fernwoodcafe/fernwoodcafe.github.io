@@ -8,6 +8,17 @@ body {
   padding:20px;
 }
 
+/* Nav */
+
+nav ul li a {
+  background-color: #d7f4e1;
+}
+
+nav ul li a.router-link-active {
+  background-color: #599f71;
+  color:white;
+}
+
 /* Tables */
 
 table {
