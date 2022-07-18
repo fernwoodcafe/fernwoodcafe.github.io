@@ -6,7 +6,7 @@
       <dd>{{ formatMoney(menuItemTotalCost) }}</dd>
     </div>
     <div>
-      <dt>Recommended Menu Price</dt>
+      <dt>Recommended Menu Price @ 3.5</dt>
       <dd>{{ formatMoney(menuItemRecommendedPrice) }}</dd>
     </div>
   </dl>
@@ -122,9 +122,12 @@ const menuItemRecommendedPrice = computed(() =>
 <style>
 form {
   display: flex;
+  justify-content: flex-start;
 }
+
 fieldset {
-  flex-basis: 50%;
+  flex: 0 0 50%;
+  border: none;
 }
 
 dl {

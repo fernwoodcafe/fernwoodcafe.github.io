@@ -7,8 +7,8 @@
         {{ option[optionKey] }}
       </option>
     </select>
-    <button v-if="selectedOption" @click="onClick">
-      Add {{ selectedOption[optionKey] }}
+    <button :enabled="selectedOption != null" @click="onClick">
+      Add {{ selectedOption?.[optionKey] }}
     </button>
   </fieldset>
 </template>
@@ -40,24 +40,31 @@ const onClick = () => {
 <style scoped>
 fieldset {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  align-content: space-between;
 }
 
 fieldset label {
-  flex: 1 1 auto;
-  font-weight: 500;
-}
-fieldset select {
-  flex: 1 1 auto;
-}
-fieldset button {
-  flex: 1 1 auto;
+  flex: 0 0 80px;
+  font-weight: 600;
 }
 
-button,
-button:hover {
+fieldset select {
+  flex: 0 0 400px;
+}
+
+fieldset button,
+fieldset button:hover {
+  flex: 0 0 480px;
   color: white;
   background-color: #5a9f71;
+}
+
+fieldset button[enabled="true"] {
+  visibility: visible;
+}
+
+fieldset button[enabled="false"] {
+  visibility: hidden;
 }
 </style>
