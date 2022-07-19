@@ -10,6 +10,7 @@ export default defineConfig({
   base: env.COSTING_APP_PUBLIC_PATH ?? "/",
   build: {
     outDir: env.COSTING_APP_DESTINATION_DIR,
+    target: "esnext",
   },
   plugins: [vue(), vueJsx()],
   resolve: {
