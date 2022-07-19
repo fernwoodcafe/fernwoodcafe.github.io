@@ -10,8 +10,10 @@
     :readOnlyEdit="true"
     :getRowId="getRowId"
     :singleClickEdit="true"
+    :rowData="gridData.items"
     @grid-ready="onGridReady"
     @cell-edit-request="onCellEditRequest"
+    @model-updated="onModelUpdated"
   ></AgGridVue>
 </template>
 
@@ -24,10 +26,10 @@ import type {
   CellEditRequestEvent,
   ColDef,
   GridOptions,
+  ModelUpdatedEvent,
 } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
-import { watch } from "vue";
 
 type Props = {
   gridData: ReactiveArray<object>;
@@ -58,6 +60,25 @@ const defaultColDef: ColDef = {
 };
 
 const getRowId = ({ data }) => data.uniqueId;
+
+let oldGridData = props.gridData.items.map((x) => x);
+const onModelUpdated = (event: ModelUpdatedEvent) => {
+  console.log("onModelUpdated", event);
+
+  // Check the length to determine if we have new records.
+  // If we have new records, start editing the most recent one.
+  if (props.gridData.items.length != oldGridData.length) {
+    const colKey = event.columnApi.getColumns()[0].getColDef().field;
+    const rowIndex = props.gridData.items.length - 1;
+    event.api.setFocusedCell(rowIndex, colKey);
+    event.api.startEditingCell({
+      rowIndex,
+      colKey,
+    });
+  }
+
+  oldGridData = props.gridData.items.map((x) => x);
+};
 
 const onCellEditRequest = (event: CellEditRequestEvent) => {
   emit("gridDataUpdate", {
@@ -103,27 +124,6 @@ const onGridReady = ({ api }: GridOptions) => {
   }
 
   api.setColumnDefs(columnDefs);
-  api.setRowData(props.gridData.items);
-
-  let oldGridDataLength = props.gridData.items.length;
-  watch(props.gridData, (newGridData) => {
-    api.setRowData(props.gridData.items);
-
-    const rowIndex = props.gridData.items.length - 1;
-    const colKey = columnDefs[0].field;
-
-    oldGridDataLength = props.gridData.items.length;
-
-    // Check the length to determine if we have new records.
-    // If we have new records, start editing the most recent one.
-    if (newGridData.items.length != oldGridDataLength) {
-      api.setFocusedCell(rowIndex, colKey);
-      api.startEditingCell({
-        rowIndex,
-        colKey,
-      });
-    }
-  });
 };
 </script>
 

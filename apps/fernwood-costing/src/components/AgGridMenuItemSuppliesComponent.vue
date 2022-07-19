@@ -15,6 +15,7 @@ import formatMoney from "@/formatters/formatMoney";
 import type { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
+  ColDef,
   ValueFormatterParams,
   ValueGetterParams,
 } from "ag-grid-community";
@@ -54,7 +55,7 @@ watch(props.menuItem, (newMenuItem) => {
     .concat(addedItems);
 });
 
-const columnDefs = [
+const columnDefs: ColDef[] = [
   {
     field: "supplyDetails",
     cellEditor: "agSelectCellEditor",
