@@ -61,17 +61,6 @@ const columnDefs = [
     cellEditorParams: {
       values: props.suppliesList.items.map((item) => item.supplyName),
     },
-    // valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
-    //   const targetSupply = props.suppliesList.items.find(
-    //     (supply) => supply.uniqueId == data.supplyUniqueId
-    //   );
-
-    //   const costPerUnit = formatMoney(
-    //     targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity
-    //   );
-
-    //   return `${targetSupply.supplyName} @ ${costPerUnit} per ${targetSupply.supplyUnits}`;
-    // },
   },
   {
     field: "supplyQuantity",

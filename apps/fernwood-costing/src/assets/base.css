@@ -15,28 +15,28 @@ body {
 
 nav ul {
   list-style: none;
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 }
 
 nav ul li {
-  display:inline-block;
-  margin:0;
+  display: inline-block;
+  margin: 0;
 }
 
 nav ul li a {
-  padding:20px;
+  padding: 20px;
   text-decoration: none;
   background-color: var(--color-success);
-  color:white;
+  color: white;
 }
 
 nav ul li a:hover {
-  filter:brightness(120%);
+  filter: brightness(120%);
 }
 
 nav ul li a.router-link-active {
-  filter:brightness(130%);
+  filter: brightness(130%);
 }
 
 /* Tables */
