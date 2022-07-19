@@ -20,9 +20,10 @@ on:
 
 env:
   SITE_SOURCE_DIR: ${{ github.workspace }}
-  SITE_PUBLIC_PATH: ${{ github.workspace }}/docs
+  SITE_DESTINATION_DIR: ${{ github.workspace }}/docs
   COSTING_APP_SOURCE_DIR: ${{ github.workspace }}/apps/fernwood-costing
-  COSTING_APP_PUBLIC_PATH: ${{ github.workspace}}/docs/costing
+  COSTING_APP_DESTINATION_DIR: ${{ github.workspace}}/docs/costing
+  COSTING_APP_PUBLIC_PATH: /costing
 
 jobs:
   build:
@@ -41,12 +42,12 @@ jobs:
       - name: Build Site
         run: |
           npm ci
-          npm run build -- --out-dir $SITE_PUBLIC_PATH
+          npm run build -- --out-dir $SITE_DESTINATION_DIR
         working-directory: ${{ env.SITE_SOURCE_DIR }}
       - name: Build Costing App
         run: |
           npm ci
-          npm run build -- --dest $COSTING_APP_PUBLIC_PATH
+          npm run build -- --dest $COSTING_APP_DESTINATION_DIR
         working-directory: ${{ env.COSTING_APP_SOURCE_DIR }}
       - name: Dump Build Results
         run: tree -I "node_modules"
