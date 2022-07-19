@@ -1,18 +1,17 @@
 <template>
   <!--
     Note: If we switch to readOnlyEdit,
-    then we need to adjust how our AgSelectEditor works.
+    then we need to adjust how some of our edits work.
   -->
   <AgGridVue
     class="ag-theme-alpine"
     :stopEditingWhenCellsLoseFocus="true"
     :defaultColDef="defaultColDef"
-    :readOnlyEdit="false"
+    :readOnlyEdit="true"
     :getRowId="getRowId"
     :singleClickEdit="true"
     @grid-ready="onGridReady"
-    @cell-value-changed="onCellValueChanged"
-    @model-updated="onModelUpdated"
+    @cell-edit-request="onCellEditRequest"
   ></AgGridVue>
 </template>
 
@@ -21,7 +20,11 @@ import AgRowToolsRenderer from "@/components/AgRowToolsRenderer.vue";
 import { AgGridVue } from "ag-grid-vue3";
 
 import type { ReactiveArray } from "@/types/ReactiveArray";
-import type { ColDef, GridOptions } from "ag-grid-community";
+import type {
+  CellEditRequestEvent,
+  ColDef,
+  GridOptions,
+} from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 import { watch } from "vue";
@@ -56,13 +59,11 @@ const defaultColDef: ColDef = {
 
 const getRowId = ({ data }) => data.uniqueId;
 
-const onCellValueChanged = (event) => {
-  console.log("onCellValueChanged");
-  emit("gridDataUpdate", event.data);
-};
-
-const onModelUpdated = (event) => {
-  console.log("onModelUpdated", event);
+const onCellEditRequest = (event: CellEditRequestEvent) => {
+  emit("gridDataUpdate", {
+    ...event.data,
+    [event.colDef.field]: event.value,
+  });
 };
 
 const onGridReady = ({ api }: GridOptions) => {
@@ -81,8 +82,6 @@ const onGridReady = ({ api }: GridOptions) => {
       field,
     };
   });
-
-  console.log("props.gridTools", props.gridTools);
 
   if (props.gridTools != null) {
     columnDefs.push({
@@ -108,20 +107,21 @@ const onGridReady = ({ api }: GridOptions) => {
 
   let oldGridDataLength = props.gridData.items.length;
   watch(props.gridData, (newGridData) => {
+    api.setRowData(props.gridData.items);
+
+    const rowIndex = props.gridData.items.length - 1;
+    const colKey = columnDefs[0].field;
+
+    oldGridDataLength = props.gridData.items.length;
+
     // Check the length to determine if we have new records.
+    // If we have new records, start editing the most recent one.
     if (newGridData.items.length != oldGridDataLength) {
-      api.setRowData(props.gridData.items);
-
-      const rowIndex = props.gridData.items.length - 1;
-      const colKey = columnDefs[0].field;
-
       api.setFocusedCell(rowIndex, colKey);
       api.startEditingCell({
         rowIndex,
         colKey,
       });
-
-      oldGridDataLength = props.gridData.items.length;
     }
   });
 };

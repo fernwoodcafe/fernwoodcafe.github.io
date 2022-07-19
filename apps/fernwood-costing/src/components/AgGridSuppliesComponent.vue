@@ -22,7 +22,6 @@
 import AgCheckboxEditor from "@/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgPercentEditor from "@/components/AgPercentEditor.vue";
-import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { formatMoney, formatPercent } from "@/formatters";
 import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
 import type { Supply } from "@/types/CafeDomain";
@@ -53,22 +52,16 @@ const onSupplyDeleteClick = (data) => emit("supplyDeleted", data);
 const columnDefs: ColDef[] = [
   {
     field: "supplyType",
-    cellEditor: AgSelectEditor,
+    cellEditor: "agSelectCellEditor",
     cellEditorParams: {
-      options: ["ingredient", "packaging"].map((option) => ({
-        value: option,
-        label: option,
-      })),
+      values: ["ingredient", "packaging"],
     },
   },
   {
     field: "supplyUnits",
-    cellEditor: AgSelectEditor,
+    cellEditor: "agSelectCellEditor",
     cellEditorParams: {
-      options: ["gram", "litre", "ounce", "item"].map((option) => ({
-        value: option,
-        label: option,
-      })),
+      options: ["gram", "litre", "ounce", "item"],
     },
   },
   {

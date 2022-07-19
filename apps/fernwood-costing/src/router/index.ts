@@ -12,12 +12,12 @@ const db = await setupDB();
 export const domainEventsRepo = DomainEventsRepo(db);
 const domainEvents = await domainEventsRepo.select();
 
-export const menuItemsList = await materializeMenuItems(
+export const menuItemsList = materializeMenuItems(
   reactive({ items: [] }),
   ...domainEvents
 );
 
-export const suppliesList = await materializeSupplies(
+export const suppliesList = materializeSupplies(
   reactive({ items: [] }),
   ...domainEvents
 );
