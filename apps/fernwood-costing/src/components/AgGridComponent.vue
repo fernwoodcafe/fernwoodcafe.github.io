@@ -115,6 +115,10 @@ const onGridReady = ({ api }: GridOptions) => {
       const colKey = columnDefs[0].field;
 
       api.setFocusedCell(rowIndex, colKey);
+      api.startEditingCell({
+        rowIndex,
+        colKey,
+      });
 
       oldGridDataLength = props.gridData.items.length;
     }
