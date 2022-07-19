@@ -19,10 +19,10 @@ on:
     branches: [trunk]
 
 env:
-  SITE_SOURCE_DIR: ./
-  SITE_PUBLIC_PATH: ./docs
-  COSTING_APP_SOURCE_DIR: ./apps/fernwood-costing
-  COSTING_APP_PUBLIC_PATH: ./docs/costing
+  SITE_SOURCE_DIR: ${{ GITHUB_WORKSPACE }}
+  SITE_PUBLIC_PATH: ${{ GITHUB_WORKSPACE }}/docs
+  COSTING_APP_SOURCE_DIR: ${{ GITHUB _WORKSPACE }}/apps/fernwood-costing
+  COSTING_APP_PUBLIC_PATH: ${{ GITHUB_WORKSPACE}}/docs/costing
 
 jobs:
   build:
