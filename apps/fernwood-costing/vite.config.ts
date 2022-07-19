@@ -7,10 +7,15 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  mode: "development",
   base: env.COSTING_APP_PUBLIC_PATH ?? "/",
   build: {
     outDir: env.COSTING_APP_DESTINATION_DIR ?? "dist",
     target: "esnext",
+    minify: false,
+  },
+  preview: {
+    open: true,
   },
   plugins: [vue(), vueJsx()],
   resolve: {

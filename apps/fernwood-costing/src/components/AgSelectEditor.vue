@@ -10,7 +10,7 @@
     </option>
   </select>
 </template>
-<script setup lang="ts">
+<script lang="ts">
 import type { ICellEditorParams } from "ag-grid-community";
 import type { OptionHTMLAttributes } from "vue";
 import { ref } from "vue";
@@ -21,15 +21,17 @@ type Props = {
   };
 };
 
-const props = defineProps<Props>();
-
-const selectedOption = ref(props.params.value);
-
-const getValue = () => selectedOption.value;
-
-defineExpose({
-  getValue,
-});
+// We use export default here because the production vite build does not return
+// the defineExpose. See also https://stackoverflow.com/q/73032489/1108891.
+export default {
+  setup(props: Props) {
+    const selectedOption = ref(props.params.value?.valueOf());
+    return {
+      selectedOption,
+      getValue: () => selectedOption.value,
+    };
+  },
+};
 </script>
 <style scoped>
 select {

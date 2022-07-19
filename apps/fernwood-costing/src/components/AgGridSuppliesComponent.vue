@@ -24,8 +24,8 @@ import AgPercentEditor from "@/components/AgPercentEditor.vue";
 import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { formatMoney, formatPercent } from "@/formatters";
 import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
-import type { ReactiveArray } from "@/types/ReactiveArray";
 import type { Supply } from "@/types/CafeDomain";
+import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
   ColDef,
   ValueFormatterParams,
