@@ -2,6 +2,7 @@
   <AgGridComponent
     :gridData="menuItemSupplies"
     :gridColumns="['supplyDetails', 'supplyQuantity', 'supplyCost']"
+    :gridTools="['delete']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemSupplyUpdated"
     @gridRowDeleteClick="onMenuItemSupplyDeleteClick"
@@ -10,8 +11,7 @@
 
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
-import AgSelectEditor from "@/components/AgSelectEditor.vue";
-import { formatMoney } from "@/formatters";
+import formatMoney from "@/formatters/formatMoney";
 import type { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
@@ -57,24 +57,21 @@ watch(props.menuItem, (newMenuItem) => {
 const columnDefs = [
   {
     field: "supplyDetails",
-    cellEditor: AgSelectEditor,
+    cellEditor: "agSelectCellEditor",
     cellEditorParams: {
-      options: props.suppliesList.items.map((item) => ({
-        value: `${item.supplyName}`,
-        label: `${item.supplyName}`,
-      })),
+      values: props.suppliesList.items.map((item) => item.supplyName),
     },
-    valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
-      const targetSupply = props.suppliesList.items.find(
-        (supply) => supply.uniqueId == data.supplyUniqueId
-      );
+    // valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
+    //   const targetSupply = props.suppliesList.items.find(
+    //     (supply) => supply.uniqueId == data.supplyUniqueId
+    //   );
 
-      const costPerUnit = formatMoney(
-        targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity
-      );
+    //   const costPerUnit = formatMoney(
+    //     targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity
+    //   );
 
-      return `${targetSupply.supplyName} @ ${costPerUnit} per ${targetSupply.supplyUnits}`;
-    },
+    //   return `${targetSupply.supplyName} @ ${costPerUnit} per ${targetSupply.supplyUnits}`;
+    // },
   },
   {
     field: "supplyQuantity",

@@ -28,10 +28,7 @@ export default {
     const selectedOption = ref(props.params.value?.valueOf());
     return {
       selectedOption,
-      getValue: () => {
-        console.log("getValue");
-        return selectedOption.value;
-      },
+      getValue: () => selectedOption.value,
     };
   },
 };

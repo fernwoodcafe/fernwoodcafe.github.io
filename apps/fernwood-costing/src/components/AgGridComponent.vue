@@ -9,6 +9,7 @@
     :defaultColDef="defaultColDef"
     :readOnlyEdit="false"
     :getRowId="getRowId"
+    :singleClickEdit="true"
     @grid-ready="onGridReady"
     @cell-value-changed="onCellValueChanged"
     @model-updated="onModelUpdated"
@@ -129,5 +130,10 @@ const onGridReady = ({ api }: GridOptions) => {
 <style>
 .ag-theme-alpine {
   height: 500px;
+}
+
+/* Prevent grid from vanishing when popups appear. */
+.ag-popup {
+  height: 0;
 }
 </style>
