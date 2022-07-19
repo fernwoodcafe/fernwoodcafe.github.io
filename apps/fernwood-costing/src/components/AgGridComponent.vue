@@ -3,6 +3,7 @@
     class="ag-theme-alpine"
     :stopEditingWhenCellsLoseFocus="true"
     :defaultColDef="defaultColDef"
+    :readOnlyEdit="true"
     :getRowId="getRowId"
     @grid-ready="onGridReady"
     @cell-value-changed="onCellValueChanged"
