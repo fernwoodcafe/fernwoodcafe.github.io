@@ -8,6 +8,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/types/*": ["./types/*"]
-    }
+    },
+    // TODO Re-enable these strict options.
+    "noImplicitAny": false,
+    "strict": false
   }
 }

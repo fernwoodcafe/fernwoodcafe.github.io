@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { ICellEditorParams } from "ag-grid-community";
+import type { ICellEditorParams } from "ag-grid-community";
 type Props = {
   params: ICellEditorParams;
 };

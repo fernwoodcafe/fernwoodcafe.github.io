@@ -14,7 +14,10 @@ import AgSelectEditor from "@/components/AgSelectEditor.vue";
 import { formatMoney } from "@/formatters";
 import type { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
-import { ValueFormatterParams, ValueGetterParams } from "ag-grid-community";
+import type {
+  ValueFormatterParams,
+  ValueGetterParams,
+} from "ag-grid-community";
 import { reactive, watch } from "vue";
 
 type Props = {

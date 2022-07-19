@@ -1,17 +1,22 @@
 <template>
   <select v-model="selectedOption">
     <option disabled :value="{}">Please select one</option>
-    <option v-for="option in params.options" :value="option.value">
+    <option
+      v-for="option in params.options"
+      :value="option.value"
+      :key="option.value"
+    >
       {{ option.label }}
     </option>
   </select>
 </template>
 <script setup lang="ts">
-import { ICellEditorParams } from "ag-grid-community";
-import { OptionHTMLAttributes, ref } from "vue";
+import type { ICellEditorParams } from "ag-grid-community";
+import type { OptionHTMLAttributes } from "vue";
+import { ref } from "vue";
 
 type Props = {
-  params: ICellEditorParams<any, OptionHTMLAttributes> & {
+  params: ICellEditorParams & {
     options: OptionHTMLAttributes[];
   };
 };

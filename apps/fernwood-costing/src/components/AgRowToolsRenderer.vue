@@ -4,10 +4,10 @@
   </form>
 </template>
 <script setup lang="ts">
-import { ICellRendererParams } from "ag-grid-community";
+import type { ICellRendererParams } from "ag-grid-community";
 type Props = {
   params: ICellRendererParams & {
-    onDeleteClick: Function;
+    onDeleteClick: (data) => void;
   };
 };
 

@@ -14,7 +14,8 @@
 import AgRowToolsRenderer from "@/components/AgRowToolsRenderer.vue";
 import { AgGridVue } from "ag-grid-vue3";
 
-import { ColDef, GridOptions } from "ag-grid-community";
+import type { ReactiveArray } from "@/types/ReactiveArray";
+import type { ColDef, GridOptions } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 import { watch } from "vue";
