@@ -61,7 +61,7 @@ const columnDefs: ColDef[] = [
     field: "supplyUnits",
     cellEditor: "agSelectCellEditor",
     cellEditorParams: {
-      options: ["gram", "litre", "ounce", "item"],
+      values: ["gram", "litre", "ounce", "item"],
     },
   },
   {
