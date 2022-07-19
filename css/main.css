@@ -46,6 +46,7 @@ footer {
 footer > a {
   margin:0;
   float:right;
+  padding:5px;
 }
 
 footer > p {
