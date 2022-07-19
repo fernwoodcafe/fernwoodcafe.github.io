@@ -1,5 +1,11 @@
 <template>
-  <h2>{{ menuItem.menuItemName }}</h2>
+  <h2>
+    <FrcInput
+      @change="onMenuItemNameUpdated"
+      :value="menuItem.menuItemName"
+      type="text"
+    />
+  </h2>
   <dl>
     <div>
       <dt>Total Cost</dt>
@@ -35,6 +41,7 @@
 
 <script setup lang="ts">
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
+import FrcInput from "@/components/FrcInput.vue";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
 import formatMoney from "@/formatters/formatMoney";
 import type {
@@ -44,7 +51,7 @@ import type {
   Supply,
 } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 
 type Props = {
   menuItem: MenuItem;
@@ -58,7 +65,6 @@ const ingredientOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "ingredient"
 );
 
-const selectedPackaging = ref<Partial<Supply>>({});
 const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
@@ -79,6 +85,23 @@ const addSupply = (supply: Partial<Supply>) => {
 
 const onClickNewIngredient = (data) => addSupply(data);
 const onClickNewPackaging = (data) => addSupply(data);
+
+const onMenuItemNameUpdated = async (event: Event) => {
+  if (event.target instanceof HTMLInputElement) {
+    await props.sendCommand({
+      type: "update_menu_item",
+      payload: {
+        ...props.menuItem,
+        menuItemName: event.target.value,
+      },
+    });
+
+    window.location.hash = window.location.hash.replace(
+      props.menuItem.menuItemName.toLocaleLowerCase(),
+      event.target.value.toLocaleLowerCase()
+    );
+  }
+};
 
 const onMenuItemSupplyUpdated = (data: MenuItemSupply) =>
   props.sendCommand({

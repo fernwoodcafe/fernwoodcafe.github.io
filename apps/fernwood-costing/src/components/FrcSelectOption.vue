@@ -3,7 +3,11 @@
     <label>{{ title }}</label>
     <select v-model="selectedOption">
       <option disabled :value="null">Please select one</option>
-      <option v-for="option in options" :value="option">
+      <option
+        v-for="option in options"
+        :value="option"
+        :key="option[optionKey]"
+      >
         {{ option[optionKey] }}
       </option>
     </select>
