@@ -25,6 +25,7 @@ type Props = {
   gridData: ReactiveArray<object>;
   gridColumns: Array<string>;
   gridColumnDefs?: Array<ColDef>;
+  gridTools?: Array<"edit" | "delete">;
 };
 
 type Emits = {
@@ -62,37 +63,40 @@ const onModelUpdated = (event) => {
 const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
-  const columnDefs = props.gridColumns
-    .map((field) => {
-      const def = props.gridColumnDefs?.find((def) => def.field == field);
-      if (def) {
-        // Complex Column.
-        console.log("complex", def);
-        return def;
-      }
+  const columnDefs = props.gridColumns.map((field) => {
+    const def = props.gridColumnDefs?.find((def) => def.field == field);
+    if (def) {
+      // Complex Column.
+      console.log("complex", def);
+      return def;
+    }
 
-      // Simple Column.
-      return {
-        field,
-      };
-    })
-    .concat([
-      {
-        field: "actions",
-        editable: false,
-        cellRenderer: AgRowToolsRenderer,
-        cellRendererParams: {
-          // We pass in event handlers because we do not know how to handle
-          // events that cellRenderers emit.
-          onDeleteClick: (rowData) => {
-            emit("gridRowDeleteClick", rowData);
-          },
-          onEditClick: (rowData) => {
-            emit("gridRowEditClick", rowData);
-          },
+    // Simple Column.
+    return {
+      field,
+    };
+  });
+
+  console.log("props.gridTools", props.gridTools);
+
+  if (props.gridTools != null) {
+    columnDefs.push({
+      field: "actions",
+      editable: false,
+      cellRenderer: AgRowToolsRenderer,
+      cellRendererParams: {
+        // We pass in event handlers because we do not know how to handle
+        // events that cellRenderers emit.
+        onDeleteClick: (rowData) => {
+          emit("gridRowDeleteClick", rowData);
         },
+        onEditClick: (rowData) => {
+          emit("gridRowEditClick", rowData);
+        },
+        gridTools: props.gridTools,
       },
-    ]);
+    });
+  }
 
   api.setColumnDefs(columnDefs);
   api.setRowData(props.gridData.items);

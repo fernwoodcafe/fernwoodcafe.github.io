@@ -57,3 +57,22 @@ table tr,
 table tbody {
   border: 0px;
 }
+
+/* Controls */
+
+input[type="button"][value^="Edit"] {
+  background-color: green;
+  color: white;
+}
+input[type="button"][value^="Delete"] {
+  background-color: red;
+  color: white;
+}
+input[type="button"][value^="New"] {
+  background-color: green;
+  color: white;
+}
+input[type="button"][value^="Delete"] {
+  background-color: red;
+  color: white;
+}

@@ -11,6 +11,7 @@
       'hasPST',
       'unitCost',
     ]"
+    :gridTools="['delete']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onSupplyUpdated"
     @gridRowDeleteClick="onSupplyDeleteClick"

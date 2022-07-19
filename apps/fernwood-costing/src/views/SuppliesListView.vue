@@ -1,6 +1,6 @@
 <template>
   <h1>Supplies</h1>
-  <button @click="onClickNewSupply">New Supply</button>
+  <input type="button" @click="onClickNewSupply" value="New Supply" />
   <AgGridSuppliesComponent
     :suppliesList="suppliesList"
     @supplyUpdated="onSupplyUpdated"

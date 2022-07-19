@@ -2,6 +2,7 @@
   <AgGridComponent
     :gridData="menuItemsList"
     :gridColumns="['menuItemName']"
+    :gridTools="['delete', 'edit']"
     @gridDataUpdate="onMenuItemUpdated"
     @gridRowDeleteClick="onMenuItemDeleteClick"
     @gridRowEditClick="onMenuItemEditClick"

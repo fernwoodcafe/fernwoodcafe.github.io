@@ -1,6 +1,6 @@
 <template>
   <h1>Menu Items</h1>
-  <button @click="onClickNewMenuItem">New Menu Item</button>
+  <input type="button" @click="onClickNewMenuItem" value="New Menu Item" />
   <AgGridMenuItemsComponent
     :menuItemsList="menuItemsList"
     @menuItemUpdated="onMenuItemUpdated"
