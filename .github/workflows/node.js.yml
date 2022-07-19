@@ -18,6 +18,12 @@ on:
   push:
     branches: [trunk]
 
+env:
+  SITE_SOURCE_DIR: ./
+  SITE_PUBLIC_PATH: ./docs
+  COSTING_APP_SOURCE_DIR: ./docs/costing
+  COSTING_APP_PUBLIC_PATH: ./docs/costing
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,12 +39,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Build Site
-        run: npm ci
-        run: npm run build -- --out-dir ./docs
+        run: |
+          npm ci
+          npm run build -- --out-dir $SITE_PUBLIC_PATH
+        working-directory: $SITE_SOURCE_DIR
       - name: Build Costing App
-        run: npm ci
-        run: npm run build -- --dest ../../docs/app/costing
-        working-directory: ./apps/frc-costing
+        run: |
+          npm ci
+          npm run build -- --dest $COSTING_APP_PUBLIC_PATH
+        working-directory: $COSTING_APP_SOURCE_DIR
       - name: Archive build output
         run: tar --dereference --hard-dereference --directory docs/ -cvf artifact.tar .
       - name: Upload Artifact
