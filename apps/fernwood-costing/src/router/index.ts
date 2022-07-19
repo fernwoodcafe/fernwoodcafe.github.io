@@ -2,6 +2,7 @@ import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
 import materializeSupplies from "@/cqrs-es/materializeSupplies";
 import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
+import formatLink from "@/formatters/formatLink";
 import { reactive, watch } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import handleCommand from "../cqrs-es/handleCommand";
@@ -23,7 +24,7 @@ export const suppliesList = await materializeSupplies(
 
 const buildMenuItemRoutes = () =>
   menuItemsList.items.map((menuItem) => ({
-    path: `/menu-items/${menuItem.menuItemName}`,
+    path: `/menu-items/${formatLink(menuItem.menuItemName)}`,
     component: () => import("../views/MenuItemView.vue"),
     props: {
       menuItem,

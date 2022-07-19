@@ -10,9 +10,11 @@
 
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
-import AgRouterLinkRenderer from "./AgRouterLinkRenderer.vue";
+import formatLink from "@/formatters/formatLink";
 import type { MenuItem } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
+import type { ColDef } from "ag-grid-community";
+import AgRouterLinkRenderer from "./AgRouterLinkRenderer.vue";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
@@ -31,10 +33,13 @@ const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 
 const onMenuItemDeleted = (data) => emit("menuItemDeleted", data);
 
-const columnDefs = [
+const columnDefs: ColDef[] = [
   {
     field: "menuItemName",
     cellRenderer: AgRouterLinkRenderer,
+    cellRendererParams: {
+      formatLink,
+    },
   },
 ];
 </script>
