@@ -1,4 +1,5 @@
 import { DomainEvent, MenuItem, MenuItemSupply } from "@/types/CafeDomain";
+import { ReactiveArray } from "@/types/ReactiveArray";
 
 export default (
   menuItemsList: ReactiveArray<MenuItem>,

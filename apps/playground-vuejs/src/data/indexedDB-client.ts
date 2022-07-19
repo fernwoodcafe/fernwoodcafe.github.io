@@ -13,7 +13,7 @@ const cloneObject = (obj) =>
  * @param {object[]} objects
  */
 export const $create = (db, objectStoreName, objects) =>
-  new Promise((resolve, reject) => {
+  new Promise<void>((resolve, reject) => {
     console.log("$create", objectStoreName);
     const transaction = db.transaction(objectStoreName, "readwrite");
 
@@ -105,7 +105,7 @@ export const $migrateDB = (
  * @param {string} databaseName
  */
 export const $deleteDB = (databaseName) =>
-  new Promise((resolve, reject) => {
+  new Promise<void>((resolve, reject) => {
     const request = indexedDB.deleteDatabase(databaseName);
 
     request.onsuccess = (event) => {

@@ -19,6 +19,12 @@ on:
     branches: [trunk]
 
 env:
+  # TODO Make the site source dir a sibling of the costing-app source dir.
+  # E.g.,
+  # ./
+  #   fernwood-site/
+  #   fernwood-costing/
+  # Why? This might make the repository easier to navigate for maintenance.
   SITE_SOURCE_DIR: ${{ github.workspace }}
   SITE_DESTINATION_DIR: ${{ github.workspace }}/docs
   COSTING_APP_SOURCE_DIR: ${{ github.workspace }}/apps/fernwood-costing
@@ -47,7 +53,7 @@ jobs:
       - name: Build Costing App
         run: |
           npm ci
-          npm run build -- --dest $COSTING_APP_DESTINATION_DIR
+          npm run build
         working-directory: ${{ env.COSTING_APP_SOURCE_DIR }}
       - name: Dump Build Results
         run: tree -I "node_modules"
