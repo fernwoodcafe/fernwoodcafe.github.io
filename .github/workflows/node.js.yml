@@ -21,7 +21,7 @@ on:
 env:
   SITE_SOURCE_DIR: ./
   SITE_PUBLIC_PATH: ./docs
-  COSTING_APP_SOURCE_DIR: ./apps/frc-costing
+  COSTING_APP_SOURCE_DIR: ./apps/fernwood-costing
   COSTING_APP_PUBLIC_PATH: ./docs/costing
 
 jobs:

@@ -1,4 +1,4 @@
-# frc-costing
+# fernwood-costing
 
 ## Project setup
 ```
