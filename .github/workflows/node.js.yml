@@ -48,6 +48,9 @@ jobs:
           npm ci
           npm run build -- --dest $COSTING_APP_PUBLIC_PATH
         working-directory: ${{ env.COSTING_APP_SOURCE_DIR }}
+      - name: Dump Build Results
+        run: tree
+        working-directory: ${{ env.SITE_SOURCE_DIR }}
       - name: Archive build output
         run: tar --dereference --hard-dereference --directory docs/ -cvf artifact.tar .
       - name: Upload Artifact
