@@ -1,9 +1,13 @@
 <template>
+  <!--
+    Note: If we switch to readOnlyEdit,
+    then we need to adjust how our AgSelectEditor works.
+  -->
   <AgGridVue
     class="ag-theme-alpine"
     :stopEditingWhenCellsLoseFocus="true"
     :defaultColDef="defaultColDef"
-    :readOnlyEdit="true"
+    :readOnlyEdit="false"
     :getRowId="getRowId"
     @grid-ready="onGridReady"
     @cell-value-changed="onCellValueChanged"
