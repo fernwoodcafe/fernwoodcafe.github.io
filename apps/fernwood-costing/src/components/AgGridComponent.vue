@@ -29,7 +29,8 @@ type Props = {
 
 type Emits = {
   (e: "gridDataUpdate", data: any): void;
-  (e: "gridRowDelete", data: any): void;
+  (e: "gridRowDeleteClick", data: any): void;
+  (e: "gridRowEditClick", data: any): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -81,8 +82,13 @@ const onGridReady = ({ api }: GridOptions) => {
         editable: false,
         cellRenderer: AgRowToolsRenderer,
         cellRendererParams: {
+          // We pass in event handlers because we do not know how to handle
+          // events that cellRenderers emit.
           onDeleteClick: (rowData) => {
-            emit("gridRowDelete", rowData);
+            emit("gridRowDeleteClick", rowData);
+          },
+          onEditClick: (rowData) => {
+            emit("gridRowEditClick", rowData);
           },
         },
       },

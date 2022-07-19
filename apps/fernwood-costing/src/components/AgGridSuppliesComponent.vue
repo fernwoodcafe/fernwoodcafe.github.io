@@ -13,7 +13,7 @@
     ]"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onSupplyUpdated"
-    @gridRowDelete="onSupplyDeleted"
+    @gridRowDeleteClick="onSupplyDeleteClick"
   ></AgGridComponent>
 </template>
 
@@ -47,7 +47,7 @@ defineProps<Props>();
 
 const onSupplyUpdated = (data) => emit("supplyUpdated", data);
 
-const onSupplyDeleted = (data) => emit("supplyDeleted", data);
+const onSupplyDeleteClick = (data) => emit("supplyDeleted", data);
 
 const columnDefs: ColDef[] = [
   {

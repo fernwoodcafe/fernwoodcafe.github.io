@@ -5,6 +5,7 @@
     :menuItemsList="menuItemsList"
     @menuItemUpdated="onMenuItemUpdated"
     @menuItemDeleted="onMenuItemDeleted"
+    @menuItemEditClick="onMenuItemEditClick"
   ></AgGridMenuItemsComponent>
 
   <RouterView :key="$route.fullPath" />
@@ -12,9 +13,11 @@
 
 <script setup lang="ts">
 import AgGridMenuItemsComponent from "@/components/AgGridMenuItemsComponent.vue";
+import formatLink from "@/formatters/formatLink";
 import type { DomainCommand, MenuItem } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
@@ -51,5 +54,11 @@ const onMenuItemDeleted = (menuItem: MenuItem) => {
     type: "delete_menu_item",
     payload: menuItem,
   });
+};
+
+const router = useRouter();
+const onMenuItemEditClick = (menuItem: MenuItem) => {
+  console.log("onMenuItemEditClick", JSON.stringify(menuItem));
+  router.push(`menu-items/${formatLink(menuItem.menuItemName)}`);
 };
 </script>

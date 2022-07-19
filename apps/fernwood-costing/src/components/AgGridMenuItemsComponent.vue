@@ -4,7 +4,8 @@
     :gridColumns="['menuItemName']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemUpdated"
-    @gridRowDelete="onMenuItemDeleted"
+    @gridRowDeleteClick="onMenuItemDeleteClick"
+    @gridRowEditClick="onMenuItemEditClick"
   ></AgGridComponent>
 </template>
 
@@ -23,6 +24,7 @@ type Props = {
 type Emits = {
   (e: "menuItemUpdated", data: MenuItem): void;
   (e: "menuItemDeleted", data: MenuItem): void;
+  (e: "menuItemEditClick", data: MenuItem): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -30,8 +32,8 @@ const emit = defineEmits<Emits>();
 defineProps<Props>();
 
 const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
-
-const onMenuItemDeleted = (data) => emit("menuItemDeleted", data);
+const onMenuItemDeleteClick = (data) => emit("menuItemDeleted", data);
+const onMenuItemEditClick = (data) => emit("menuItemEditClick", data);
 
 const columnDefs: ColDef[] = [
   {

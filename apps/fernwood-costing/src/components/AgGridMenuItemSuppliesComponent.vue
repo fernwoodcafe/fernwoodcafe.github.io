@@ -4,7 +4,7 @@
     :gridColumns="['supplyDetails', 'supplyQuantity', 'supplyCost']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemSupplyUpdated"
-    @gridRowDelete="onMenuItemSupplyDeleted"
+    @gridRowDeleteClick="onMenuItemSupplyDeleteClick"
   ></AgGridComponent>
 </template>
 
@@ -34,7 +34,8 @@ const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
 const onMenuItemSupplyUpdated = (data) => emit("menuItemSupplyUpdated", data);
-const onMenuItemSupplyDeleted = (data) => emit("menuItemSupplyDeleted", data);
+const onMenuItemSupplyDeleteClick = (data) =>
+  emit("menuItemSupplyDeleted", data);
 
 const menuItemSupplies = reactive({
   items: props.menuItem.menuItemSupplies,
