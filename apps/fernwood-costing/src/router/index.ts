@@ -3,7 +3,7 @@ import materializeSupplies from "@/cqrs-es/materializeSupplies";
 import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
 import { reactive, watch } from "vue";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import handleCommand from "../cqrs-es/handleCommand";
 
 const db = await setupDB();
@@ -33,7 +33,10 @@ const buildMenuItemRoutes = () =>
   }));
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // We use hash navigation because GitHub Pages does not support a simple catch-all fallback route
+  // to the server.See https://router.vuejs.org/guide/essentials/history-mode.html#html5-mode for
+  // more details and see also https://stackoverflow.com/q/47677220/1108891.
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
