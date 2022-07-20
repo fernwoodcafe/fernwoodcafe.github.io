@@ -1,4 +1,8 @@
 export default (cost: number, fromUnit: string, toUnit: string) => {
+  if (fromUnit === toUnit) {
+    return cost;
+  }
+
   const key = `${fromUnit}-per-${toUnit}`;
 
   const smallPerBig = {
