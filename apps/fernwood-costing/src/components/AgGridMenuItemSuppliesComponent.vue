@@ -58,18 +58,24 @@ watch(props.menuItem, (newMenuItem) => {
 const columnDefs: ColDef[] = [
   {
     field: "supplyDetails",
+    headerName: "Name",
     cellEditor: "agSelectCellEditor",
     cellEditorParams: {
       values: props.suppliesList.items.map((item) => item.supplyName),
     },
+    valueGetter: ({ data }) => {
+      console.log(data);
+      return data.supplyName;
+    },
   },
   {
     field: "supplyQuantity",
+    headerName: "Quantity",
     valueParser: (params) => Number(params.newValue),
   },
   {
     field: "supplyCost",
-    headerName: "Supply Cost (Calculated)",
+    headerName: "Cost (Calculated)",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
       const targetSupply = props.suppliesList.items.find(
