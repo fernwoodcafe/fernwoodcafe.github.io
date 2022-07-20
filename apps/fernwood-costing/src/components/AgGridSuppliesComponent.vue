@@ -3,7 +3,8 @@
     :gridData="suppliesList"
     :gridColumns="[
       'supplyName',
-      'supplier',
+      'supplyNotes',
+      'supplierName',
       'supplyType',
       'supplyUnits',
       'purchaseQuantity',
@@ -57,6 +58,10 @@ const columnDefs: ColDef[] = [
     cellEditorParams: {
       values: ["ingredient", "packaging"],
     },
+  },
+  {
+    field: "supplierName",
+    valueGetter: () => "Coming Soon",
   },
   {
     field: "supplyUnits",
