@@ -46,7 +46,7 @@ const props = defineProps<Props>();
 // We create a separate variable to ensure refresh happens.
 // See https://blog.ag-grid.com/refresh-grid-after-data-change/
 const rowData = ref(props.gridData.items.slice());
-const backupRowData = rowData.value;
+let backupRowData = rowData.value;
 
 watch(props.gridData, () => {
   rowData.value = props.gridData.items.slice();
@@ -80,6 +80,8 @@ const onModelUpdated = (event: ModelUpdatedEvent) => {
       colKey,
     });
   }
+
+  backupRowData = rowData.value.slice();
 };
 
 const onCellEditRequest = (event: CellEditRequestEvent) => {
