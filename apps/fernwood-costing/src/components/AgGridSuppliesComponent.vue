@@ -79,6 +79,10 @@ const columnDefs: ColDef[] = [
   {
     field: "hasPST",
     cellEditor: AgCheckboxEditor,
+    cellRenderer: (params) => {
+      console.log(params);
+      return params.value ? "&#10003" : "&#10007";
+    },
   },
   {
     field: "unitCost",

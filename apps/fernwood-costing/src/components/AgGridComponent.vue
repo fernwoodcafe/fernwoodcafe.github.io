@@ -97,7 +97,7 @@ const onCellEditRequest = (event: CellEditRequestEvent) => {
 const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
-  const columnDefs = props.gridColumns.map((field) => {
+  const columnDefs: ColDef[] = props.gridColumns.map((field) => {
     const def = props.gridColumnDefs?.find((def) => def.field == field);
     if (def) {
       // Complex Column.
