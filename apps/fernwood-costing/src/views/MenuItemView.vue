@@ -43,6 +43,7 @@
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcInput from "@/components/FrcInput.vue";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
+import formatLink from "@/formatters/formatLink";
 import formatMoney from "@/formatters/formatMoney";
 import type {
   DomainCommand,
@@ -87,6 +88,7 @@ const onClickNewIngredient = (data) => addSupply(data);
 const onClickNewPackaging = (data) => addSupply(data);
 
 const onMenuItemNameUpdated = async (event: Event) => {
+  console.log("onMenuItemNameUpdated");
   if (event.target instanceof HTMLInputElement) {
     await props.sendCommand({
       type: "update_menu_item",
@@ -96,9 +98,15 @@ const onMenuItemNameUpdated = async (event: Event) => {
       },
     });
 
-    window.location.hash = window.location.hash.replace(
+    console.log(
+      "onMenuItemNameUpdated",
       props.menuItem.menuItemName.toLocaleLowerCase(),
       event.target.value.toLocaleLowerCase()
+    );
+
+    window.location.hash = window.location.hash.replace(
+      formatLink(props.menuItem.menuItemName.toLocaleLowerCase()),
+      formatLink(event.target.value.toLocaleLowerCase())
     );
   }
 };
