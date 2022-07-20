@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import formatMoney from "@/formatters/formatMoney";
+import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
 import type { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
@@ -50,16 +51,27 @@ const columnDefs: ColDef[] = [
   {
     field: "supplyDetails",
     headerName: "Details",
-    cellEditor: "agSelectCellEditor",
-    cellEditorParams: {
-      values: props.suppliesList.items.map((item) => item.supplyName),
-    },
-    valueGetter: ({ data }) => {
-      const target = props.suppliesList.items.find(
+    editable: false,
+    valueGetter: ({ data }: { data: MenuItemSupply }) => {
+      const supply = props.suppliesList.items.find(
         (item) => item.uniqueId == data.supplyUniqueId
       );
 
-      return target.supplyName;
+      const costPerUnit = formatMoney(calculatePerUnitSupplyCost(supply));
+
+      return {
+        costPerUnit,
+        ...supply,
+      };
+    },
+    cellRenderer: (params: { value: Supply & { costPerUnit: number } }) => {
+      console.log("cellRenderer", params);
+
+      return `
+        <strong>${params.value.supplyName}</strong>
+        <span>-</span>
+        <span>${params.value.costPerUnit} / ${params.value.supplyUnits}</span>
+      `;
     },
   },
   {
