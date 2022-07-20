@@ -43,16 +43,7 @@ const menuItemSupplies = reactive({
 });
 
 watch(props.menuItem, (newMenuItem) => {
-  const oldItems = new Set(menuItemSupplies.items);
-  const newItems = new Set(newMenuItem.menuItemSupplies);
-
-  // This machinery lets us add to the top/bottom instead of the middle.
-  const addedItems = [...newItems].filter((item) => !oldItems.has(item));
-  const removedItems = [...oldItems].filter((item) => !newItems.has(item));
-
-  menuItemSupplies.items = menuItemSupplies.items
-    .filter((item) => !removedItems.includes(item))
-    .concat(addedItems);
+  menuItemSupplies.items = newMenuItem.menuItemSupplies;
 });
 
 const columnDefs: ColDef[] = [
