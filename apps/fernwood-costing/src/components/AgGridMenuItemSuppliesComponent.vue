@@ -12,10 +12,12 @@
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import formatMoney from "@/formatters/formatMoney";
 import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
+import convertUnitCost from "@/services/convertUnitCost";
 import type { MenuItem, MenuItemSupply, Supply } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
   ColDef,
+  ColGroupDef,
   ValueFormatterParams,
   ValueGetterParams,
 } from "ag-grid-community";
@@ -46,7 +48,7 @@ watch(props.menuItem, (newMenuItem) => {
   menuItemSupplies.items = newMenuItem.menuItemSupplies;
 });
 
-const columnDefs: ColDef[] = [
+const columnDefs: (ColDef | ColGroupDef)[] = [
   {
     field: "supplyDetails",
     headerName: "Details",
@@ -74,9 +76,23 @@ const columnDefs: ColDef[] = [
     },
   },
   {
-    field: "supplyQuantity",
-    headerName: "Quantity",
-    valueParser: (params) => Number(params.newValue),
+    headerName: "Conversion",
+    children: [
+      {
+        field: "menuItemSupplyUnits",
+        headerName: "Units",
+        cellEditor: "agSelectCellEditor",
+        cellEditorParams: {
+          // TODO [should-have] Filter these based on the supplyUnits
+          values: ["gram", "litre", "ounce", "item", "pound", "kilogram"],
+        },
+      },
+      {
+        field: "menuItemSupplyQuantity",
+        headerName: "Quantity",
+        valueParser: (params) => Number(params.newValue),
+      },
+    ],
   },
   {
     field: "supplyCost",
@@ -87,10 +103,14 @@ const columnDefs: ColDef[] = [
         (supply) => supply.uniqueId == data.supplyUniqueId
       );
 
-      return (
-        data.supplyQuantity *
-        (targetSupply.purchasePriceBeforeTax / targetSupply.purchaseQuantity)
+      const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
+      const costPerMenuItemUnit = convertUnitCost(
+        costPerSupplyUnit,
+        targetSupply.supplyUnits,
+        data.menuItemSupplyUnits
       );
+
+      return data.menuItemSupplyQuantity * costPerMenuItemUnit;
     },
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatMoney(params.value),

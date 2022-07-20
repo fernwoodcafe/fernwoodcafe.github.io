@@ -1,20 +1,27 @@
 import type { MenuItem, Supply } from "@/types/CafeDomain";
+import calculatePerUnitSupplyCost from "./calculatePerUnitSupplyCost";
+import convertUnitCost from "./convertUnitCost";
 
 export default (menuItem: MenuItem, suppliesList: Supply[]) =>
   menuItem.menuItemSupplies
     .map((menuItemSupply) => {
-      const target = suppliesList.find(
+      const targetSupply = suppliesList.find(
         (s) => s.uniqueId == menuItemSupply.supplyUniqueId
       );
 
-      const unitPrice =
-        target == null
-          ? 0
-          : target.purchasePriceBeforeTax / target.purchaseQuantity;
+      const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
+      const costPerMenuItemUnit = convertUnitCost(
+        costPerSupplyUnit,
+        targetSupply.supplyUnits,
+        menuItemSupply.menuItemSupplyUnits
+      );
 
       return {
-        unitPrice,
+        unitCost: costPerMenuItemUnit,
         ...menuItemSupply,
       };
     })
-    .reduce((acc, next) => acc + next.supplyQuantity * next.unitPrice, 0);
+    .reduce(
+      (acc, next) => acc + next.menuItemSupplyQuantity * next.unitCost,
+      0
+    );

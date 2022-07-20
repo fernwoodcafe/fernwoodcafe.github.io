@@ -57,7 +57,7 @@ const columnDefs: ColDef[] = [
     field: "supplyUnits",
     cellEditor: "agSelectCellEditor",
     cellEditorParams: {
-      values: ["gram", "litre", "ounce", "item"],
+      values: ["gram", "litre", "ounce", "item", "pound", "kilogram"],
     },
   },
   { field: "purchaseQuantity" },
@@ -85,10 +85,12 @@ const columnDefs: ColDef[] = [
     field: "unitCost",
     headerName: "Unit Cost (Calculated)",
     editable: false,
-    valueGetter: ({ data }: ValueGetterParams<Supply>) =>
-      calculatePerUnitSupplyCost(data),
+    valueGetter: ({ data }: ValueGetterParams<Supply>) => ({
+      cost: calculatePerUnitSupplyCost(data),
+      units: data.supplyUnits,
+    }),
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
-      formatMoney(params.value),
+      `${formatMoney(params.value.cost)} / ${params.value.units}`,
   },
 ];
 </script>

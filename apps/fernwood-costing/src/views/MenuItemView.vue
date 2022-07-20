@@ -47,11 +47,11 @@ import formatLink from "@/formatters/formatLink";
 import formatMoney from "@/formatters/formatMoney";
 import calculateMenuItemTotalCost from "@/services/calculateMenuItemTotalCost";
 import type {
-  CafeGoals,
-  DomainCommand,
-  MenuItem,
-  MenuItemSupply,
-  Supply,
+CafeGoals,
+DomainCommand,
+MenuItem,
+MenuItemSupply,
+Supply
 } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { computed } from "vue";
