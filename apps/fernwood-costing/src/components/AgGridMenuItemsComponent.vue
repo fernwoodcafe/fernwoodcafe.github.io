@@ -1,7 +1,6 @@
 <template>
   <AgGridComponent
     :gridData="menuItemsList"
-    :gridColumns="['menuItemName', 'menuItemSummary']"
     :gridTools="['delete', 'edit']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemUpdated"
@@ -16,7 +15,7 @@ import formatMoney from "@/formatters/formatMoney";
 import calculateMenuItemTotalCost from "@/services/calculateMenuItemTotalCost";
 import type { CafeGoals, MenuItem, Supply } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
-import type { ColDef } from "ag-grid-community";
+import type { ColDef, ColGroupDef } from "ag-grid-community";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
@@ -38,21 +37,52 @@ const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 const onMenuItemDeleteClick = (data) => emit("menuItemDeleted", data);
 const onMenuItemEditClick = (data) => emit("menuItemEditClick", data);
 
-const columnDefs: ColDef[] = [
+const columnDefs: (ColDef | ColGroupDef)[] = [
   {
-    field: "menuItemSummary",
-    editable: false,
-    cellRenderer: ({ data }) => {
-      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
-      const price = cost * props.cafeGoals.weightedAverageMarkup;
-      return `
-      <div style="display: flex; column-gap:5px">
-        <span><strong>Cost</strong> ${formatMoney(cost)}</span>
-        <span><strong>Price</strong> ${formatMoney(price)}</span>
-        <span><strong>Contrib</strong> ${formatMoney(price - cost)}</span>
-      </div>
-      `;
-    },
+    field: "menuItemName",
+  },
+  {
+    headerName: "Summary",
+    children: [
+      {
+        headerName: "Cost",
+        editable: false,
+        cellRenderer: ({ data }) => {
+          const cost = calculateMenuItemTotalCost(
+            data,
+            props.suppliesList.items
+          );
+
+          return formatMoney(cost);
+        },
+      },
+      {
+        headerName: "Price",
+        editable: false,
+        cellRenderer: ({ data }) => {
+          const cost = calculateMenuItemTotalCost(
+            data,
+            props.suppliesList.items
+          );
+          const price = cost * props.cafeGoals.weightedAverageMarkup;
+
+          return formatMoney(price);
+        },
+      },
+      {
+        headerName: "Contribution (Price - Cost)",
+        editable: false,
+        cellRenderer: ({ data }) => {
+          const cost = calculateMenuItemTotalCost(
+            data,
+            props.suppliesList.items
+          );
+          const price = cost * props.cafeGoals.weightedAverageMarkup;
+
+          return formatMoney(price - cost);
+        },
+      },
+    ],
   },
 ];
 </script>

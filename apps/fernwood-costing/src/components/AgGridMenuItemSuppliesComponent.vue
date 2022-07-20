@@ -1,7 +1,6 @@
 <template>
   <AgGridComponent
     :gridData="menuItemSupplies"
-    :gridColumns="['supplyDetails', 'supplyQuantity', 'supplyCost']"
     :gridTools="['delete']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onMenuItemSupplyUpdated"

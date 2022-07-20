@@ -1,18 +1,6 @@
 <template>
   <AgGridComponent
     :gridData="suppliesList"
-    :gridColumns="[
-      'supplyName',
-      'supplyNotes',
-      'supplierName',
-      'supplyType',
-      'supplyUnits',
-      'purchaseQuantity',
-      'purchasePriceBeforeTax',
-      'percentWaste',
-      'hasPST',
-      'unitCost',
-    ]"
     :gridTools="['delete']"
     :gridColumnDefs="columnDefs"
     @gridDataUpdate="onSupplyUpdated"
@@ -52,6 +40,12 @@ const onSupplyUpdated = (data) => emit("supplyUpdated", data);
 const onSupplyDeleteClick = (data) => emit("supplyDeleted", data);
 
 const columnDefs: ColDef[] = [
+  { field: "supplyName" },
+  { field: "supplyNotes" },
+  {
+    field: "supplierName",
+    valueGetter: () => "Coming Soon",
+  },
   {
     field: "supplyType",
     cellEditor: "agSelectCellEditor",
@@ -60,16 +54,13 @@ const columnDefs: ColDef[] = [
     },
   },
   {
-    field: "supplierName",
-    valueGetter: () => "Coming Soon",
-  },
-  {
     field: "supplyUnits",
     cellEditor: "agSelectCellEditor",
     cellEditorParams: {
       values: ["gram", "litre", "ounce", "item"],
     },
   },
+  { field: "purchaseQuantity" },
   {
     field: "purchasePriceBeforeTax",
     headerName: "Purchase Price before Tax",

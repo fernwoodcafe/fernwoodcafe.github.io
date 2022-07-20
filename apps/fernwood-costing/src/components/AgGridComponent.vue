@@ -34,7 +34,6 @@ import { ref, watch } from "vue";
 
 type Props = {
   gridData: ReactiveArray<object>;
-  gridColumns: Array<string>;
   gridColumnDefs?: Array<ColDef>;
   gridTools?: Array<"edit" | "delete">;
 };
@@ -97,19 +96,7 @@ const onCellEditRequest = (event: CellEditRequestEvent) => {
 const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
-  const columnDefs: ColDef[] = props.gridColumns.map((field) => {
-    const def = props.gridColumnDefs?.find((def) => def.field == field);
-    if (def) {
-      // Complex Column.
-      console.log("complex", def);
-      return def;
-    }
-
-    // Simple Column.
-    return {
-      field,
-    };
-  });
+  const columnDefs: ColDef[] = props.gridColumnDefs;
 
   if (props.gridTools != null) {
     columnDefs.push({
