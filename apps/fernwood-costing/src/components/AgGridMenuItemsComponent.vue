@@ -42,47 +42,40 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     field: "menuItemName",
   },
   {
-    headerName: "Summary",
-    children: [
-      {
-        headerName: "Cost",
-        editable: false,
-        cellRenderer: ({ data }) => {
-          const cost = calculateMenuItemTotalCost(
-            data,
-            props.suppliesList.items
-          );
+    headerName: "Cost",
+    editable: false,
+    cellRenderer: ({ data }) => {
+      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
 
-          return formatMoney(cost);
-        },
-      },
-      {
-        headerName: "Price",
-        editable: false,
-        cellRenderer: ({ data }) => {
-          const cost = calculateMenuItemTotalCost(
-            data,
-            props.suppliesList.items
-          );
-          const price = cost * props.cafeGoals.weightedAverageMarkup;
+      return formatMoney(cost);
+    },
+  },
+  {
+    headerName: `Recommended Price @ ${props.cafeGoals.weightedAverageMarkup} Markup`,
+    editable: false,
+    cellRenderer: ({ data }) => {
+      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const price = cost * props.cafeGoals.weightedAverageMarkup;
 
-          return formatMoney(price);
-        },
-      },
-      {
-        headerName: "Contribution (Price - Cost)",
-        editable: false,
-        cellRenderer: ({ data }) => {
-          const cost = calculateMenuItemTotalCost(
-            data,
-            props.suppliesList.items
-          );
-          const price = cost * props.cafeGoals.weightedAverageMarkup;
+      return formatMoney(price);
+    },
+  },
+  {
+    headerName: "Actual Price",
+  },
+  {
+    headerName: "Actual Markup",
+    editable: false,
+  },
+  {
+    headerName: "Contribution (Price - Cost)",
+    editable: false,
+    cellRenderer: ({ data }) => {
+      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const price = cost * props.cafeGoals.weightedAverageMarkup;
 
-          return formatMoney(price - cost);
-        },
-      },
-    ],
+      return formatMoney(price - cost);
+    },
   },
 ];
 </script>
