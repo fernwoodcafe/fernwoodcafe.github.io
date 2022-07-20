@@ -47,11 +47,11 @@ import formatLink from "@/formatters/formatLink";
 import formatMoney from "@/formatters/formatMoney";
 import calculateMenuItemTotalCost from "@/services/calculateMenuItemTotalCost";
 import type {
-CafeGoals,
-DomainCommand,
-MenuItem,
-MenuItemSupply,
-Supply
+  CafeGoals,
+  DomainCommand,
+  MenuItem,
+  MenuItemSupply,
+  Supply,
 } from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { computed } from "vue";
@@ -73,12 +73,13 @@ const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addSupply = (supply: Partial<Supply>) => {
+const addMenuItemSupply = (supply: Partial<Supply>) => {
   const menuItemSupply: MenuItemSupply = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,
     supplyUniqueId: supply.uniqueId,
-    supplyQuantity: 0,
+    menuItemSupplyQuantity: 0,
+    menuItemSupplyUnits: "",
   };
 
   props.sendCommand({
@@ -87,8 +88,8 @@ const addSupply = (supply: Partial<Supply>) => {
   });
 };
 
-const onClickNewIngredient = (data) => addSupply(data);
-const onClickNewPackaging = (data) => addSupply(data);
+const onClickNewIngredient = (data) => addMenuItemSupply(data);
+const onClickNewPackaging = (data) => addMenuItemSupply(data);
 
 const onMenuItemNameUpdated = async (event: Event) => {
   console.log("onMenuItemNameUpdated");
