@@ -10,7 +10,7 @@
     :readOnlyEdit="true"
     :getRowId="getRowId"
     :singleClickEdit="true"
-    :rowData="gridData.items"
+    :rowData="rowData"
     @grid-ready="onGridReady"
     @cell-edit-request="onCellEditRequest"
     @model-updated="onModelUpdated"
@@ -30,6 +30,7 @@ import type {
 } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
+import { ref, watch } from "vue";
 
 type Props = {
   gridData: ReactiveArray<object>;
@@ -47,6 +48,15 @@ type Emits = {
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
+// We create a separate variable to ensure refresh happens.
+// See https://blog.ag-grid.com/refresh-grid-after-data-change/
+const rowData = ref(props.gridData.items.slice());
+const backupRowData = rowData.value;
+
+watch(props.gridData, () => {
+  rowData.value = props.gridData.items.slice();
+});
+
 // DefaultColDef sets props common to all Columns
 const defaultColDef: ColDef = {
   sortable: true,
@@ -61,13 +71,12 @@ const defaultColDef: ColDef = {
 
 const getRowId = ({ data }) => data.uniqueId;
 
-let oldGridData = props.gridData.items.map((x) => x);
 const onModelUpdated = (event: ModelUpdatedEvent) => {
-  console.log("onModelUpdated", event);
+  console.log("onModelUpdated");
 
   // Check the length to determine if we have new records.
   // If we have new records, start editing the most recent one.
-  if (props.gridData.items.length != oldGridData.length) {
+  if (rowData.value.length > backupRowData.length) {
     const colKey = event.columnApi.getColumns()[0].getColDef().field;
     const rowIndex = props.gridData.items.length - 1;
     event.api.setFocusedCell(rowIndex, colKey);
@@ -76,8 +85,6 @@ const onModelUpdated = (event: ModelUpdatedEvent) => {
       colKey,
     });
   }
-
-  oldGridData = props.gridData.items.map((x) => x);
 };
 
 const onCellEditRequest = (event: CellEditRequestEvent) => {
