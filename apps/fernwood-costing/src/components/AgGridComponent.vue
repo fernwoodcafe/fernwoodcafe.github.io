@@ -21,6 +21,7 @@ import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
   CellEditRequestEvent,
   ColDef,
+  ColGroupDef,
   GridOptions,
   ModelUpdatedEvent,
 } from "ag-grid-community";
@@ -67,17 +68,24 @@ const defaultColDef: ColDef = {
 const getRowId = ({ data }) => data.uniqueId;
 
 const onModelUpdated = (event: ModelUpdatedEvent) => {
-  console.log("onModelUpdated");
+  console.log("onModelUpdated", rowData.value.length);
 
   // Check the length to determine if we have new records.
   // If we have new records, start editing the most recent one.
   if (rowData.value.length > backupRowData.length) {
-    const colKey = event.columnApi.getColumns()[0].getColDef().field;
+    const isColDef = (input: ColDef | ColGroupDef): input is ColDef =>
+      Object.keys(input).includes("field");
+
+    const firstEditableColKey = event.api
+      .getColumnDefs()
+      .filter(isColDef)
+      .find((def) => def.editable).field;
+
     const rowIndex = props.gridData.items.length - 1;
-    event.api.setFocusedCell(rowIndex, colKey);
+    event.api.setFocusedCell(rowIndex, firstEditableColKey);
     event.api.startEditingCell({
       rowIndex,
-      colKey,
+      colKey: firstEditableColKey,
     });
   }
 
@@ -109,7 +117,7 @@ const toolsColDef: ColDef = {
 const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
-  const columnDefs: ColDef[] = props.gridColumnDefs;
+  const columnDefs: ColDef[] = props.gridColumnDefs.slice();
 
   if (props.gridTools != null) {
     columnDefs.unshift(toolsColDef);
