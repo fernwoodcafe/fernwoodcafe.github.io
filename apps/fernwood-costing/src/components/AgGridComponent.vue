@@ -91,28 +91,30 @@ const onCellEditRequest = (event: CellEditRequestEvent) => {
   });
 };
 
+const toolsColDef: ColDef = {
+  field: "actions",
+  editable: false,
+  cellRenderer: AgRowToolsRenderer,
+  cellRendererParams: {
+    // We pass in event handlers because we do not know how to handle
+    // events that cellRenderers emit.
+    onDeleteClick: (rowData) => {
+      emit("gridRowDeleteClick", rowData);
+    },
+    onEditClick: (rowData) => {
+      emit("gridRowEditClick", rowData);
+    },
+    gridTools: props.gridTools,
+  },
+};
+
 const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
   const columnDefs: ColDef[] = props.gridColumnDefs;
 
   if (props.gridTools != null) {
-    columnDefs.push({
-      field: "actions",
-      editable: false,
-      cellRenderer: AgRowToolsRenderer,
-      cellRendererParams: {
-        // We pass in event handlers because we do not know how to handle
-        // events that cellRenderers emit.
-        onDeleteClick: (rowData) => {
-          emit("gridRowDeleteClick", rowData);
-        },
-        onEditClick: (rowData) => {
-          emit("gridRowEditClick", rowData);
-        },
-        gridTools: props.gridTools,
-      },
-    });
+    columnDefs.push(toolsColDef);
   }
 
   api.setColumnDefs(columnDefs);
