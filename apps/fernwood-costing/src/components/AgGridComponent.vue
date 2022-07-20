@@ -1,8 +1,4 @@
 <template>
-  <!--
-    Note: If we switch to readOnlyEdit,
-    then we need to adjust how some of our edits work.
-  -->
   <AgGridVue
     class="ag-theme-alpine"
     :stopEditingWhenCellsLoseFocus="true"
