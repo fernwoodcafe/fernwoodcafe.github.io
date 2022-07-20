@@ -11,9 +11,12 @@
         {{ option[optionKey] }}
       </option>
     </select>
-    <button :enabled="selectedOption != null" @click="onClick">
-      Add {{ selectedOption?.[optionKey] }}
-    </button>
+    <input
+      type="button"
+      :enabled="selectedOption != null"
+      @click="onClick"
+      :value="`Add ${selectedOption?.[optionKey]}`"
+    />
   </fieldset>
 </template>
 <script setup lang="ts">
@@ -21,7 +24,7 @@ import { ref } from "vue";
 
 type Props = {
   title: string;
-  options: any[];
+  options: string[];
   optionKey: string;
 };
 
@@ -46,6 +49,8 @@ fieldset {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  row-gap: 5px;
+  column-gap: 5px;
 }
 
 fieldset label {
@@ -57,18 +62,18 @@ fieldset select {
   flex: 0 0 400px;
 }
 
-fieldset button,
-fieldset button:hover {
+fieldset input,
+fieldset input:hover {
   flex: 0 0 480px;
   color: white;
   background-color: #5a9f71;
 }
 
-fieldset button[enabled="true"] {
+fieldset input[enabled="true"] {
   visibility: visible;
 }
 
-fieldset button[enabled="false"] {
+fieldset input[enabled="false"] {
   visibility: hidden;
 }
 </style>

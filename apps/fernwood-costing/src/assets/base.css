@@ -75,6 +75,23 @@ nav ul li a.router-link-active {
 
 /* Controls */
 
+select,
+input {
+    border: 2px solid var(--color-secondary);
+    border-radius: 5px;
+}
+
+select {
+  height:2em;
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    border-color: var(--color-info);
+    box-shadow: 0 0 10px var(--color-info);
+}
+
 input[type="button"] {
   border-radius: 5px;
   line-height: 2em;
@@ -91,7 +108,9 @@ input[type="button"][value^="Delete"] {
   background-color: var(--color-danger);
   color: white;
 }
+input[type="button"][value^="Add"],
 input[type="button"][value^="New"] {
   background-color: var(--color-success);
   color: white;
 }
+
