@@ -51,7 +51,7 @@ watch(props.menuItem, (newMenuItem) => {
 const columnDefs: (ColDef | ColGroupDef)[] = [
   {
     field: "supplyDetails",
-    headerName: "Details",
+    headerName: "Supply Cost and Units",
     editable: false,
     valueGetter: ({ data }: { data: MenuItemSupply }) => {
       const supply = props.suppliesList.items.find(
@@ -76,7 +76,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     },
   },
   {
-    headerName: "Conversion",
+    headerName: "Conversion to Menu Item Cost and Units",
     children: [
       {
         field: "menuItemSupplyUnits",
@@ -92,28 +92,27 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         headerName: "Quantity",
         valueParser: (params) => Number(params.newValue),
       },
+      {
+        headerName: "Cost (Calculated)",
+        editable: false,
+        valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
+          const targetSupply = props.suppliesList.items.find(
+            (supply) => supply.uniqueId == data.supplyUniqueId
+          );
+
+          const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
+          const costPerMenuItemUnit = convertUnitCost(
+            costPerSupplyUnit,
+            targetSupply.supplyUnits,
+            data.menuItemSupplyUnits
+          );
+
+          return data.menuItemSupplyQuantity * costPerMenuItemUnit;
+        },
+        valueFormatter: (params: ValueFormatterParams<Supply>) =>
+          formatMoney(params.value),
+      },
     ],
-  },
-  {
-    field: "supplyCost",
-    headerName: "Cost (Calculated)",
-    editable: false,
-    valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
-      const targetSupply = props.suppliesList.items.find(
-        (supply) => supply.uniqueId == data.supplyUniqueId
-      );
-
-      const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
-      const costPerMenuItemUnit = convertUnitCost(
-        costPerSupplyUnit,
-        targetSupply.supplyUnits,
-        data.menuItemSupplyUnits
-      );
-
-      return data.menuItemSupplyQuantity * costPerMenuItemUnit;
-    },
-    valueFormatter: (params: ValueFormatterParams<Supply>) =>
-      formatMoney(params.value),
   },
 ];
 </script>
