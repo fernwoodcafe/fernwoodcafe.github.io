@@ -71,11 +71,11 @@ const packagingOptions = props.suppliesList.items.filter(
 );
 
 const addSupply = (supply: Partial<Supply>) => {
-  const menuItemSupply = {
+  const menuItemSupply: MenuItemSupply = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,
     supplyUniqueId: supply.uniqueId,
-    supplyName: supply.supplyName,
+    supplyQuantity: 0,
   };
 
   props.sendCommand({
@@ -153,31 +153,37 @@ const menuItemRecommendedPrice = computed(() =>
 <style>
 form {
   display: flex;
+  column-gap: 5px;
+  margin-bottom: 10px;
 }
 
 fieldset {
   flex: 0 0 auto;
   border: none;
+  padding: 0;
 }
 
 dl {
   font-size: 1rem;
   line-height: 1.2rem;
-  padding: 10px;
-  border: thin solid gray;
+  display: flex;
+  column-gap: 10px;
 }
 
 dl div {
-  display: flex;
-  justify-content: flex-start;
+  background-color: var(--color-info);
+  border-radius: 5px;
+  padding: 15px;
 }
 
 dl div dt {
-  font-weight: 500;
-  flex: 0 0 32%;
+  font-weight: bolder;
+  text-align: left;
+  margin-bottom: 5px;
 }
 
 dl div dd {
-  flex: 0 0 25%;
+  text-align: left;
+  margin: 0;
 }
 </style>

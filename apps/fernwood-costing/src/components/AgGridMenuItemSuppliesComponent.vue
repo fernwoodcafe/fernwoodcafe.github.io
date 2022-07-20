@@ -58,14 +58,16 @@ watch(props.menuItem, (newMenuItem) => {
 const columnDefs: ColDef[] = [
   {
     field: "supplyDetails",
-    headerName: "Name",
+    headerName: "Details",
     cellEditor: "agSelectCellEditor",
     cellEditorParams: {
       values: props.suppliesList.items.map((item) => item.supplyName),
     },
     valueGetter: ({ data }) => {
-      console.log(data);
-      return data.supplyName;
+      const target = props.suppliesList.items.find(
+        (item) => item.uniqueId == data.supplyUniqueId
+      );
+      return target.supplyName;
     },
   },
   {
