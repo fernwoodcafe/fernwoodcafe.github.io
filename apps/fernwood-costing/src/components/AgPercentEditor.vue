@@ -1,5 +1,5 @@
 <template>
-  <input ref="input" type="number" v-model="percent" />
+  <input ref="input" class="percent" type="number" v-model="percent" />
 </template>
 <script lang="ts">
 import type { ICellEditorParams } from "ag-grid-community";
@@ -25,8 +25,8 @@ export default defineComponent({
   },
 });
 </script>
-<style module>
-input {
+<style>
+.ag-root-wrapper input.percent {
   height: 100%;
   width: 100%;
   border: none;
