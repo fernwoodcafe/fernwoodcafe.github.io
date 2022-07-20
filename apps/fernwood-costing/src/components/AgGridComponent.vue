@@ -92,17 +92,15 @@ const onCellEditRequest = (event: CellEditRequestEvent) => {
 };
 
 const toolsColDef: ColDef = {
-  field: "actions",
+  headerName: "Actions",
   editable: false,
   cellRenderer: AgRowToolsRenderer,
   cellRendererParams: {
-    // We pass in event handlers because we do not know how to handle
-    // events that cellRenderers emit.
-    onDeleteClick: (rowData) => {
-      emit("gridRowDeleteClick", rowData);
-    },
     onEditClick: (rowData) => {
       emit("gridRowEditClick", rowData);
+    },
+    onDeleteClick: (rowData) => {
+      emit("gridRowDeleteClick", rowData);
     },
     gridTools: props.gridTools,
   },
@@ -114,6 +112,7 @@ const onGridReady = ({ api }: GridOptions) => {
   const columnDefs: ColDef[] = props.gridColumnDefs;
 
   if (props.gridTools != null) {
+    columnDefs.unshift(toolsColDef);
     columnDefs.push(toolsColDef);
   }
 
