@@ -29,18 +29,18 @@ h2 input,
 h3 input,
 h4 input,
 h5 input {
-  font-size:inherit;
+  font-size: inherit;
 }
 
 /* Nav */
 
 nav ul {
-  padding:0;
+  padding: 0;
   list-style: none;
-  display:flex;
+  display: flex;
   justify-content: flex-start;
   align-items: stretch;
-  column-gap:5px;
+  column-gap: 5px;
 }
 
 nav ul li {
@@ -60,8 +60,8 @@ nav ul li:last-child a {
 nav ul li a {
   background-color: var(--color-success);
   color: white;
-  padding:10px;
-  line-height:3em;
+  padding: 10px;
+  line-height: 3em;
   text-decoration: none;
 }
 
@@ -77,28 +77,28 @@ nav ul li a.router-link-active {
 
 select,
 input {
-    border: 2px solid var(--color-secondary);
-    border-radius: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  border: 2px solid var(--color-secondary);
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 select {
-  height:2em;
+  height: 2em;
 }
 
 select:focus,
 input:focus {
-    outline: none;
-    border-color: var(--color-info);
-    box-shadow: 0 0 10px var(--color-info);
+  outline: none;
+  border-color: var(--color-info);
+  box-shadow: 0 0 10px var(--color-info);
 }
 
 input[type="button"] {
   border-radius: 5px;
   line-height: 2em;
-  border:none;
-  margin-right:5px;
+  border: none;
+  margin-right: 5px;
   line-height: 2em;
 }
 
@@ -115,4 +115,3 @@ input[type="button"][value^="New"] {
   background-color: var(--color-success);
   color: white;
 }
-
