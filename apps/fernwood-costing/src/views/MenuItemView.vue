@@ -12,7 +12,7 @@
       <dd>{{ formatMoney(menuItemTotalCost) }}</dd>
     </div>
     <div>
-      <dt>Recommended Menu Price @ 3.5</dt>
+      <dt>Recommended Menu Price @ {{ cafeGoals.weightedAverageMarkup }}</dt>
       <dd>{{ formatMoney(menuItemRecommendedPrice) }}</dd>
     </div>
   </dl>
@@ -45,7 +45,9 @@ import FrcInput from "@/components/FrcInput.vue";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
 import formatLink from "@/formatters/formatLink";
 import formatMoney from "@/formatters/formatMoney";
+import calculateMenuItemTotalCost from "@/services/calculateMenuItemTotalCost";
 import type {
+  CafeGoals,
   DomainCommand,
   MenuItem,
   MenuItemSupply,
@@ -57,6 +59,7 @@ import { computed } from "vue";
 type Props = {
   menuItem: MenuItem;
   suppliesList: ReactiveArray<Supply>;
+  cafeGoals: CafeGoals;
   sendCommand: (Command: DomainCommand) => Promise<void>;
 };
 
@@ -123,28 +126,12 @@ const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
     payload: data,
   });
 
-const calculateMenuItemTotalCost = () =>
-  props.menuItem.menuItemSupplies
-    .map((menuItemSupply) => {
-      const target = props.suppliesList.items.find(
-        (s) => s.uniqueId == menuItemSupply.supplyUniqueId
-      );
+const calculateMenuItemRecommendedMarkup = () =>
+  menuItemTotalCost.value * props.cafeGoals.weightedAverageMarkup;
 
-      const unitPrice =
-        target == null
-          ? 0
-          : target.purchasePriceBeforeTax / target.purchaseQuantity;
-
-      return {
-        unitPrice,
-        ...menuItemSupply,
-      };
-    })
-    .reduce((acc, next) => acc + next.supplyQuantity * next.unitPrice, 0);
-
-const calculateMenuItemRecommendedMarkup = () => menuItemTotalCost.value * 3.5;
-
-const menuItemTotalCost = computed(() => calculateMenuItemTotalCost());
+const menuItemTotalCost = computed(() =>
+  calculateMenuItemTotalCost(props.menuItem, props.suppliesList.items)
+);
 const menuItemRecommendedPrice = computed(() =>
   calculateMenuItemRecommendedMarkup()
 );

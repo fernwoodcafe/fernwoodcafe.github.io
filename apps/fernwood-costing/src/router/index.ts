@@ -3,6 +3,7 @@ import materializeSupplies from "@/cqrs-es/materializeSupplies";
 import DomainEventsRepo from "@/data/DomainEventsRepo";
 import setupDB from "@/data/indexedDB-setup";
 import formatLink from "@/formatters/formatLink";
+import type { CafeGoals } from "@/types/CafeDomain";
 import { reactive, watch } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import handleCommand from "../cqrs-es/handleCommand";
@@ -22,6 +23,10 @@ export const suppliesList = materializeSupplies(
   ...domainEvents
 );
 
+const cafeGoals = reactive<CafeGoals>({
+  weightedAverageMarkup: 3.5,
+});
+
 const buildMenuItemRoutes = () =>
   menuItemsList.items.map((menuItem) => ({
     path: `/menu-items/${formatLink(menuItem.menuItemName)}`,
@@ -29,6 +34,7 @@ const buildMenuItemRoutes = () =>
     props: {
       menuItem,
       suppliesList,
+      cafeGoals,
       sendCommand: handleCommand,
     },
   }));
@@ -58,6 +64,8 @@ const router = createRouter({
       component: () => import("../views/MenuItemsListView.vue"),
       props: {
         menuItemsList,
+        suppliesList,
+        cafeGoals,
         sendCommand: handleCommand,
       },
     },

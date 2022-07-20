@@ -3,6 +3,8 @@
   <input type="button" @click="onClickNewMenuItem" value="New Menu Item" />
   <AgGridMenuItemsComponent
     :menuItemsList="menuItemsList"
+    :suppliesList="suppliesList"
+    :cafeGoals="cafeGoals"
     @menuItemUpdated="onMenuItemUpdated"
     @menuItemDeleted="onMenuItemDeleted"
     @menuItemEditClick="onMenuItemEditClick"
@@ -14,13 +16,20 @@
 <script setup lang="ts">
 import AgGridMenuItemsComponent from "@/components/AgGridMenuItemsComponent.vue";
 import formatLink from "@/formatters/formatLink";
-import type { DomainCommand, MenuItem } from "@/types/CafeDomain";
+import type {
+  CafeGoals,
+  DomainCommand,
+  MenuItem,
+  Supply,
+} from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
+  suppliesList: ReactiveArray<Supply>;
+  cafeGoals: CafeGoals;
   sendCommand: (Command: DomainCommand<MenuItem>) => Promise<void>;
 };
 

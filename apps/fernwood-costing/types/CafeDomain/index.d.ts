@@ -1,3 +1,4 @@
+import { CafeGoals } from "./CafeGoals";
 import { MenuItem } from "./MenuItem";
 import { MenuItemSupply } from "./MenuItemSupply";
 import { Supply } from "./Supply";
@@ -47,6 +48,6 @@ export type DomainEvent<T = any> = {
   meta?: Record<string, any>;
 };
 
-export { MenuItem, MenuItemSupply, Supply };
+export { MenuItem, MenuItemSupply, Supply, CafeGoals };
 
 export as namespace CafeDomain;
