@@ -39,6 +39,7 @@ const onClickNewSupply = () => {
       uniqueId: crypto.randomUUID(),
       supplyUnits: "",
       supplyName: `New Supply ${props.suppliesList.items.length}`,
+      supplier: "",
       supplyType: "ingredient",
       percentWaste: 0,
       hasPST: false,

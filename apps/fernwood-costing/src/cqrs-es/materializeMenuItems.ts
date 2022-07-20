@@ -57,6 +57,15 @@ export default (
       );
     }
 
+    if (event.type == "supply_deleted") {
+      menuItemsList.items = menuItemsList.items.reduce((acc, menuItem) => {
+        menuItem.menuItemSupplies = menuItem.menuItemSupplies.filter(
+          (supply) => supply.supplyUniqueId != event.payload.uniqueId
+        );
+        return acc.concat([menuItem]);
+      }, []);
+    }
+
     if (event.type == "supply_removed_from_menu_item") {
       menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
         menuItem.uniqueId == event.payload.menuItemUniqueId

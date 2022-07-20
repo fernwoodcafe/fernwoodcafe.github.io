@@ -1,6 +1,10 @@
-import type { DomainEvent } from "@/types/CafeDomain";
+import type { DomainEvent, Supply } from "@/types/CafeDomain";
+import type { ReactiveArray } from "@/types/ReactiveArray";
 
-export default (suppliesList, ...events: DomainEvent[]) => {
+export default (
+  suppliesList: ReactiveArray<Supply>,
+  ...events: DomainEvent[]
+) => {
   events.forEach((event) => {
     console.log("materializeSupplies", event.type);
 

@@ -3,6 +3,7 @@
     :gridData="suppliesList"
     :gridColumns="[
       'supplyName',
+      'supplier',
       'supplyType',
       'supplyUnits',
       'purchaseQuantity',

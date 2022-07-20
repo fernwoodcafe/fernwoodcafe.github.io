@@ -67,6 +67,7 @@ const columnDefs: ColDef[] = [
       const target = props.suppliesList.items.find(
         (item) => item.uniqueId == data.supplyUniqueId
       );
+
       return target.supplyName;
     },
   },
