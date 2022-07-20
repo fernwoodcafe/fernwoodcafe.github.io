@@ -153,11 +153,10 @@ const menuItemRecommendedPrice = computed(() =>
 <style>
 form {
   display: flex;
-  justify-content: flex-start;
 }
 
 fieldset {
-  flex: 0 0 50%;
+  flex: 0 0 auto;
   border: none;
 }
 

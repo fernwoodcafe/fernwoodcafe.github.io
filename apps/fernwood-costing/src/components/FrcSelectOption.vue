@@ -24,7 +24,7 @@ import { ref } from "vue";
 
 type Props = {
   title: string;
-  options: string[];
+  options: Record<string, any>[];
   optionKey: string;
 };
 
@@ -47,33 +47,30 @@ const onClick = () => {
 <style scoped>
 fieldset {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  align-items: baseline;
   row-gap: 5px;
-  column-gap: 5px;
 }
 
 fieldset label {
-  flex: 0 0 80px;
+  flex: 0 0 auto;
   font-weight: 600;
 }
 
 fieldset select {
-  flex: 0 0 400px;
+  flex: 0 0 auto;
 }
 
-fieldset input,
-fieldset input:hover {
-  flex: 0 0 480px;
-  color: white;
-  background-color: #5a9f71;
+fieldset input[type="button"] {
+  margin: 0;
+  flex: 0 0 auto;
 }
 
-fieldset input[enabled="true"] {
+fieldset input[type="button"][enabled="true"] {
   visibility: visible;
 }
 
-fieldset input[enabled="false"] {
+fieldset input[type="button"][enabled="false"] {
   visibility: hidden;
 }
 </style>
