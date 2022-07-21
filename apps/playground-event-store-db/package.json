@@ -10,6 +10,8 @@
   "license": "MIT",
   "engines": "12.18.3",
   "dependencies": {
-    "@eventstore/db-client": "^3.4.0"
+    "@eventstore/db-client": "^3.4.0",
+    "@koa/router": "^12.0.0",
+    "koa": "^2.13.4"
   }
 }

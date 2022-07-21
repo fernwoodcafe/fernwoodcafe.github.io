@@ -1,4 +1,3 @@
-
 const {
   EventStoreDBClient,
   jsonEvent,
@@ -11,13 +10,10 @@ const client = new EventStoreDBClient(
     { insecure: true }
 );
 
-const doSomethingProductive = (event) => {
-    console.log(event);
-}
+const streamName = "es_supported_clients";
 
-async function simpleTest() {
-  const streamName = "es_supported_clients";
-
+const post = () => { 
+  console.log('post');
   const event = jsonEvent({
     type: "grpc-client",
     data: {
@@ -26,7 +22,12 @@ async function simpleTest() {
     },
   });
 
-  const appendResult = await client.appendToStream(streamName, [event]);
+  return client.appendToStream(streamName, [event]);
+}
+
+const get = async () => { 
+  console.log('get');
+  await post();
 
   const events = client.readStream(streamName, {
     fromRevision: START,
@@ -34,9 +35,12 @@ async function simpleTest() {
     maxCount: 10,
   });
 
+  const eventBuffer = [];
   for await (const event of events) {
-     doSomethingProductive(event);
+    eventBuffer.push(event);
   }
+
+  return eventBuffer;
 }
 
-simpleTest();
+module.exports = { post, get };
