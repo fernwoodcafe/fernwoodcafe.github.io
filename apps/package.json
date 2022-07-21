@@ -8,6 +8,7 @@
   "author": "Shaun Luttin",
   "license": "MIT",
   "dependencies": {
+    "@eventstore/db-client": "^3.4.0",
     "serve": "^13.0.4"
   }
 }
