@@ -21,7 +21,6 @@ import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
   CellEditRequestEvent,
   ColDef,
-  ColGroupDef,
   GridOptions,
   ModelUpdatedEvent,
 } from "ag-grid-community";
@@ -73,19 +72,30 @@ const onModelUpdated = (event: ModelUpdatedEvent) => {
   // Check the length to determine if we have new records.
   // If we have new records, start editing the most recent one.
   if (rowData.value.length > backupRowData.length) {
-    const isColDef = (input: ColDef | ColGroupDef): input is ColDef =>
-      Object.keys(input).includes("field");
+    // Get the most recent row and select it.
+    const rowIndex = event.api.getLastDisplayedRow();
+    const row = event.api
+      .getRenderedNodes()
+      .find((row) => row.rowIndex == rowIndex);
 
-    const firstEditableColKey = event.api
-      .getColumnDefs()
-      .filter(isColDef)
-      .find((def) => def.editable).field;
+    row.setSelected(true, true);
 
-    const rowIndex = props.gridData.items.length - 1;
-    event.api.setFocusedCell(rowIndex, firstEditableColKey);
+    // Get its first editable cell and select it.
+    const cell = event.columnApi
+      .getColumns()
+      .find((c) => c.isCellEditable(row));
+
+    cell.setColDef(
+      {
+        ...cell.getColDef(),
+        cellClass: "look-here-now",
+      },
+      null
+    );
+
     event.api.startEditingCell({
-      rowIndex,
-      colKey: firstEditableColKey,
+      rowIndex: rowIndex,
+      colKey: cell.getColId(),
     });
   }
 

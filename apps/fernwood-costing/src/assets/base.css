@@ -115,3 +115,8 @@ input[type="button"][value^="New"] {
   background-color: var(--color-success);
   color: white;
 }
+
+input:focus
+{
+  background-color:  var(--color-info) !important;
+}
