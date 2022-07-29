@@ -29,24 +29,13 @@
   </head>
 
   <body>
-        <button type="button" onclick="signIn()" >Sign In</button>
-        <button type="button" onclick="signIn()" >Sign Out</button>
-    </nav>
-    <br />
-    <button
-      class="btn btn-primary"
-      id="readExcel"
-      onclick="readExcel()"
-    >
-      Read Excel
-    </button>
+    <button type="button" onclick="signIn()" >Sign In</button>
+    <button type="button" onclick="signOut()" >Sign Out</button>
+    <button id="readExcel" onclick="readExcel()" >Read Excel</button>
 
     <!-- importing app scripts (load order is important) -->
     <script type="text/javascript" src="./authConfig.js"></script>
     <script type="text/javascript" src="./graphConfig.js"></script>
-
-    <!-- <script type="text/javascript" src="./authRedirect.js"></script>   -->
-    <!-- uncomment the above line and comment the line below if you would like to use the redirect flow -->
     <script type="text/javascript" src="./authRedirect.js"></script>
     <script type="text/javascript" src="./graph.js"></script>
   </body>
