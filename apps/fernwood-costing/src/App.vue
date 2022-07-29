@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import NavBar from "@/components/AuthNavBar.vue";
 </script>
 
 <template>
   <main>
     <header>
+      <NavBar />
       <nav>
         <ul>
           <li><RouterLink to="/supplies">Supplies</RouterLink></li>
