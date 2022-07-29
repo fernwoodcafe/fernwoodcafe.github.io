@@ -13,15 +13,6 @@ function callMSGraph(endpoint, token, callback) {
     headers: headers,
   };
 
-  console.log(
-    "request made to Graph API at: " +
-      new Date().toString() +
-      " to " +
-      endpoint +
-      " with token " +
-      bearer
-  );
-
   fetch(endpoint, options)
     .then((response) => response.json())
     .then((response) => callback(response, endpoint))

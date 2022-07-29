@@ -110,3 +110,17 @@ function readMail() {
       console.error(error);
     });
 }
+
+function readExcel() {
+  getTokenRedirect(tokenRequest)
+    .then((response) => {
+      callMSGraph(
+        graphConfig.graphDriveEndpoint,
+        response.accessToken,
+        (data, endpoint) => console.log(data, endpoint)
+      );
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
