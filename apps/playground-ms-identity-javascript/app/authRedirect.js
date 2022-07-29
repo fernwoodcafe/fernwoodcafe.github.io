@@ -31,14 +31,12 @@ function selectAccount() {
     console.warn("Multiple accounts detected.");
   } else if (currentAccounts.length === 1) {
     username = currentAccounts[0].username;
-    showWelcomeMessage(username);
   }
 }
 
 function handleResponse(response) {
   if (response !== null) {
     username = response.account.username;
-    showWelcomeMessage(username);
   } else {
     selectAccount();
   }
