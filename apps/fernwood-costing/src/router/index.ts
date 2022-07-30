@@ -14,29 +14,37 @@ const db = await setupDB();
 export const domainEventsRepo = DomainEventsRepo(db);
 const domainEvents = await domainEventsRepo.select();
 
-export const menuItemsList = materializeMenuItems(
+export const menuItems = materializeMenuItems(
   reactive({ items: [] }),
   ...domainEvents
 );
 
-export const suppliesList = materializeSupplies(
+export const supplies = materializeSupplies(
   reactive({ items: [] }),
   ...domainEvents
 );
+
+const sendCommand = handleCommand({
+  menuItems,
+  supplies,
+  materializeMenuItems,
+  materializeSupplies,
+  domainEventsRepo,
+});
 
 const cafeGoals = reactive<CafeGoals>({
   weightedAverageMarkup: 3.5,
 });
 
 const buildMenuItemRoutes = () =>
-  menuItemsList.items.map((menuItem) => ({
+  menuItems.items.map((menuItem) => ({
     path: `/menu-items/${formatLink(menuItem.menuItemName)}`,
     component: () => import("../views/MenuItemView.vue"),
     props: {
       menuItem,
-      suppliesList,
+      suppliesList: supplies,
       cafeGoals,
-      sendCommand: handleCommand,
+      sendCommand,
     },
   }));
 
@@ -55,8 +63,8 @@ const router = createRouter({
       name: "supplies",
       component: () => import("../views/SuppliesListView.vue"),
       props: {
-        suppliesList,
-        sendCommand: handleCommand,
+        suppliesList: supplies,
+        sendCommand,
       },
     },
     {
@@ -64,17 +72,17 @@ const router = createRouter({
       name: "menuItems",
       component: () => import("../views/MenuItemsListView.vue"),
       props: {
-        menuItemsList,
-        suppliesList,
+        menuItemsList: menuItems,
+        suppliesList: supplies,
         cafeGoals,
-        sendCommand: handleCommand,
+        sendCommand,
       },
     },
     ...buildMenuItemRoutes(),
   ],
 });
 
-watch(menuItemsList, () => {
+watch(menuItems, () => {
   const routes = buildMenuItemRoutes();
   routes.forEach((route) => {
     router.addRoute(route);

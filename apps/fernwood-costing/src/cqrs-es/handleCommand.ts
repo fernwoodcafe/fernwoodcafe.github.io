@@ -1,7 +1,14 @@
-import handleMenuItemCommand from "./handleMenuItemCommand";
-import handleSupplyCommand from "./handleSupplyCommand";
+import type { DomainCommand } from "@/types/CafeDomain";
+import handleMenuItemCommand, {
+  type Props as MenuItemProps,
+} from "./handleMenuItemCommand";
+import handleSupplyCommand, {
+  type Props as SupplyProps,
+} from "./handleSupplyCommand";
 
-export default async (command) => {
-  await handleSupplyCommand(command);
-  await handleMenuItemCommand(command);
+type Props = MenuItemProps & SupplyProps;
+
+export default (props: Props) => async (command: DomainCommand) => {
+  await handleSupplyCommand(props, command);
+  await handleMenuItemCommand(props, command);
 };

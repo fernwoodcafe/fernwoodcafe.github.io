@@ -1,8 +1,18 @@
-import materializeSupplies from "@/cqrs-es/materializeSupplies";
-import type { DomainCommand } from "@/types/CafeDomain";
-import { domainEventsRepo, suppliesList } from "../router/index";
+import type { DomainEventsRepository } from "@/data/DomainEventsRepo";
+import type { DomainCommand, Supply } from "@/types/CafeDomain";
+import type { ReactiveArray } from "@/types/ReactiveArray";
+import type { Materializer } from "./Materializer";
 
-export default async function (command: DomainCommand) {
+export type Props = {
+  supplies: ReactiveArray<Supply>;
+  materializeSupplies: Materializer<ReactiveArray<Supply>>;
+  domainEventsRepo: DomainEventsRepository;
+};
+
+export default async function (
+  { supplies, materializeSupplies, domainEventsRepo }: Props,
+  command: DomainCommand
+) {
   let eventResult = null;
 
   if (command.type == "create_supply") {
@@ -27,6 +37,6 @@ export default async function (command: DomainCommand) {
   }
 
   if (eventResult) {
-    materializeSupplies(suppliesList, eventResult);
+    materializeSupplies(supplies, eventResult);
   }
 }

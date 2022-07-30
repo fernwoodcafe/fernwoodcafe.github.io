@@ -1,8 +1,22 @@
-import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
-import type { DomainCommand } from "@/types/CafeDomain";
-import { domainEventsRepo, menuItemsList } from "../router/index";
+import type { DomainEventsRepository } from "@/data/DomainEventsRepo";
+import type { DomainCommand, MenuItem } from "@/types/CafeDomain";
+import type { ReactiveArray } from "@/types/ReactiveArray";
+import type { Materializer } from "./Materializer";
 
-export default async function (command: DomainCommand) {
+export type Props = {
+  menuItems: ReactiveArray<MenuItem>;
+  materializeMenuItems: Materializer<ReactiveArray<MenuItem>>;
+  domainEventsRepo: DomainEventsRepository;
+};
+
+export default async function (
+  {
+    menuItems: model,
+    materializeMenuItems: materializer,
+    domainEventsRepo,
+  }: Props,
+  command: DomainCommand
+) {
   let eventResult = null;
 
   console.log(command.type, command.payload);
@@ -50,6 +64,6 @@ export default async function (command: DomainCommand) {
   }
 
   if (eventResult) {
-    materializeMenuItems(menuItemsList, eventResult);
+    materializer(model, eventResult);
   }
 }
