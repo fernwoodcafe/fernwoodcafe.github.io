@@ -1,13 +1,10 @@
 <template>
-  <div class="welcome-name">
-    <span v-if="!!name">Welcome, {{ name }}</span>
-    <i class="el-icon-user"></i>
-  </div>
+  <span v-if="!!name">Welcome, {{ name }}</span>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { useMsal } from "@/composition-api/useMsal";
+import { computed } from "vue";
 
 const { accounts } = useMsal();
 
@@ -18,12 +15,6 @@ const name = computed(() => {
       return name.split(" ")[0];
     }
   }
-  return "";
+  return "No Name";
 });
 </script>
-
-<style>
-.welcome-name {
-  color: #fff;
-}
-</style>

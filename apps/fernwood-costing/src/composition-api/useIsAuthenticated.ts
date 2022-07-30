@@ -1,4 +1,4 @@
-import { type Ref, ref, watch } from "vue";
+import { ref, watch, type Ref } from "vue";
 import { useMsal } from "./useMsal";
 
 export function useIsAuthenticated(): Ref<boolean> {
