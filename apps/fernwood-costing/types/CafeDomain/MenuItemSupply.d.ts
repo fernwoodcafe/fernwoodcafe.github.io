@@ -1,4 +1,4 @@
-import { DomainEntity } from ".";
+import { DomainEntity } from "DomainEntity";
 
 export type MenuItemSupply = DomainEntity & {
   menuItemUniqueId: string;

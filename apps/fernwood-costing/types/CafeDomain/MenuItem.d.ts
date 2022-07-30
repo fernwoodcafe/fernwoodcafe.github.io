@@ -1,4 +1,4 @@
-import { DomainEntity } from ".";
+import { DomainEntity } from "DomainEntity";
 import { MenuItemSupply } from "./MenuItemSupply";
 
 export type MenuItem = DomainEntity & {

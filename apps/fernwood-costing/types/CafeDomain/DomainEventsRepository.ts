@@ -1,4 +1,4 @@
-import type { DomainEvent } from "@/types/CafeDomain";
+import type { DomainEvent } from "./DomainEvent";
 
 export type DomainEventsRepository = {
   insert: (event: DomainEvent) => Promise<DomainEvent>;
