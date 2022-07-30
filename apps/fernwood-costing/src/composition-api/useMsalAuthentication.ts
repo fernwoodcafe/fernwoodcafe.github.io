@@ -1,5 +1,5 @@
-import { AuthenticationResult, AuthError, InteractionStatus, InteractionType, PopupRequest, RedirectRequest, SilentRequest } from "@azure/msal-browser";
-import { Ref, ref, watch } from "vue";
+import { type AuthenticationResult, AuthError, InteractionStatus, InteractionType, type PopupRequest, type RedirectRequest, type SilentRequest } from "@azure/msal-browser";
+import { type Ref, ref, watch } from "vue";
 import { useMsal } from "./useMsal";
 
 export type MsalAuthenticationResult = {
@@ -73,7 +73,7 @@ export function useMsalAuthentication(interactionType: InteractionType, request:
     });
 
     acquireToken();
-    
+
     return {
         acquireToken,
         result,

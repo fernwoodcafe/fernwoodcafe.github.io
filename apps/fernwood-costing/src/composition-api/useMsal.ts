@@ -1,5 +1,5 @@
-import { AccountInfo, InteractionStatus, PublicClientApplication } from "@azure/msal-browser";
-import { getCurrentInstance, Ref, toRefs } from "vue";
+import { type AccountInfo, InteractionStatus, PublicClientApplication } from "@azure/msal-browser";
+import { getCurrentInstance, type Ref, toRefs } from "vue";
 
 export type MsalContext = {
     instance: PublicClientApplication,

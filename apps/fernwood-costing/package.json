@@ -15,10 +15,10 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^2.26.0",
-    "vue": "^3.2.37",
-    "vue-router": "^4.1.2",
     "ag-grid-community": "^28.0.2",
-    "ag-grid-vue3": "^28.0.0"
+    "ag-grid-vue3": "^28.0.0",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

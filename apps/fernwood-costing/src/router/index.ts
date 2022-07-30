@@ -7,6 +7,7 @@ import type { CafeGoals } from "@/types/CafeDomain";
 import { reactive, watch } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import handleCommand from "../cqrs-es/handleCommand";
+import { registerGuard } from "./Guard";
 
 const db = await setupDB();
 
@@ -81,5 +82,7 @@ watch(menuItemsList, () => {
 
   console.log("routes", router.getRoutes());
 });
+
+registerGuard(router);
 
 export default router;
