@@ -1,6 +1,6 @@
 <template>
+  <input type="button" v-on:click="logoutRedirect" value="Sign Out" />
   <WelcomeName />
-  <button v-on:click="logoutRedirect">Logout</button>
 </template>
 <script setup lang="ts">
 import { useMsal } from "@/auth-msft/useMsal";

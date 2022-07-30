@@ -119,3 +119,8 @@ input[type="button"][value^="New"] {
 input:focus {
   background-color: var(--color-info) !important;
 }
+
+input[type="button"][value^="Sign In"],
+input[type="button"][value^="Sign Out"] {
+  background-color: var(--color-info);
+}
