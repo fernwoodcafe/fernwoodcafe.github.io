@@ -1,7 +1,7 @@
 import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
 import materializeSupplies from "@/cqrs-es/materializeSupplies";
-import DomainEventsRepo from "@/data/DomainEventsRepo";
-import setupDB from "@/data/indexedDB-setup";
+import DomainEventsRepo from "@/data/indexedDB-domainEventsRepository";
+import setupDB from "@/data/indexedDB-migrate";
 import formatLink from "@/formatters/formatLink";
 import type { CafeGoals } from "@/types/CafeDomain";
 import { reactive, watch } from "vue";

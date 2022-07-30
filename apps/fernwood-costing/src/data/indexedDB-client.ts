@@ -63,43 +63,42 @@ export const $migrateDB = (
   databaseName: string,
   migrations: any[]
 ): Promise<IDBDatabase> =>
-  new Promise(async (resolve, reject) => {
-    const databases = await indexedDB.databases();
-    const findResult = databases.find((x) => x.name == databaseName);
-    const currentVersion = findResult == null ? 0 : findResult.version;
+  new Promise((resolve, reject) =>
+    indexedDB.databases().then((databases) => {
+      const findResult = databases.find((x) => x.name == databaseName);
+      const currentVersion = findResult == null ? 0 : findResult.version;
+      const openDBRequest = indexedDB.open(databaseName, migrations.length);
 
-    const openDBRequest = indexedDB.open(databaseName, migrations.length);
+      openDBRequest.onerror = (event) => {
+        console.log("error", event);
+        reject();
+      };
 
-    openDBRequest.onerror = (event) => {
-      console.log("error", event);
-      reject();
-    };
+      openDBRequest.onsuccess = (event) => {
+        console.log("success", event);
+        const db = openDBRequest.result;
+        resolve(db);
+      };
 
-    openDBRequest.onsuccess = (event) => {
-      console.log("success", event);
-      const db = openDBRequest.result;
-      resolve(db);
-    };
+      openDBRequest.onupgradeneeded = (event) => {
+        console.log("upgradeneeded", event);
+        const db = openDBRequest.result;
+        migrations.slice(currentVersion).forEach((migration) => {
+          console.log(`running migration '${migration.message}`);
+          migration.operations.forEach((operation) => {
+            const objectStore = operation(db);
+            if (!objectStore) {
+              return;
+            }
 
-    openDBRequest.onupgradeneeded = (event) => {
-      console.log("upgradeneeded", event);
-      const db = openDBRequest.result;
-
-      migrations.slice(currentVersion).forEach((migration) => {
-        console.log(`running migration '${migration.message}`);
-        migration.operations.forEach((operation) => {
-          const objectStore = operation(db);
-          if (!objectStore) {
-            return;
-          }
-
-          objectStore.transaction.oncomplete = (event) => {
-            console.log("complete", event);
-          };
+            objectStore.transaction.oncomplete = (event) => {
+              console.log("complete", event);
+            };
+          });
         });
-      });
-    };
-  });
+      };
+    })
+  );
 
 /**
  * @param {string} databaseName

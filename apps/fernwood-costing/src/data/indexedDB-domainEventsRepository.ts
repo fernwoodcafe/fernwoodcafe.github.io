@@ -1,10 +1,6 @@
 import { $create, $readMany } from "@/data/indexedDB-client";
 import type { DomainEvent } from "@/types/CafeDomain";
-
-export type DomainEventsRepository = {
-  insert: (event: DomainEvent) => Promise<DomainEvent>;
-  select: () => Promise<DomainEvent[]>;
-};
+import type { DomainEventsRepository } from "./DomainEventsRepository";
 
 export default (db: IDBDatabase): DomainEventsRepository => ({
   async insert(event: DomainEvent) {
