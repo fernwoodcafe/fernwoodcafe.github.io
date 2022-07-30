@@ -1,6 +1,6 @@
 import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
 import materializeSupplies from "@/cqrs-es/materializeSupplies";
-import DomainEventsRepo from "@/data/indexedDB-domainEventsRepository";
+import initializeRepository from "@/data/indexedDB/initializeRepository";
 import formatLink from "@/formatters/formatLink";
 import type { CafeGoals } from "@/types/CafeDomain";
 import { reactive, watch } from "vue";
@@ -8,18 +8,15 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import handleCommand from "../cqrs-es/handleCommand";
 import { registerGuard } from "./Guard";
 
-export const domainEventsRepo = DomainEventsRepo();
+const domainEventsRepo = initializeRepository();
 const domainEvents = await domainEventsRepo.select();
 
-export const menuItems = materializeMenuItems(
+const menuItems = materializeMenuItems(
   reactive({ items: [] }),
   ...domainEvents
 );
 
-export const supplies = materializeSupplies(
-  reactive({ items: [] }),
-  ...domainEvents
-);
+const supplies = materializeSupplies(reactive({ items: [] }), ...domainEvents);
 
 const sendCommand = handleCommand({
   menuItems,

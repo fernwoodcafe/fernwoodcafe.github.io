@@ -1,7 +1,3 @@
-/**
- * @param {object} obj
- * @return
- */
 const cloneObject = (obj) =>
   // Clone manually to handle the exception that we receive with Proxy objects.
   // Uncaught DOMException: Failed to execute 'put' on 'IDBObjectStore': #<Object> could not be cloned.

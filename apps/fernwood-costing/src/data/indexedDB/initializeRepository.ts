@@ -1,8 +1,18 @@
-import { $create, $readMany } from "@/data/indexedDB-client";
-import migrateDB from "@/data/indexedDB-migrate";
+import {
+  $create,
+  $deleteDB,
+  $migrateDB,
+  $readMany,
+} from "@/data/indexedDB/client";
 import type { DomainEvent, DomainEventsRepository } from "@/types/CafeDomain";
+import migrations from "./migrations";
 
-const db = await migrateDB();
+const resetPrototype = false;
+if (resetPrototype) {
+  $deleteDB("restaurantDB");
+}
+
+const db = await $migrateDB("restaurantDB", migrations);
 
 export default (): DomainEventsRepository => ({
   async insert(event: DomainEvent) {
