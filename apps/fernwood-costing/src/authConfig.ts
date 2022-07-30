@@ -6,7 +6,7 @@ export const msalConfig = {
     clientId: "cae7e594-2307-4888-a321-a17a5f2e70fb",
     authority:
       "https://login.microsoftonline.com/9b761c82-8867-470b-8d76-e5e9e0765377",
-    redirectUri: "https://www.fernwoodcafe.com/costing",
+    redirectUri: "http://localhost:5173",
   },
   cache: {
     cacheLocation: "sessionStorage",
@@ -53,4 +53,6 @@ export const loginRequest = {
 // Add here the endpoints for MS Graph API services you would like to use.
 export const graphConfig = {
   graphMeEndpoint: "https://graph.microsoft.com/v1.0/me",
+  graphDriveEndpoint: "https://graph.microsoft.com/v1.0/me/drive/root/children",
+  graphMailEndpoint: "https://graph.microsoft.com/v1.0/me/messages",
 };
