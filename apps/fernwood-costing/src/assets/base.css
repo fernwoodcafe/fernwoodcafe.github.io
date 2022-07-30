@@ -89,9 +89,14 @@ select {
 
 select:focus,
 input:focus {
-  outline: none;
   border-color: var(--color-info);
   box-shadow: 0 0 10px var(--color-info);
+}
+
+input[type="button"]:focus {
+  border-color: none;
+  box-shadow: none;
+  filter: brightness(110%);
 }
 
 input[type="button"] {
@@ -116,11 +121,7 @@ input[type="button"][value^="New"] {
   color: white;
 }
 
-input:focus {
-  background-color: var(--color-info) !important;
-}
-
 input[type="button"][value^="Sign In"],
 input[type="button"][value^="Sign Out"] {
-  background-color: var(--color-info);
+  background-color: var(--color-warning);
 }
