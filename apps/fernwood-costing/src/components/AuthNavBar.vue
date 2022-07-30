@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { useIsAuthenticated } from "@/composition-api/useIsAuthenticated";
+import { useIsAuthenticated } from "@/auth-msft/useIsAuthenticated";
 import SignInButton from "./AuthSignInButton.vue";
 import SignOutButton from "./AuthSignOutButton.vue";
 

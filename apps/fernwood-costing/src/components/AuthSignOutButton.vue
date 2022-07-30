@@ -3,7 +3,7 @@
   <button v-on:click="logoutRedirect">Logout</button>
 </template>
 <script setup lang="ts">
-import { useMsal } from "@/composition-api/useMsal";
+import { useMsal } from "@/auth-msft/useMsal";
 import WelcomeName from "./AuthWelcomeName.vue";
 
 const { instance } = useMsal();

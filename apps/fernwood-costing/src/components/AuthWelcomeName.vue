@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { useMsal } from "@/composition-api/useMsal";
+import { useMsal } from "@/auth-msft/useMsal";
 import { computed } from "vue";
 
 const { accounts } = useMsal();
