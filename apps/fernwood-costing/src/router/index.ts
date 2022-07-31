@@ -6,7 +6,6 @@ import type { CafeGoals } from "@/types/CafeDomain";
 import { reactive, watch } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import handleCommand from "../cqrs-es/handleCommand";
-import { registerGuard } from "./Guard";
 
 const domainEventsRepo = initializeRepository();
 const domainEvents = await domainEventsRepo.select();
@@ -84,7 +83,5 @@ watch(menuItems, () => {
 
   console.log("routes", router.getRoutes());
 });
-
-registerGuard(router);
 
 export default router;

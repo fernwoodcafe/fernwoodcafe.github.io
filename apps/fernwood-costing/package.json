@@ -14,7 +14,6 @@
     "format": "prettier ./src ./types -w"
   },
   "dependencies": {
-    "@azure/msal-browser": "^2.26.0",
     "ag-grid-community": "^28.0.2",
     "ag-grid-vue3": "^28.0.0",
     "vue": "^3.2.37",
