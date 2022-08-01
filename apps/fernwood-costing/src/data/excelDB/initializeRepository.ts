@@ -1,8 +1,9 @@
 import type { DomainEvent, DomainEventsRepository } from "@/types/CafeDomain";
-import { graphClient } from "./graphClient";
+import initializeGraphClient from "./initializeGraphClient";
 
 const costingWorkbookPath = "CostingApp-EventStore.xlsx";
 const costingEventsTableName = "EventStream";
+const graphClient = await initializeGraphClient();
 
 /**
  * https://docs.microsoft.com/en-us/graph/api/table-range?view=graph-rest-1.0&tabs=http
