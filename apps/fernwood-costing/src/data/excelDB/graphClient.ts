@@ -33,17 +33,25 @@ export const httpGet = (endpoint: string) => {
   return fetchJson(request);
 };
 
-// GET https://graph.microsoft.com/v1.0/me/drive/items/01CYZLFJGUJ7JHBSZDFZFL25KSZGQTVAUN/workbook/worksheets/Sheet32243
-// content-type: Application/Json
-// authorization: Bearer {access-token}
-// workbook-session-id: {session-id}
-const getEvents = async (
+const createPersistentSession = async (
+  driveEndpoint: string,
+  workbookPath: string
+) => {
+  const endpoint = `${driveEndpoint}/root:/${workbookPath}:/workbook/createSession`;
+  const json = await httpPost(endpoint, {
+    persistChanges: true,
+  });
+
+  return json.id;
+};
+
+const getWorkbookTableRange = (
   sessionId: string,
   driveEndpoint: string,
-  workbookId: string
+  workbookPath: string,
+  tableName: string
 ) => {
-  // const endpoint = `${driveEndpoint}/items/${workbookId}/workbook/worksheets/`;
-  const endpoint = `${driveEndpoint}/items/${workbookId}/workbook/tables/EventStream/range`;
+  const endpoint = `${driveEndpoint}/root:/${workbookPath}:/workbook/tables/${tableName}/range`;
 
   const request = new Request(endpoint, {
     method: "GET",
@@ -52,29 +60,31 @@ const getEvents = async (
     }),
   });
 
-  const json = await fetchJson(request);
+  return fetchJson(request);
+};
+
+const getEvents = async (
+  sessionId: string,
+  driveEndpoint: string,
+  workbookPath: string,
+  tableName: string
+) => {
+  const json = await getWorkbookTableRange(
+    sessionId,
+    driveEndpoint,
+    workbookPath,
+    tableName
+  );
 
   console.log("graph:getEvents", json);
 
   return [];
 };
 
-const createPersistentSession = async (
-  driveEndpoint: string,
-  workbookId: string
-) => {
-  const endpoint = `${driveEndpoint}/items/${workbookId}/workbook/createSession`;
-  const json = await httpPost(endpoint, {
-    persistChanges: true,
-  });
-
-  return json.id;
-};
-
 export const $readMany = async (): Promise<DomainEvent[]> => {
   const sessionId = await createPersistentSession(
     graphConfig.graphDriveEndpoint,
-    graphConfig.costingWorkbookId
+    graphConfig.costingWorkbookPath
   );
 
   console.log("graph:sessionId", sessionId);
@@ -82,6 +92,7 @@ export const $readMany = async (): Promise<DomainEvent[]> => {
   return getEvents(
     sessionId,
     graphConfig.graphDriveEndpoint,
-    graphConfig.costingWorkbookId
+    graphConfig.costingWorkbookPath,
+    graphConfig.costingEventsTableName
   );
 };
