@@ -13,22 +13,56 @@ const getWorkbookTableRange = async (
 ) => {
   const endpoint = `/me/drive/root:/${workbookPath}:/workbook/tables/${tableName}/range`;
   const response = await graphClient.api(endpoint).get();
-  console.log("graph:range", response);
-  return [];
+  return response.values;
 };
 
 /**
  * https://docs.microsoft.com/en-us/graph/api/table-post-rows?view=graph-rest-1.0&tabs=http
  */
-const createWorkbookTableRow = (workbookPath: string, tableName: string) => {};
+const createWorkbookTableRow = async (
+  workbookPath: string,
+  tableName: string,
+  domainEvent: DomainEvent
+) => {
+  // TODO Copy the EventStore schema for storage here.
+  const workbookTableRow = {
+    values: [
+      // Row
+      [
+        // Column
+        JSON.stringify(domainEvent),
+      ],
+    ],
+  };
+
+  await graphClient
+    .api(`/me/drive/root:/${workbookPath}:/workbook/tables/${tableName}/rows`)
+    .version("beta")
+    .post(workbookTableRow);
+};
 
 export default (): DomainEventsRepository => ({
-  insert: (event: DomainEvent): Promise<DomainEvent> => {
-    throw new Error("Not implemented");
+  insert: async (event: DomainEvent): Promise<DomainEvent> => {
+    await createWorkbookTableRow(
+      costingWorkbookPath,
+      costingEventsTableName,
+      event
+    );
+    return event;
   },
-  select: (): Promise<DomainEvent[]> =>
-    getWorkbookTableRange(costingWorkbookPath, costingEventsTableName).then(
-      (events: DomainEvent[]) =>
-        events.sort((a, b) => a.eventIndex - b.eventIndex)
-    ),
+  select: async (): Promise<DomainEvent[]> => {
+    const tableRange = await getWorkbookTableRange(
+      costingWorkbookPath,
+      costingEventsTableName
+    );
+
+    const domainEvents = tableRange
+      .slice(1)
+      .map((row) => row[0])
+      .map((cell) => JSON.parse(cell));
+
+    console.log("domainEvents", domainEvents);
+
+    return domainEvents;
+  },
 });
