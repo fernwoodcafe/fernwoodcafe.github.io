@@ -5,7 +5,6 @@ import { RouterLink, RouterView } from "vue-router";
 <template>
   <main>
     <header>
-      <NavBar />
       <nav>
         <ul>
           <li><RouterLink to="/supplies">Supplies</RouterLink></li>

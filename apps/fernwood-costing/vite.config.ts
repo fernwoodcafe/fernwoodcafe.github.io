@@ -14,6 +14,9 @@ export default defineConfig({
     target: "esnext",
     minify: false,
   },
+  server: {
+    port: 2233,
+  },
   preview: {
     open: true,
   },
