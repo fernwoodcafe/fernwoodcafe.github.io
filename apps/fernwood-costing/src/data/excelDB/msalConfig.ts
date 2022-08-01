@@ -49,4 +49,5 @@ export const loginRequest = {
 export const graphConfig = {
   graphMeEndpoint: "https://graph.microsoft.com/v1.0/me",
   graphDriveEndpoint: "https://graph.microsoft.com/v1.0/me/drive",
+  costingWorkbookId: "01WODPJHNUFIDRETOZIRDL77KL5NJ7RRVS",
 };
