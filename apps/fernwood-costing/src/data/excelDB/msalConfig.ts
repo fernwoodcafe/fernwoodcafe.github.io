@@ -1,5 +1,13 @@
 import { LogLevel, type Configuration } from "@azure/msal-browser";
 
+/**
+ * To view Azure Active Directory settings:
+ * 1. portal.azure.com
+ * 2. Sign in as shaun@fernwoodcafe.onmicrosoft.com
+ * 3. Go to Hamburger > Azure Active Directory > App Registrations > Fernwood Costing App.
+ *
+ * E.g., We register client applications under "Authentication".
+ */
 export const msalConfig: Configuration = {
   auth: {
     clientId: "cae7e594-2307-4888-a321-a17a5f2e70fb",
