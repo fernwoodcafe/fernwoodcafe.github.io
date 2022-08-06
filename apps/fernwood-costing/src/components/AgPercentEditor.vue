@@ -13,6 +13,7 @@ export default defineComponent({
     this.$nextTick(() => {
       if (this.$refs.input instanceof HTMLInputElement) {
         this.$refs.input.focus();
+        this.$refs.input.select();
       }
     });
   },
