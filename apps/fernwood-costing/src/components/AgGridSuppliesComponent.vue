@@ -80,6 +80,7 @@ const columnDefs: ColDef[] = [
     },
   },
   { field: "supplyNotes" },
+  { field: "supplyLink" },
   {
     field: "unitCost",
     headerName: "Unit Cost (Calculated)",
