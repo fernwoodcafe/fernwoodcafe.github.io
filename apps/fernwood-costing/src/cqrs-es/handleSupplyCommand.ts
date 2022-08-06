@@ -9,34 +9,33 @@ export type Props = {
   domainEventsRepo: DomainEventsRepository;
 };
 
+const commandHandlers = {
+  create_supply: (command) => ({
+    type: "supply_created",
+    payload: command.payload,
+  }),
+  update_supply: (command) => ({
+    type: "supply_updated",
+    payload: command.payload,
+  }),
+
+  delete_supply: (command) => ({
+    type: "supply_deleted",
+    payload: command.payload,
+  }),
+};
+
 export default async function (
   { supplies, materializeSupplies, domainEventsRepo }: Props,
   command: DomainCommand
 ) {
-  let eventResult = null;
-
-  if (command.type == "create_supply") {
-    eventResult = await domainEventsRepo.insert({
-      type: "supply_created",
-      payload: command.payload,
-    });
+  if (!commandHandlers[command.type]) {
+    return;
   }
 
-  if (command.type == "update_supply") {
-    eventResult = await domainEventsRepo.insert({
-      type: "supply_updated",
-      payload: command.payload,
-    });
-  }
-
-  if (command.type == "delete_supply") {
-    eventResult = await domainEventsRepo.insert({
-      type: "supply_deleted",
-      payload: command.payload,
-    });
-  }
-
-  if (eventResult) {
-    materializeSupplies(supplies, eventResult);
+  const event = commandHandlers[command.type](command);
+  if (event) {
+    materializeSupplies(supplies, event);
+    domainEventsRepo.insert(event);
   }
 }

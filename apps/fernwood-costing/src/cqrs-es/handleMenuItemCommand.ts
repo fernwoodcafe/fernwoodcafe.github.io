@@ -12,6 +12,38 @@ export type Props = {
   domainEventsRepo: DomainEventsRepository;
 };
 
+const commandHandlers = {
+  create_menu_item: (command) => ({
+    type: "menu_item_created",
+    payload: command.payload,
+  }),
+
+  update_menu_item: (command) => ({
+    type: "menu_item_updated",
+    payload: command.payload,
+  }),
+
+  delete_menu_item: (command) => ({
+    type: "menu_item_deleted",
+    payload: command.payload,
+  }),
+
+  add_supply_to_menu_item: (command) => ({
+    type: "supply_added_to_menu_item",
+    payload: command.payload,
+  }),
+
+  update_supply_on_menu_item: (command) => ({
+    type: "supply_updated_on_menu_item",
+    payload: command.payload,
+  }),
+
+  remove_supply_from_menu_item: (command) => ({
+    type: "supply_removed_from_menu_item",
+    payload: command.payload,
+  }),
+};
+
 export default async function (
   {
     menuItems: model,
@@ -20,53 +52,13 @@ export default async function (
   }: Props,
   command: DomainCommand
 ) {
-  let eventResult = null;
-
-  console.log(command.type, command.payload);
-
-  if (command.type == "create_menu_item") {
-    eventResult = await domainEventsRepo.insert({
-      type: "menu_item_created",
-      payload: command.payload,
-    });
+  if (!commandHandlers[command.type]) {
+    return;
   }
 
-  if (command.type == "update_menu_item") {
-    eventResult = await domainEventsRepo.insert({
-      type: "menu_item_updated",
-      payload: command.payload,
-    });
-  }
-
-  if (command.type == "delete_menu_item") {
-    eventResult = await domainEventsRepo.insert({
-      type: "menu_item_deleted",
-      payload: command.payload,
-    });
-  }
-
-  if (command.type == "add_supply_to_menu_item") {
-    eventResult = await domainEventsRepo.insert({
-      type: "supply_added_to_menu_item",
-      payload: command.payload,
-    });
-  }
-
-  if (command.type == "update_supply_on_menu_item") {
-    eventResult = await domainEventsRepo.insert({
-      type: "supply_updated_on_menu_item",
-      payload: command.payload,
-    });
-  }
-
-  if (command.type == "remove_supply_from_menu_item") {
-    eventResult = await domainEventsRepo.insert({
-      type: "supply_removed_from_menu_item",
-      payload: command.payload,
-    });
-  }
-
-  if (eventResult) {
-    materializer(model, eventResult);
+  const event = commandHandlers[command.type](command);
+  if (event) {
+    materializer(model, event);
+    domainEventsRepo.insert(event);
   }
 }
