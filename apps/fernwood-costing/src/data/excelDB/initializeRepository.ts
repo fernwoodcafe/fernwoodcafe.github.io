@@ -1,4 +1,4 @@
-import type { DomainEvent, DomainEventsRepository } from "@/types/CafeDomain";
+import type { DomainEvent, DomainEventsRepository } from "@/domain";
 import initializeGraphClient from "./initializeGraphClient";
 
 const costingWorkbookPath = "CostingApp-EventStore.xlsx";

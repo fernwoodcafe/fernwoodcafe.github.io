@@ -1,5 +1,4 @@
-import type { DomainCommand, Supply } from "@/types/CafeDomain";
-import type { DomainEventsRepository } from "@/types/CafeDomain/DomainEventsRepository";
+import type { DomainCommand, DomainEventsRepository, Supply } from "@/domain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type { Materializer } from "./Materializer";
 

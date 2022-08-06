@@ -4,7 +4,7 @@ import {
   $migrateDB,
   $readMany,
 } from "@/data/indexedDB/client";
-import type { DomainEvent, DomainEventsRepository } from "@/types/CafeDomain";
+import type { DomainEvent, DomainEventsRepository } from "@/domain";
 import migrations from "./migrations";
 
 const resetPrototype = false;

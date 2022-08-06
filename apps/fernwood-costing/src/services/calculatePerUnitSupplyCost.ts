@@ -1,4 +1,4 @@
-import type { Supply } from "@/types/CafeDomain";
+import type { Supply } from "@/domain";
 
 const pst = 0.06;
 

@@ -12,9 +12,10 @@
 import AgCheckboxEditor from "@/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgPercentEditor from "@/components/AgPercentEditor.vue";
+import type { Supply } from "@/domain";
 import { formatMoney, formatPercent } from "@/formatters";
 import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
-import type { Supply } from "@/types/CafeDomain";
+import { unitsOfMeasure } from "@/services/convertUnitCost.js";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
   ColDef,
@@ -55,7 +56,7 @@ const columnDefs: ColDef[] = [
     field: "supplyUnits",
     cellEditor: "agSelectCellEditor",
     cellEditorParams: {
-      values: ["gram", "litre", "ounce", "item", "pound", "kilogram"],
+      values: unitsOfMeasure,
     },
   },
   { field: "purchaseQuantity" },

@@ -15,13 +15,8 @@
 
 <script setup lang="ts">
 import AgGridMenuItemsComponent from "@/components/AgGridMenuItemsComponent.vue";
+import type { CafeGoals, DomainCommand, MenuItem, Supply } from "@/domain";
 import formatLink from "@/formatters/formatLink";
-import type {
-  CafeGoals,
-  DomainCommand,
-  MenuItem,
-  Supply,
-} from "@/types/CafeDomain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { ref } from "vue";
 import { useRouter } from "vue-router";

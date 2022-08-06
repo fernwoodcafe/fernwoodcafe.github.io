@@ -1,4 +1,4 @@
-import type { MenuItem, Supply } from "@/types/CafeDomain";
+import type { MenuItem, Supply } from "@/domain";
 import calculatePerUnitSupplyCost from "./calculatePerUnitSupplyCost";
 import convertUnitCost from "./convertUnitCost";
 

@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
-import type { DomainCommand, Supply } from "@/types/CafeDomain";
+import type { DomainCommand, Supply } from "@/domain";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 
 type Props = {
@@ -39,9 +39,9 @@ const onClickNewSupply = () => {
       uniqueId: crypto.randomUUID(),
       supplyUnits: "",
       supplyName: `New Supply ${props.suppliesList.items.length}`,
+      supplierName: "",
       supplyNotes: "",
       supplyLink: "",
-      supplierUniqueId: "",
       supplyType: "ingredient",
       percentWaste: 0,
       hasPST: false,

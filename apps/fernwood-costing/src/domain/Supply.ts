@@ -1,4 +1,4 @@
-import { DomainEntity } from "DomainEntity";
+import type { DomainEntity } from "./DomainEntity";
 
 export type Supply = DomainEntity & {
   supplyName: string;
