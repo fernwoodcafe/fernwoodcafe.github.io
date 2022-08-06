@@ -43,6 +43,7 @@
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcInput from "@/components/FrcInput.vue";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
+import { calculateMenuItemTotalCost } from "@/domain/services";
 import type {
   CafeGoals,
   DomainCommand,
@@ -50,9 +51,7 @@ import type {
   MenuItemSupply,
   Supply,
 } from "@/domain/types";
-import formatLink from "@/formatters/formatLink";
-import formatMoney from "@/formatters/formatMoney";
-import calculateMenuItemTotalCost from "@/services/calculateMenuItemTotalCost";
+import { formatLink, formatMoney } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { computed } from "vue";
 

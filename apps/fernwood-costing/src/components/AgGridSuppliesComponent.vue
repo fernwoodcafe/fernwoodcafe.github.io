@@ -12,10 +12,10 @@
 import AgCheckboxEditor from "@/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgPercentEditor from "@/components/AgPercentEditor.vue";
+import { calculatePerUnitSupplyCost } from "@/domain/services";
 import type { Supply } from "@/domain/types";
 import { unitsOfMeasure } from "@/domain/values";
 import { formatMoney, formatPercent } from "@/formatters";
-import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
   ColDef,

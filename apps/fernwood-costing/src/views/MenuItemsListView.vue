@@ -21,7 +21,7 @@ import type {
   MenuItem,
   Supply,
 } from "@/domain/types";
-import formatLink from "@/formatters/formatLink";
+import { formatLink } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { ref } from "vue";
 import { useRouter } from "vue-router";

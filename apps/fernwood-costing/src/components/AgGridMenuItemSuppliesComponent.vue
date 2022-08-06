@@ -10,10 +10,9 @@
 
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
+import { calculatePerUnitSupplyCost, convertUnitCost } from "@/domain/services";
 import type { MenuItem, MenuItemSupply, Supply } from "@/domain/types";
-import formatMoney from "@/formatters/formatMoney";
-import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
-import convertUnitCost from "@/services/convertUnitCost";
+import { formatMoney } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
   ColDef,

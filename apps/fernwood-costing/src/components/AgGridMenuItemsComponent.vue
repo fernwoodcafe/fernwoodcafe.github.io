@@ -11,9 +11,9 @@
 
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
+import { calculateMenuItemTotalCost } from "@/domain/services";
 import type { CafeGoals, MenuItem, Supply } from "@/domain/types";
-import formatMoney from "@/formatters/formatMoney";
-import calculateMenuItemTotalCost from "@/services/calculateMenuItemTotalCost";
+import { formatMoney } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type { ColDef, ColGroupDef } from "ag-grid-community";
 
