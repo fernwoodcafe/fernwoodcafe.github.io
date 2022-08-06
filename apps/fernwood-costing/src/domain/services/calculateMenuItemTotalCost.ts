@@ -1,6 +1,6 @@
 import type { MenuItem, Supply } from "@/domain/types";
 import calculatePerUnitSupplyCost from "./calculatePerUnitSupplyCost";
-import convertUnitCost from "./convertUnitCost";
+import convertUnit from "./convertUnit";
 
 export default (menuItem: MenuItem, suppliesList: Supply[]) =>
   menuItem.menuItemSupplies
@@ -10,7 +10,7 @@ export default (menuItem: MenuItem, suppliesList: Supply[]) =>
       );
 
       const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
-      const costPerMenuItemUnit = convertUnitCost(
+      const costPerMenuItemUnit = convertUnit(
         costPerSupplyUnit,
         targetSupply.supplyUnits,
         menuItemSupply.menuItemSupplyUnits

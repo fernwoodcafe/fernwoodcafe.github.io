@@ -1,1 +1,9 @@
-export default ["gram", "litre", "ounce", "item", "pound", "kilogram"];
+export default [
+  "gram",
+  "litre",
+  "ounce-mass",
+  "ounce-fluid-us",
+  "item",
+  "pound",
+  "kilogram",
+];

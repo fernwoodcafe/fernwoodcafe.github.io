@@ -10,7 +10,11 @@
 
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
-import { calculatePerUnitSupplyCost, convertUnitCost } from "@/domain/services";
+import {
+  calculatePerUnitSupplyCost,
+  convertUnit,
+  lookupAvailableUnitConversions,
+} from "@/domain/services";
 import type { MenuItem, MenuItemSupply, Supply } from "@/domain/types";
 import { formatMoney } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
@@ -47,26 +51,23 @@ watch(props.menuItem, (newMenuItem) => {
   menuItemSupplies.items = newMenuItem.menuItemSupplies;
 });
 
+const lookupSupplyDetails = (data: MenuItemSupply) =>
+  props.suppliesList.items.find((item) => item.uniqueId == data.supplyUniqueId);
+
 const columnDefs: (ColDef | ColGroupDef)[] = [
   {
     field: "supplyDetails",
     headerName: "Supply Cost and Units",
     editable: false,
     valueGetter: ({ data }: { data: MenuItemSupply }) => {
-      const supply = props.suppliesList.items.find(
-        (item) => item.uniqueId == data.supplyUniqueId
-      );
-
+      const supply = lookupSupplyDetails(data);
       const costPerUnit = formatMoney(calculatePerUnitSupplyCost(supply));
-
       return {
         costPerUnit,
         ...supply,
       };
     },
     cellRenderer: (params: { value: Supply & { costPerUnit: number } }) => {
-      console.log("cellRenderer", params);
-
       return `
         <strong>${params.value.supplyName}</strong>
         <span>-</span>
@@ -81,9 +82,14 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         field: "menuItemSupplyUnits",
         headerName: "Units",
         cellEditor: "agSelectCellEditor",
-        cellEditorParams: {
+        cellEditorParams: (params) => {
           // TODO [should-have] Filter these based on the supplyUnits
-          values: ["gram", "litre", "ounce", "item", "pound", "kilogram"],
+          const { supplyUnits } = lookupSupplyDetails(params.data);
+          const availableUnits = lookupAvailableUnitConversions(supplyUnits);
+          console.log("cellEditorParams", availableUnits);
+          return {
+            values: availableUnits,
+          };
         },
       },
       {
@@ -100,7 +106,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
           );
 
           const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
-          const costPerMenuItemUnit = convertUnitCost(
+          const costPerMenuItemUnit = convertUnit(
             costPerSupplyUnit,
             targetSupply.supplyUnits,
             data.menuItemSupplyUnits

@@ -1,24 +1,11 @@
-const smallPerBig = {
-  ["ounce-per-pound"]: 16,
-  ["gram-per-pound"]: 453.5924,
-};
-
-const unitConversionTable = Object.entries(smallPerBig).reduce(
-  (acc, [key, value]) => {
-    const reverseKey = key.split("-").reverse().join("-");
-    const reverseValue = 1 / value;
-    acc[reverseKey] = reverseValue;
-    return acc;
-  },
-  smallPerBig
-);
+import unitConversions from "../values/unitConversions";
 
 export default (value: number, fromUnit: string, toUnit: string) => {
   if (fromUnit === toUnit) {
     return value;
   }
 
-  const key = `${fromUnit}-per-${toUnit}`;
+  const key = `${fromUnit}/${toUnit}`;
 
-  return value * unitConversionTable[key];
+  return value * unitConversions[key];
 };

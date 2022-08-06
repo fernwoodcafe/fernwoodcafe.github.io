@@ -1,9 +1,11 @@
 import calculateMenuItemTotalCost from "./calculateMenuItemTotalCost";
 import calculatePerUnitSupplyCost from "./calculatePerUnitSupplyCost";
-import convertUnitCost from "./convertUnitCost";
+import convertUnit from "./convertUnit";
+import lookupAvailableUnitConversions from "./lookupAvailableUnitConversions";
 
 export {
   calculateMenuItemTotalCost,
   calculatePerUnitSupplyCost,
-  convertUnitCost,
+  convertUnit,
+  lookupAvailableUnitConversions,
 };
