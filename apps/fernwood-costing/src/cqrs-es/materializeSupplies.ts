@@ -1,4 +1,4 @@
-import type { DomainEvent, Supply } from "@/domain";
+import type { DomainEvent, Supply } from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 
 export default (

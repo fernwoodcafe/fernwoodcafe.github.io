@@ -1,12 +1,3 @@
-export const unitsOfMeasure = [
-  "gram",
-  "litre",
-  "ounce",
-  "item",
-  "pound",
-  "kilogram",
-];
-
 export default (cost: number, fromUnit: string, toUnit: string) => {
   if (fromUnit === toUnit) {
     return cost;

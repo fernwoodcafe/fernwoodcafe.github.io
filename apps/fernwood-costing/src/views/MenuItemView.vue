@@ -49,7 +49,7 @@ import type {
   MenuItem,
   MenuItemSupply,
   Supply,
-} from "@/domain";
+} from "@/domain/types";
 import formatLink from "@/formatters/formatLink";
 import formatMoney from "@/formatters/formatMoney";
 import calculateMenuItemTotalCost from "@/services/calculateMenuItemTotalCost";

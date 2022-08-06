@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
-import type { MenuItem, MenuItemSupply, Supply } from "@/domain";
+import type { MenuItem, MenuItemSupply, Supply } from "@/domain/types";
 import formatMoney from "@/formatters/formatMoney";
 import calculatePerUnitSupplyCost from "@/services/calculatePerUnitSupplyCost";
 import convertUnitCost from "@/services/convertUnitCost";

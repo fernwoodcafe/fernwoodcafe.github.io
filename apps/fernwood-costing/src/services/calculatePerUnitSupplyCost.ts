@@ -1,4 +1,4 @@
-import type { Supply } from "@/domain";
+import type { Supply } from "@/domain/types";
 
 const pst = 0.06;
 

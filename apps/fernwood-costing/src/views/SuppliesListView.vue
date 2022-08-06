@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
-import type { DomainCommand, Supply } from "@/domain";
+import type { DomainCommand, Supply } from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 
 type Props = {

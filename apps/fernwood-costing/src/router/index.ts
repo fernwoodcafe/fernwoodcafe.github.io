@@ -1,7 +1,7 @@
 import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
 import materializeSupplies from "@/cqrs-es/materializeSupplies";
 import initializeRepository from "@/data/excelDB/initializeRepository";
-import type { CafeGoals } from "@/domain";
+import type { CafeGoals } from "@/domain/types";
 import formatLink from "@/formatters/formatLink";
 import { reactive, watch } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";

@@ -1,4 +1,4 @@
-import type { DomainEvent, MenuItem, MenuItemSupply } from "@/domain";
+import type { DomainEvent, MenuItem, MenuItemSupply } from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 
 export default (

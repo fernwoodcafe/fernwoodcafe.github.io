@@ -1,4 +1,8 @@
-import type { DomainCommand, DomainEventsRepository, Supply } from "@/domain";
+import type {
+  DomainCommand,
+  DomainEventsRepository,
+  Supply,
+} from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type { Materializer } from "./Materializer";
 

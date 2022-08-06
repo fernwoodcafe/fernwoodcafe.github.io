@@ -1,4 +1,4 @@
-import type { DomainCommand } from "@/domain";
+import type { DomainCommand } from "@/domain/types";
 import handleMenuItemCommand, {
   type Props as MenuItemProps,
 } from "./handleMenuItemCommand";
