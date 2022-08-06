@@ -83,10 +83,8 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         headerName: "Units",
         cellEditor: "agSelectCellEditor",
         cellEditorParams: (params) => {
-          // TODO [should-have] Filter these based on the supplyUnits
           const { supplyUnits } = lookupSupplyDetails(params.data);
           const availableUnits = lookupAvailableUnitConversions(supplyUnits);
-          console.log("cellEditorParams", availableUnits);
           return {
             values: availableUnits,
           };

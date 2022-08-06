@@ -1,4 +1,5 @@
 import type { DomainEntity } from "./DomainEntity";
+import type { UnitOfMeasure } from "./UnitOfMeasure";
 
 export type Supply = DomainEntity & {
   supplyName: string;
@@ -6,7 +7,7 @@ export type Supply = DomainEntity & {
   supplyNotes: string;
   supplyLink: string;
   supplyType: "packaging" | "ingredient";
-  supplyUnits: string;
+  supplyUnits: UnitOfMeasure;
   purchaseQuantity: number;
   purchasePriceBeforeTax: number;
   percentWaste: number;
