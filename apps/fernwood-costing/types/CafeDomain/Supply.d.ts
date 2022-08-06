@@ -1,9 +1,8 @@
 import { DomainEntity } from "DomainEntity";
 
-// TODO [should-have] Consider a Supplier type and use supplierId instead.
 export type Supply = DomainEntity & {
   supplyName: string;
-  supplierUniqueId: string;
+  supplierName: string;
   supplyNotes: string;
   supplyType: "packaging" | "ingredient";
   supplyUnits: string;

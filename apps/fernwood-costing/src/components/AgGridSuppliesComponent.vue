@@ -41,10 +41,8 @@ const onSupplyDeleteClick = (data) => emit("supplyDeleted", data);
 
 const columnDefs: ColDef[] = [
   { field: "supplyName" },
-  { field: "supplyNotes" },
   {
     field: "supplierName",
-    valueGetter: () => "Coming Soon",
   },
   {
     field: "supplyType",
@@ -81,6 +79,7 @@ const columnDefs: ColDef[] = [
       return params.value ? "&#10003" : "&#10007";
     },
   },
+  { field: "supplyNotes" },
   {
     field: "unitCost",
     headerName: "Unit Cost (Calculated)",
