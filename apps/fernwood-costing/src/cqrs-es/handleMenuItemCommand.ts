@@ -13,32 +13,27 @@ export type Props = {
 };
 
 const commandHandlers = {
-  create_menu_item: (command) => ({
+  create_menu_item: (command: DomainCommand) => ({
     type: "menu_item_created",
     payload: command.payload,
   }),
-
-  update_menu_item: (command) => ({
+  update_menu_item: (command: DomainCommand) => ({
     type: "menu_item_updated",
     payload: command.payload,
   }),
-
-  delete_menu_item: (command) => ({
+  delete_menu_item: (command: DomainCommand) => ({
     type: "menu_item_deleted",
     payload: command.payload,
   }),
-
-  add_supply_to_menu_item: (command) => ({
+  add_supply_to_menu_item: (command: DomainCommand) => ({
     type: "supply_added_to_menu_item",
     payload: command.payload,
   }),
-
-  update_supply_on_menu_item: (command) => ({
+  update_supply_on_menu_item: (command: DomainCommand) => ({
     type: "supply_updated_on_menu_item",
     payload: command.payload,
   }),
-
-  remove_supply_from_menu_item: (command) => ({
+  remove_supply_from_menu_item: (command: DomainCommand) => ({
     type: "supply_removed_from_menu_item",
     payload: command.payload,
   }),

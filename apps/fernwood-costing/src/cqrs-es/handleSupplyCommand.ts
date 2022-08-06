@@ -10,16 +10,15 @@ export type Props = {
 };
 
 const commandHandlers = {
-  create_supply: (command) => ({
+  create_supply: (command: DomainCommand) => ({
     type: "supply_created",
     payload: command.payload,
   }),
-  update_supply: (command) => ({
+  update_supply: (command: DomainCommand) => ({
     type: "supply_updated",
     payload: command.payload,
   }),
-
-  delete_supply: (command) => ({
+  delete_supply: (command: DomainCommand) => ({
     type: "supply_deleted",
     payload: command.payload,
   }),
