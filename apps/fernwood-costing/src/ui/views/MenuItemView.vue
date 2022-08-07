@@ -76,6 +76,8 @@ CafeSupply
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import {
   applyMarkupToMenuItem,
+  calculateCategoryPercentTotalSales,
+  calculateMenuItemCategoryFactor,
   calculateMenuItemCost,
   calculateMenuItemMarkup,
 } from "@packages/domain/services";
@@ -96,6 +98,7 @@ import { computed } from "vue";
 
 type Props = {
   menuItem: MenuItem;
+  menuItemsList: ReactiveArray<MenuItem>;
   suppliesList: ReactiveArray<CafeSupply>;
   cafeGoals: CafeGoals;
   supplyTaxes: CafeSupplyTaxes;
@@ -199,7 +202,14 @@ const menuItemActualMarkup = computed(() =>
 );
 
 const menuItemWeightedCostFactor = computed(() => {
-  return 0;
+  const categoryPercentTotalSales = calculateCategoryPercentTotalSales(
+    props.menuItemsList.items
+  );
+
+  return calculateMenuItemCategoryFactor(
+    props.menuItem.percentTotalSales,
+    categoryPercentTotalSales
+  );
 });
 
 const menuItemWeightedMarkupValue = computed(() => {
