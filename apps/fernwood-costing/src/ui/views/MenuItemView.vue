@@ -52,6 +52,14 @@ CafeSupply
           >Actual Markup
           <p>{{ menuItemActualMarkup }}</p>
         </label>
+        <label
+          >Weighted Cost Factor
+          <p>{{ menuItemWeightedCostFactor }}</p>
+        </label>
+        <label
+          >Weighted Markup Value
+          <p>{{ menuItemWeightedMarkupValue }}</p>
+        </label>
       </form>
     </section>
   </article>
@@ -66,7 +74,11 @@ CafeSupply
 
 <script setup lang="ts">
 import type { DomainCommand } from "@packages/cqrs-es-types";
-import { calculateMenuItemCost } from "@packages/domain/services";
+import {
+  applyMarkupToMenuItem,
+  calculateMenuItemCost,
+  calculateMenuItemMarkup,
+} from "@packages/domain/services";
 import type {
   CafeGoals,
   CafeSupply,
@@ -176,13 +188,22 @@ const menuItemTotalCost = computed(() =>
     props.suppliesList.items
   )
 );
-const menuItemRecommendedPrice = computed(
-  () => menuItemTotalCost.value * props.cafeGoals.weightedAverageMarkup
+const menuItemRecommendedPrice = computed(() =>
+  applyMarkupToMenuItem(
+    menuItemTotalCost.value,
+    props.cafeGoals.weightedAverageMarkup
+  )
 );
-const menuItemActualMarkup = computed(() => {
-  const cost = menuItemTotalCost.value;
-  const markup = props.menuItem.menuItemPrice / cost;
-  return isNaN(markup) ? "-" : markup.toFixed(2);
+const menuItemActualMarkup = computed(() =>
+  calculateMenuItemMarkup(menuItemTotalCost.value, props.menuItem.menuItemPrice)
+);
+
+const menuItemWeightedCostFactor = computed(() => {
+  return 0;
+});
+
+const menuItemWeightedMarkupValue = computed(() => {
+  return 0;
 });
 </script>
 
