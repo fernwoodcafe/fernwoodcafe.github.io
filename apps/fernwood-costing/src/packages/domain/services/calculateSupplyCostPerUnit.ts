@@ -8,9 +8,9 @@ type CafeSupplyKeys =
 
 type CafeSupplyArg = Pick<CafeSupply, CafeSupplyKeys>;
 
-export default (taxes: CafeSupplyTaxes, supply: CafeSupplyArg) => {
+export default (supplyTaxes: CafeSupplyTaxes, supply: CafeSupplyArg) => {
   const costAfterPST = supply.hasPST
-    ? supply.purchasePriceBeforeTax * (1 + taxes.PST)
+    ? supply.purchasePriceBeforeTax * (1 + supplyTaxes.PST)
     : supply.purchasePriceBeforeTax;
 
   const wasteQuantity = supply.purchaseQuantity * supply.percentWaste;

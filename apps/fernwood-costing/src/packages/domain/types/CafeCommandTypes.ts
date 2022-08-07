@@ -1,4 +1,4 @@
-export type DomainCommandTypes =
+export type CafeCommandTypes =
   | "create_supply"
   | "update_supply"
   | "delete_supply"

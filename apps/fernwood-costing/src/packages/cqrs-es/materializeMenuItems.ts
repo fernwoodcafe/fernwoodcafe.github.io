@@ -1,12 +1,16 @@
-import type { DomainEvent } from "@packages/cqrs-es-types";
-import type { MenuItem, MenuItemComponent } from "@packages/domain/types";
+import type {
+  CafeEventUnion,
+  MenuItem,
+  MenuItemComponent,
+} from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
+import convertEventToLatestVersion from "./convertEventToLatestVersion";
 
 export default (
   menuItemsList: ReactiveArray<MenuItem>,
-  ...events: DomainEvent[]
+  ...events: CafeEventUnion[]
 ) => {
-  events.forEach((event) => {
+  events.map(convertEventToLatestVersion).forEach((event) => {
     console.log("materializeMenuItems", event);
 
     if (event.type == "menu_item_created") {

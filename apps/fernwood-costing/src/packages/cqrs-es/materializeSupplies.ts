@@ -1,10 +1,9 @@
-import type { DomainEvent } from "@packages/cqrs-es-types";
-import type { CafeSupply } from "@packages/domain/types";
+import type { CafeEventUnion, CafeSupply } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
 export default (
   suppliesList: ReactiveArray<CafeSupply>,
-  ...events: DomainEvent[]
+  ...events: CafeEventUnion[]
 ) => {
   events.forEach((event) => {
     console.log("materializeSupplies", event.type);

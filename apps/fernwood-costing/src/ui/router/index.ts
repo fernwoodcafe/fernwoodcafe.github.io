@@ -71,7 +71,8 @@ const router = createRouter({
       name: "supplies",
       component: () => import("../views/SuppliesListView.vue"),
       props: {
-        suppliesList: suppliesList,
+        suppliesList,
+        supplyTaxes,
         sendCommand,
       },
     },
