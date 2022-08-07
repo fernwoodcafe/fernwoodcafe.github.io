@@ -64,20 +64,20 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
-import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
-import FrcInput from "@/components/FrcInput.vue";
-import FrcSelectOption from "@/components/FrcSelectOption.vue";
-import type { DomainCommand } from "@/cqrs-es-types";
-import { calculateMenuItemTotalCost } from "@/domain/services";
+import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppliesComponent.vue";
+import FrcInput from "@ui/components/FrcInput.vue";
+import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
+import type { DomainCommand } from "@packages/cqrs-es-types";
 import type {
   CafeGoals,
   InventoryItem,
   MenuItem,
   MenuItemSupply,
-} from "@/domain/types";
-import { formatLink, formatMoney } from "@/formatters";
-import isInstance from "@/typeGuards/isInstance.js";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+} from "@packages/domain/types";
+import { formatLink, formatMoney } from "@ui/formatters";
+import isInstance from "@ui/typeGuards/isInstance.js";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
+import { calculateMenuItemTotalCost } from "@packages/domain/services";
 import { computed } from "vue";
 
 type Props = {

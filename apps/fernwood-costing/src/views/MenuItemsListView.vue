@@ -15,11 +15,15 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
-import AgGridMenuItemsComponent from "@/components/AgGridMenuItemsComponent.vue";
-import type { DomainCommand } from "@/cqrs-es-types";
-import type { CafeGoals, InventoryItem, MenuItem } from "@/domain/types";
-import { formatLink } from "@/formatters";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+import AgGridMenuItemsComponent from "@ui/components/AgGridMenuItemsComponent.vue";
+import type { DomainCommand } from "@packages/cqrs-es-types";
+import type {
+  CafeGoals,
+  InventoryItem,
+  MenuItem,
+} from "@packages/domain/types";
+import { formatLink } from "@ui/formatters";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 

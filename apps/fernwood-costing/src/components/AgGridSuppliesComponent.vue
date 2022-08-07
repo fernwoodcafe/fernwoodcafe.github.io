@@ -10,14 +10,14 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
-import AgCheckboxEditor from "@/components/AgCheckboxEditor.vue";
-import AgGridComponent from "@/components/AgGridComponent.vue";
-import AgPercentEditor from "@/components/AgPercentEditor.vue";
-import { calculatePerUnitSupplyCost } from "@/domain/services";
-import type { InventoryItem } from "@/domain/types";
-import { unitsOfMeasure } from "@/domain/values";
-import { formatMoney, formatPercent } from "@/formatters";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+import AgCheckboxEditor from "@ui/components/AgCheckboxEditor.vue";
+import AgGridComponent from "@ui/components/AgGridComponent.vue";
+import AgPercentEditor from "@ui/components/AgPercentEditor.vue";
+import { formatMoney, formatPercent } from "@ui/formatters";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
+import { calculateSupplyCostPerUnit } from "@packages/domain/services";
+import type { InventoryItem } from "@packages/domain/types";
+import { unitsOfMeasure } from "@packages/domain/values";
 import type {
   ColDef,
   ValueFormatterParams,
@@ -88,7 +88,7 @@ const columnDefs: ColDef[] = [
     headerName: "Unit Cost",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<InventoryItem>) => ({
-      cost: calculatePerUnitSupplyCost(data),
+      cost: calculateSupplyCostPerUnit(data),
       units: data.supplyUnits,
     }),
     valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>

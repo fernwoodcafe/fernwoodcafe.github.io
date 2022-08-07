@@ -11,11 +11,15 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
-import AgGridComponent from "@/components/AgGridComponent.vue";
-import { calculateMenuItemTotalCost } from "@/domain/services";
-import type { CafeGoals, InventoryItem, MenuItem } from "@/domain/types";
-import { formatMoney } from "@/formatters";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+import AgGridComponent from "@ui/components/AgGridComponent.vue";
+import { formatMoney } from "@ui/formatters";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
+import { calculateMenuItemTotalCost } from "@packages/domain/services";
+import type {
+  CafeGoals,
+  InventoryItem,
+  MenuItem,
+} from "@packages/domain/types";
 import type { ColDef } from "ag-grid-community";
 
 type Props = {

@@ -1,6 +1,6 @@
-import type { DomainCommand, DomainEvent } from "@/cqrs-es-types";
-import type { InventoryItem } from "@/domain/types";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+import type { DomainCommand, DomainEvent } from "@packages/cqrs-es-types";
+import type { InventoryItem } from "@packages/domain/types";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type { Materializer } from "../cqrs-es-types/Materializer";
 
 export type Props = {

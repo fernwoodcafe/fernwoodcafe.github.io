@@ -10,10 +10,10 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
-import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
-import type { DomainCommand } from "@/cqrs-es-types";
-import type { InventoryItem } from "@/domain/types";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+import AgGridSuppliesComponent from "@ui/components/AgGridSuppliesComponent.vue";
+import type { DomainCommand } from "@packages/cqrs-es-types";
+import type { InventoryItem } from "@packages/domain/types";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
 type Props = {
   suppliesList: ReactiveArray<InventoryItem>;

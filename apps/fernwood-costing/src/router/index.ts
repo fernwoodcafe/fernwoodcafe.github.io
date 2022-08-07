@@ -1,15 +1,14 @@
-import materializeMenuItems from "@/cqrs-es/materializeMenuItems";
-import materializeSupplies from "@/cqrs-es/materializeSupplies";
-import initializeRepository from "@/data/excelDB/initializeRepository";
-import type { CafeGoals } from "@/domain/types";
-import { formatLink } from "@/formatters";
+import { materializeMenuItems, materializeSupplies } from "@packages/cqrs-es";
+import initializeRepository from "@packages/data/excelDB/initializeRepository";
+import type { CafeGoals } from "@packages/domain/types";
+import { formatLink } from "@ui/formatters";
 import { reactive, watch } from "vue";
 import {
   createRouter,
   createWebHashHistory,
   type RouteRecordRaw,
 } from "vue-router";
-import handleCommand from "../cqrs-es/handleCommand";
+import handleCommand from "../../packages/cqrs-es/handleCommand";
 
 const domainEventsRepo = initializeRepository();
 const domainEvents = await domainEventsRepo.select();

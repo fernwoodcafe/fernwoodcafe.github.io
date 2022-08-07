@@ -10,15 +10,19 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
-import AgGridComponent from "@/components/AgGridComponent.vue";
+import AgGridComponent from "@ui/components/AgGridComponent.vue";
+import { formatMoney } from "@ui/formatters";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import {
-  calculatePerUnitSupplyCost,
+  calculateSupplyCostPerUnit,
   convertUnit,
-  lookupAvailableUnitConversions,
-} from "@/domain/services";
-import type { InventoryItem, MenuItem, MenuItemSupply } from "@/domain/types";
-import { formatMoney } from "@/formatters";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+  lookupUnitAvailableConversions,
+} from "@packages/domain/services";
+import type {
+  InventoryItem,
+  MenuItem,
+  MenuItemSupply,
+} from "@packages/domain/types";
 import type {
   ColDef,
   ColGroupDef,
@@ -62,7 +66,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     editable: false,
     valueGetter: ({ data }: { data: MenuItemSupply }) => {
       const supply = lookupSupplyDetails(data);
-      const costPerUnit = formatMoney(calculatePerUnitSupplyCost(supply));
+      const costPerUnit = formatMoney(calculateSupplyCostPerUnit(supply));
       return {
         costPerUnit,
         ...supply,
@@ -84,7 +88,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     cellEditor: "agSelectCellEditor",
     cellEditorParams: (params) => {
       const { supplyUnits } = lookupSupplyDetails(params.data);
-      const availableUnits = lookupAvailableUnitConversions(supplyUnits);
+      const availableUnits = lookupUnitAvailableConversions(supplyUnits);
       return {
         values: availableUnits,
       };
@@ -105,7 +109,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         (supply) => supply.uniqueId == data.supplyUniqueId
       );
 
-      const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
+      const costPerSupplyUnit = calculateSupplyCostPerUnit(targetSupply);
       const costPerMenuItemUnit = convertUnit(
         costPerSupplyUnit,
         targetSupply.supplyUnits,

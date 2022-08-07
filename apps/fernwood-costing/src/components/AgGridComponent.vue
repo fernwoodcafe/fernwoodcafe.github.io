@@ -14,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import AgRowToolsRenderer from "@/components/AgRowToolsRenderer.vue";
+import AgRowToolsRenderer from "@ui/components/AgRowToolsRenderer.vue";
 import { AgGridVue } from "ag-grid-vue3";
 
-import type { ReactiveArray } from "@/types/ReactiveArray";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type {
   CellEditRequestEvent,
   ColDef,

@@ -1,6 +1,6 @@
-import type { DomainEvent } from "@/cqrs-es-types";
-import type { MenuItem, MenuItemSupply } from "@/domain/types";
-import type { ReactiveArray } from "@/types/ReactiveArray";
+import type { DomainEvent } from "@packages/cqrs-es-types";
+import type { MenuItem, MenuItemSupply } from "@packages/domain/types";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
 export default (
   menuItemsList: ReactiveArray<MenuItem>,

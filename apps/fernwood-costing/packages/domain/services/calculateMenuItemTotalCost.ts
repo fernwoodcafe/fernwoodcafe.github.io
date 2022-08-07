@@ -1,5 +1,5 @@
-import type { InventoryItem, MenuItemSupply } from "@/domain/types";
-import calculatePerUnitSupplyCost from "./calculatePerUnitSupplyCost";
+import type { InventoryItem, MenuItemSupply } from "@packages/domain/types";
+import calculateSupplyCostPerUnit from "./calculateSupplyCostPerUnit";
 import convertUnit from "./convertUnit";
 
 export default (
@@ -12,7 +12,7 @@ export default (
         (s) => s.uniqueId == menuItemSupply.supplyUniqueId
       );
 
-      const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
+      const costPerSupplyUnit = calculateSupplyCostPerUnit(targetSupply);
       const costPerMenuItemUnit =
         menuItemSupply.menuItemSupplyUnits === "-" ||
         targetSupply.supplyUnits === "-"
