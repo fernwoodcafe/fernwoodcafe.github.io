@@ -15,7 +15,7 @@ import { calculateMenuItemTotalCost } from "@/domain/services";
 import type { CafeGoals, MenuItem, Supply } from "@/domain/types";
 import { formatMoney } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
-import type { ColDef, ColGroupDef } from "ag-grid-community";
+import type { ColDef } from "ag-grid-community";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
@@ -37,46 +37,50 @@ const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 const onMenuItemDeleteClick = (data) => emit("menuItemDeleted", data);
 const onMenuItemEditClick = (data) => emit("menuItemEditClick", data);
 
-const columnDefs: (ColDef<MenuItem> | ColGroupDef)[] = [
+const columnDefs: ColDef<MenuItem>[] = [
   {
     field: "menuItemName",
+  },
+  {
+    headerName: "Cost",
+    editable: false,
+    cellRenderer: ({ data }: { data: MenuItem }) => {
+      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      return formatMoney(cost);
+    },
+  },
+  {
+    headerName: `Price @ ${props.cafeGoals.weightedAverageMarkup} Markup`,
+    editable: false,
+    cellRenderer: ({ data }: { data: MenuItem }) => {
+      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const price = cost * props.cafeGoals.weightedAverageMarkup;
+      return formatMoney(price);
+    },
   },
   {
     field: "percentTotalSales",
   },
   {
-    headerName: "Cost",
-    editable: false,
-    cellRenderer: ({ data }) => {
-      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
-
-      return formatMoney(cost);
-    },
-  },
-  {
-    headerName: `Recommended Price @ ${props.cafeGoals.weightedAverageMarkup} Markup`,
-    editable: false,
-    cellRenderer: ({ data }) => {
-      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
-      const price = cost * props.cafeGoals.weightedAverageMarkup;
-
-      return formatMoney(price);
-    },
-  },
-  {
-    headerName: "Actual Price",
+    headerName: "Chosen Menu Price",
+    field: "menuItemPrice",
+    valueFormatter: (node) => formatMoney(node.data.menuItemPrice),
   },
   {
     headerName: "Actual Markup",
     editable: false,
+    cellRenderer: ({ data }: { data: MenuItem }) => {
+      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const markup = data.menuItemPrice / cost;
+      return isNaN(markup) ? "-" : markup.toFixed(2);
+    },
   },
   {
-    headerName: "Contribution (Price - Cost)",
+    headerName: "Actual Contribution (Price - Cost)",
     editable: false,
-    cellRenderer: ({ data }) => {
+    cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
       const price = cost * props.cafeGoals.weightedAverageMarkup;
-
       return formatMoney(price - cost);
     },
   },

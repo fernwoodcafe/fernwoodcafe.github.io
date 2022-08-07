@@ -12,7 +12,7 @@
       <dd>{{ formatMoney(menuItemTotalCost) }}</dd>
     </div>
     <div>
-      <dt>Price @ 3.5 Markup</dt>
+      <dt>Price @ {{ cafeGoals.weightedAverageMarkup }} Markup</dt>
       <dd>{{ formatMoney(menuItemRecommendedPrice) }}</dd>
     </div>
   </dl>

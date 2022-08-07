@@ -76,46 +76,41 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     },
   },
   {
-    headerName: "Conversion to Menu Item Cost and Units",
-    children: [
-      {
-        field: "menuItemSupplyUnits",
-        headerName: "Units",
-        cellEditor: "agSelectCellEditor",
-        cellEditorParams: (params) => {
-          const { supplyUnits } = lookupSupplyDetails(params.data);
-          const availableUnits = lookupAvailableUnitConversions(supplyUnits);
-          return {
-            values: availableUnits,
-          };
-        },
-      },
-      {
-        field: "menuItemSupplyQuantity",
-        headerName: "Quantity",
-        valueParser: (params) => Number(params.newValue),
-      },
-      {
-        headerName: "Cost (Calculated)",
-        editable: false,
-        valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
-          const targetSupply = props.suppliesList.items.find(
-            (supply) => supply.uniqueId == data.supplyUniqueId
-          );
+    field: "menuItemSupplyUnits",
+    headerName: "Units",
+    cellEditor: "agSelectCellEditor",
+    cellEditorParams: (params) => {
+      const { supplyUnits } = lookupSupplyDetails(params.data);
+      const availableUnits = lookupAvailableUnitConversions(supplyUnits);
+      return {
+        values: availableUnits,
+      };
+    },
+  },
+  {
+    field: "menuItemSupplyQuantity",
+    headerName: "Quantity",
+    valueParser: (params) => Number(params.newValue),
+  },
+  {
+    headerName: "Cost (Calculated)",
+    editable: false,
+    valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
+      const targetSupply = props.suppliesList.items.find(
+        (supply) => supply.uniqueId == data.supplyUniqueId
+      );
 
-          const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
-          const costPerMenuItemUnit = convertUnit(
-            costPerSupplyUnit,
-            targetSupply.supplyUnits,
-            data.menuItemSupplyUnits
-          );
+      const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
+      const costPerMenuItemUnit = convertUnit(
+        costPerSupplyUnit,
+        targetSupply.supplyUnits,
+        data.menuItemSupplyUnits
+      );
 
-          return data.menuItemSupplyQuantity * costPerMenuItemUnit;
-        },
-        valueFormatter: (params: ValueFormatterParams<Supply>) =>
-          formatMoney(params.value),
-      },
-    ],
+      return data.menuItemSupplyQuantity * costPerMenuItemUnit;
+    },
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+      formatMoney(params.value),
   },
 ];
 </script>

@@ -127,7 +127,15 @@ const toolsColDef: ColDef = {
 const onGridReady = ({ api }: GridOptions) => {
   console.log("onGridReady", props.gridData.items);
 
-  const columnDefs: ColDef[] = props.gridColumnDefs.slice();
+  const columnDefs: ColDef[] = props.gridColumnDefs.slice().map((colDef) => {
+    if (colDef.editable === false) {
+      colDef.cellClass = "ag-cell-not-editable";
+    } else {
+      colDef.cellClass = "ag-cell-editable";
+    }
+
+    return colDef;
+  });
 
   if (props.gridTools != null) {
     columnDefs.unshift(toolsColDef);
@@ -140,11 +148,19 @@ const onGridReady = ({ api }: GridOptions) => {
 
 <style>
 .ag-theme-alpine {
-  height: 500px;
+  height: 100vh;
 }
 
 /* Prevent grid from vanishing when popups appear. */
 .ag-popup {
   height: 0;
+}
+
+.ag-cell-not-editable {
+  font-style: italic;
+}
+
+.ag-cell-editable {
+  font-style: normal;
 }
 </style>
