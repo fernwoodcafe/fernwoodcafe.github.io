@@ -14,7 +14,7 @@ InventoryItem
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
 import { formatMoney } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
-import { calculateMenuItemTotalCost } from "@packages/domain/services";
+import { calculateMenuItemCost } from "@packages/domain/services";
 import type {
   CafeGoals,
   InventoryItem,
@@ -50,7 +50,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Cost",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(
+      const cost = calculateMenuItemCost(
         data.menuItemSupplies,
         props.suppliesList.items
       );
@@ -61,7 +61,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: `Price @ ${props.cafeGoals.weightedAverageMarkup} Markup`,
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(
+      const cost = calculateMenuItemCost(
         data.menuItemSupplies,
         props.suppliesList.items
       );
@@ -81,7 +81,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Actual Markup",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(
+      const cost = calculateMenuItemCost(
         data.menuItemSupplies,
         props.suppliesList.items
       );
@@ -93,7 +93,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Actual Contribution (Price - Cost)",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(
+      const cost = calculateMenuItemCost(
         data.menuItemSupplies,
         props.suppliesList.items
       );

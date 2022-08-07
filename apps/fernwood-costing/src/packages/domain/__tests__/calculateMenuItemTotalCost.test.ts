@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { calculateMenuItemTotalCost } from "../services";
+import { calculateMenuItemCost } from "../services";
 import type { InventoryItem, MenuItemSupply } from "../types";
 
 describe("when processing valid inputs", () => {
@@ -8,6 +8,6 @@ describe("when processing valid inputs", () => {
 
   it("does not throw", () => {
     // Act
-    calculateMenuItemTotalCost(menuItemSupplies, inventoryItems);
+    calculateMenuItemCost(menuItemSupplies, inventoryItems);
   });
 });

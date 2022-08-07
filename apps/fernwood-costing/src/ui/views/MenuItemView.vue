@@ -77,7 +77,7 @@ import type {
 import { formatLink, formatMoney } from "@ui/formatters";
 import isInstance from "@ui/typeGuards/isInstance.js";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
-import { calculateMenuItemTotalCost } from "@packages/domain/services";
+import { calculateMenuItemCost } from "@packages/domain/services";
 import { computed } from "vue";
 
 type Props = {
@@ -167,7 +167,7 @@ const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
   });
 
 const menuItemTotalCost = computed(() =>
-  calculateMenuItemTotalCost(
+  calculateMenuItemCost(
     props.menuItem.menuItemSupplies,
     props.suppliesList.items
   )

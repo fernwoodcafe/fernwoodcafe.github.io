@@ -1,10 +1,10 @@
-import calculateMenuItemTotalCost from "./calculateMenuItemTotalCost";
+import calculateMenuItemCost from "./calculateMenuItemCost";
 import calculateSupplyCostPerUnit from "./calculateSupplyCostPerUnit";
 import convertUnit from "./convertUnit";
 import lookupUnitAvailableConversions from "./lookupUnitAvailableConversions";
 
 export {
-  calculateMenuItemTotalCost,
+  calculateMenuItemCost,
   calculateSupplyCostPerUnit,
   convertUnit,
   lookupUnitAvailableConversions,
