@@ -11,9 +11,9 @@ CafeSupply
 
 <script setup lang="ts">
 import {
-  calculateSupplyCostPerUnit,
-  convertUnit,
-  lookupUnitAvailableConversions,
+  availableUnitConversions,
+  supplyCostPerUnit,
+  valueConvertedToUnit,
 } from "@packages/domain/services";
 import type {
   CafeSupply,
@@ -70,7 +70,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     valueGetter: ({ data }: { data: MenuItemComponent }) => {
       const supply = lookupSupplyDetails(data);
       const costPerUnit = formatMoney(
-        calculateSupplyCostPerUnit(props.supplyTaxes, supply)
+        supplyCostPerUnit(props.supplyTaxes, supply)
       );
       return {
         costPerUnit,
@@ -91,7 +91,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     cellEditor: "agSelectCellEditor",
     cellEditorParams: (params) => {
       const { supplyUnits } = lookupSupplyDetails(params.data);
-      const availableUnits = lookupUnitAvailableConversions(supplyUnits);
+      const availableUnits = availableUnitConversions(supplyUnits);
       return {
         values: availableUnits,
       };
@@ -112,11 +112,11 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         (supply) => supply.uniqueId == data.supplyUniqueId
       );
 
-      const costPerSupplyUnit = calculateSupplyCostPerUnit(
+      const costPerSupplyUnit = supplyCostPerUnit(
         props.supplyTaxes,
         targetSupply
       );
-      const costPerMenuItemUnit = convertUnit(
+      const costPerMenuItemUnit = valueConvertedToUnit(
         costPerSupplyUnit,
         targetSupply.supplyUnits,
         data.menuItemSupplyUnits

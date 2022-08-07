@@ -10,7 +10,7 @@ CafeSupply
 </template>
 
 <script setup lang="ts">
-import { calculateSupplyCostPerUnit } from "@packages/domain/services";
+import { supplyCostPerUnit } from "@packages/domain/services";
 import type { CafeSupply, CafeSupplyTaxes } from "@packages/domain/types";
 import { unitsOfMeasure } from "@packages/domain/values";
 import AgCheckboxEditor from "@ui/components/AgCheckboxEditor.vue";
@@ -88,7 +88,7 @@ const columnDefs: ColDef[] = [
     headerName: "Unit Cost",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<CafeSupply>) => ({
-      cost: calculateSupplyCostPerUnit(props.supplyTaxes, data),
+      cost: supplyCostPerUnit(props.supplyTaxes, data),
       units: data.supplyUnits,
     }),
     valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>

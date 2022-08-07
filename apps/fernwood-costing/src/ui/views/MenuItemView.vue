@@ -75,11 +75,11 @@ CafeSupply
 <script setup lang="ts">
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import {
-  applyMarkupToMenuItem,
-  calculateCategoryPercentTotalSales,
-  calculateMenuItemCategoryFactor,
-  calculateMenuItemCost,
-  calculateMenuItemMarkup,
+  categoryPercentTotalSales,
+  menuItemCategoryFactor,
+  menuItemCost,
+  menuItemMarkup,
+  menuItemPriceAtMarkup,
 } from "@packages/domain/services";
 import type {
   CafeGoals,
@@ -185,30 +185,26 @@ const onMenuItemComponentDeleted = (data: MenuItemComponent) =>
   });
 
 const menuItemTotalCost = computed(() =>
-  calculateMenuItemCost(
+  menuItemCost(
     props.supplyTaxes,
     props.menuItem.menuItemComponents,
     props.suppliesList.items
   )
 );
 const menuItemRecommendedPrice = computed(() =>
-  applyMarkupToMenuItem(
+  menuItemPriceAtMarkup(
     menuItemTotalCost.value,
     props.cafeGoals.weightedAverageMarkup
   )
 );
 const menuItemActualMarkup = computed(() =>
-  calculateMenuItemMarkup(menuItemTotalCost.value, props.menuItem.menuItemPrice)
+  menuItemMarkup(props.menuItem.menuItemPrice, menuItemTotalCost.value)
 );
 
 const menuItemWeightedCostFactor = computed(() => {
-  const categoryPercentTotalSales = calculateCategoryPercentTotalSales(
-    props.menuItemsList.items
-  );
-
-  return calculateMenuItemCategoryFactor(
+  return menuItemCategoryFactor(
     props.menuItem.percentTotalSales,
-    categoryPercentTotalSales
+    categoryPercentTotalSales(props.menuItemsList.items)
   );
 });
 

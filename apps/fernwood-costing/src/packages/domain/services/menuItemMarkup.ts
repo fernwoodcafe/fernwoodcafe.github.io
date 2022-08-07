@@ -1,4 +1,4 @@
-export default (menuItemCost: number, menuItemPrice: number) => {
+export default (menuItemPrice: number, menuItemCost: number) => {
   const markup = menuItemPrice / menuItemCost;
   return isNaN(markup) ? "-" : markup.toFixed(2);
 };

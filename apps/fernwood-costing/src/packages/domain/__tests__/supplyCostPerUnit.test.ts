@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { calculateSupplyCostPerUnit } from "../services";
+import { supplyCostPerUnit } from "../services";
 
 describe("when processing valid inputs", () => {
   const supplyTaxes = {
@@ -15,6 +15,6 @@ describe("when processing valid inputs", () => {
 
   it("does not throw", () => {
     // Act
-    calculateSupplyCostPerUnit(supplyTaxes, supplyKeys);
+    supplyCostPerUnit(supplyTaxes, supplyKeys);
   });
 });

@@ -3,8 +3,8 @@ import type {
   CafeSupplyTaxes,
   MenuItemComponent,
 } from "@packages/domain/types";
-import calculateSupplyCostPerUnit from "./calculateSupplyCostPerUnit";
-import convertUnit from "./convertUnit";
+import supplyCostPerUnit from "./supplyCostPerUnit";
+import valueConvertedToUnit from "./valueConvertedToUnit";
 
 export default (
   supplyTaxes: CafeSupplyTaxes,
@@ -17,15 +17,12 @@ export default (
         (s) => s.uniqueId == menuItemSupply.supplyUniqueId
       );
 
-      const costPerSupplyUnit = calculateSupplyCostPerUnit(
-        supplyTaxes,
-        targetSupply
-      );
+      const costPerSupplyUnit = supplyCostPerUnit(supplyTaxes, targetSupply);
       const costPerMenuItemUnit =
         menuItemSupply.menuItemSupplyUnits === "-" ||
         targetSupply.supplyUnits === "-"
           ? 0
-          : convertUnit(
+          : valueConvertedToUnit(
               costPerSupplyUnit,
               targetSupply.supplyUnits,
               menuItemSupply.menuItemSupplyUnits

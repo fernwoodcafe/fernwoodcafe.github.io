@@ -1,9 +1,9 @@
 import { describe, it } from "vitest";
-import { lookupUnitAvailableConversions } from "../services";
+import { availableUnitConversions } from "../services";
 
 describe("when processing valid inputs", () => {
   it("does not throw", () => {
     // Act
-    lookupUnitAvailableConversions("gram");
+    availableUnitConversions("gram");
   });
 });

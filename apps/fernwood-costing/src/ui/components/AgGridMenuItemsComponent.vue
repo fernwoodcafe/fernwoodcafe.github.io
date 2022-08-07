@@ -11,7 +11,7 @@ CafeSupply
 </template>
 
 <script setup lang="ts">
-import { calculateMenuItemCost } from "@packages/domain/services";
+import { menuItemCost } from "@packages/domain/services";
 import type {
   CafeGoals,
   CafeSupply,
@@ -53,7 +53,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Cost",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemCost(
+      const cost = menuItemCost(
         props.supplyTaxes,
         data.menuItemComponents,
         props.suppliesList.items
@@ -65,7 +65,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: `Price @ ${props.cafeGoals.weightedAverageMarkup} Markup`,
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemCost(
+      const cost = menuItemCost(
         props.supplyTaxes,
         data.menuItemComponents,
         props.suppliesList.items
@@ -89,7 +89,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Actual Markup",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemCost(
+      const cost = menuItemCost(
         props.supplyTaxes,
         data.menuItemComponents,
         props.suppliesList.items
@@ -102,7 +102,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Actual Contribution (Price - Cost)",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemCost(
+      const cost = menuItemCost(
         props.supplyTaxes,
         data.menuItemComponents,
         props.suppliesList.items
