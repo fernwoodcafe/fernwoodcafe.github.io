@@ -33,7 +33,7 @@ CafeSupply
         </fieldset>
         <fieldset>
           <label>Percent Category Sales</label>
-          <p>{{ menuItemPercentCategorySalesComputed }}</p>
+          <p>{{ menuItemPercentCategorySalesComputed.toFixed(2) }}</p>
         </fieldset>
         <fieldset>
           <label>Weighted Markup</label>
