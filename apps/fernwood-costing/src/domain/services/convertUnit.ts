@@ -11,7 +11,8 @@ export default (
   }
 
   const conversion = unitConversions.find(
-    (conversion) => conversion.From === fromUnit && conversion.To === toUnit
+    (conversion) =>
+      conversion.FromUnit === fromUnit && conversion.ToUnit === toUnit
   );
 
   return value * conversion.Multiplier;

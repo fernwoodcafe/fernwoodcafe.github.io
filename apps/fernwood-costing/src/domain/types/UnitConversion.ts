@@ -1,8 +1,8 @@
 import type { UnitOfMeasure } from "./UnitOfMeasure";
 
 export type UnitConversion = {
-  From: UnitOfMeasure;
-  To: UnitOfMeasure;
+  FromUnit: UnitOfMeasure;
+  ToUnit: UnitOfMeasure;
   Multiplier: number;
 };
 

@@ -4,7 +4,11 @@ import initializeRepository from "@/data/excelDB/initializeRepository";
 import type { CafeGoals } from "@/domain/types";
 import { formatLink } from "@/formatters";
 import { reactive, watch } from "vue";
-import { createRouter, createWebHashHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  type RouteRecordRaw,
+} from "vue-router";
 import handleCommand from "../cqrs-es/handleCommand";
 
 const domainEventsRepo = initializeRepository();
@@ -29,8 +33,9 @@ const cafeGoals = reactive<CafeGoals>({
   weightedAverageMarkup: 3.5,
 });
 
-const buildMenuItemRoutes = () =>
-  menuItems.items.map((menuItem) => ({
+const buildMenuItemRoutes = (): RouteRecordRaw[] =>
+  menuItems.items.map<RouteRecordRaw>((menuItem) => ({
+    name: menuItem.menuItemName,
     path: `/menu-items/${formatLink(menuItem.menuItemName)}`,
     component: () => import("../views/MenuItemView.vue"),
     props: {
@@ -78,6 +83,7 @@ const router = createRouter({
 watch(menuItems, () => {
   const routes = buildMenuItemRoutes();
   routes.forEach((route) => {
+    router.removeRoute(route.name);
     router.addRoute(route);
   });
 

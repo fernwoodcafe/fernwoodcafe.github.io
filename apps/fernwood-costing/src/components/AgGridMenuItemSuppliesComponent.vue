@@ -93,7 +93,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     valueParser: (params) => Number(params.newValue),
   },
   {
-    headerName: "Cost (Calculated)",
+    headerName: "Cost",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
       const targetSupply = props.suppliesList.items.find(

@@ -84,7 +84,7 @@ const columnDefs: ColDef[] = [
   { field: "supplyLink" },
   {
     field: "unitCost",
-    headerName: "Unit Cost (Calculated)",
+    headerName: "Unit Cost",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<Supply>) => ({
       cost: calculatePerUnitSupplyCost(data),

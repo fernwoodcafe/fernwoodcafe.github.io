@@ -19,7 +19,7 @@ export default smallPerBig
     return acc;
   }, smallPerBig)
   .map<UnitConversion>((tuple) => ({
-    From: tuple[0],
-    To: tuple[1],
+    FromUnit: tuple[0],
+    ToUnit: tuple[1],
     Multiplier: tuple[2],
   }));

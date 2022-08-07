@@ -109,9 +109,16 @@ const onCellEditRequest = (event: CellEditRequestEvent) => {
   });
 };
 
+/**
+ * Setting maxWidth plays well with a default to flex width.
+ * See https://www.ag-grid.com/javascript-data-grid/column-sizing/#column-flex
+ */
 const toolsColDef: ColDef = {
   headerName: "Actions",
   editable: false,
+  resizable: false,
+  maxWidth: 130,
+  suppressMenu: true,
   cellRenderer: AgRowToolsRenderer,
   cellRendererParams: {
     onEditClick: (rowData) => {
@@ -129,9 +136,11 @@ const onGridReady = ({ api }: GridOptions) => {
 
   const columnDefs: ColDef[] = props.gridColumnDefs.slice().map((colDef) => {
     if (colDef.editable === false) {
-      colDef.cellClass = "ag-cell-not-editable";
+      colDef.cellClass = "ag-not-editable";
+      colDef.headerClass = "ag-not-editable";
     } else {
-      colDef.cellClass = "ag-cell-editable";
+      colDef.cellClass = "ag-editable";
+      colDef.headerClass = "ag-editable";
     }
 
     return colDef;
@@ -156,11 +165,12 @@ const onGridReady = ({ api }: GridOptions) => {
   height: 0;
 }
 
-.ag-cell-not-editable {
-  font-style: italic;
+.ag-header-cell.ag-editable span.ag-header-cell-text::after {
+  content: "*";
+  padding-left: 2px;
 }
 
-.ag-cell-editable {
-  font-style: normal;
+.ag-cell.ag-not-editable {
+  font-style: italic;
 }
 </style>

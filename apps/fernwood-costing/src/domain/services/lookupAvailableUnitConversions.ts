@@ -1,11 +1,14 @@
+import type { UnitOfMeasure } from "../types/UnitOfMeasure";
 import unitConversions from "../values/unitConversions";
 
-export default (unitOfMeasure: string) => {
+export default (unitOfMeasure: UnitOfMeasure): UnitOfMeasure[] => {
   const availableConversions = unitConversions.filter(
-    (conversion) => conversion[0] == unitOfMeasure
+    (conversion) => conversion.FromUnit == unitOfMeasure
   );
 
   return availableConversions.length === 0
     ? [unitOfMeasure]
-    : availableConversions.map((conversion) => conversion[1]);
+    : availableConversions
+        .map((conversion) => conversion.ToUnit)
+        .concat(unitOfMeasure);
 };
