@@ -1,6 +1,12 @@
 CafeSupply
 <template>
-  <h1>Menu Items</h1>
+  <h1>
+    Menu Items
+    <small>
+      (Category Weighted Average Markup:
+      {{ categoryWeightedAverageMarkupComputed.toFixed(2) }})
+    </small>
+  </h1>
   <input type="button" @click="onClickNewMenuItem" value="New Menu Item" />
   <AgGridMenuItemsComponent
     :menuItemsList="menuItemsList"
@@ -11,12 +17,11 @@ CafeSupply
     @menuItemDeleted="onMenuItemDeleted"
     @menuItemEditClick="onMenuItemEditClick"
   ></AgGridMenuItemsComponent>
-
-  <RouterView :key="$route.fullPath" />
 </template>
 
 <script setup lang="ts">
 import type { DomainCommand } from "@packages/cqrs-es-types";
+import { categoryWeightedAverageMarkup } from "@packages/domain/services";
 import type {
   CafeGoals,
   CafeSupply,
@@ -26,7 +31,7 @@ import type {
 import AgGridMenuItemsComponent from "@ui/components/AgGridMenuItemsComponent.vue";
 import { formatLink } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
 type Props = {
@@ -75,4 +80,12 @@ const onMenuItemEditClick = (menuItem: MenuItem) => {
   console.log("onMenuItemEditClick", JSON.stringify(menuItem));
   router.push(`menu-items/${formatLink(menuItem.menuItemName)}`);
 };
+
+const categoryWeightedAverageMarkupComputed = computed(() =>
+  categoryWeightedAverageMarkup(
+    props.supplyTaxes,
+    props.suppliesList.items,
+    props.menuItemsList.items
+  )
+);
 </script>
