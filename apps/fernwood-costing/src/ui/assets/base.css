@@ -133,28 +133,6 @@ label {
   font-weight: 600;
 }
 
-form fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-form fieldset {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  row-gap: 5px;
-}
-
-fieldset label,
-fieldset input,
-fieldset select {
-  flex: 0 0 auto;
-}
-
-form fieldset input {
-  height: 1.2rem;
-}
-
-fieldset input[type="button"] {
-  height: 1.6rem;
+fieldset {
+  border: none;
 }

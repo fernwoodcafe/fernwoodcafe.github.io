@@ -62,7 +62,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     },
   },
   {
-    headerName: `Price @ ${props.cafeGoals.weightedAverageMarkup} Markup`,
+    headerName: `Price @ ${props.cafeGoals.targetWeightedAverageMarkup} Markup`,
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = menuItemCost(
@@ -70,7 +70,7 @@ const columnDefs: ColDef<MenuItem>[] = [
         data.menuItemComponents,
         props.suppliesList.items
       );
-      const price = cost * props.cafeGoals.weightedAverageMarkup;
+      const price = cost * props.cafeGoals.targetWeightedAverageMarkup;
       return formatMoney(price);
     },
   },
@@ -107,7 +107,7 @@ const columnDefs: ColDef<MenuItem>[] = [
         data.menuItemComponents,
         props.suppliesList.items
       );
-      const price = cost * props.cafeGoals.weightedAverageMarkup;
+      const price = cost * props.cafeGoals.targetWeightedAverageMarkup;
       return formatMoney(price - cost);
     },
   },

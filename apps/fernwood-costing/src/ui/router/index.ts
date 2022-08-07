@@ -35,7 +35,7 @@ const sendCommand = handleCommand({
 });
 
 const cafeGoals = reactive<CafeGoals>({
-  weightedAverageMarkup: 3.5,
+  targetWeightedAverageMarkup: 3.5,
 });
 
 const supplyTaxes = reactive<CafeSupplyTaxes>({

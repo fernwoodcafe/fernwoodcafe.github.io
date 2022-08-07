@@ -1,3 +1,3 @@
 export type CafeGoals = {
-  weightedAverageMarkup: number;
+  targetWeightedAverageMarkup: number;
 };

@@ -9,7 +9,44 @@ CafeSupply
   </h2>
   <article>
     <section>
-      <h2>Costing</h2>
+      <h2>Set Menu Item Price</h2>
+      <form @submit.prevent>
+        <FrcInput
+          :label="'Projected Percent Total Sales'"
+          :value="menuItem.percentTotalSales"
+          :type="'number'"
+          @change="onPercentageTotalSalesChanged"
+        />
+        <FrcInput
+          :label="'Chosen Menu Item Price'"
+          :value="menuItem.menuItemPrice"
+          :type="'number'"
+          @change="onChosenMenuItemPriceChange"
+        />
+        <fieldset>
+          <label>Price @ {{ cafeGoals.targetWeightedAverageMarkup }}</label>
+          <p>{{ formatMoney(menuItemBaselinePrice) }}</p>
+        </fieldset>
+        <fieldset>
+          <label>Actual Markup</label>
+          <p>{{ menuItemMarkupComputed.toFixed(2) }}</p>
+        </fieldset>
+        <fieldset>
+          <label>Percent Category Sales</label>
+          <p>{{ menuItemPercentCategorySalesComputed }}</p>
+        </fieldset>
+        <fieldset>
+          <label>Weighted Markup</label>
+          <p>{{ menuItemWeightedMarkupValue.toFixed(2) }}</p>
+        </fieldset>
+        <fieldset>
+          <label>Category Weighted Average Markup</label>
+          <p>{{ categoryWeightedAverageMarkup }}</p>
+        </fieldset>
+      </form>
+    </section>
+    <section>
+      <h2>Add Menu Item Components</h2>
       <form @submit.prevent>
         <FrcSelectOption
           :label="'Add Ingredient'"
@@ -23,43 +60,10 @@ CafeSupply
           :optionKey="'supplyName'"
           @submitSelect="onClickNewPackaging"
         />
-        <label
-          >Total Cost
-          <p>{{ formatMoney(menuItemTotalCost) }}</p>
-        </label>
-      </form>
-    </section>
-    <section>
-      <h2>Weighted Average Pricing</h2>
-      <form @submit.prevent>
-        <label
-          >Price @ {{ cafeGoals.weightedAverageMarkup }} Markup
-          <p>{{ formatMoney(menuItemRecommendedPrice) }}</p>
-        </label>
-        <FrcInput
-          :label="'Projected Percent Total Sales'"
-          :value="menuItem.percentTotalSales"
-          :type="'number'"
-          @change="onPercentageTotalSalesChanged"
-        />
-        <FrcInput
-          :label="'Chosen Menu Item Price'"
-          :value="menuItem.menuItemPrice"
-          :type="'number'"
-          @change="onChosenMenuItemPriceChange"
-        />
-        <label
-          >Actual Markup
-          <p>{{ menuItemActualMarkup }}</p>
-        </label>
-        <label
-          >Weighted Cost Factor
-          <p>{{ menuItemWeightedCostFactor }}</p>
-        </label>
-        <label
-          >Weighted Markup Value
-          <p>{{ menuItemWeightedMarkupValue }}</p>
-        </label>
+        <fieldset>
+          <label>Total Cost</label>
+          <p>{{ formatMoney(menuItemCostComputed) }}</p>
+        </fieldset>
       </form>
     </section>
   </article>
@@ -76,9 +80,9 @@ CafeSupply
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import {
   categoryPercentTotalSales,
-  menuItemCategoryFactor,
   menuItemCost,
   menuItemMarkup,
+  menuItemPercentCategorySales,
   menuItemPriceAtMarkup,
 } from "@packages/domain/services";
 import type {
@@ -184,67 +188,82 @@ const onMenuItemComponentDeleted = (data: MenuItemComponent) =>
     payload: data,
   });
 
-const menuItemTotalCost = computed(() =>
+const menuItemCostComputed = computed(() =>
   menuItemCost(
     props.supplyTaxes,
     props.menuItem.menuItemComponents,
     props.suppliesList.items
   )
 );
-const menuItemRecommendedPrice = computed(() =>
+const menuItemBaselinePrice = computed(() =>
   menuItemPriceAtMarkup(
-    menuItemTotalCost.value,
-    props.cafeGoals.weightedAverageMarkup
+    menuItemCostComputed.value,
+    props.cafeGoals.targetWeightedAverageMarkup
   )
 );
-const menuItemActualMarkup = computed(() =>
-  menuItemMarkup(props.menuItem.menuItemPrice, menuItemTotalCost.value)
+const menuItemMarkupComputed = computed(() =>
+  menuItemMarkup(props.menuItem.menuItemPrice, menuItemCostComputed.value)
 );
 
-const menuItemWeightedCostFactor = computed(() => {
-  return menuItemCategoryFactor(
+const menuItemPercentCategorySalesComputed = computed(() =>
+  menuItemPercentCategorySales(
     props.menuItem.percentTotalSales,
     categoryPercentTotalSales(props.menuItemsList.items)
-  );
-});
+  )
+);
 
-const menuItemWeightedMarkupValue = computed(() => {
-  return 0;
-});
+const menuItemWeightedMarkup = (
+  menuItemMarkup: number,
+  menuItemFactor: number
+) => menuItemMarkup * menuItemFactor;
+
+const menuItemWeightedMarkupValue = computed(() =>
+  menuItemWeightedMarkup(
+    menuItemMarkupComputed.value,
+    menuItemPercentCategorySalesComputed.value
+  )
+);
+
+const categoryWeightedAverageMarkup = computed(() => 0);
 </script>
 
 <style scoped>
 article {
   display: flex;
+  flex-wrap: wrap;
   column-gap: 50px;
 }
 
 section {
-  flex: 0 0 auto;
+  flex: 0 0 100%;
   padding-left: 10px;
   padding-right: 10px;
-  border: thin solid var(--color-secondary);
   border-radius: 5px;
   margin-bottom: 20px;
 }
 
-form {
+section > form {
   display: flex;
-  column-gap: 5px;
-  margin-bottom: 10px;
+  column-gap: 10px;
 }
 
-form > label,
-form > fieldset {
-  flex: 0 1 auto;
-  border: none;
-  padding: 0 10px;
+section > form > fieldset {
+  background-color: var(--color-info);
+  padding: 10px;
   border-radius: 5px;
 }
 
-form > label > p,
-form > label > input {
-  font-weight: normal;
-  display: block; /* own line */
+section > form > fieldset > :deep(label) {
+  display: block;
+  padding: 5px;
+  text-align: center;
+}
+
+section > form > fieldset > p,
+section > form > fieldset > :deep(input) {
+  display: block;
+  padding: 5px;
+  margin: auto;
+  text-align: center;
 }
 </style>
