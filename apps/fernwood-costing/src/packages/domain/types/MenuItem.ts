@@ -1,9 +1,9 @@
 import type { DomainEntity } from "../../cqrs-es-types/DomainEntity";
-import type { MenuItemSupply } from "./MenuItemSupply";
+import type { MenuItemComponent } from "./MenuItemComponent";
 
 export type MenuItem = DomainEntity & {
   menuItemName: string;
-  menuItemSupplies: MenuItemSupply[];
+  menuItemComponents: MenuItemComponent[];
   menuItemPrice: number;
   percentTotalSales: number;
 };

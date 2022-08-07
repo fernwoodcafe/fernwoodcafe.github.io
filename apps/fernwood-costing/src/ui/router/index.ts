@@ -4,7 +4,7 @@ import {
   materializeSupplies,
 } from "@packages/cqrs-es";
 import initializeRepository from "@packages/data/excelDB/initializeRepository";
-import type { CafeGoals } from "@packages/domain/types";
+import type { CafeGoals, CafeSupplyTaxes } from "@packages/domain/types";
 import { formatLink } from "@ui/formatters";
 import { reactive, watch } from "vue";
 import {
@@ -16,16 +16,19 @@ import {
 const domainEventsRepo = initializeRepository();
 const domainEvents = await domainEventsRepo.select();
 
-const menuItems = materializeMenuItems(
+const menuItemsList = materializeMenuItems(
   reactive({ items: [] }),
   ...domainEvents
 );
 
-const supplies = materializeSupplies(reactive({ items: [] }), ...domainEvents);
+const suppliesList = materializeSupplies(
+  reactive({ items: [] }),
+  ...domainEvents
+);
 
 const sendCommand = handleCommand({
-  menuItems,
-  supplies,
+  menuItems: menuItemsList,
+  supplies: suppliesList,
   materializeMenuItems,
   materializeSupplies,
   domainEventsRepo,
@@ -35,14 +38,19 @@ const cafeGoals = reactive<CafeGoals>({
   weightedAverageMarkup: 3.5,
 });
 
+const supplyTaxes = reactive<CafeSupplyTaxes>({
+  PST: 0.06,
+});
+
 const buildMenuItemRoutes = (): RouteRecordRaw[] =>
-  menuItems.items.map<RouteRecordRaw>((menuItem) => ({
+  menuItemsList.items.map<RouteRecordRaw>((menuItem) => ({
     name: menuItem.menuItemName,
     path: `/menu-items/${formatLink(menuItem.menuItemName)}`,
     component: () => import("../views/MenuItemView.vue"),
     props: {
       menuItem,
-      suppliesList: supplies,
+      suppliesList,
+      supplyTaxes,
       cafeGoals,
       sendCommand,
     },
@@ -63,7 +71,7 @@ const router = createRouter({
       name: "supplies",
       component: () => import("../views/SuppliesListView.vue"),
       props: {
-        suppliesList: supplies,
+        suppliesList: suppliesList,
         sendCommand,
       },
     },
@@ -72,8 +80,9 @@ const router = createRouter({
       name: "menuItems",
       component: () => import("../views/MenuItemsListView.vue"),
       props: {
-        menuItemsList: menuItems,
-        suppliesList: supplies,
+        menuItemsList,
+        suppliesList,
+        supplyTaxes,
         cafeGoals,
         sendCommand,
       },
@@ -82,7 +91,7 @@ const router = createRouter({
   ],
 });
 
-watch(menuItems, () => {
+watch(menuItemsList, () => {
   const routes = buildMenuItemRoutes();
   routes.forEach((route) => {
     router.removeRoute(route.name);

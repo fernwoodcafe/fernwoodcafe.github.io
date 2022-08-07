@@ -1,4 +1,4 @@
-InventoryItem
+CafeSupply
 <template>
   <h2>
     <input
@@ -58,32 +58,35 @@ InventoryItem
   <AgGridMenuItemSuppliesComponent
     :menuItem="menuItem"
     :suppliesList="suppliesList"
-    @menuItemSupplyUpdated="onMenuItemSupplyUpdated"
-    @menuItemSupplyDeleted="onMenuItemSupplyDeleted"
+    :supplyTaxes="supplyTaxes"
+    @menuItemSupplyUpdated="onMenuItemComponentUpdated"
+    @menuItemSupplyDeleted="onMenuItemComponentDeleted"
   ></AgGridMenuItemSuppliesComponent>
 </template>
 
 <script setup lang="ts">
+import type { DomainCommand } from "@packages/cqrs-es-types";
+import { calculateMenuItemCost } from "@packages/domain/services";
+import type {
+  CafeGoals,
+  CafeSupply,
+  CafeSupplyTaxes,
+  MenuItem,
+  MenuItemComponent,
+} from "@packages/domain/types";
 import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcInput from "@ui/components/FrcInput.vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
-import type { DomainCommand } from "@packages/cqrs-es-types";
-import type {
-  CafeGoals,
-  InventoryItem,
-  MenuItem,
-  MenuItemSupply,
-} from "@packages/domain/types";
 import { formatLink, formatMoney } from "@ui/formatters";
 import isInstance from "@ui/typeGuards/isInstance.js";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
-import { calculateMenuItemCost } from "@packages/domain/services";
 import { computed } from "vue";
 
 type Props = {
   menuItem: MenuItem;
-  suppliesList: ReactiveArray<InventoryItem>;
+  suppliesList: ReactiveArray<CafeSupply>;
   cafeGoals: CafeGoals;
+  supplyTaxes: CafeSupplyTaxes;
   sendCommand: (Command: DomainCommand) => Promise<void>;
 };
 
@@ -97,8 +100,8 @@ const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addNewMenuItemSupply = async (supply: Partial<InventoryItem>) => {
-  const menuItemSupply: MenuItemSupply = {
+const addNewMenuItemComponent = async (supply: Partial<CafeSupply>) => {
+  const menuItemSupply: MenuItemComponent = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,
     supplyUniqueId: supply.uniqueId,
@@ -112,8 +115,8 @@ const addNewMenuItemSupply = async (supply: Partial<InventoryItem>) => {
   });
 };
 
-const onClickNewIngredient = addNewMenuItemSupply;
-const onClickNewPackaging = addNewMenuItemSupply;
+const onClickNewIngredient = addNewMenuItemComponent;
+const onClickNewPackaging = addNewMenuItemComponent;
 
 /**
  * Remember:
@@ -154,13 +157,13 @@ const onMenuItemNameUpdated = async (event: Event) => {
   );
 };
 
-const onMenuItemSupplyUpdated = (data: MenuItemSupply) =>
+const onMenuItemComponentUpdated = (data: MenuItemComponent) =>
   props.sendCommand({
     type: "update_supply_on_menu_item",
     payload: data,
   });
 
-const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
+const onMenuItemComponentDeleted = (data: MenuItemComponent) =>
   props.sendCommand({
     type: "remove_supply_from_menu_item",
     payload: data,
@@ -168,7 +171,8 @@ const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
 
 const menuItemTotalCost = computed(() =>
   calculateMenuItemCost(
-    props.menuItem.menuItemSupplies,
+    props.supplyTaxes,
+    props.menuItem.menuItemComponents,
     props.suppliesList.items
   )
 );

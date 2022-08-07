@@ -1,6 +1,7 @@
 import type { CafeGoals } from "./CafeGoals";
-import type { InventoryItem } from "./InventoryItem";
+import type { CafeSupply } from "./CafeSupply";
+import type { CafeSupplyTaxes } from "./CafeSupplyTaxes";
 import type { MenuItem } from "./MenuItem";
-import type { MenuItemSupply } from "./MenuItemSupply";
+import type { MenuItemComponent } from "./MenuItemComponent";
 
-export { MenuItem, MenuItemSupply, InventoryItem, CafeGoals };
+export { MenuItem, MenuItemComponent, CafeSupply, CafeGoals, CafeSupplyTaxes };

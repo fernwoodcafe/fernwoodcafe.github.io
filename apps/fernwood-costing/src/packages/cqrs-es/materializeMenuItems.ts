@@ -1,5 +1,5 @@
 import type { DomainEvent } from "@packages/cqrs-es-types";
-import type { MenuItem, MenuItemSupply } from "@packages/domain/types";
+import type { MenuItem, MenuItemComponent } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
 export default (
@@ -34,7 +34,7 @@ export default (
       menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
         menuItem.uniqueId == event.payload.menuItemUniqueId
           ? (() => {
-              menuItem.menuItemSupplies.push(event.payload);
+              menuItem.menuItemComponents.push(event.payload);
               return menuItem;
             })()
           : menuItem
@@ -45,8 +45,8 @@ export default (
       menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
         menuItem.uniqueId == event.payload.menuItemUniqueId
           ? (() => {
-              menuItem.menuItemSupplies = menuItem.menuItemSupplies.map(
-                (menuItemSupply: MenuItemSupply) => {
+              menuItem.menuItemComponents = menuItem.menuItemComponents.map(
+                (menuItemSupply: MenuItemComponent) => {
                   return menuItemSupply.uniqueId == event.payload.uniqueId
                     ? event.payload
                     : menuItemSupply;
@@ -60,7 +60,7 @@ export default (
 
     if (event.type == "supply_deleted") {
       menuItemsList.items = menuItemsList.items.reduce((acc, menuItem) => {
-        menuItem.menuItemSupplies = menuItem.menuItemSupplies.filter(
+        menuItem.menuItemComponents = menuItem.menuItemComponents.filter(
           (supply) => supply.supplyUniqueId != event.payload.uniqueId
         );
         return acc.concat([menuItem]);
@@ -71,8 +71,8 @@ export default (
       menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
         menuItem.uniqueId == event.payload.menuItemUniqueId
           ? (() => {
-              menuItem.menuItemSupplies = menuItem.menuItemSupplies.filter(
-                (menuItemSupply: MenuItemSupply) =>
+              menuItem.menuItemComponents = menuItem.menuItemComponents.filter(
+                (menuItemSupply: MenuItemComponent) =>
                   menuItemSupply.uniqueId != event.payload.uniqueId
               );
               return menuItem;

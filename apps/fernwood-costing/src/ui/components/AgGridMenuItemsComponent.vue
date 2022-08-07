@@ -1,4 +1,4 @@
-InventoryItem
+CafeSupply
 <template>
   <AgGridComponent
     :gridData="menuItemsList"
@@ -17,15 +17,17 @@ import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { calculateMenuItemCost } from "@packages/domain/services";
 import type {
   CafeGoals,
-  InventoryItem,
+  CafeSupply,
+  CafeSupplyTaxes,
   MenuItem,
 } from "@packages/domain/types";
 import type { ColDef } from "ag-grid-community";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<InventoryItem>;
+  suppliesList: ReactiveArray<CafeSupply>;
   cafeGoals: CafeGoals;
+  supplyTaxes: CafeSupplyTaxes;
 };
 
 type Emits = {
@@ -51,7 +53,8 @@ const columnDefs: ColDef<MenuItem>[] = [
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = calculateMenuItemCost(
-        data.menuItemSupplies,
+        props.supplyTaxes,
+        data.menuItemComponents,
         props.suppliesList.items
       );
       return formatMoney(cost);
@@ -62,7 +65,8 @@ const columnDefs: ColDef<MenuItem>[] = [
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = calculateMenuItemCost(
-        data.menuItemSupplies,
+        props.supplyTaxes,
+        data.menuItemComponents,
         props.suppliesList.items
       );
       const price = cost * props.cafeGoals.weightedAverageMarkup;
@@ -82,7 +86,8 @@ const columnDefs: ColDef<MenuItem>[] = [
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = calculateMenuItemCost(
-        data.menuItemSupplies,
+        props.supplyTaxes,
+        data.menuItemComponents,
         props.suppliesList.items
       );
       const markup = data.menuItemPrice / cost;
@@ -94,7 +99,8 @@ const columnDefs: ColDef<MenuItem>[] = [
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = calculateMenuItemCost(
-        data.menuItemSupplies,
+        props.supplyTaxes,
+        data.menuItemComponents,
         props.suppliesList.items
       );
       const price = cost * props.cafeGoals.weightedAverageMarkup;

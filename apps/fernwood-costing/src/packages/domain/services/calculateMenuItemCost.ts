@@ -1,18 +1,26 @@
-import type { InventoryItem, MenuItemSupply } from "@packages/domain/types";
+import type {
+  CafeSupply,
+  CafeSupplyTaxes,
+  MenuItemComponent,
+} from "@packages/domain/types";
 import calculateSupplyCostPerUnit from "./calculateSupplyCostPerUnit";
 import convertUnit from "./convertUnit";
 
 export default (
-  menuItemSupplies: MenuItemSupply[],
-  suppliesList: InventoryItem[]
+  supplyTaxes: CafeSupplyTaxes,
+  menuItemComponents: MenuItemComponent[],
+  suppliesList: CafeSupply[]
 ) =>
-  menuItemSupplies
+  menuItemComponents
     .map((menuItemSupply) => {
       const targetSupply = suppliesList.find(
         (s) => s.uniqueId == menuItemSupply.supplyUniqueId
       );
 
-      const costPerSupplyUnit = calculateSupplyCostPerUnit(targetSupply);
+      const costPerSupplyUnit = calculateSupplyCostPerUnit(
+        supplyTaxes,
+        targetSupply
+      );
       const costPerMenuItemUnit =
         menuItemSupply.menuItemSupplyUnits === "-" ||
         targetSupply.supplyUnits === "-"

@@ -1,10 +1,11 @@
-InventoryItem
+CafeSupply
 <template>
   <h1>Menu Items</h1>
   <input type="button" @click="onClickNewMenuItem" value="New Menu Item" />
   <AgGridMenuItemsComponent
     :menuItemsList="menuItemsList"
     :suppliesList="suppliesList"
+    :supplyTaxes="supplyTaxes"
     :cafeGoals="cafeGoals"
     @menuItemUpdated="onMenuItemUpdated"
     @menuItemDeleted="onMenuItemDeleted"
@@ -15,13 +16,14 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
-import AgGridMenuItemsComponent from "@ui/components/AgGridMenuItemsComponent.vue";
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import type {
   CafeGoals,
-  InventoryItem,
+  CafeSupply,
+  CafeSupplyTaxes,
   MenuItem,
 } from "@packages/domain/types";
+import AgGridMenuItemsComponent from "@ui/components/AgGridMenuItemsComponent.vue";
 import { formatLink } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { ref } from "vue";
@@ -29,7 +31,8 @@ import { useRouter } from "vue-router";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<InventoryItem>;
+  suppliesList: ReactiveArray<CafeSupply>;
+  supplyTaxes: CafeSupplyTaxes;
   cafeGoals: CafeGoals;
   sendCommand: (Command: DomainCommand<MenuItem>) => Promise<void>;
 };
@@ -47,7 +50,7 @@ const onClickNewMenuItem = () => {
       menuItemName: `New Menu Item ${props.menuItemsList.items.length}`,
       percentTotalSales: 0,
       menuItemPrice: 0,
-      menuItemSupplies: [],
+      menuItemComponents: [],
     },
   });
 };

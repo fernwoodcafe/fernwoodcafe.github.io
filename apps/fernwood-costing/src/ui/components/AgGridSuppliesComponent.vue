@@ -1,4 +1,4 @@
-InventoryItem
+CafeSupply
 <template>
   <AgGridComponent
     :gridData="suppliesList"
@@ -10,14 +10,14 @@ InventoryItem
 </template>
 
 <script setup lang="ts">
+import { calculateSupplyCostPerUnit } from "@packages/domain/services";
+import type { CafeSupply, CafeSupplyTaxes } from "@packages/domain/types";
+import { unitsOfMeasure } from "@packages/domain/values";
 import AgCheckboxEditor from "@ui/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
 import AgPercentEditor from "@ui/components/AgPercentEditor.vue";
 import { formatMoney, formatPercent } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
-import { calculateSupplyCostPerUnit } from "@packages/domain/services";
-import type { InventoryItem } from "@packages/domain/types";
-import { unitsOfMeasure } from "@packages/domain/values";
 import type {
   ColDef,
   ValueFormatterParams,
@@ -25,17 +25,17 @@ import type {
 } from "ag-grid-community";
 
 type Props = {
-  suppliesList: ReactiveArray<InventoryItem>;
+  suppliesList: ReactiveArray<CafeSupply>;
+  supplyTaxes: CafeSupplyTaxes;
 };
 
 type Emits = {
-  (e: "supplyUpdated", data: InventoryItem): void;
-  (e: "supplyDeleted", data: InventoryItem): void;
+  (e: "supplyUpdated", data: CafeSupply): void;
+  (e: "supplyDeleted", data: CafeSupply): void;
 };
 
 const emit = defineEmits<Emits>();
-
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const onSupplyUpdated = (data) => emit("supplyUpdated", data);
 
@@ -64,13 +64,13 @@ const columnDefs: ColDef[] = [
   {
     field: "purchasePriceBeforeTax",
     headerName: "Purchase Price before Tax",
-    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
+    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
       formatMoney(params.value),
   },
   {
     field: "percentWaste",
     cellEditor: AgPercentEditor,
-    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
+    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
       formatPercent(params.value),
   },
   {
@@ -87,11 +87,11 @@ const columnDefs: ColDef[] = [
     field: "unitCost",
     headerName: "Unit Cost",
     editable: false,
-    valueGetter: ({ data }: ValueGetterParams<InventoryItem>) => ({
-      cost: calculateSupplyCostPerUnit(data),
+    valueGetter: ({ data }: ValueGetterParams<CafeSupply>) => ({
+      cost: calculateSupplyCostPerUnit(props.supplyTaxes, data),
       units: data.supplyUnits,
     }),
-    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
+    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
       `${formatMoney(params.value.cost)} / ${params.value.units}`,
   },
 ];

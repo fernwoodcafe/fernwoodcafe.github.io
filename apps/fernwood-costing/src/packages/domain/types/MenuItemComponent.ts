@@ -1,7 +1,7 @@
 import type { DomainEntity } from "../../cqrs-es-types/DomainEntity";
 import type { UnitOfMeasure } from "./UnitOfMeasure";
 
-export type MenuItemSupply = DomainEntity & {
+export type MenuItemComponent = DomainEntity & {
   menuItemUniqueId: string;
   supplyUniqueId: string;
   menuItemSupplyUnits: UnitOfMeasure;

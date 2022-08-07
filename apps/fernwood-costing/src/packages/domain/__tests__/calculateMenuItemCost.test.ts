@@ -1,13 +1,14 @@
 import { describe, it } from "vitest";
 import { calculateMenuItemCost } from "../services";
-import type { InventoryItem, MenuItemSupply } from "../types";
+import type { CafeSupply, CafeSupplyTaxes, MenuItemComponent } from "../types";
 
 describe("when processing valid inputs", () => {
-  const inventoryItems: InventoryItem[] = [];
-  const menuItemSupplies: MenuItemSupply[] = [];
+  const taxes: CafeSupplyTaxes = { PST: 0.06 };
+  const supplies: CafeSupply[] = [];
+  const menuItemComponents: MenuItemComponent[] = [];
 
   it("does not throw", () => {
     // Act
-    calculateMenuItemCost(menuItemSupplies, inventoryItems);
+    calculateMenuItemCost(taxes, menuItemComponents, supplies);
   });
 });

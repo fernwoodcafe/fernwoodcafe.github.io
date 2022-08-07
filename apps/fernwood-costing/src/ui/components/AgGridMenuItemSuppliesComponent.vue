@@ -1,28 +1,29 @@
-InventoryItem
+CafeSupply
 <template>
   <AgGridComponent
-    :gridData="menuItemSupplies"
+    :gridData="menuItemComponents"
     :gridTools="['delete']"
     :gridColumnDefs="columnDefs"
-    @gridDataUpdate="onMenuItemSupplyUpdated"
-    @gridRowDeleteClick="onMenuItemSupplyDeleteClick"
+    @gridDataUpdate="onMenuItemComponentUpdated"
+    @gridRowDeleteClick="onMenuItemComponentDeleteClick"
   ></AgGridComponent>
 </template>
 
 <script setup lang="ts">
-import AgGridComponent from "@ui/components/AgGridComponent.vue";
-import { formatMoney } from "@ui/formatters";
-import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import {
   calculateSupplyCostPerUnit,
   convertUnit,
   lookupUnitAvailableConversions,
 } from "@packages/domain/services";
 import type {
-  InventoryItem,
+  CafeSupply,
+  CafeSupplyTaxes,
   MenuItem,
-  MenuItemSupply,
+  MenuItemComponent,
 } from "@packages/domain/types";
+import AgGridComponent from "@ui/components/AgGridComponent.vue";
+import { formatMoney } from "@ui/formatters";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type {
   ColDef,
   ColGroupDef,
@@ -33,30 +34,32 @@ import { reactive, watch } from "vue";
 
 type Props = {
   menuItem: MenuItem;
-  suppliesList: ReactiveArray<InventoryItem>;
+  suppliesList: ReactiveArray<CafeSupply>;
+  supplyTaxes: CafeSupplyTaxes;
 };
 
 type Emits = {
-  (e: "menuItemSupplyUpdated", data: MenuItemSupply): void;
-  (e: "menuItemSupplyDeleted", data: MenuItemSupply): void;
+  (e: "menuItemSupplyUpdated", data: MenuItemComponent): void;
+  (e: "menuItemSupplyDeleted", data: MenuItemComponent): void;
 };
 
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-const onMenuItemSupplyUpdated = (data) => emit("menuItemSupplyUpdated", data);
-const onMenuItemSupplyDeleteClick = (data) =>
+const onMenuItemComponentUpdated = (data) =>
+  emit("menuItemSupplyUpdated", data);
+const onMenuItemComponentDeleteClick = (data) =>
   emit("menuItemSupplyDeleted", data);
 
-const menuItemSupplies = reactive({
-  items: props.menuItem.menuItemSupplies,
+const menuItemComponents = reactive({
+  items: props.menuItem.menuItemComponents,
 });
 
 watch(props.menuItem, (newMenuItem) => {
-  menuItemSupplies.items = newMenuItem.menuItemSupplies;
+  menuItemComponents.items = newMenuItem.menuItemComponents;
 });
 
-const lookupSupplyDetails = (data: MenuItemSupply) =>
+const lookupSupplyDetails = (data: MenuItemComponent) =>
   props.suppliesList.items.find((item) => item.uniqueId == data.supplyUniqueId);
 
 const columnDefs: (ColDef | ColGroupDef)[] = [
@@ -64,17 +67,17 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     field: "supplyDetails",
     headerName: "Supply Cost and Units",
     editable: false,
-    valueGetter: ({ data }: { data: MenuItemSupply }) => {
+    valueGetter: ({ data }: { data: MenuItemComponent }) => {
       const supply = lookupSupplyDetails(data);
-      const costPerUnit = formatMoney(calculateSupplyCostPerUnit(supply));
+      const costPerUnit = formatMoney(
+        calculateSupplyCostPerUnit(props.supplyTaxes, supply)
+      );
       return {
         costPerUnit,
         ...supply,
       };
     },
-    cellRenderer: (params: {
-      value: InventoryItem & { costPerUnit: number };
-    }) => {
+    cellRenderer: (params: { value: CafeSupply & { costPerUnit: number } }) => {
       return `
         <strong>${params.value.supplyName}</strong>
         <span>-</span>
@@ -102,14 +105,17 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
   {
     headerName: "Cost",
     editable: false,
-    valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
+    valueGetter: ({ data }: ValueGetterParams<MenuItemComponent>) => {
       if (data.menuItemSupplyUnits === "-") return 0;
 
       const targetSupply = props.suppliesList.items.find(
         (supply) => supply.uniqueId == data.supplyUniqueId
       );
 
-      const costPerSupplyUnit = calculateSupplyCostPerUnit(targetSupply);
+      const costPerSupplyUnit = calculateSupplyCostPerUnit(
+        props.supplyTaxes,
+        targetSupply
+      );
       const costPerMenuItemUnit = convertUnit(
         costPerSupplyUnit,
         targetSupply.supplyUnits,
@@ -118,7 +124,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
 
       return data.menuItemSupplyQuantity * costPerMenuItemUnit;
     },
-    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
+    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
       formatMoney(params.value),
   },
 ];

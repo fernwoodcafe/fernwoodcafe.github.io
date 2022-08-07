@@ -1,10 +1,16 @@
-import type { InventoryItem } from "@packages/domain/types";
+import type { CafeSupply, CafeSupplyTaxes } from "../types";
 
-const pst = 0.06;
+type CafeSupplyKeys =
+  | "purchasePriceBeforeTax"
+  | "purchaseQuantity"
+  | "percentWaste"
+  | "hasPST";
 
-export default (supply: InventoryItem) => {
+type CafeSupplyArg = Pick<CafeSupply, CafeSupplyKeys>;
+
+export default (taxes: CafeSupplyTaxes, supply: CafeSupplyArg) => {
   const costAfterPST = supply.hasPST
-    ? supply.purchasePriceBeforeTax * (1 + pst)
+    ? supply.purchasePriceBeforeTax * (1 + taxes.PST)
     : supply.purchasePriceBeforeTax;
 
   const wasteQuantity = supply.purchaseQuantity * supply.percentWaste;
