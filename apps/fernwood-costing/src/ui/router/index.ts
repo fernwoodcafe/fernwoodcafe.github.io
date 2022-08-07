@@ -4,7 +4,11 @@ import {
   materializeSupplies,
 } from "@packages/cqrs-es";
 import initializeRepository from "@packages/data/excelDB/initializeRepository";
-import type { CafeGoals, CafeSupplyTaxes } from "@packages/domain/types";
+import type {
+  CafeEventUnion,
+  CafeGoals,
+  CafeSupplyTaxes,
+} from "@packages/domain/types";
 import { formatLink } from "@ui/formatters";
 import { reactive, watch } from "vue";
 import {
@@ -14,7 +18,7 @@ import {
 } from "vue-router";
 
 const domainEventsRepo = initializeRepository();
-const domainEvents = await domainEventsRepo.select();
+const domainEvents = (await domainEventsRepo.select()) as CafeEventUnion[];
 
 const menuItemsList = materializeMenuItems(
   reactive({ items: [] }),
