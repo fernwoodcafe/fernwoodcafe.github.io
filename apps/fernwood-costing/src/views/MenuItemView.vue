@@ -3,7 +3,7 @@
     <FrcInput
       @change="onMenuItemNameUpdated"
       :value="menuItem.menuItemName"
-      type="text"
+      :type="'text'"
     />
   </h2>
   <dl>
@@ -12,23 +12,35 @@
       <dd>{{ formatMoney(menuItemTotalCost) }}</dd>
     </div>
     <div>
-      <dt>Recommended Menu Price @ {{ cafeGoals.weightedAverageMarkup }}</dt>
+      <dt>Price @ 3.5 Markup</dt>
       <dd>{{ formatMoney(menuItemRecommendedPrice) }}</dd>
     </div>
   </dl>
 
   <form @submit.prevent>
     <FrcSelectOption
-      :title="'Ingredient'"
+      :label="'Ingredient'"
       :options="ingredientOptions"
       :optionKey="'supplyName'"
       @submitSelect="onClickNewIngredient"
     />
     <FrcSelectOption
-      :title="'Packaging'"
+      :label="'Packaging'"
       :options="packagingOptions"
       :optionKey="'supplyName'"
       @submitSelect="onClickNewPackaging"
+    />
+    <FrcInput
+      :label="'Percentage Total Sales'"
+      :value="menuItem.percentageTotalSales"
+      :type="'number'"
+      @change="onPercentageTotalSalesChanged"
+    />
+    <FrcInput
+      :label="'Chosen Menu Item Price'"
+      :value="menuItem.menuItemPrice"
+      :type="'number'"
+      @change="onChosenMenuItemPriceChange"
     />
   </form>
   <AgGridMenuItemSuppliesComponent
@@ -45,13 +57,14 @@ import FrcInput from "@/components/FrcInput.vue";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
 import { calculateMenuItemTotalCost } from "@/domain/services";
 import type {
-  CafeGoals,
-  DomainCommand,
-  MenuItem,
-  MenuItemSupply,
-  Supply,
+CafeGoals,
+DomainCommand,
+MenuItem,
+MenuItemSupply,
+Supply
 } from "@/domain/types";
 import { formatLink, formatMoney } from "@/formatters";
+import isInstanceof from '@/typeGuards/isInstanceof.js';
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { computed } from "vue";
 
@@ -72,13 +85,13 @@ const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addMenuItemSupply = (supply: Partial<Supply>) => {
+const addNewMenuItemSupply = (supply: Partial<Supply>) => {
   const menuItemSupply: MenuItemSupply = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,
     supplyUniqueId: supply.uniqueId,
     menuItemSupplyQuantity: 0,
-    menuItemSupplyUnits: "",
+    menuItemSupplyUnits: "-",
   };
 
   props.sendCommand({
@@ -87,11 +100,7 @@ const addMenuItemSupply = (supply: Partial<Supply>) => {
   });
 };
 
-const onClickNewIngredient = (data) => addMenuItemSupply(data);
-const onClickNewPackaging = (data) => addMenuItemSupply(data);
-
-const onMenuItemNameUpdated = async (event: Event) => {
-  console.log("onMenuItemNameUpdated");
+const onUpdateMenuItem = async (event: Event) => {
   if (event.target instanceof HTMLInputElement) {
     await props.sendCommand({
       type: "update_menu_item",
@@ -100,18 +109,22 @@ const onMenuItemNameUpdated = async (event: Event) => {
         menuItemName: event.target.value,
       },
     });
+  }
+}
 
-    console.log(
-      "onMenuItemNameUpdated",
-      props.menuItem.menuItemName.toLocaleLowerCase(),
-      event.target.value.toLocaleLowerCase()
-    );
+const onClickNewIngredient = (data) => addNewMenuItemSupply(data);
+const onClickNewPackaging = (data) => addNewMenuItemSupply(data);
+
+const onChosenMenuItemPriceChange = onUpdateMenuItem;
+const onPercentageTotalSalesChanged = onUpdateMenuItem;
+const onMenuItemNameUpdated = async (event: Event) => {
+  if (isInstanceof(event.target, HTMLInputElement)) {
+    await onUpdateMenuItem(event);
 
     window.location.hash = window.location.hash.replace(
       formatLink(props.menuItem.menuItemName.toLocaleLowerCase()),
       formatLink(event.target.value.toLocaleLowerCase())
     );
-  }
 };
 
 const onMenuItemSupplyUpdated = (data: MenuItemSupply) =>

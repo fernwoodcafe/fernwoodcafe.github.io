@@ -1,6 +1,6 @@
 <template>
   <fieldset>
-    <label>{{ title }}</label>
+    <label v-if="{ label }">{{ label }}</label>
     <select v-model="selectedOption">
       <option disabled :value="null">Please select one</option>
       <option
@@ -23,7 +23,7 @@
 import { ref } from "vue";
 
 type Props = {
-  title: string;
+  label?: string;
   options: Record<string, any>[];
   optionKey: string;
 };

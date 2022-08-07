@@ -42,6 +42,9 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     field: "menuItemName",
   },
   {
+    field: "percentageTotalSales",
+  },
+  {
     headerName: "Cost",
     editable: false,
     cellRenderer: ({ data }) => {
