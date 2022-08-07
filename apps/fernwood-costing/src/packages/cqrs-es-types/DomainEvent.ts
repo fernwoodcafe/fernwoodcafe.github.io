@@ -1,4 +1,4 @@
-export type DomainEvent<TName = string, TPayload = unknown> = {
+export type DomainEvent<TName = string, TPayload = object> = {
   eventIndex?: number; // autoincremented
   type: TName;
   payload: TPayload;
