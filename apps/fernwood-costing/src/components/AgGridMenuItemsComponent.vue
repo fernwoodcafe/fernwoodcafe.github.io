@@ -37,12 +37,12 @@ const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 const onMenuItemDeleteClick = (data) => emit("menuItemDeleted", data);
 const onMenuItemEditClick = (data) => emit("menuItemEditClick", data);
 
-const columnDefs: (ColDef | ColGroupDef)[] = [
+const columnDefs: (ColDef<MenuItem> | ColGroupDef)[] = [
   {
     field: "menuItemName",
   },
   {
-    field: "percentageTotalSales",
+    field: "percentTotalSales",
   },
   {
     headerName: "Cost",

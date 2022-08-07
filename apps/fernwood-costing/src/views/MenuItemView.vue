@@ -31,8 +31,8 @@
       @submitSelect="onClickNewPackaging"
     />
     <FrcInput
-      :label="'Percentage Total Sales'"
-      :value="menuItem.percentageTotalSales"
+      :label="'Percent Total Sales'"
+      :value="menuItem.percentTotalSales"
       :type="'number'"
       @change="onPercentageTotalSalesChanged"
     />
@@ -57,14 +57,14 @@ import FrcInput from "@/components/FrcInput.vue";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
 import { calculateMenuItemTotalCost } from "@/domain/services";
 import type {
-CafeGoals,
-DomainCommand,
-MenuItem,
-MenuItemSupply,
-Supply
+  CafeGoals,
+  DomainCommand,
+  MenuItem,
+  MenuItemSupply,
+  Supply,
 } from "@/domain/types";
 import { formatLink, formatMoney } from "@/formatters";
-import isInstanceof from '@/typeGuards/isInstanceof.js';
+import isInstance from "@/typeGuards/isInstance.js";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { computed } from "vue";
 
@@ -85,7 +85,7 @@ const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addNewMenuItemSupply = (supply: Partial<Supply>) => {
+const addNewMenuItemSupply = async (supply: Partial<Supply>) => {
   const menuItemSupply: MenuItemSupply = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,
@@ -94,37 +94,52 @@ const addNewMenuItemSupply = (supply: Partial<Supply>) => {
     menuItemSupplyUnits: "-",
   };
 
-  props.sendCommand({
+  await props.sendCommand({
     type: "add_supply_to_menu_item",
     payload: menuItemSupply,
   });
 };
 
-const onUpdateMenuItem = async (event: Event) => {
-  if (event.target instanceof HTMLInputElement) {
-    await props.sendCommand({
-      type: "update_menu_item",
-      payload: {
-        ...props.menuItem,
-        menuItemName: event.target.value,
-      },
-    });
-  }
-}
+const onClickNewIngredient = addNewMenuItemSupply;
+const onClickNewPackaging = addNewMenuItemSupply;
 
-const onClickNewIngredient = (data) => addNewMenuItemSupply(data);
-const onClickNewPackaging = (data) => addNewMenuItemSupply(data);
+/**
+ * Remember:
+ * - Vuejs encourages one-way props binding.
+ * - Vuejs discourages putting a `watch` on props.
+ * - Props down; events up.
+ * - Avoid watching props.
+ * - Lotsa events.
+ */
+const onUpdateMenuItem = async (key: keyof MenuItem, event: Event) => {
+  if (!isInstance(event.target, HTMLInputElement)) return;
 
-const onChosenMenuItemPriceChange = onUpdateMenuItem;
-const onPercentageTotalSalesChanged = onUpdateMenuItem;
+  console.log("onUpdateMenuItem", key, event.target.value);
+
+  await props.sendCommand({
+    type: "update_menu_item",
+    payload: {
+      ...props.menuItem,
+      [key]: event.target.value,
+    },
+  });
+};
+
+const onChosenMenuItemPriceChange = (event: Event) =>
+  onUpdateMenuItem("menuItemPrice", event);
+
+const onPercentageTotalSalesChanged = (event: Event) =>
+  onUpdateMenuItem("percentTotalSales", event);
+
 const onMenuItemNameUpdated = async (event: Event) => {
-  if (isInstanceof(event.target, HTMLInputElement)) {
-    await onUpdateMenuItem(event);
+  await onUpdateMenuItem("menuItemName", event);
 
-    window.location.hash = window.location.hash.replace(
-      formatLink(props.menuItem.menuItemName.toLocaleLowerCase()),
-      formatLink(event.target.value.toLocaleLowerCase())
-    );
+  if (!isInstance(event.target, HTMLInputElement)) return;
+
+  window.location.hash = window.location.hash.replace(
+    formatLink(props.menuItem.menuItemName.toLocaleLowerCase()),
+    formatLink(event.target.value.toLocaleLowerCase())
+  );
 };
 
 const onMenuItemSupplyUpdated = (data: MenuItemSupply) =>

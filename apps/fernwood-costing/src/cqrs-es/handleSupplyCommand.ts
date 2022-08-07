@@ -1,15 +1,10 @@
-import type {
-  DomainCommand,
-  DomainEventsRepository,
-  Supply,
-} from "@/domain/types";
+import type { DomainCommand, DomainEvent, Supply } from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type { Materializer } from "./Materializer";
 
 export type Props = {
   supplies: ReactiveArray<Supply>;
   materializeSupplies: Materializer<ReactiveArray<Supply>>;
-  domainEventsRepo: DomainEventsRepository;
 };
 
 const commandHandlers = {
@@ -27,17 +22,15 @@ const commandHandlers = {
   }),
 };
 
-export default async function (
-  { supplies, materializeSupplies, domainEventsRepo }: Props,
+export default function (
+  { supplies, materializeSupplies }: Props,
   command: DomainCommand
-) {
+): DomainEvent[] {
   if (!commandHandlers[command.type]) {
-    return;
+    return [];
   }
 
   const event = commandHandlers[command.type](command);
-  if (event) {
-    materializeSupplies(supplies, event);
-    domainEventsRepo.insert(event);
-  }
+  materializeSupplies(supplies, event);
+  return [event];
 }

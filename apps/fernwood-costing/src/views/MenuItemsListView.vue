@@ -44,13 +44,14 @@ const onClickNewMenuItem = () => {
     payload: {
       uniqueId: crypto.randomUUID(),
       menuItemName: `New Menu Item ${props.menuItemsList.items.length}`,
+      percentTotalSales: 0,
+      menuItemPrice: 0,
       menuItemSupplies: [],
     },
   });
 };
 
 const onMenuItemUpdated = (menuItem: MenuItem) => {
-  console.log("onMenuItemUpdated", newMenuItemName);
   props.sendCommand({
     type: "update_menu_item",
     payload: menuItem,

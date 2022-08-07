@@ -10,7 +10,7 @@ type Emits = {
 };
 type Props = {
   label?: string;
-  value: string | number;
+  value?: string | number;
   type: string;
 };
 
