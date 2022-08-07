@@ -37,7 +37,7 @@ const onClickNewSupply = () => {
     type: "create_supply",
     payload: {
       uniqueId: crypto.randomUUID(),
-      supplyUnits: "",
+      supplyUnits: "-",
       supplyName: `New Supply ${props.suppliesList.items.length}`,
       supplierName: "",
       supplyNotes: "",
