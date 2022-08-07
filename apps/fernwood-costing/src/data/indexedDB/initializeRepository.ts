@@ -1,10 +1,10 @@
+import type { DomainEvent, DomainEventsRepository } from "@/cqrs-es-types";
 import {
   $create,
   $deleteDB,
   $migrateDB,
   $readMany,
 } from "@/data/indexedDB/client";
-import type { DomainEvent, DomainEventsRepository } from "@/domain/types";
 import migrations from "./migrations";
 
 const resetPrototype = false;

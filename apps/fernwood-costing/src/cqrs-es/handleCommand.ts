@@ -1,4 +1,4 @@
-import type { DomainCommand, DomainEventsRepository } from "@/domain/types";
+import type { DomainCommand, DomainEventsRepository } from "@/cqrs-es-types";
 import handleMenuItemCommand, {
   type Props as MenuItemProps,
 } from "./handleMenuItemCommand";

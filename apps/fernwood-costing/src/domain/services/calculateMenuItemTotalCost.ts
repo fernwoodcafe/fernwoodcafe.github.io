@@ -1,9 +1,12 @@
-import type { MenuItem, Supply } from "@/domain/types";
+import type { InventoryItem, MenuItemSupply } from "@/domain/types";
 import calculatePerUnitSupplyCost from "./calculatePerUnitSupplyCost";
 import convertUnit from "./convertUnit";
 
-export default (menuItem: MenuItem, suppliesList: Supply[]) =>
-  menuItem.menuItemSupplies
+export default (
+  menuItemSupplies: MenuItemSupply[],
+  suppliesList: InventoryItem[]
+) =>
+  menuItemSupplies
     .map((menuItemSupply) => {
       const targetSupply = suppliesList.find(
         (s) => s.uniqueId == menuItemSupply.supplyUniqueId

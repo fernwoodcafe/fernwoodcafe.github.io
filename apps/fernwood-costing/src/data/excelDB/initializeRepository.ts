@@ -1,4 +1,4 @@
-import type { DomainEvent, DomainEventsRepository } from "@/domain/types";
+import type { DomainEvent, DomainEventsRepository } from "@/cqrs-es-types";
 import initializeGraphClient from "./initializeGraphClient";
 
 const costingWorkbookPath = "CostingApp-EventStore.xlsx";

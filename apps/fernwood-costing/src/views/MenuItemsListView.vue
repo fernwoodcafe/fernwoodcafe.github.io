@@ -1,3 +1,4 @@
+InventoryItem
 <template>
   <h1>Menu Items</h1>
   <input type="button" @click="onClickNewMenuItem" value="New Menu Item" />
@@ -15,12 +16,8 @@
 
 <script setup lang="ts">
 import AgGridMenuItemsComponent from "@/components/AgGridMenuItemsComponent.vue";
-import type {
-  CafeGoals,
-  DomainCommand,
-  MenuItem,
-  Supply,
-} from "@/domain/types";
+import type { DomainCommand } from "@/cqrs-es-types";
+import type { CafeGoals, InventoryItem, MenuItem } from "@/domain/types";
 import { formatLink } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import { ref } from "vue";
@@ -28,7 +25,7 @@ import { useRouter } from "vue-router";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<Supply>;
+  suppliesList: ReactiveArray<InventoryItem>;
   cafeGoals: CafeGoals;
   sendCommand: (Command: DomainCommand<MenuItem>) => Promise<void>;
 };

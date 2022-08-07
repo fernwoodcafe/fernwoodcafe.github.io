@@ -1,3 +1,4 @@
+InventoryItem
 <template>
   <h1>Supplies</h1>
   <input type="button" @click="onClickNewSupply" value="New Supply" />
@@ -10,23 +11,24 @@
 
 <script setup lang="ts">
 import AgGridSuppliesComponent from "@/components/AgGridSuppliesComponent.vue";
-import type { DomainCommand, Supply } from "@/domain/types";
+import type { DomainCommand } from "@/cqrs-es-types";
+import type { InventoryItem } from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 
 type Props = {
-  suppliesList: ReactiveArray<Supply>;
-  sendCommand: (Command: DomainCommand<Supply>) => Promise<void>;
+  suppliesList: ReactiveArray<InventoryItem>;
+  sendCommand: (Command: DomainCommand<InventoryItem>) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
-const onSupplyUpdated = (supply: Supply) =>
+const onSupplyUpdated = (supply: InventoryItem) =>
   props.sendCommand({
     type: "update_supply",
     payload: supply,
   });
 
-const onSupplyDeleted = (supply: Supply) =>
+const onSupplyDeleted = (supply: InventoryItem) =>
   props.sendCommand({
     type: "delete_supply",
     payload: supply,

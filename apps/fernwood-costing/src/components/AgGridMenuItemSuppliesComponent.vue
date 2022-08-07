@@ -1,3 +1,4 @@
+InventoryItem
 <template>
   <AgGridComponent
     :gridData="menuItemSupplies"
@@ -15,7 +16,7 @@ import {
   convertUnit,
   lookupAvailableUnitConversions,
 } from "@/domain/services";
-import type { MenuItem, MenuItemSupply, Supply } from "@/domain/types";
+import type { InventoryItem, MenuItem, MenuItemSupply } from "@/domain/types";
 import { formatMoney } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type {
@@ -28,7 +29,7 @@ import { reactive, watch } from "vue";
 
 type Props = {
   menuItem: MenuItem;
-  suppliesList: ReactiveArray<Supply>;
+  suppliesList: ReactiveArray<InventoryItem>;
 };
 
 type Emits = {
@@ -67,7 +68,9 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         ...supply,
       };
     },
-    cellRenderer: (params: { value: Supply & { costPerUnit: number } }) => {
+    cellRenderer: (params: {
+      value: InventoryItem & { costPerUnit: number };
+    }) => {
       return `
         <strong>${params.value.supplyName}</strong>
         <span>-</span>
@@ -111,7 +114,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
 
       return data.menuItemSupplyQuantity * costPerMenuItemUnit;
     },
-    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
       formatMoney(params.value),
   },
 ];

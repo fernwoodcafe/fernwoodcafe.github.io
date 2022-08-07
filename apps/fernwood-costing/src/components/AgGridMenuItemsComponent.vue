@@ -1,3 +1,4 @@
+InventoryItem
 <template>
   <AgGridComponent
     :gridData="menuItemsList"
@@ -12,14 +13,14 @@
 <script setup lang="ts">
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import { calculateMenuItemTotalCost } from "@/domain/services";
-import type { CafeGoals, MenuItem, Supply } from "@/domain/types";
+import type { CafeGoals, InventoryItem, MenuItem } from "@/domain/types";
 import { formatMoney } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 import type { ColDef } from "ag-grid-community";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<Supply>;
+  suppliesList: ReactiveArray<InventoryItem>;
   cafeGoals: CafeGoals;
 };
 
@@ -45,7 +46,10 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Cost",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const cost = calculateMenuItemTotalCost(
+        data.menuItemSupplies,
+        props.suppliesList.items
+      );
       return formatMoney(cost);
     },
   },
@@ -53,7 +57,10 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: `Price @ ${props.cafeGoals.weightedAverageMarkup} Markup`,
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const cost = calculateMenuItemTotalCost(
+        data.menuItemSupplies,
+        props.suppliesList.items
+      );
       const price = cost * props.cafeGoals.weightedAverageMarkup;
       return formatMoney(price);
     },
@@ -70,7 +77,10 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Actual Markup",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const cost = calculateMenuItemTotalCost(
+        data.menuItemSupplies,
+        props.suppliesList.items
+      );
       const markup = data.menuItemPrice / cost;
       return isNaN(markup) ? "-" : markup.toFixed(2);
     },
@@ -79,7 +89,10 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Actual Contribution (Price - Cost)",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = calculateMenuItemTotalCost(data, props.suppliesList.items);
+      const cost = calculateMenuItemTotalCost(
+        data.menuItemSupplies,
+        props.suppliesList.items
+      );
       const price = cost * props.cafeGoals.weightedAverageMarkup;
       return formatMoney(price - cost);
     },

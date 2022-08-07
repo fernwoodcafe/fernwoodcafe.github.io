@@ -1,8 +1,8 @@
-import type { Supply } from "@/domain/types";
+import type { InventoryItem } from "@/domain/types";
 
 const pst = 0.06;
 
-export default (supply: Supply) => {
+export default (supply: InventoryItem) => {
   const costAfterPST = supply.hasPST
     ? supply.purchasePriceBeforeTax * (1 + pst)
     : supply.purchasePriceBeforeTax;

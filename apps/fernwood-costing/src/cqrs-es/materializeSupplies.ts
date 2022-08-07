@@ -1,8 +1,9 @@
-import type { DomainEvent, Supply } from "@/domain/types";
+import type { DomainEvent } from "@/cqrs-es-types";
+import type { InventoryItem } from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
 
 export default (
-  suppliesList: ReactiveArray<Supply>,
+  suppliesList: ReactiveArray<InventoryItem>,
   ...events: DomainEvent[]
 ) => {
   events.forEach((event) => {

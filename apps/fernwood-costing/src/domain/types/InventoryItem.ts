@@ -1,7 +1,7 @@
-import type { DomainEntity } from "./DomainEntity";
+import type { DomainEntity } from "../../cqrs-es-types/DomainEntity";
 import type { UnitOfMeasure } from "./UnitOfMeasure";
 
-export type Supply = DomainEntity & {
+export type InventoryItem = DomainEntity & {
   supplyName: string;
   supplierName: string;
   supplyNotes: string;

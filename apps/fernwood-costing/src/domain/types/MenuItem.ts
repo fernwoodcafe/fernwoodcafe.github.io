@@ -1,4 +1,4 @@
-import type { DomainEntity } from "./DomainEntity";
+import type { DomainEntity } from "../../cqrs-es-types/DomainEntity";
 import type { MenuItemSupply } from "./MenuItemSupply";
 
 export type MenuItem = DomainEntity & {

@@ -1,3 +1,4 @@
+InventoryItem
 <template>
   <h2>
     <input
@@ -66,13 +67,13 @@
 import AgGridMenuItemSuppliesComponent from "@/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcInput from "@/components/FrcInput.vue";
 import FrcSelectOption from "@/components/FrcSelectOption.vue";
+import type { DomainCommand } from "@/cqrs-es-types";
 import { calculateMenuItemTotalCost } from "@/domain/services";
 import type {
   CafeGoals,
-  DomainCommand,
+  InventoryItem,
   MenuItem,
   MenuItemSupply,
-  Supply,
 } from "@/domain/types";
 import { formatLink, formatMoney } from "@/formatters";
 import isInstance from "@/typeGuards/isInstance.js";
@@ -81,7 +82,7 @@ import { computed } from "vue";
 
 type Props = {
   menuItem: MenuItem;
-  suppliesList: ReactiveArray<Supply>;
+  suppliesList: ReactiveArray<InventoryItem>;
   cafeGoals: CafeGoals;
   sendCommand: (Command: DomainCommand) => Promise<void>;
 };
@@ -96,7 +97,7 @@ const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addNewMenuItemSupply = async (supply: Partial<Supply>) => {
+const addNewMenuItemSupply = async (supply: Partial<InventoryItem>) => {
   const menuItemSupply: MenuItemSupply = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,
@@ -166,7 +167,10 @@ const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
   });
 
 const menuItemTotalCost = computed(() =>
-  calculateMenuItemTotalCost(props.menuItem, props.suppliesList.items)
+  calculateMenuItemTotalCost(
+    props.menuItem.menuItemSupplies,
+    props.suppliesList.items
+  )
 );
 const menuItemRecommendedPrice = computed(
   () => menuItemTotalCost.value * props.cafeGoals.weightedAverageMarkup

@@ -1,3 +1,4 @@
+InventoryItem
 <template>
   <AgGridComponent
     :gridData="suppliesList"
@@ -13,7 +14,7 @@ import AgCheckboxEditor from "@/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@/components/AgGridComponent.vue";
 import AgPercentEditor from "@/components/AgPercentEditor.vue";
 import { calculatePerUnitSupplyCost } from "@/domain/services";
-import type { Supply } from "@/domain/types";
+import type { InventoryItem } from "@/domain/types";
 import { unitsOfMeasure } from "@/domain/values";
 import { formatMoney, formatPercent } from "@/formatters";
 import type { ReactiveArray } from "@/types/ReactiveArray";
@@ -24,12 +25,12 @@ import type {
 } from "ag-grid-community";
 
 type Props = {
-  suppliesList: ReactiveArray<Supply>;
+  suppliesList: ReactiveArray<InventoryItem>;
 };
 
 type Emits = {
-  (e: "supplyUpdated", data: Supply): void;
-  (e: "supplyDeleted", data: Supply): void;
+  (e: "supplyUpdated", data: InventoryItem): void;
+  (e: "supplyDeleted", data: InventoryItem): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -63,13 +64,13 @@ const columnDefs: ColDef[] = [
   {
     field: "purchasePriceBeforeTax",
     headerName: "Purchase Price before Tax",
-    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
       formatMoney(params.value),
   },
   {
     field: "percentWaste",
     cellEditor: AgPercentEditor,
-    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
       formatPercent(params.value),
   },
   {
@@ -86,11 +87,11 @@ const columnDefs: ColDef[] = [
     field: "unitCost",
     headerName: "Unit Cost",
     editable: false,
-    valueGetter: ({ data }: ValueGetterParams<Supply>) => ({
+    valueGetter: ({ data }: ValueGetterParams<InventoryItem>) => ({
       cost: calculatePerUnitSupplyCost(data),
       units: data.supplyUnits,
     }),
-    valueFormatter: (params: ValueFormatterParams<Supply>) =>
+    valueFormatter: (params: ValueFormatterParams<InventoryItem>) =>
       `${formatMoney(params.value.cost)} / ${params.value.units}`,
   },
 ];

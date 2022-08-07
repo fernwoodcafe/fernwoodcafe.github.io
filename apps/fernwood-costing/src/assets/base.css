@@ -114,8 +114,7 @@ input[type="button"][value^="Edit"] {
 input[type="button"][value^="Cancel"] {
   background-color: var(--color-warning);
 }
-input[type="button"][value^="Delete"]
-{
+input[type="button"][value^="Delete"] {
   background-color: var(--color-danger);
   color: white;
 }
@@ -135,8 +134,8 @@ label {
 }
 
 form fieldset {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 form fieldset {

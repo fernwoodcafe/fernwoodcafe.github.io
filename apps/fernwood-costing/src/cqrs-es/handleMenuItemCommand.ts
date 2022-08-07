@@ -1,6 +1,7 @@
-import type { DomainCommand, DomainEvent, MenuItem } from "@/domain/types";
+import type { DomainCommand, DomainEvent } from "@/cqrs-es-types";
+import type { MenuItem } from "@/domain/types";
 import type { ReactiveArray } from "@/types/ReactiveArray";
-import type { Materializer } from "./Materializer";
+import type { Materializer } from "../cqrs-es-types/Materializer";
 
 export type Props = {
   menuItems: ReactiveArray<MenuItem>;
