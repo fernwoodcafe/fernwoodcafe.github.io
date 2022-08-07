@@ -11,7 +11,6 @@ type Props = {
 export default {
   setup(props: Props) {
     const checked = ref(props.params.value?.valueOf());
-    console.log("wat", checked.value);
     return {
       checked,
       getValue: () => checked.value,
