@@ -111,7 +111,11 @@ input[type="button"][value^="Edit"] {
   background-color: var(--color-success);
   color: white;
 }
-input[type="button"][value^="Delete"] {
+input[type="button"][value^="Cancel"] {
+  background-color: var(--color-warning);
+}
+input[type="button"][value^="Delete"]
+{
   background-color: var(--color-danger);
   color: white;
 }
@@ -126,6 +130,32 @@ input[type="button"][value^="Sign Out"] {
   background-color: var(--color-warning);
 }
 
-fieldset label {
+label {
   font-weight: 600;
+}
+
+form fieldset {
+  margin:0;
+  padding:0;
+}
+
+form fieldset {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  row-gap: 5px;
+}
+
+fieldset label,
+fieldset input,
+fieldset select {
+  flex: 0 0 auto;
+}
+
+form fieldset input {
+  height: 1.2rem;
+}
+
+fieldset input[type="button"] {
+  height: 1.6rem;
 }

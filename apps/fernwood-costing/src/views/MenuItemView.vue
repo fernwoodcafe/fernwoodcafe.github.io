@@ -1,53 +1,59 @@
 <template>
   <h2>
-    <FrcInput
+    <input
       @change="onMenuItemNameUpdated"
       :value="menuItem.menuItemName"
       :type="'text'"
     />
   </h2>
-  <form @submit.prevent>
-    <fieldset>
-      <label>Total Cost</label>
-      <p>{{ formatMoney(menuItemTotalCost) }}</p>
-    </fieldset>
-    <fieldset>
-      <label>Price @ {{ cafeGoals.weightedAverageMarkup }} Markup</label>
-      <p>{{ formatMoney(menuItemRecommendedPrice) }}</p>
-    </fieldset>
-    <fieldset>
-      <label>Actual Markup</label>
-      <p>{{ menuItemActualMarkup }}</p>
-    </fieldset>
-    <fieldset>
-      <FrcInput
-        :label="'Percent Total Sales'"
-        :value="menuItem.percentTotalSales"
-        :type="'number'"
-        @change="onPercentageTotalSalesChanged"
-      />
-    </fieldset>
-    <fieldset>
-      <FrcInput
-        :label="'Chosen Menu Item Price'"
-        :value="menuItem.menuItemPrice"
-        :type="'number'"
-        @change="onChosenMenuItemPriceChange"
-      />
-    </fieldset>
-    <FrcSelectOption
-      :label="'Ingredient'"
-      :options="ingredientOptions"
-      :optionKey="'supplyName'"
-      @submitSelect="onClickNewIngredient"
-    />
-    <FrcSelectOption
-      :label="'Packaging'"
-      :options="packagingOptions"
-      :optionKey="'supplyName'"
-      @submitSelect="onClickNewPackaging"
-    />
-  </form>
+  <article>
+    <section>
+      <h2>Costing</h2>
+      <form @submit.prevent>
+        <FrcSelectOption
+          :label="'Add Ingredient'"
+          :options="ingredientOptions"
+          :optionKey="'supplyName'"
+          @submitSelect="onClickNewIngredient"
+        />
+        <FrcSelectOption
+          :label="'Add Packaging'"
+          :options="packagingOptions"
+          :optionKey="'supplyName'"
+          @submitSelect="onClickNewPackaging"
+        />
+        <label
+          >Total Cost
+          <p>{{ formatMoney(menuItemTotalCost) }}</p>
+        </label>
+      </form>
+    </section>
+    <section>
+      <h2>Weighted Average Pricing</h2>
+      <form @submit.prevent>
+        <label
+          >Price @ {{ cafeGoals.weightedAverageMarkup }} Markup
+          <p>{{ formatMoney(menuItemRecommendedPrice) }}</p>
+        </label>
+        <FrcInput
+          :label="'Projected Percent Total Sales'"
+          :value="menuItem.percentTotalSales"
+          :type="'number'"
+          @change="onPercentageTotalSalesChanged"
+        />
+        <FrcInput
+          :label="'Chosen Menu Item Price'"
+          :value="menuItem.menuItemPrice"
+          :type="'number'"
+          @change="onChosenMenuItemPriceChange"
+        />
+        <label
+          >Actual Markup
+          <p>{{ menuItemActualMarkup }}</p>
+        </label>
+      </form>
+    </section>
+  </article>
   <AgGridMenuItemSuppliesComponent
     :menuItem="menuItem"
     :suppliesList="suppliesList"
@@ -172,23 +178,38 @@ const menuItemActualMarkup = computed(() => {
 });
 </script>
 
-<style>
+<style scoped>
+article {
+  display: flex;
+  column-gap: 50px;
+}
+
+section {
+  flex: 0 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: thin solid var(--color-secondary);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
 form {
   display: flex;
   column-gap: 5px;
   margin-bottom: 10px;
 }
 
-fieldset {
-  flex: 0 0 auto;
+form > label,
+form > fieldset {
+  flex: 0 1 auto;
   border: none;
-  padding: 0;
+  padding: 0 10px;
+  border-radius: 5px;
 }
 
-form {
-  font-size: 1rem;
-  line-height: 1.2rem;
-  display: flex;
-  column-gap: 10px;
+form > label > p,
+form > label > input {
+  font-weight: normal;
+  display: block; /* own line */
 }
 </style>

@@ -14,8 +14,14 @@
     <input
       type="button"
       :enabled="selectedOption != null"
-      @click="onClick"
+      @click="onAddClick"
       :value="`Add ${selectedOption?.[optionKey]}`"
+    />
+    <input
+      type="button"
+      :enabled="selectedOption != null"
+      @click="onCancelClick"
+      :value="`Cancel`"
     />
   </fieldset>
 </template>
@@ -38,35 +44,20 @@ type Emits = {
 
 const emit = defineEmits<Emits>();
 
-const onClick = () => {
+const onAddClick = () => {
   emit("submitSelect", selectedOption.value);
+  selectedOption.value = null;
+};
+
+const onCancelClick = () => {
   selectedOption.value = null;
 };
 </script>
 
 <style scoped>
-fieldset {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  row-gap: 5px;
-}
-
-fieldset label {
-  flex: 0 0 auto;
-}
-
-fieldset select {
-  flex: 0 0 auto;
-}
-
-fieldset input[type="button"] {
-  margin: 0;
-  flex: 0 0 auto;
-}
-
 fieldset input[type="button"][enabled="true"] {
   visibility: visible;
+  margin: 0;
 }
 
 fieldset input[type="button"][enabled="false"] {

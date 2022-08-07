@@ -10,11 +10,15 @@ export default (menuItem: MenuItem, suppliesList: Supply[]) =>
       );
 
       const costPerSupplyUnit = calculatePerUnitSupplyCost(targetSupply);
-      const costPerMenuItemUnit = convertUnit(
-        costPerSupplyUnit,
-        targetSupply.supplyUnits,
-        menuItemSupply.menuItemSupplyUnits
-      );
+      const costPerMenuItemUnit =
+        menuItemSupply.menuItemSupplyUnits === "-" ||
+        targetSupply.supplyUnits === "-"
+          ? 0
+          : convertUnit(
+              costPerSupplyUnit,
+              targetSupply.supplyUnits,
+              menuItemSupply.menuItemSupplyUnits
+            );
 
       return {
         unitCost: costPerMenuItemUnit,

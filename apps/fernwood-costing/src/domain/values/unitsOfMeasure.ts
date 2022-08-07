@@ -1,5 +1,5 @@
 export default <const>[
-  "-", // default
+  "-",
   "gram",
   "litre",
   "millilitre",

@@ -96,6 +96,8 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     headerName: "Cost",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<MenuItemSupply>) => {
+      if (data.menuItemSupplyUnits === "-") return 0;
+
       const targetSupply = props.suppliesList.items.find(
         (supply) => supply.uniqueId == data.supplyUniqueId
       );
