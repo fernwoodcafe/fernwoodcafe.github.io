@@ -11,9 +11,6 @@ CafeSupply
 </template>
 
 <script setup lang="ts">
-import AgGridComponent from "@ui/components/AgGridComponent.vue";
-import { formatMoney } from "@ui/formatters";
-import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { calculateMenuItemCost } from "@packages/domain/services";
 import type {
   CafeGoals,
@@ -21,7 +18,11 @@ import type {
   CafeSupplyTaxes,
   MenuItem,
 } from "@packages/domain/types";
-import type { ColDef } from "ag-grid-community";
+import AgGridComponent from "@ui/components/AgGridComponent.vue";
+import AgPercentEditor from "@ui/components/AgPercentEditor.vue";
+import { formatMoney, formatPercent } from "@ui/formatters";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
+import type { ColDef, ValueFormatterParams } from "ag-grid-community";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
@@ -75,6 +76,9 @@ const columnDefs: ColDef<MenuItem>[] = [
   },
   {
     field: "percentTotalSales",
+    cellEditor: AgPercentEditor,
+    valueFormatter: (params: ValueFormatterParams<MenuItem>) =>
+      formatPercent(params.value),
   },
   {
     headerName: "Chosen Menu Price",

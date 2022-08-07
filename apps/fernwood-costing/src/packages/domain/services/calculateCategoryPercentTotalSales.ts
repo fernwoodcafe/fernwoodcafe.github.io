@@ -1,4 +1,6 @@
 import type { MenuItem } from "../types";
 
 export default (menuItemsInCategory: MenuItem[]) =>
-  menuItemsInCategory.reduce((acc, next) => acc + next.percentTotalSales, 0);
+  menuItemsInCategory
+    .filter((menuItem) => menuItem.percentTotalSales)
+    .reduce((acc, next) => acc + next.percentTotalSales, 0);

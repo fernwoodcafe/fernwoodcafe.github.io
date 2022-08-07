@@ -206,6 +206,8 @@ const menuItemWeightedCostFactor = computed(() => {
     props.menuItemsList.items
   );
 
+  console.log("wat", categoryPercentTotalSales);
+
   return calculateMenuItemCategoryFactor(
     props.menuItem.percentTotalSales,
     categoryPercentTotalSales

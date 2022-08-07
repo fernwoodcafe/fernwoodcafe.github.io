@@ -49,6 +49,7 @@ const buildMenuItemRoutes = (): RouteRecordRaw[] =>
     component: () => import("../views/MenuItemView.vue"),
     props: {
       menuItem,
+      menuItemsList,
       suppliesList,
       supplyTaxes,
       cafeGoals,
