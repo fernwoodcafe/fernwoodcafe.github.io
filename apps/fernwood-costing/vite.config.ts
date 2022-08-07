@@ -23,8 +23,8 @@ export default defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
-      "@packages": fileURLToPath(new URL("./packages", import.meta.url)),
-      "@ui": fileURLToPath(new URL("./src", import.meta.url)),
+      "@packages": fileURLToPath(new URL("./src/packages", import.meta.url)),
+      "@ui": fileURLToPath(new URL("./src/ui", import.meta.url)),
     },
   },
 });

@@ -1,4 +1,8 @@
-import { materializeMenuItems, materializeSupplies } from "@packages/cqrs-es";
+import {
+  handleCommand,
+  materializeMenuItems,
+  materializeSupplies,
+} from "@packages/cqrs-es";
 import initializeRepository from "@packages/data/excelDB/initializeRepository";
 import type { CafeGoals } from "@packages/domain/types";
 import { formatLink } from "@ui/formatters";
@@ -8,7 +12,6 @@ import {
   createWebHashHistory,
   type RouteRecordRaw,
 } from "vue-router";
-import handleCommand from "../../packages/cqrs-es/handleCommand";
 
 const domainEventsRepo = initializeRepository();
 const domainEvents = await domainEventsRepo.select();
