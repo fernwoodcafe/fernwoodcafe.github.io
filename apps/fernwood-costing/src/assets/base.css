@@ -125,3 +125,7 @@ input[type="button"][value^="Sign In"],
 input[type="button"][value^="Sign Out"] {
   background-color: var(--color-warning);
 }
+
+fieldset label {
+  font-weight: 600;
+}

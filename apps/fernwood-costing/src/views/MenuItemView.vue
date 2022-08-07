@@ -6,18 +6,35 @@
       :type="'text'"
     />
   </h2>
-  <dl>
-    <div>
-      <dt>Total Cost</dt>
-      <dd>{{ formatMoney(menuItemTotalCost) }}</dd>
-    </div>
-    <div>
-      <dt>Price @ {{ cafeGoals.weightedAverageMarkup }} Markup</dt>
-      <dd>{{ formatMoney(menuItemRecommendedPrice) }}</dd>
-    </div>
-  </dl>
-
   <form @submit.prevent>
+    <fieldset>
+      <label>Total Cost</label>
+      <p>{{ formatMoney(menuItemTotalCost) }}</p>
+    </fieldset>
+    <fieldset>
+      <label>Price @ {{ cafeGoals.weightedAverageMarkup }} Markup</label>
+      <p>{{ formatMoney(menuItemRecommendedPrice) }}</p>
+    </fieldset>
+    <fieldset>
+      <label>Actual Markup</label>
+      <p>{{ menuItemActualMarkup }}</p>
+    </fieldset>
+    <fieldset>
+      <FrcInput
+        :label="'Percent Total Sales'"
+        :value="menuItem.percentTotalSales"
+        :type="'number'"
+        @change="onPercentageTotalSalesChanged"
+      />
+    </fieldset>
+    <fieldset>
+      <FrcInput
+        :label="'Chosen Menu Item Price'"
+        :value="menuItem.menuItemPrice"
+        :type="'number'"
+        @change="onChosenMenuItemPriceChange"
+      />
+    </fieldset>
     <FrcSelectOption
       :label="'Ingredient'"
       :options="ingredientOptions"
@@ -29,18 +46,6 @@
       :options="packagingOptions"
       :optionKey="'supplyName'"
       @submitSelect="onClickNewPackaging"
-    />
-    <FrcInput
-      :label="'Percent Total Sales'"
-      :value="menuItem.percentTotalSales"
-      :type="'number'"
-      @change="onPercentageTotalSalesChanged"
-    />
-    <FrcInput
-      :label="'Chosen Menu Item Price'"
-      :value="menuItem.menuItemPrice"
-      :type="'number'"
-      @change="onChosenMenuItemPriceChange"
     />
   </form>
   <AgGridMenuItemSuppliesComponent
@@ -154,15 +159,17 @@ const onMenuItemSupplyDeleted = (data: MenuItemSupply) =>
     payload: data,
   });
 
-const calculateMenuItemRecommendedMarkup = () =>
-  menuItemTotalCost.value * props.cafeGoals.weightedAverageMarkup;
-
 const menuItemTotalCost = computed(() =>
   calculateMenuItemTotalCost(props.menuItem, props.suppliesList.items)
 );
-const menuItemRecommendedPrice = computed(() =>
-  calculateMenuItemRecommendedMarkup()
+const menuItemRecommendedPrice = computed(
+  () => menuItemTotalCost.value * props.cafeGoals.weightedAverageMarkup
 );
+const menuItemActualMarkup = computed(() => {
+  const cost = menuItemTotalCost.value;
+  const markup = props.menuItem.menuItemPrice / cost;
+  return isNaN(markup) ? "-" : markup.toFixed(2);
+});
 </script>
 
 <style>
@@ -178,27 +185,10 @@ fieldset {
   padding: 0;
 }
 
-dl {
+form {
   font-size: 1rem;
   line-height: 1.2rem;
   display: flex;
   column-gap: 10px;
-}
-
-dl div {
-  background-color: var(--color-info);
-  border-radius: 5px;
-  padding: 15px;
-}
-
-dl div dt {
-  font-weight: bolder;
-  text-align: left;
-  margin-bottom: 5px;
-}
-
-dl div dd {
-  text-align: left;
-  margin: 0;
 }
 </style>

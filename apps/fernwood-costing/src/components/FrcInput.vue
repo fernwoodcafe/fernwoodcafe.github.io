@@ -19,19 +19,18 @@ const emit = defineEmits<Emits>();
 </script>
 
 <style scoped>
-fieldset {
+form fieldset {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   row-gap: 5px;
 }
 
-fieldset label {
+form fieldset label {
   flex: 0 0 auto;
-  font-weight: 600;
 }
 
-fieldset input {
+form fieldset input {
   height: 1.2rem;
 }
 </style>

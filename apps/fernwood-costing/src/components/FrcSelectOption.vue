@@ -54,7 +54,6 @@ fieldset {
 
 fieldset label {
   flex: 0 0 auto;
-  font-weight: 600;
 }
 
 fieldset select {
