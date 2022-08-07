@@ -1,16 +1,13 @@
-import { expect } from "chai";
 import { describe, it } from "vitest";
 import { calculateMenuItemTotalCost } from "../services";
 import type { InventoryItem, MenuItemSupply } from "../types";
 
-describe("when receiving valid arguments", () => {
+describe("when processing valid inputs", () => {
   const inventoryItems: InventoryItem[] = [];
   const menuItemSupplies: MenuItemSupply[] = [];
 
   it("does not throw", () => {
     // Act
-    const result = calculateMenuItemTotalCost(menuItemSupplies, inventoryItems);
-    // Assert
-    expect(result).not.null;
+    calculateMenuItemTotalCost(menuItemSupplies, inventoryItems);
   });
 });
