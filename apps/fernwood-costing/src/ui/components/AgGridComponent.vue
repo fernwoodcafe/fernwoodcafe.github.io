@@ -117,7 +117,7 @@ const toolsColDef: ColDef = {
   headerName: "Actions",
   editable: false,
   resizable: false,
-  maxWidth: 130,
+  maxWidth: 100,
   suppressMenu: true,
   cellRenderer: AgRowToolsRenderer,
   cellRendererParams: {
@@ -146,9 +146,18 @@ const onGridReady = ({ api }: GridOptions) => {
     return colDef;
   });
 
-  if (props.gridTools != null) {
-    columnDefs.unshift(toolsColDef);
-    columnDefs.push(toolsColDef);
+  if (props.gridTools?.includes("edit")) {
+    columnDefs.unshift({
+      ...toolsColDef,
+      colId: "tools-safe",
+    });
+  }
+
+  if (props.gridTools?.includes("delete")) {
+    columnDefs.push({
+      ...toolsColDef,
+      colId: "tools-dangerous",
+    });
   }
 
   api.setColumnDefs(columnDefs);

@@ -2,13 +2,13 @@
   <form @submit.prevent>
     <input
       type="button"
-      v-if="tools.has('edit')"
+      v-if="tools.has('edit') && colId === 'tools-safe'"
       @click="onEditClick"
       value="Edit"
     />
     <input
       type="button"
-      v-if="tools.has('delete')"
+      v-if="tools.has('delete') && colId === 'tools-dangerous'"
       @click="onDeleteClick"
       value="Delete"
     />
@@ -25,7 +25,7 @@ type Props = {
 };
 
 const props = defineProps<Props>();
-
+const colId = props.params.column.getColId();
 const tools = new Set(props.params.gridTools);
 
 const onDeleteClick = () => {

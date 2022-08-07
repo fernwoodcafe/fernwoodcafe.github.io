@@ -62,7 +62,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     },
   },
   {
-    headerName: `Price @ ${props.cafeGoals.targetWeightedAverageMarkup} Markup`,
+    headerName: `Baseline Price @ ${props.cafeGoals.targetWeightedAverageMarkup} Markup`,
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = menuItemCost(
@@ -86,7 +86,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     valueFormatter: (node) => formatMoney(node.data.menuItemPrice),
   },
   {
-    headerName: "Actual Markup",
+    headerName: "Markup",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = menuItemCost(
@@ -99,7 +99,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     },
   },
   {
-    headerName: "Actual Contribution (Price - Cost)",
+    headerName: "Contribution (Price - Cost)",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = menuItemCost(
