@@ -41,7 +41,7 @@ CafeSupply
         </fieldset>
         <fieldset>
           <label>Category Weighted Average Markup</label>
-          <p>{{ categoryWeightedAverageMarkup }}</p>
+          <p>{{ categoryWeightedAverageMarkupComputed.toFixed(2) }}</p>
         </fieldset>
       </form>
     </section>
@@ -80,10 +80,12 @@ CafeSupply
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import {
   categoryPercentTotalSales,
+  categoryWeightedAverageMarkup,
   menuItemCost,
   menuItemMarkup,
   menuItemPercentCategorySales,
   menuItemPriceAtMarkup,
+  menuItemWeightedMarkup,
 } from "@packages/domain/services";
 import type {
   CafeGoals,
@@ -212,11 +214,6 @@ const menuItemPercentCategorySalesComputed = computed(() =>
   )
 );
 
-const menuItemWeightedMarkup = (
-  menuItemMarkup: number,
-  menuItemFactor: number
-) => menuItemMarkup * menuItemFactor;
-
 const menuItemWeightedMarkupValue = computed(() =>
   menuItemWeightedMarkup(
     menuItemMarkupComputed.value,
@@ -224,7 +221,13 @@ const menuItemWeightedMarkupValue = computed(() =>
   )
 );
 
-const categoryWeightedAverageMarkup = computed(() => 0);
+const categoryWeightedAverageMarkupComputed = computed(() =>
+  categoryWeightedAverageMarkup(
+    props.supplyTaxes,
+    props.suppliesList.items,
+    props.menuItemsList.items
+  )
+);
 </script>
 
 <style scoped>
