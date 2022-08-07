@@ -78,7 +78,7 @@ import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppli
 import FrcInput from "@ui/components/FrcInput.vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
 import { formatLink, formatMoney } from "@ui/formatters";
-import isInstance from "@ui/typeGuards/isInstance.js";
+import isInstance from "@ui/typeGuards/isInstance";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { computed } from "vue";
 
