@@ -11,20 +11,24 @@ CafeSupply
     <section>
       <h2>Set Menu Item Price</h2>
       <form @submit.prevent>
+        <!-- TODO Render this input as a percentage. -->
         <FrcInput
           :label="'Projected Percent Total Sales'"
           :value="menuItem.percentTotalSales"
           :type="'number'"
           @change="onPercentageTotalSalesChanged"
         />
+        <!-- TODO Render this input as a currency. -->
         <FrcInput
-          :label="'Chosen Menu Item Price'"
+          :label="'Chosen Price'"
           :value="menuItem.menuItemPrice"
           :type="'number'"
           @change="onChosenMenuItemPriceChange"
         />
         <fieldset>
-          <label>Price @ {{ cafeGoals.targetWeightedAverageMarkup }}</label>
+          <label
+            >Base Price @ {{ cafeGoals.targetWeightedAverageMarkup }}</label
+          >
           <p>{{ formatMoney(menuItemBaselinePrice) }}</p>
         </fieldset>
         <fieldset>
@@ -33,15 +37,11 @@ CafeSupply
         </fieldset>
         <fieldset>
           <label>Percent Category Sales</label>
-          <p>{{ menuItemPercentCategorySalesComputed.toFixed(2) }}</p>
+          <p>{{ formatPercent(menuItemPercentCategorySalesComputed) }}</p>
         </fieldset>
         <fieldset>
           <label>Weighted Markup</label>
           <p>{{ menuItemWeightedMarkupValue.toFixed(2) }}</p>
-        </fieldset>
-        <fieldset>
-          <label>Category Weighted Average Markup</label>
-          <p>{{ categoryWeightedAverageMarkupComputed.toFixed(2) }}</p>
         </fieldset>
       </form>
     </section>
@@ -97,7 +97,7 @@ import type {
 import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcInput from "@ui/components/FrcInput.vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
-import { formatLink, formatMoney } from "@ui/formatters";
+import { formatLink, formatMoney, formatPercent } from "@ui/formatters";
 import isInstance from "@ui/typeGuards/isInstance";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { computed } from "vue";
