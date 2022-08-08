@@ -172,7 +172,7 @@ const onGridReady = ({ api }: GridOptions) => {
 
 .ag-header-cell.ag-editable span.ag-header-cell-text::after {
   content: "*";
-  padding-left: 2px;
+  padding-left: 2rem;
 }
 
 .ag-cell.ag-not-editable {

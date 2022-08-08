@@ -4,25 +4,27 @@
 /* Structure */
 
 html {
+  /*
+    With border-box, the width of a box includes its padding; whereas by
+    default the padding adds to the width. For instance, if we have width
+    100px and padding 10px, by default total width sits at 120px with the
+    border around those 120px.
+  */
+  box-sizing: border-box;
+  font-family: arial, sans-serif;
+  font-size:6.25%; /* Make rems equal to pixels. */
 }
 
-body {
-}
-
-main {
-}
-
-main > header {
-}
-
-main > header > nav {
+html * {
+  /*
+    Use inherit here to preserve inheritance downstream, otherwise we
+    explicitily set box-sizing on every (*) element.
+  */
+  box-sizing: inherit;
+  font-size: 16rem;
 }
 
 /* Text */
-
-main {
-  font-family: arial, sans-serif;
-}
 
 h1 input,
 h2 input,
@@ -40,7 +42,7 @@ nav ul {
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
-  column-gap: 5px;
+  gap: 5rem;
 }
 
 nav ul li {
@@ -48,20 +50,20 @@ nav ul li {
 }
 
 nav ul li:first-child a {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
 }
 
 nav ul li:last-child a {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5rem;
+  border-bottom-right-radius: 5rem;
 }
 
 nav ul li a {
   background-color: var(--color-success);
   color: white;
-  padding: 10px;
-  line-height: 3em;
+  padding: 10rem;
+  line-height: 3rem;
   text-decoration: none;
 }
 
@@ -77,10 +79,10 @@ nav ul li a.router-link-active {
 
 select,
 input {
-  border: 2px solid var(--color-secondary);
-  border-radius: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  border: 2rem solid var(--color-secondary);
+  border-radius: 5rem;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 select {
@@ -90,7 +92,7 @@ select {
 select:focus,
 input:focus {
   border-color: var(--color-info);
-  box-shadow: 0 0 10px var(--color-info);
+  box-shadow: 0 0 10rem var(--color-info);
 }
 
 input[type="button"]:focus {
@@ -100,16 +102,10 @@ input[type="button"]:focus {
 }
 
 input[type="button"] {
-  border-radius: 5px;
-  line-height: 2em;
+  border-radius: 5rem;
   border: none;
-  margin-right: 5px;
-  line-height: 2em;
-}
-
-input[type="button"][value^="Edit"] {
-  background-color: var(--color-success);
-  color: white;
+  margin-right: 5rem;
+  padding:5rem 7rem;
 }
 input[type="button"][value^="Cancel"] {
   background-color: var(--color-warning);
@@ -135,4 +131,15 @@ label {
 
 fieldset {
   border: none;
+}
+
+
+@media only screen and (max-width:800px) {
+    :root {
+      --color-info: hotpink;
+    }
+
+    html {
+      font-size:5%;
+    }
 }
