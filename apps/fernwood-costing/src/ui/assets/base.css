@@ -1,146 +1,21 @@
 @import "https://unpkg.com/@csstools/normalize.css";
-@import "./vars.css";
-
-/* Structure */
 
 html {
   /*
-    With border-box, the width of a box includes its padding; whereas by
-    default the padding adds to the width. For instance, if we have width
-    100px and padding 10px, by default total width sits at 120px with the
-    border around those 120px.
+    With border-box, rendered box width equals CSS width.
+    With content-box, rendered box width equals CSS width + (2 x CSS padding).
+    For instance, if we have width 100px and padding 10px, border-box rendered width
+    equals 100px whereas context-box rendered width equals 120px.
   */
   box-sizing: border-box;
   font-family: arial, sans-serif;
-  font-size:6.25%; /* Make rems equal to pixels. */
+  font-size:6.25%; /* Make one rem equal to one pixel. */
 }
 
 html * {
   /*
-    Use inherit here to preserve inheritance downstream, otherwise we
-    explicitily set box-sizing on every (*) element.
+    Here we use inherit to preserve downstream inheritance.
   */
   box-sizing: inherit;
-  font-size: 16rem;
-}
-
-/* Text */
-
-h1 input,
-h2 input,
-h3 input,
-h4 input,
-h5 input {
-  font-size: inherit;
-}
-
-/* Nav */
-
-nav ul {
-  padding: 0;
-  list-style: none;
-  display: flex;
-  justify-content: flex-start;
-  align-items: stretch;
-  gap: 5rem;
-}
-
-nav ul li {
-  flex: 0 0 auto;
-}
-
-nav ul li:first-child a {
-  border-top-left-radius: 5rem;
-  border-bottom-left-radius: 5rem;
-}
-
-nav ul li:last-child a {
-  border-top-right-radius: 5rem;
-  border-bottom-right-radius: 5rem;
-}
-
-nav ul li a {
-  background-color: var(--color-success);
-  color: white;
-  padding: 10rem;
-  line-height: 3rem;
-  text-decoration: none;
-}
-
-nav ul li a:hover {
-  filter: brightness(120%);
-}
-
-nav ul li a.router-link-active {
-  filter: brightness(130%);
-}
-
-/* Controls */
-
-select,
-input {
-  border: 2rem solid var(--color-secondary);
-  border-radius: 5rem;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
-}
-
-select {
-  height: 2em;
-}
-
-select:focus,
-input:focus {
-  border-color: var(--color-info);
-  box-shadow: 0 0 10rem var(--color-info);
-}
-
-input[type="button"]:focus {
-  border-color: none;
-  box-shadow: none;
-  filter: brightness(110%);
-}
-
-input[type="button"] {
-  border-radius: 5rem;
-  border: none;
-  margin-right: 5rem;
-  padding:5rem 7rem;
-}
-input[type="button"][value^="Cancel"] {
-  background-color: var(--color-warning);
-}
-input[type="button"][value^="Delete"] {
-  background-color: var(--color-danger);
-  color: white;
-}
-input[type="button"][value^="Add"],
-input[type="button"][value^="Edit"],
-input[type="button"][value^="New"] {
-  background-color: var(--color-success);
-  color: white;
-}
-
-input[type="button"][value^="Sign In"],
-input[type="button"][value^="Sign Out"] {
-  background-color: var(--color-warning);
-}
-
-label {
-  font-weight: 600;
-}
-
-fieldset {
-  border: none;
-}
-
-
-@media only screen and (max-width:800px) {
-    :root {
-      --color-info: hotpink;
-    }
-
-    html {
-      font-size:5%;
-    }
+  font-size:18rem;
 }

@@ -1,0 +1,38 @@
+nav ul {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 5rem;
+}
+
+nav ul li {
+  flex: 0 0 auto;
+}
+
+nav ul li:first-child a {
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
+}
+
+nav ul li:last-child a {
+  border-top-right-radius: 5rem;
+  border-bottom-right-radius: 5rem;
+}
+
+nav ul li a {
+  background-color: var(--color-success);
+  color: white;
+  padding: 10rem;
+  line-height: 3rem;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  filter: brightness(120%);
+}
+
+nav ul li a.router-link-active {
+  filter: brightness(130%);
+}
