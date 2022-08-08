@@ -103,8 +103,6 @@ watch(menuItemsList, () => {
     router.removeRoute(route.name);
     router.addRoute(route);
   });
-
-  console.log("routes", router.getRoutes());
 });
 
 export default router;

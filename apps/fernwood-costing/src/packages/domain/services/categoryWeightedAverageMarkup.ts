@@ -30,13 +30,5 @@ export default (
 
       const weightedMarkup = menuItemWeightedMarkup(markup, percentCategory);
 
-      console.log("categoryWeightedAverageMarkup", {
-        cost,
-        markup,
-        categoryPercent,
-        percentCategory,
-        weightedMarkup,
-      });
-
       return acc + weightedMarkup;
     }, 0);

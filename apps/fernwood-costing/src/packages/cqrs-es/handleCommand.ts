@@ -20,8 +20,6 @@ export default (props: Props) => async (command: DomainCommand) => {
     handleMenuItemCommand(props, command),
   ];
 
-  console.log("handleCommand", command.type, events);
-
   // TODO [must-have] Handle rapid fire events that cause a 409.
   const promises = events.flat().map(props.domainEventsRepo.insert);
   await Promise.all(promises);

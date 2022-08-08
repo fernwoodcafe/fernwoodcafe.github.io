@@ -76,10 +76,7 @@ const columnDefs: ColDef[] = [
   {
     field: "hasPST",
     cellEditor: AgCheckboxEditor,
-    cellRenderer: (params) => {
-      console.log(params);
-      return params.value ? "&#10003" : "&#10007";
-    },
+    cellRenderer: (params) => (params.value ? "&#10003" : "&#10007"),
   },
   { field: "supplyNotes" },
   { field: "supplyLink" },

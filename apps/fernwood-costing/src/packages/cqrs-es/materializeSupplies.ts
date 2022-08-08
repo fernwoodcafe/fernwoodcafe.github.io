@@ -6,8 +6,6 @@ export default (
   ...events: CafeEventUnion[]
 ) => {
   events.forEach((event) => {
-    console.log("materializeSupplies", event.type);
-
     if (event.type == "supply_created") {
       suppliesList.items.push(event.payload);
     }

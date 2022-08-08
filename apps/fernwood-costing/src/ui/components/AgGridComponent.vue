@@ -67,8 +67,6 @@ const defaultColDef: ColDef = {
 const getRowId = ({ data }) => data.uniqueId;
 
 const onModelUpdated = (event: ModelUpdatedEvent) => {
-  console.log("onModelUpdated", rowData.value.length);
-
   // Check the length to determine if we have new records.
   // If we have new records, start editing the most recent one.
   if (rowData.value.length > backupRowData.length) {
@@ -132,8 +130,6 @@ const toolsColDef: ColDef = {
 };
 
 const onGridReady = ({ api }: GridOptions) => {
-  console.log("onGridReady", props.gridData.items);
-
   const columnDefs: ColDef[] = props.gridColumnDefs.slice().map((colDef) => {
     if (colDef.editable === false) {
       colDef.cellClass = "ag-not-editable";

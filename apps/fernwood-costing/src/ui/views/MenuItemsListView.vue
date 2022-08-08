@@ -47,7 +47,6 @@ const props = defineProps<Props>();
 const newMenuItemName = ref("");
 
 const onClickNewMenuItem = () => {
-  console.log("onClickNewMenuItem", newMenuItemName);
   props.sendCommand({
     type: "create_menu_item",
     payload: {
@@ -68,7 +67,6 @@ const onMenuItemUpdated = (menuItem: MenuItem) => {
 };
 
 const onMenuItemDeleted = (menuItem: MenuItem) => {
-  console.log("onMenuItemDeleted", newMenuItemName);
   props.sendCommand({
     type: "delete_menu_item",
     payload: menuItem,
@@ -77,7 +75,6 @@ const onMenuItemDeleted = (menuItem: MenuItem) => {
 
 const router = useRouter();
 const onMenuItemEditClick = (menuItem: MenuItem) => {
-  console.log("onMenuItemEditClick", JSON.stringify(menuItem));
   router.push(`menu-items/${formatLink(menuItem.menuItemName)}`);
 };
 

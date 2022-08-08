@@ -150,8 +150,6 @@ const onClickNewPackaging = addNewMenuItemComponent;
 const onUpdateMenuItem = async (key: keyof MenuItem, event: Event) => {
   if (!isInstance(event.target, HTMLInputElement)) return;
 
-  console.log("onUpdateMenuItem", key, event.target.value);
-
   await props.sendCommand({
     type: "update_menu_item",
     payload: {

@@ -11,8 +11,6 @@ export default (
   ...events: CafeEventUnion[]
 ) => {
   events.map(convertEventToLatestVersion).forEach((event) => {
-    console.log("materializeMenuItems", event);
-
     if (event.type == "menu_item_created") {
       menuItemsList.items.push(event.payload);
     }
