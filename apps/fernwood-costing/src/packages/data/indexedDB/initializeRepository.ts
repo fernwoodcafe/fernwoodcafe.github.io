@@ -20,7 +20,6 @@ const db = await $migrateDB("restaurantDB", migrations);
 export default (): DomainEventsRepository => ({
   async insert(event: DomainEvent): Promise<DomainEvent> {
     await $create(db, "domainEvents", [event]);
-    console.log("insert", event);
     return event;
   },
   select: (): Promise<DomainEvent[]> =>

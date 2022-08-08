@@ -65,8 +65,6 @@ export default (): DomainEventsRepository => ({
       .map((row) => row[0])
       .map((cell) => JSON.parse(cell));
 
-    console.log("domainEvents", domainEvents);
-
     return domainEvents;
   },
 });
