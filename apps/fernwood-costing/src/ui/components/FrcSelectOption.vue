@@ -33,7 +33,12 @@ type Emits = {
 const emit = defineEmits<Emits>();
 
 watch(selectedOption, () => {
-  emit("submitSelect", selectedOption.value);
-  selectedOption.value = null;
+  if (selectedOption.value) {
+    emit("submitSelect", selectedOption.value);
+
+    // We wrap in an if statement to avoid firing emit twice when we reset
+    // the selected option to null.
+    selectedOption.value = null;
+  }
 });
 </script>
