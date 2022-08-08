@@ -115,6 +115,7 @@ input[type="button"][value^="Delete"] {
   color: white;
 }
 input[type="button"][value^="Add"],
+input[type="button"][value^="Edit"],
 input[type="button"][value^="New"] {
   background-color: var(--color-success);
   color: white;
