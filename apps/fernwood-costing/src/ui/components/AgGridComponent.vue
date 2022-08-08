@@ -79,21 +79,13 @@ const onModelUpdated = (event: ModelUpdatedEvent) => {
     row.setSelected(true, true);
 
     // Get its first editable cell and select it.
-    const cell = event.columnApi
+    const firstEditableCell = event.columnApi
       .getColumns()
       .find((c) => c.isCellEditable(row));
 
-    cell.setColDef(
-      {
-        ...cell.getColDef(),
-        cellClass: "look-here-now",
-      },
-      null
-    );
-
     event.api.startEditingCell({
       rowIndex: rowIndex,
-      colKey: cell.getColId(),
+      colKey: firstEditableCell.getColId(),
     });
   }
 
