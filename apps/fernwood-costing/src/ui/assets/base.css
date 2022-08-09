@@ -12,10 +12,13 @@ html {
   font-size:6.25%; /* Make one rem equal to one pixel. */
 }
 
-html * {
+body {
+  font-size:18rem;/* Then set the font-size e.g., to 18px. */
+}
+
+body * {
   /*
     Here we use inherit to preserve downstream inheritance.
   */
   box-sizing: inherit;
-  font-size:18rem;
 }

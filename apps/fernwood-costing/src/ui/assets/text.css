@@ -1,3 +1,16 @@
+h1 {
+  font-size: 32rem;
+}
+h3 {
+  font-size: 28rem;
+}
+h4{
+  font-size: 24rem;
+}
+h5 {
+  font-size: 20rem;
+}
+
 h1 input,
 h2 input,
 h3 input,
