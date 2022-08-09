@@ -7,7 +7,7 @@ const convertMenuItemEvent = (event: DomainEvent) => {
     ...clone,
     payload: {
       ...clone.payload,
-      menuItemComponents: (event.payload as any).menuItemSupplies,
+      menuItemComponents: (event.payload as any)?.menuItemSupplies ?? [],
     },
   };
 };
