@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import type { AppStatus } from "./types/AppStatus";
+
+type Props = {
+  status: AppStatus;
+};
+
+defineProps<Props>();
 </script>
 
 <template>
@@ -11,6 +18,9 @@ import { RouterLink, RouterView } from "vue-router";
           <li><RouterLink to="/menu-items">Menu Items</RouterLink></li>
         </ul>
       </nav>
+      <aside>
+        {{ status.message }}
+      </aside>
     </header>
     <article>
       <RouterView />
