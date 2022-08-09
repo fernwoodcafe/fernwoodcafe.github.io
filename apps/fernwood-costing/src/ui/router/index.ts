@@ -1,51 +1,34 @@
-import {
-  handleCommand,
-  materializeMenuItems,
-  materializeSupplies,
-} from "@packages/cqrs-es";
-import type { DomainEventsRepository } from "@packages/cqrs-es-types";
+import type { DomainCommandHandler } from "@packages/cqrs-es-types/DomainCommandHandler";
 import type {
-  CafeEventUnion,
   CafeGoals,
+  CafeSupply,
   CafeSupplyTaxes,
+  MenuItem,
 } from "@packages/domain/types";
 import { formatLink } from "@ui/formatters";
-import { reactive, watch } from "vue";
+import type { ReactiveArray } from "@ui/types/ReactiveArray";
+import { watch } from "vue";
 import {
   createRouter,
   createWebHashHistory,
   type RouteRecordRaw,
 } from "vue-router";
 
-export default async (domainEventsRepo: DomainEventsRepository) => {
-  const domainEvents = (await domainEventsRepo.select()) as CafeEventUnion[];
+type Props = {
+  menuItemsList: ReactiveArray<MenuItem>;
+  suppliesList: ReactiveArray<CafeSupply>;
+  sendCommand: DomainCommandHandler;
+  cafeGoals: CafeGoals;
+  supplyTaxes: CafeSupplyTaxes;
+};
 
-  const menuItemsList = materializeMenuItems(
-    reactive({ items: [] }),
-    ...domainEvents
-  );
-
-  const suppliesList = materializeSupplies(
-    reactive({ items: [] }),
-    ...domainEvents
-  );
-
-  const sendCommand = handleCommand({
-    menuItems: menuItemsList,
-    supplies: suppliesList,
-    materializeMenuItems,
-    materializeSupplies,
-    domainEventsRepo,
-  });
-
-  const cafeGoals = reactive<CafeGoals>({
-    targetWeightedAverageMarkup: 3.5,
-  });
-
-  const supplyTaxes = reactive<CafeSupplyTaxes>({
-    PST: 0.06,
-  });
-
+export default ({
+  menuItemsList,
+  suppliesList,
+  sendCommand,
+  supplyTaxes,
+  cafeGoals,
+}: Props) => {
   const buildMenuItemRoutes = (): RouteRecordRaw[] =>
     menuItemsList.items.map<RouteRecordRaw>((menuItem) => ({
       name: menuItem.menuItemName,

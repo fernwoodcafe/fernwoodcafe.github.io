@@ -2,6 +2,7 @@ import type {
   DomainCommand,
   DomainEventsRepository,
 } from "@packages/cqrs-es-types";
+import type { DomainCommandHandler } from "@packages/cqrs-es-types/DomainCommandHandler";
 import handleMenuItemCommand, {
   type Props as MenuItemProps,
 } from "./handleMenuItemCommand";
@@ -14,13 +15,14 @@ type Props = MenuItemProps &
     domainEventsRepo: DomainEventsRepository;
   };
 
-export default (props: Props) => async (command: DomainCommand) => {
-  const events = [
-    handleSupplyCommand(props, command),
-    handleMenuItemCommand(props, command),
-  ];
+export default (props: Props): DomainCommandHandler =>
+  async (command: DomainCommand) => {
+    const events = [
+      handleSupplyCommand(props, command),
+      handleMenuItemCommand(props, command),
+    ];
 
-  // TODO [must-have] Handle rapid fire events that cause a 409.
-  const promises = events.flat().map(props.domainEventsRepo.insert);
-  await Promise.all(promises);
-};
+    // TODO [must-have] Handle rapid fire events that cause a 409.
+    const promises = events.flat().map(props.domainEventsRepo.insert);
+    await Promise.all(promises);
+  };
