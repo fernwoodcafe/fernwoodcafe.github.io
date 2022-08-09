@@ -79,21 +79,13 @@ const onModelUpdated = (event: ModelUpdatedEvent) => {
     row.setSelected(true, true);
 
     // Get its first editable cell and select it.
-    const cell = event.columnApi
+    const firstEditableCell = event.columnApi
       .getColumns()
       .find((c) => c.isCellEditable(row));
 
-    cell.setColDef(
-      {
-        ...cell.getColDef(),
-        cellClass: "look-here-now",
-      },
-      null
-    );
-
     event.api.startEditingCell({
       rowIndex: rowIndex,
-      colKey: cell.getColId(),
+      colKey: firstEditableCell.getColId(),
     });
   }
 
@@ -172,7 +164,7 @@ const onGridReady = ({ api }: GridOptions) => {
 
 .ag-header-cell.ag-editable span.ag-header-cell-text::after {
   content: "*";
-  padding-left: 2px;
+  padding-left: 2rem;
 }
 
 .ag-cell.ag-not-editable {

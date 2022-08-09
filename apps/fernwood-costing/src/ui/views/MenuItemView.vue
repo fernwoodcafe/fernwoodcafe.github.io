@@ -1,4 +1,3 @@
-CafeSupply
 <template>
   <h2>
     <input
@@ -231,40 +230,42 @@ const categoryWeightedAverageMarkupComputed = computed(() =>
 <style scoped>
 article {
   display: flex;
-  flex-wrap: wrap;
-  column-gap: 50px;
+  flex-direction: column;
 }
 
 section {
   flex: 0 0 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  padding-left: 10rem;
+  padding-right: 10rem;
+  border-radius: 5rem;
+  margin-bottom: 20rem;
 }
 
 section > form {
   display: flex;
-  column-gap: 10px;
+  column-gap: 10rem;
 }
 
 section > form > fieldset {
+  display: flex;
+  flex-direction: column;
+  gap:10rem;
+  justify-content: space-between;
+
   background-color: var(--color-info);
-  padding: 10px;
-  border-radius: 5px;
+  padding: 10rem;
+  border-radius: 5rem;
 }
 
 section > form > fieldset > :deep(label) {
-  display: block;
-  padding: 5px;
   text-align: center;
 }
 
 section > form > fieldset > p,
-section > form > fieldset > :deep(input) {
-  display: block;
-  padding: 5px;
-  margin: auto;
+section > form > fieldset > :deep(input),
+section > form > fieldset > :deep(select) {
   text-align: center;
+  margin:0;
+  line-height:20rem;
 }
 </style>
