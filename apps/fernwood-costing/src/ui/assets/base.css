@@ -22,3 +22,15 @@ body * {
   */
   box-sizing: inherit;
 }
+
+main > header {
+  display:flex;
+  justify-content: space-between;
+}
+
+main > header > aside {
+  background-color: var(--color-warning);
+  border-radius: 5px;
+  padding:5px;
+  height:20rem;
+}

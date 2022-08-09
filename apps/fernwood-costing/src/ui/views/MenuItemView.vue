@@ -249,7 +249,7 @@ section > form {
 section > form > fieldset {
   display: flex;
   flex-direction: column;
-  gap:10rem;
+  gap: 10rem;
   justify-content: space-between;
 
   background-color: var(--color-info);
@@ -265,7 +265,7 @@ section > form > fieldset > p,
 section > form > fieldset > :deep(input),
 section > form > fieldset > :deep(select) {
   text-align: center;
-  margin:0;
-  line-height:20rem;
+  margin: 0;
+  line-height: 20rem;
 }
 </style>

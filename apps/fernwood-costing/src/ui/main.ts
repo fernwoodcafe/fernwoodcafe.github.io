@@ -5,13 +5,13 @@ import "./assets/main.css";
 import router from "./router";
 
 const status = reactive({
-  message: "welcome",
+  message: "Welcome!",
 });
 
 const domainEventsRepo = initializeRepository();
 
-domainEventsRepo.addListener("onSaved", (e) => (status.message = "saved"));
-domainEventsRepo.addListener("onQueued", (e) => (status.message = "queued"));
+domainEventsRepo.addListener("onSaved", () => (status.message = "Saved"));
+domainEventsRepo.addListener("onQueued", () => (status.message = "Unsaved"));
 
 const app = createApp(App, {
   status,
