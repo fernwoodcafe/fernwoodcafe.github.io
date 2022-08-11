@@ -18,7 +18,7 @@ type Props = {
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-const percentValue = ref(props.value * 100);
+const percentValue = ref(Math.round(props.value * 100));
 
 watch(percentValue, () => {
   emit("changeInPercent", percentValue.value / 100);
