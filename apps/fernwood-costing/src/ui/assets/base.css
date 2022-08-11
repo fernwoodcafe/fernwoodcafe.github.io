@@ -9,11 +9,11 @@ html {
   */
   box-sizing: border-box;
   font-family: arial, sans-serif;
-  font-size:6.25%; /* Make one rem equal to one pixel. */
+  font-size: 6.25%; /* Make one rem equal to one pixel. */
 }
 
 body {
-  font-size:18rem;/* Then set the font-size e.g., to 18px. */
+  font-size: 18rem; /* Then set the font-size e.g., to 18px. */
 }
 
 body * {
@@ -24,13 +24,13 @@ body * {
 }
 
 main > header {
-  display:flex;
+  display: flex;
   justify-content: space-between;
 }
 
 main > header > aside {
   background-color: var(--color-warning);
   border-radius: 5px;
-  padding:5px;
-  height:20rem;
+  padding: 5px;
+  height: 20rem;
 }

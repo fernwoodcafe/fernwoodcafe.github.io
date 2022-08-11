@@ -26,7 +26,7 @@ input[type="button"] {
   border-radius: 5rem;
   border: none;
   margin-right: 5rem;
-  padding:5rem 7rem;
+  padding: 5rem 7rem;
 }
 input[type="button"][value^="Cancel"] {
   background-color: var(--color-warning);

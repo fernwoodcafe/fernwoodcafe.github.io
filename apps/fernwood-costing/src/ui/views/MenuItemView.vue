@@ -10,19 +10,15 @@
     <section>
       <h2>Set Menu Item Price</h2>
       <form @submit.prevent>
-        <!-- TODO Render this input as a percentage. -->
-        <FrcInput
+        <FrcInputPercent
           :label="'Projected Percent Total Sales'"
           :value="menuItem.percentTotalSales"
-          :type="'number'"
-          @change="onPercentageTotalSalesChanged"
+          @changeInPercent="onPercentageTotalSalesChanged"
         />
-        <!-- TODO Render this input as a currency. -->
-        <FrcInput
+        <FrcInputMoney
           :label="'Chosen Price'"
           :value="menuItem.menuItemPrice"
-          :type="'number'"
-          @change="onChosenMenuItemPriceChange"
+          @changeInMoney="onChosenMenuItemPriceChange"
         />
         <fieldset>
           <label
@@ -94,12 +90,13 @@ import type {
   MenuItemComponent,
 } from "@packages/domain/types";
 import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppliesComponent.vue";
-import FrcInput from "@ui/components/FrcInput.vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
 import { formatLink, formatMoney, formatPercent } from "@ui/formatters";
 import isInstance from "@ui/typeGuards/isInstance";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { computed } from "vue";
+import FrcInputMoney from "../components/FrcInputMoney.vue";
+import FrcInputPercent from "../components/FrcInputPercent.vue";
 
 type Props = {
   menuItem: MenuItem;
@@ -146,32 +143,44 @@ const onClickNewPackaging = addNewMenuItemComponent;
  * - Avoid watching props.
  * - Lotsa events.
  */
-const onUpdateMenuItem = async (key: keyof MenuItem, event: Event) => {
+const onPercentageTotalSalesChanged = async (percentTotalSales: number) => {
+  console.log("percent", percentTotalSales);
+  await props.sendCommand({
+    type: "update_menu_item",
+    payload: {
+      ...props.menuItem,
+      percentTotalSales,
+    },
+  });
+};
+
+const onChosenMenuItemPriceChange = async (menuItemPrice: number) => {
+  console.log("money", menuItemPrice);
+  await props.sendCommand({
+    type: "update_menu_item",
+    payload: {
+      ...props.menuItem,
+      menuItemPrice,
+    },
+  });
+};
+
+const onMenuItemNameUpdated = async (event: Event) => {
   if (!isInstance(event.target, HTMLInputElement)) return;
+
+  const menuItemName = event.target.value;
 
   await props.sendCommand({
     type: "update_menu_item",
     payload: {
       ...props.menuItem,
-      [key]: event.target.value,
+      menuItemName,
     },
   });
-};
-
-const onChosenMenuItemPriceChange = (event: Event) =>
-  onUpdateMenuItem("menuItemPrice", event);
-
-const onPercentageTotalSalesChanged = (event: Event) =>
-  onUpdateMenuItem("percentTotalSales", event);
-
-const onMenuItemNameUpdated = async (event: Event) => {
-  await onUpdateMenuItem("menuItemName", event);
-
-  if (!isInstance(event.target, HTMLInputElement)) return;
 
   window.location.hash = window.location.hash.replace(
     formatLink(props.menuItem.menuItemName.toLocaleLowerCase()),
-    formatLink(event.target.value.toLocaleLowerCase())
+    formatLink(menuItemName.toLocaleLowerCase())
   );
 };
 
