@@ -5,10 +5,6 @@
       @changeInText="onMenuItemNameUpdated"
     />
   </h2>
-  <ul>
-    <li>Name: {{ menuItem.menuItemName }}</li>
-    <li>Price: {{ menuItem.menuItemPrice }}</li>
-  </ul>
   <article>
     <section>
       <h2>Set Menu Item Price</h2>
