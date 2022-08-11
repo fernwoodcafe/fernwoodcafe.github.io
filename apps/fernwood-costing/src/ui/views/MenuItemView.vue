@@ -1,12 +1,20 @@
 <template>
   <h2>
-    <input
-      @change="onMenuItemNameUpdated"
+    <FrcInputText
       :value="menuItem.menuItemName"
-      :type="'text'"
+      @changeInText="onMenuItemNameUpdated"
     />
   </h2>
+  <ul>
+    <li>Name: {{ menuItem.menuItemName }}</li>
+    <li>Price: {{ menuItem.menuItemPrice }}</li>
+  </ul>
   <article>
+    <FrcInputMoney
+      :label="'Chosen Price'"
+      :value="menuItem.menuItemPrice"
+      @changeInMoney="onChosenMenuItemPriceChange"
+    />
     <section>
       <h2>Set Menu Item Price</h2>
       <form @submit.prevent>
@@ -92,11 +100,11 @@ import type {
 import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
 import { formatLink, formatMoney, formatPercent } from "@ui/formatters";
-import isInstance from "@ui/typeGuards/isInstance";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { computed } from "vue";
 import FrcInputMoney from "../components/FrcInputMoney.vue";
 import FrcInputPercent from "../components/FrcInputPercent.vue";
+import FrcInputText from "../components/FrcInputText.vue";
 
 type Props = {
   menuItem: MenuItem;
@@ -144,7 +152,6 @@ const onClickNewPackaging = addNewMenuItemComponent;
  * - Lotsa events.
  */
 const onPercentageTotalSalesChanged = async (percentTotalSales: number) => {
-  console.log("percent", percentTotalSales);
   await props.sendCommand({
     type: "update_menu_item",
     payload: {
@@ -155,7 +162,6 @@ const onPercentageTotalSalesChanged = async (percentTotalSales: number) => {
 };
 
 const onChosenMenuItemPriceChange = async (menuItemPrice: number) => {
-  console.log("money", menuItemPrice);
   await props.sendCommand({
     type: "update_menu_item",
     payload: {
@@ -165,11 +171,7 @@ const onChosenMenuItemPriceChange = async (menuItemPrice: number) => {
   });
 };
 
-const onMenuItemNameUpdated = async (event: Event) => {
-  if (!isInstance(event.target, HTMLInputElement)) return;
-
-  const menuItemName = event.target.value;
-
+const onMenuItemNameUpdated = async (menuItemName: string) => {
   await props.sendCommand({
     type: "update_menu_item",
     payload: {

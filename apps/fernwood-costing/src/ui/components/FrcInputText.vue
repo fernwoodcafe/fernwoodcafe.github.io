@@ -1,27 +1,27 @@
 <template>
   <fieldset>
     <label v-if="{ label }">{{ label }}</label>
-    <input v-model.lazy="percentRef" type="number" />
+    <input v-model.lazy="textRef" type="text" />
   </fieldset>
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
 type Emits = {
-  (e: "changeInPercent", data: number): void;
+  (e: "changeInText", data: string): void;
 };
 type Props = {
   label?: string;
-  value?: number;
+  value?: string;
 };
 
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-const percentRef = ref(Math.round(props.value * 100));
+const textRef = ref(props.value);
 
-watch(percentRef, () => {
-  emit("changeInPercent", percentRef.value / 100);
+watch(textRef, () => {
+  emit("changeInText", textRef.value);
 });
 </script>
 

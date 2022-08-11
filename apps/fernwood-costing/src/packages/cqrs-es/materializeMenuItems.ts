@@ -16,6 +16,10 @@ export default (
     }
 
     if (event.type == "menu_item_updated") {
+      console.log(event.type, {
+        price: event.payload.menuItemPrice,
+        name: event.payload.menuItemName,
+      });
       menuItemsList.items = menuItemsList.items.map((oldItem) =>
         oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
       );
