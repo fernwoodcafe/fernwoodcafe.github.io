@@ -10,11 +10,6 @@
     <li>Price: {{ menuItem.menuItemPrice }}</li>
   </ul>
   <article>
-    <FrcInputMoney
-      :label="'Chosen Price'"
-      :value="menuItem.menuItemPrice"
-      @changeInMoney="onChosenMenuItemPriceChange"
-    />
     <section>
       <h2>Set Menu Item Price</h2>
       <form @submit.prevent>

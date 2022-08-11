@@ -16,13 +16,22 @@ export default (
     }
 
     if (event.type == "menu_item_updated") {
-      console.log(event.type, {
-        price: event.payload.menuItemPrice,
-        name: event.payload.menuItemName,
+      menuItemsList.items = menuItemsList.items.map((menuItem) => {
+        if (menuItem.uniqueId !== event.payload.uniqueId) {
+          return menuItem;
+        }
+
+        // He we MUTATE the menuItem, because the MenuItemView component has a
+        // reference to t. When we mutate it here, the MenuItemView receives those
+        // updates. Spooky action at a distance! I would like an immutable way to
+        // use VueJs while still leveraging its reactivity.
+        // Maybe: https://vuejs.org/guide/extras/reactivity-in-depth.html#immutable-data
+        Object.keys(menuItem).forEach((key) => {
+          menuItem[key] = event.payload[key];
+        });
+
+        return event.payload;
       });
-      menuItemsList.items = menuItemsList.items.map((oldItem) =>
-        oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
-      );
     }
 
     if (event.type == "menu_item_deleted") {
