@@ -5,6 +5,7 @@ import type {
 } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import convertEventToLatestVersion from "./convertEventToLatestVersion";
+import mutateRecord from "./mutateRecord";
 
 export default (
   menuItemsList: ReactiveArray<MenuItem>,
@@ -21,16 +22,9 @@ export default (
           return menuItem;
         }
 
-        // He we MUTATE the menuItem, because the MenuItemView component has a
-        // reference to t. When we mutate it here, the MenuItemView receives those
-        // updates. Spooky action at a distance! I would like an immutable way to
-        // use VueJs while still leveraging its reactivity.
-        // Maybe: https://vuejs.org/guide/extras/reactivity-in-depth.html#immutable-data
-        Object.keys(menuItem).forEach((key) => {
-          menuItem[key] = event.payload[key];
-        });
+        mutateRecord(menuItem, event.payload);
 
-        return event.payload;
+        return menuItem;
       });
     }
 
