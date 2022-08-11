@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <label v-if="{ label }">{{ label }}</label>
-    <input v-model="moneyValue" type="number" />
+    <input v-model="moneyValue" type="number" step="0.01" />
   </fieldset>
 </template>
 <script setup lang="ts">
@@ -18,10 +18,10 @@ type Props = {
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-const moneyValue = ref(props.value);
+const moneyValue = ref(props.value.toFixed(2));
 
 watch(moneyValue, () => {
-  emit("changeInMoney", moneyValue.value);
+  emit("changeInMoney", parseFloat(moneyValue.value));
 });
 </script>
 
