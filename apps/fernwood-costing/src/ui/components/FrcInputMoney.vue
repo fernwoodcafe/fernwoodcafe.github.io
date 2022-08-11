@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <label v-if="{ label }">{{ label }}</label>
-    <input v-model.lazy="moneyRef" type="text" />
+    <input v-model.lazy.number="moneyRef" type="number" />
   </fieldset>
 </template>
 <script setup lang="ts">
