@@ -20,7 +20,7 @@ const createWorkbookTableRowsInterval = intervalRunner<DomainEvent>(
       costingEventsTableName,
       events
     ),
-  3_000,
+  2_000,
   statusPublisher
 );
 
