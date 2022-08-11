@@ -8,7 +8,7 @@
 import { ref, watch } from "vue";
 
 type Emits = {
-  (e: "percentChange", data: number): void;
+  (e: "changeInMoney", data: number): void;
 };
 type Props = {
   label?: string;
