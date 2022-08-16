@@ -1,4 +1,5 @@
 import type { DomainEntity } from "../../cqrs-es-types/DomainEntity";
+import type { SupplyType } from "./SupplyType";
 import type { UnitOfMeasure } from "./UnitOfMeasure";
 
 export type Supply = DomainEntity & {
@@ -6,7 +7,7 @@ export type Supply = DomainEntity & {
   supplierName: string;
   supplyNotes: string;
   supplyLink: string;
-  supplyType: "packaging" | "ingredient";
+  supplyType: SupplyType;
   supplyUnits: UnitOfMeasure;
   purchaseQuantity: number;
   purchasePriceBeforeTax: number;

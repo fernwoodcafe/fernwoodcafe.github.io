@@ -2,6 +2,14 @@ Supply
 <template>
   <h1>Supplies</h1>
   <input type="button" @click="onClickNewSupply" value="New Supply" />
+  <input
+    type="button"
+    @click="onClickNewCompositeSupply"
+    value="New Composite Supply"
+  />
+  <AgGridCompositeSuppliesComponent
+    :compositeSuppliesList="compositeSuppliesList"
+  ></AgGridCompositeSuppliesComponent>
   <AgGridSuppliesComponent
     :suppliesList="suppliesList"
     :supplyTaxes="supplyTaxes"
@@ -12,11 +20,17 @@ Supply
 
 <script setup lang="ts">
 import type { DomainCommand } from "@packages/cqrs-es-types";
-import type { Supply, SupplyTaxes } from "@packages/domain/types";
+import type {
+  CompositeSupply,
+  Supply,
+  SupplyTaxes,
+} from "@packages/domain/types";
+import AgGridCompositeSuppliesComponent from "@ui/components/AgGridCompositeSuppliesComponent.vue";
 import AgGridSuppliesComponent from "@ui/components/AgGridSuppliesComponent.vue";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
 type Props = {
+  compositeSuppliesList: ReactiveArray<CompositeSupply>;
   suppliesList: ReactiveArray<Supply>;
   supplyTaxes: SupplyTaxes;
   sendCommand: (Command: DomainCommand<Supply>) => Promise<void>;
@@ -53,5 +67,24 @@ const onClickNewSupply = () => {
       purchasePriceBeforeTax: 0,
     },
   });
+};
+
+const onClickNewCompositeSupply = () => {
+  // props.sendCommand({
+  //   type: "create_composite_supply",
+  //   payload: {
+  //     uniqueId: crypto.randomUUID(),
+  //     supplyUnits: "-",
+  //     supplyName: `New Supply ${props.suppliesList.items.length}`,
+  //     supplierName: "",
+  //     supplyNotes: "",
+  //     supplyLink: "",
+  //     supplyType: "ingredient",
+  //     percentWaste: 0,
+  //     hasPST: false,
+  //     purchaseQuantity: 0,
+  //     purchasePriceBeforeTax: 0,
+  //   },
+  // });
 };
 </script>

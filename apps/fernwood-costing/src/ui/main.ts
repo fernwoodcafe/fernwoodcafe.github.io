@@ -42,6 +42,8 @@ const suppliesList = materializeSupplies(
   ...domainEvents
 );
 
+const compositeSuppliesList = reactive({ items: [] });
+
 const sendCommand = handleCommand({
   menuItems: menuItemsList,
   supplies: suppliesList,
@@ -56,6 +58,13 @@ const app = createApp(App, {
 
 app
   .use(
-    router({ menuItemsList, suppliesList, cafeGoals, supplyTaxes, sendCommand })
+    router({
+      menuItemsList,
+      suppliesList,
+      compositeSuppliesList,
+      cafeGoals,
+      supplyTaxes,
+      sendCommand,
+    })
   )
   .mount("#app");
