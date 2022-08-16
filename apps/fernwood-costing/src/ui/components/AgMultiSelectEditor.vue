@@ -13,7 +13,6 @@ import { ref } from "vue";
 type MultiSelectOption = {
   value: unknown; // TODO [maybe] Change value to model.
   label: string;
-  checked: boolean;
 };
 
 type MultiSelectOptions = MultiSelectOption[];
@@ -31,7 +30,11 @@ export default {
     const key = ref(props.params.key);
     const options = ref(props.params.options);
     const selectedOptions = ref(
-      props.params.options.filter((opt) => opt.checked)
+      options.value.filter((opt) =>
+        props.params.value.find(
+          (val) => val[key.value] === opt.value[key.value]
+        )
+      )
     );
 
     return {

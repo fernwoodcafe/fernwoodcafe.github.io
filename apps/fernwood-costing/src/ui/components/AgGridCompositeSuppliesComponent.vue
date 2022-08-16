@@ -35,14 +35,11 @@ const columnDefs: ColDef[] = [
   {
     field: "supplies",
     cellEditor: AgMultiSelectEditor,
-    cellEditorParams: (params: { value: Supply[] }) => ({
+    cellEditorParams: () => ({
       key: "uniqueId",
       options: props.suppliesList.items.map((item) => ({
         value: item,
         label: item.supplyName,
-        checked: params.value?.find(
-          (supply) => supply.uniqueId === item.uniqueId
-        ),
       })),
     }),
     cellEditorPopup: true,
