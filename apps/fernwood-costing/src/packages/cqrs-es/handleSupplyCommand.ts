@@ -4,7 +4,7 @@ import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type { Materializer } from "../cqrs-es-types/Materializer";
 
 export type Props = {
-  supplies: ReactiveArray<Supply>;
+  suppliesList: ReactiveArray<Supply>;
   materializeSupplies: Materializer<ReactiveArray<Supply>>;
 };
 
@@ -24,7 +24,7 @@ const commandHandlers = {
 };
 
 export default function (
-  { supplies, materializeSupplies }: Props,
+  { suppliesList, materializeSupplies }: Props,
   command: DomainCommand
 ): DomainEvent[] {
   if (!commandHandlers[command.type]) {
@@ -32,6 +32,6 @@ export default function (
   }
 
   const event = commandHandlers[command.type](command);
-  materializeSupplies(supplies, event);
+  materializeSupplies(suppliesList, event);
   return [event];
 }

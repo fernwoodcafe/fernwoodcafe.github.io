@@ -37,9 +37,9 @@ type Emits = {
 const emit = defineEmits<Emits>();
 const props = defineProps<Props>();
 
-const onSupplyUpdated = (data) => emit("supplyUpdated", data);
+const onSupplyUpdated = (data: Supply) => emit("supplyUpdated", data);
 
-const onSupplyDeleteClick = (data) => emit("supplyDeleted", data);
+const onSupplyDeleteClick = (data: Supply) => emit("supplyDeleted", data);
 
 const columnDefs: ColDef[] = [
   { field: "supplyName" },

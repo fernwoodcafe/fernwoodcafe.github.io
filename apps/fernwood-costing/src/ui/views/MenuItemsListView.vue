@@ -20,7 +20,6 @@ Supply
 </template>
 
 <script setup lang="ts">
-import type { DomainCommand } from "@packages/cqrs-es-types";
 import { categoryWeightedAverageMarkup } from "@packages/domain/services";
 import type {
   CafeGoals,
@@ -28,10 +27,11 @@ import type {
   Supply,
   SupplyTaxes,
 } from "@packages/domain/types";
+import type { CafeCommandUnion } from "@packages/domain/types/CafeCommandUnion";
 import AgGridMenuItemsComponent from "@ui/components/AgGridMenuItemsComponent.vue";
 import { formatLink } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 
 type Props = {
@@ -39,12 +39,10 @@ type Props = {
   suppliesList: ReactiveArray<Supply>;
   supplyTaxes: SupplyTaxes;
   cafeGoals: CafeGoals;
-  sendCommand: (Command: DomainCommand<MenuItem>) => Promise<void>;
+  sendCommand: (Command: CafeCommandUnion) => Promise<void>;
 };
 
 const props = defineProps<Props>();
-
-const newMenuItemName = ref("");
 
 const onClickNewMenuItem = () => {
   props.sendCommand({

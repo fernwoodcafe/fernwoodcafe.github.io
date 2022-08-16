@@ -3,6 +3,7 @@ import {
   materializeMenuItems,
   materializeSupplies,
 } from "@packages/cqrs-es";
+import materializeCompositeSupplies from "@packages/cqrs-es/materializeCompositeSupplies";
 import { initializeRepository } from "@packages/data/excelDB";
 import type {
   CafeEventUnion,
@@ -42,13 +43,18 @@ const suppliesList = materializeSupplies(
   ...domainEvents
 );
 
-const compositeSuppliesList = reactive({ items: [] });
+const compositeSuppliesList = materializeCompositeSupplies(
+  reactive({ items: [] }),
+  ...domainEvents
+);
 
 const sendCommand = handleCommand({
-  menuItems: menuItemsList,
-  supplies: suppliesList,
+  menuItemsList,
   materializeMenuItems,
+  suppliesList,
   materializeSupplies,
+  compositeSuppliesList,
+  materializeCompositeSupplies,
   domainEventsRepo,
 });
 

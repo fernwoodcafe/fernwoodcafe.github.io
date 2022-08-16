@@ -4,7 +4,7 @@ import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type { Materializer } from "../cqrs-es-types/Materializer";
 
 export type Props = {
-  menuItems: ReactiveArray<MenuItem>;
+  menuItemsList: ReactiveArray<MenuItem>;
   materializeMenuItems: Materializer<ReactiveArray<MenuItem>>;
 };
 
@@ -36,7 +36,7 @@ const commandHandlers = {
 };
 
 export default function (
-  { menuItems: model, materializeMenuItems: materializer }: Props,
+  { menuItemsList, materializeMenuItems }: Props,
   command: DomainCommand
 ): DomainEvent[] {
   if (!commandHandlers[command.type]) {
@@ -44,6 +44,6 @@ export default function (
   }
 
   const event = commandHandlers[command.type](command);
-  materializer(model, event);
+  materializeMenuItems(menuItemsList, event);
   return [event];
 }
