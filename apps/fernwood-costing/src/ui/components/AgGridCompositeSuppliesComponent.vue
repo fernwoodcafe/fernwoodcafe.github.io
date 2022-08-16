@@ -52,13 +52,8 @@ const columnDefs: ColDef[] = [
   },
 ];
 
-const onCompositeSupplyUpdated = (data: CompositeSupply) => {
-  console.log(
-    "onCompositeSupplyUpdated",
-    JSON.stringify(data.supplies, undefined, 2)
-  );
+const onCompositeSupplyUpdated = (data: CompositeSupply) =>
   emit("compositeSupplyUpdated", data);
-};
 
 const onCompositeSupplyDeleteClick = (data: CompositeSupply) =>
   emit("compositeSupplyDeleted", data);
