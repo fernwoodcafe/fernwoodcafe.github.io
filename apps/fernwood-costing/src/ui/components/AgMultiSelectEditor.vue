@@ -1,10 +1,10 @@
 <template>
-  <form>
+  <fieldset>
     <label v-for="option in options" :key="option[key]">
       <input type="checkbox" :value="option" v-model="selectedOptions" />
       {{ option[label] }}
     </label>
-  </form>
+  </fieldset>
 </template>
 <script lang="ts">
 import type { ICellEditorParams } from "ag-grid-community";
