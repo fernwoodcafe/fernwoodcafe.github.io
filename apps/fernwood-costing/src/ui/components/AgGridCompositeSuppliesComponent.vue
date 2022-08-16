@@ -36,8 +36,8 @@ const columnDefs: ColDef[] = [
     field: "supplies",
     cellEditor: AgMultiSelectEditor,
     cellEditorParams: (params: { value: Supply[] }) => ({
+      key: "uniqueId",
       options: props.suppliesList.items.map((item) => ({
-        key: item.uniqueId,
         value: item,
         label: item.supplyName,
         checked: params.value?.find(
