@@ -149,11 +149,14 @@ const onGridReady = ({ api }: GridOptions) => {
   }
 
   api.setColumnDefs(columnDefs);
-  api.setDomLayout("autoHeight");
 };
 </script>
 
 <style>
+.ag-theme-alpine {
+  height: 80vh;
+}
+
 /* Prevent grid from vanishing when popups appear. */
 .ag-popup {
   height: 0;

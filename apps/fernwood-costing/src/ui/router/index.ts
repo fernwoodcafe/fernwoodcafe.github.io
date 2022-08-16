@@ -63,6 +63,16 @@ export default ({
         component: () => import("../views/SuppliesListView.vue"),
         props: {
           suppliesList,
+          supplyTaxes,
+          sendCommand,
+        },
+      },
+      {
+        path: "/composite-supplies",
+        name: "composite-supplies",
+        component: () => import("../views/CompositeSuppliesListView.vue"),
+        props: {
+          suppliesList,
           compositeSuppliesList,
           supplyTaxes,
           sendCommand,

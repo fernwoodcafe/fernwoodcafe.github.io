@@ -15,6 +15,9 @@ defineProps<Props>();
       <nav>
         <ul>
           <li><RouterLink to="/supplies">Supplies</RouterLink></li>
+          <li>
+            <RouterLink to="/composite-supplies">Composite Supplies</RouterLink>
+          </li>
           <li><RouterLink to="/menu-items">Menu Items</RouterLink></li>
         </ul>
       </nav>
