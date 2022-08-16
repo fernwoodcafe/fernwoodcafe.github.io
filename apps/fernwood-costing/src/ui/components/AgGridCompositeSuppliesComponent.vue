@@ -49,7 +49,7 @@ const columnDefs: ColDef[] = [
     },
     cellEditorPopup: true,
     cellEditorPopupPosition: "over",
-    valueGetter: (params: { data: CompositeSupply }) => {
+    cellRenderer: (params: { data: CompositeSupply }) => {
       return params?.data?.supplies?.length?.toString();
     },
   },
