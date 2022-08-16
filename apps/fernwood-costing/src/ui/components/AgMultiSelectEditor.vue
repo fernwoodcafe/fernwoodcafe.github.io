@@ -42,7 +42,10 @@ export default {
 
 <style>
 form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(5, 24px);
+  column-gap: 10px;
+  grid-auto-flow: column;
+  padding: 5px;
 }
 </style>
