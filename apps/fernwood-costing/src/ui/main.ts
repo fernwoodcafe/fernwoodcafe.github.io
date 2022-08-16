@@ -7,7 +7,7 @@ import { initializeRepository } from "@packages/data/excelDB";
 import type {
   CafeEventUnion,
   CafeGoals,
-  CafeSupplyTaxes,
+  SupplyTaxes,
 } from "@packages/domain/types";
 import { createApp, reactive } from "vue";
 import App from "./App.vue";
@@ -23,7 +23,7 @@ const cafeGoals = reactive<CafeGoals>({
   targetWeightedAverageMarkup: 3.5,
 });
 
-const supplyTaxes = reactive<CafeSupplyTaxes>({
+const supplyTaxes = reactive<SupplyTaxes>({
   PST: 0.06,
 });
 

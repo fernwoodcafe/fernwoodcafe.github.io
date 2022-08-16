@@ -1,15 +1,15 @@
 import type {
-  CafeSupply,
-  CafeSupplyTaxes,
   MenuItemComponent,
+  Supply,
+  SupplyTaxes,
 } from "@packages/domain/types";
 import supplyCostPerUnit from "./supplyCostPerUnit";
 import valueConvertedToUnit from "./valueConvertedToUnit";
 
 export default (
-  supplyTaxes: CafeSupplyTaxes,
+  supplyTaxes: SupplyTaxes,
   menuItemComponents: MenuItemComponent[],
-  suppliesList: CafeSupply[]
+  suppliesList: Supply[]
 ) =>
   menuItemComponents
     .map((menuItemSupply) => {

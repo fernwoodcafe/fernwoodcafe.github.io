@@ -1,4 +1,4 @@
-CafeSupply
+Supply
 <template>
   <AgGridComponent
     :gridData="menuItemsList"
@@ -14,9 +14,9 @@ CafeSupply
 import { menuItemCost } from "@packages/domain/services";
 import type {
   CafeGoals,
-  CafeSupply,
-  CafeSupplyTaxes,
   MenuItem,
+  Supply,
+  SupplyTaxes,
 } from "@packages/domain/types";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
 import AgPercentEditor from "@ui/components/AgPercentEditor.vue";
@@ -26,9 +26,9 @@ import type { ColDef, ValueFormatterParams } from "ag-grid-community";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<CafeSupply>;
+  suppliesList: ReactiveArray<Supply>;
   cafeGoals: CafeGoals;
-  supplyTaxes: CafeSupplyTaxes;
+  supplyTaxes: SupplyTaxes;
 };
 
 type Emits = {

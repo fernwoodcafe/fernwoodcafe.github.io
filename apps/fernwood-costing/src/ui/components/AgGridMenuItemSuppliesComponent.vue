@@ -1,4 +1,4 @@
-CafeSupply
+Supply
 <template>
   <AgGridComponent
     :gridData="menuItemComponents"
@@ -16,10 +16,10 @@ import {
   valueConvertedToUnit,
 } from "@packages/domain/services";
 import type {
-  CafeSupply,
-  CafeSupplyTaxes,
   MenuItem,
   MenuItemComponent,
+  Supply,
+  SupplyTaxes,
 } from "@packages/domain/types";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
 import { formatMoney } from "@ui/formatters";
@@ -34,8 +34,8 @@ import { reactive, watch } from "vue";
 
 type Props = {
   menuItem: MenuItem;
-  suppliesList: ReactiveArray<CafeSupply>;
-  supplyTaxes: CafeSupplyTaxes;
+  suppliesList: ReactiveArray<Supply>;
+  supplyTaxes: SupplyTaxes;
 };
 
 type Emits = {
@@ -77,7 +77,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         ...supply,
       };
     },
-    cellRenderer: (params: { value: CafeSupply & { costPerUnit: number } }) => {
+    cellRenderer: (params: { value: Supply & { costPerUnit: number } }) => {
       return `
         <strong>${params.value.supplyName}</strong>
         <span>-</span>
@@ -124,7 +124,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
 
       return data.menuItemSupplyQuantity * costPerMenuItemUnit;
     },
-    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatMoney(params.value),
   },
 ];

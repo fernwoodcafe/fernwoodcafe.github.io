@@ -1,8 +1,8 @@
-import type { CafeEventUnion, CafeSupply } from "@packages/domain/types";
+import type { CafeEventUnion, Supply } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
 export default (
-  suppliesList: ReactiveArray<CafeSupply>,
+  suppliesList: ReactiveArray<Supply>,
   ...events: CafeEventUnion[]
 ) => {
   events.forEach((event) => {

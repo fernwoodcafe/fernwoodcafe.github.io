@@ -1,12 +1,12 @@
 import type { DomainEvent } from "@packages/cqrs-es-types";
-import type { CafeSupply } from "./CafeSupply";
 import type { MenuItem } from "./MenuItem";
 import type { MenuItemComponent } from "./MenuItemComponent";
+import type { Supply } from "./Supply";
 
 export type CafeEventUnion =
-  | DomainEvent<"supply_created", CafeSupply>
-  | DomainEvent<"supply_updated", CafeSupply>
-  | DomainEvent<"supply_deleted", CafeSupply>
+  | DomainEvent<"supply_created", Supply>
+  | DomainEvent<"supply_updated", Supply>
+  | DomainEvent<"supply_deleted", Supply>
   //
   | DomainEvent<"menu_item_created", MenuItem>
   | DomainEvent<"menu_item_updated", MenuItem>

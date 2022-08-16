@@ -1,11 +1,11 @@
 import type { DomainCommand, DomainEvent } from "@packages/cqrs-es-types";
-import type { CafeSupply } from "@packages/domain/types";
+import type { Supply } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type { Materializer } from "../cqrs-es-types/Materializer";
 
 export type Props = {
-  supplies: ReactiveArray<CafeSupply>;
-  materializeSupplies: Materializer<ReactiveArray<CafeSupply>>;
+  supplies: ReactiveArray<Supply>;
+  materializeSupplies: Materializer<ReactiveArray<Supply>>;
 };
 
 const commandHandlers = {

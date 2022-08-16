@@ -1,4 +1,4 @@
-CafeSupply
+Supply
 <template>
   <AgGridComponent
     :gridData="suppliesList"
@@ -11,7 +11,7 @@ CafeSupply
 
 <script setup lang="ts">
 import { supplyCostPerUnit } from "@packages/domain/services";
-import type { CafeSupply, CafeSupplyTaxes } from "@packages/domain/types";
+import type { Supply, SupplyTaxes } from "@packages/domain/types";
 import { unitsOfMeasure } from "@packages/domain/values";
 import AgCheckboxEditor from "@ui/components/AgCheckboxEditor.vue";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
@@ -25,13 +25,13 @@ import type {
 } from "ag-grid-community";
 
 type Props = {
-  suppliesList: ReactiveArray<CafeSupply>;
-  supplyTaxes: CafeSupplyTaxes;
+  suppliesList: ReactiveArray<Supply>;
+  supplyTaxes: SupplyTaxes;
 };
 
 type Emits = {
-  (e: "supplyUpdated", data: CafeSupply): void;
-  (e: "supplyDeleted", data: CafeSupply): void;
+  (e: "supplyUpdated", data: Supply): void;
+  (e: "supplyDeleted", data: Supply): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -64,13 +64,13 @@ const columnDefs: ColDef[] = [
   {
     field: "purchasePriceBeforeTax",
     headerName: "Purchase Price before Tax",
-    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatMoney(params.value),
   },
   {
     field: "percentWaste",
     cellEditor: AgPercentEditor,
-    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatPercent(params.value),
   },
   {
@@ -84,11 +84,11 @@ const columnDefs: ColDef[] = [
     field: "unitCost",
     headerName: "Unit Cost",
     editable: false,
-    valueGetter: ({ data }: ValueGetterParams<CafeSupply>) => ({
+    valueGetter: ({ data }: ValueGetterParams<Supply>) => ({
       cost: supplyCostPerUnit(props.supplyTaxes, data),
       units: data.supplyUnits,
     }),
-    valueFormatter: (params: ValueFormatterParams<CafeSupply>) =>
+    valueFormatter: (params: ValueFormatterParams<Supply>) =>
       `${formatMoney(params.value.cost)} / ${params.value.units}`,
   },
 ];

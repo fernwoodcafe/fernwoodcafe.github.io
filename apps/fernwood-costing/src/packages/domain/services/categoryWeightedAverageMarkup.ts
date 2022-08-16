@@ -1,4 +1,4 @@
-import type { CafeSupply, CafeSupplyTaxes, MenuItem } from "../types";
+import type { MenuItem, Supply, SupplyTaxes } from "../types";
 import categoryPercentTotalSales from "./categoryPercentTotalSales";
 import menuItemCost from "./menuItemCost";
 import menuItemMarkup from "./menuItemMarkup";
@@ -9,8 +9,8 @@ const doIncludeMenuItemCategoryCostAnalysis = (menuItem: MenuItem) =>
   menuItem.percentTotalSales && menuItem.menuItemComponents.length > 0;
 
 export default (
-  supplyTax: CafeSupplyTaxes,
-  suppliesList: CafeSupply[],
+  supplyTax: SupplyTaxes,
+  suppliesList: Supply[],
   menuItemsList: MenuItem[]
 ) =>
   menuItemsList

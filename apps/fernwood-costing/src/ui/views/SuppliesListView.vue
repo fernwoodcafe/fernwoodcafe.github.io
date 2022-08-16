@@ -1,4 +1,4 @@
-CafeSupply
+Supply
 <template>
   <h1>Supplies</h1>
   <input type="button" @click="onClickNewSupply" value="New Supply" />
@@ -12,25 +12,25 @@ CafeSupply
 
 <script setup lang="ts">
 import type { DomainCommand } from "@packages/cqrs-es-types";
-import type { CafeSupply, CafeSupplyTaxes } from "@packages/domain/types";
+import type { Supply, SupplyTaxes } from "@packages/domain/types";
 import AgGridSuppliesComponent from "@ui/components/AgGridSuppliesComponent.vue";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
 type Props = {
-  suppliesList: ReactiveArray<CafeSupply>;
-  supplyTaxes: CafeSupplyTaxes;
-  sendCommand: (Command: DomainCommand<CafeSupply>) => Promise<void>;
+  suppliesList: ReactiveArray<Supply>;
+  supplyTaxes: SupplyTaxes;
+  sendCommand: (Command: DomainCommand<Supply>) => Promise<void>;
 };
 
 const props = defineProps<Props>();
 
-const onSupplyUpdated = (supply: CafeSupply) =>
+const onSupplyUpdated = (supply: Supply) =>
   props.sendCommand({
     type: "update_supply",
     payload: supply,
   });
 
-const onSupplyDeleted = (supply: CafeSupply) =>
+const onSupplyDeleted = (supply: Supply) =>
   props.sendCommand({
     type: "delete_supply",
     payload: supply,

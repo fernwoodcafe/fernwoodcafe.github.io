@@ -1,9 +1,9 @@
 import type { DomainCommandHandler } from "@packages/cqrs-es-types/DomainCommandHandler";
 import type {
   CafeGoals,
-  CafeSupply,
-  CafeSupplyTaxes,
   MenuItem,
+  Supply,
+  SupplyTaxes,
 } from "@packages/domain/types";
 import { formatLink } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
@@ -16,10 +16,10 @@ import {
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<CafeSupply>;
+  suppliesList: ReactiveArray<Supply>;
   sendCommand: DomainCommandHandler;
   cafeGoals: CafeGoals;
-  supplyTaxes: CafeSupplyTaxes;
+  supplyTaxes: SupplyTaxes;
 };
 
 export default ({

@@ -1,14 +1,14 @@
-import type { CafeSupply, CafeSupplyTaxes } from "../types";
+import type { Supply, SupplyTaxes } from "../types";
 
-type CafeSupplyKeys =
+type SupplyKeys =
   | "purchasePriceBeforeTax"
   | "purchaseQuantity"
   | "percentWaste"
   | "hasPST";
 
-type CafeSupplyArg = Pick<CafeSupply, CafeSupplyKeys>;
+type SupplyArg = Pick<Supply, SupplyKeys>;
 
-export default (supplyTaxes: CafeSupplyTaxes, supply: CafeSupplyArg) => {
+export default (supplyTaxes: SupplyTaxes, supply: SupplyArg) => {
   const costAfterPST = supply.hasPST
     ? supply.purchasePriceBeforeTax * (1 + supplyTaxes.PST)
     : supply.purchasePriceBeforeTax;

@@ -83,10 +83,10 @@ import {
 } from "@packages/domain/services";
 import type {
   CafeGoals,
-  CafeSupply,
-  CafeSupplyTaxes,
   MenuItem,
   MenuItemComponent,
+  Supply,
+  SupplyTaxes,
 } from "@packages/domain/types";
 import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
@@ -100,9 +100,9 @@ import FrcInputText from "../components/FrcInputText.vue";
 type Props = {
   menuItem: MenuItem;
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<CafeSupply>;
+  suppliesList: ReactiveArray<Supply>;
   cafeGoals: CafeGoals;
-  supplyTaxes: CafeSupplyTaxes;
+  supplyTaxes: SupplyTaxes;
   sendCommand: (Command: DomainCommand) => Promise<void>;
 };
 
@@ -116,7 +116,7 @@ const packagingOptions = props.suppliesList.items.filter(
   (s) => s.supplyType.toLocaleLowerCase() == "packaging"
 );
 
-const addNewMenuItemComponent = async (supply: Partial<CafeSupply>) => {
+const addNewMenuItemComponent = async (supply: Partial<Supply>) => {
   const menuItemSupply: MenuItemComponent = {
     uniqueId: crypto.randomUUID(),
     menuItemUniqueId: props.menuItem.uniqueId,

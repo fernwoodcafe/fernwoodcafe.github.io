@@ -1,4 +1,4 @@
-CafeSupply
+Supply
 <template>
   <h1>
     Menu Items
@@ -24,9 +24,9 @@ import type { DomainCommand } from "@packages/cqrs-es-types";
 import { categoryWeightedAverageMarkup } from "@packages/domain/services";
 import type {
   CafeGoals,
-  CafeSupply,
-  CafeSupplyTaxes,
   MenuItem,
+  Supply,
+  SupplyTaxes,
 } from "@packages/domain/types";
 import AgGridMenuItemsComponent from "@ui/components/AgGridMenuItemsComponent.vue";
 import { formatLink } from "@ui/formatters";
@@ -36,8 +36,8 @@ import { useRouter } from "vue-router";
 
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
-  suppliesList: ReactiveArray<CafeSupply>;
-  supplyTaxes: CafeSupplyTaxes;
+  suppliesList: ReactiveArray<Supply>;
+  supplyTaxes: SupplyTaxes;
   cafeGoals: CafeGoals;
   sendCommand: (Command: DomainCommand<MenuItem>) => Promise<void>;
 };
