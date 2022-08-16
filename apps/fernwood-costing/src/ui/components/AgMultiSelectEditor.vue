@@ -33,13 +33,11 @@ export default {
       props.params.options.filter((opt) => opt.checked)
     );
 
-    console.log("setup.selectedOptions", JSON.stringify(selectedOptions.value));
     return {
       options,
       selectedOptions,
       getValue: () => {
         const selectedValues = selectedOptions.value.map((opt) => opt.value);
-        console.log("getValue.selectedOptions", JSON.stringify(selectedValues));
         return selectedValues;
       },
     };

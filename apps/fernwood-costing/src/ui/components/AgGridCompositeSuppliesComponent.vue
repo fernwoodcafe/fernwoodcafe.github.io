@@ -35,23 +35,20 @@ const columnDefs: ColDef[] = [
   {
     field: "supplies",
     cellEditor: AgMultiSelectEditor,
-    cellEditorParams: (params: { data: CompositeSupply }) => {
-      return {
-        options: props.suppliesList.items.map((item) => ({
-          key: item.uniqueId,
-          value: item,
-          label: item.supplyName,
-          checked: params?.data?.supplies?.find(
-            (supply) => supply.uniqueId === item.uniqueId
-          ),
-        })),
-      };
-    },
+    cellEditorParams: (params: { data: CompositeSupply }) => ({
+      options: props.suppliesList.items.map((item) => ({
+        key: item.uniqueId,
+        value: item,
+        label: item.supplyName,
+        checked: params?.data?.supplies?.find(
+          (supply) => supply.uniqueId === item.uniqueId
+        ),
+      })),
+    }),
     cellEditorPopup: true,
     cellEditorPopupPosition: "over",
-    cellRenderer: (params: { data: CompositeSupply }) => {
-      return params?.data?.supplies?.length?.toString();
-    },
+    cellRenderer: (params: { data: CompositeSupply }) =>
+      params?.data?.supplies?.length?.toString(),
   },
 ];
 
