@@ -2,7 +2,7 @@
   <form>
     <label v-for="option in options" :key="option[key]">
       <input type="checkbox" :value="option" v-model="selectedOptions" />
-      {{ option.label }}
+      {{ option[label] }}
     </label>
   </form>
 </template>
@@ -10,41 +10,31 @@
 import type { ICellEditorParams } from "ag-grid-community";
 import { ref } from "vue";
 
-type MultiSelectOption = {
-  value: unknown; // TODO [maybe] Change value to model.
-  label: string;
-};
-
-type MultiSelectOptions = MultiSelectOption[];
-
 type Props = {
   params: ICellEditorParams & {
     key: string;
-    options: MultiSelectOptions;
-    selectedOptions: MultiSelectOptions;
+    label: string;
+    options: unknown[];
   };
 };
 
 export default {
   setup(props: Props) {
     const key = ref(props.params.key);
+    const label = ref(props.params.label);
     const options = ref(props.params.options);
     const selectedOptions = ref(
       options.value.filter((opt) =>
-        props.params.value.find(
-          (val) => val[key.value] === opt.value[key.value]
-        )
+        props.params.value.find((val) => val[key.value] === opt[key.value])
       )
     );
 
     return {
       key,
+      label,
       options,
       selectedOptions,
-      getValue: () => {
-        const selectedValues = selectedOptions.value.map((opt) => opt.value);
-        return selectedValues;
-      },
+      getValue: () => selectedOptions.value,
     };
   },
 };

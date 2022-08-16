@@ -37,13 +37,10 @@ const columnDefs: ColDef[] = [
     cellEditor: AgMultiSelectEditor,
     cellEditorParams: () => ({
       key: "uniqueId",
-      options: props.suppliesList.items.map((item) => ({
-        value: item,
-        label: item.supplyName,
-      })),
+      label: "supplyName",
+      options: props.suppliesList.items,
     }),
     cellEditorPopup: true,
-    cellEditorPopupPosition: "over",
     cellRenderer: (params: { value: Supply[] }) =>
       params?.value?.length?.toString(),
   },
