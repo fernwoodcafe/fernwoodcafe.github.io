@@ -74,7 +74,6 @@ export default ({
         props: {
           suppliesList,
           compositeSuppliesList,
-          supplyTaxes,
           sendCommand,
         },
       },

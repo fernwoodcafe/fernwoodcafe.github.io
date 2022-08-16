@@ -12,7 +12,7 @@
  * whenever the parent wants to change state.
  * Maybe: https://vuejs.org/guide/extras/reactivity-in-depth.html#immutable-data
  */
-export default <T extends Record<string, object>>(record: T, changes: T) =>
+export default <T extends Record<string, unknown>>(record: T, changes: T) =>
   Object.keys(changes).forEach((key: keyof T) => {
     record[key] = changes[key];
   });

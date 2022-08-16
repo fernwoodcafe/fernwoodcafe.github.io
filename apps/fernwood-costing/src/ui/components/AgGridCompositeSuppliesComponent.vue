@@ -35,23 +35,33 @@ const columnDefs: ColDef[] = [
   {
     field: "supplies",
     cellEditor: AgMultiSelectEditor,
-    cellEditorParams: (params: { value: Supply[] }) => ({
-      selectedOptions: params?.value ?? [],
-      options: props.suppliesList.items.map((item) => ({
-        key: item.uniqueId,
-        value: item,
-        label: item.supplyName,
-      })),
-    }),
+    cellEditorParams: (params: { data: CompositeSupply }) => {
+      return {
+        options: props.suppliesList.items.map((item) => ({
+          key: item.uniqueId,
+          value: item,
+          label: item.supplyName,
+          checked: params?.data?.supplies?.find(
+            (supply) => supply.uniqueId === item.uniqueId
+          ),
+        })),
+      };
+    },
     cellEditorPopup: true,
     cellEditorPopupPosition: "over",
-    cellRenderer: (params: { value: Supply[] }) =>
-      params?.value?.length.toString(),
+    valueGetter: (params: { data: CompositeSupply }) => {
+      return params?.data?.supplies?.length?.toString();
+    },
   },
 ];
 
-const onCompositeSupplyUpdated = (data: CompositeSupply) =>
+const onCompositeSupplyUpdated = (data: CompositeSupply) => {
+  console.log(
+    "onCompositeSupplyUpdated",
+    JSON.stringify(data.supplies, undefined, 2)
+  );
   emit("compositeSupplyUpdated", data);
+};
 
 const onCompositeSupplyDeleteClick = (data: CompositeSupply) =>
   emit("compositeSupplyDeleted", data);

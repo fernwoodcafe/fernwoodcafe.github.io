@@ -27,7 +27,6 @@ export default function (
   { compositeSuppliesList, materializeCompositeSupplies }: Props,
   command: DomainCommand
 ): DomainEvent[] {
-  console.log(command.type);
   if (!commandHandlers[command.type]) {
     return [];
   }

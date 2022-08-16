@@ -9,9 +9,16 @@ export default (
     if (event.type == "composite_supply_created") {
       compositeSuppliesList.items.push(event.payload);
     }
+
     if (event.type == "composite_supply_updated") {
-      compositeSuppliesList.items = compositeSuppliesList.items.map((oldItem) =>
-        oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
+      compositeSuppliesList.items = compositeSuppliesList.items.map(
+        (compositeSupply) => {
+          if (compositeSupply.uniqueId !== event.payload.uniqueId) {
+            return compositeSupply;
+          }
+
+          return event.payload;
+        }
       );
     }
 
