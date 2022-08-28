@@ -7,3 +7,7 @@ export type MenuItem = DomainEntity & {
   menuItemPrice: number;
   percentTotalSales: number;
 };
+
+export type MenuItem_v1 = Omit<MenuItem, "menuItemComponents"> & {
+  menuItemSupplies: unknown[];
+};
