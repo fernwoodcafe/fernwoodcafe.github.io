@@ -16,8 +16,8 @@ export default (
   );
 
   if (!conversion) {
-    const msg = `No conversion found for '${fromUnit}' to '${toUnit}'`;
-    throw new Error(msg);
+    console.error(`No conversion found for '${fromUnit}' to '${toUnit}'`);
+    return value;
   }
 
   return value * conversion.Multiplier;
