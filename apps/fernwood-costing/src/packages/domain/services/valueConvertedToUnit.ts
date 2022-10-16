@@ -16,6 +16,7 @@ export default (
   );
 
   if (!conversion) {
+    // TODO Warn the user that updates to the menu item need to happen.
     console.error(`No conversion found for '${fromUnit}' to '${toUnit}'`);
     return value;
   }
