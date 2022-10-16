@@ -10,6 +10,9 @@ const smallPerBig: UnitConversionTuple[] = [
   ["pound", "kilogram", 2.20462],
   ["ounce-fluid-us", "litre", 33.814],
   ["ounce-fluid-us", "millilitre", 0.033814],
+  // TODO: Automate the equivalence of these.
+  ["item", "item", 1],
+  ["slice", "slice", 1],
 ];
 
 export default smallPerBig

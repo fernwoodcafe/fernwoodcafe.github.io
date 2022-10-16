@@ -6,6 +6,7 @@ export default <const>[
   "ounce-mass",
   "ounce-fluid-us",
   "item",
+  "slice",
   "pound",
   "kilogram",
 ];
