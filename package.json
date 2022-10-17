@@ -2,8 +2,8 @@
   "name": "fernwood-road-cafe-website",
   "version": "0.0.1",
   "description": "Website for the Fernwood Road Cafe on Salt Spring Island, BC",
-  "keywords": "",
-  "license": "",
+  "keywords": "marketing, cafe",
+  "license": "MIT",
   "author": "Shaun Luttin",
   "scripts": {
     "build": "parcel build index.html",
