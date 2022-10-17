@@ -56,7 +56,7 @@ footer > p {
 
 header {
   height: 400px;
-  background-image: url("/img/800w/skyview.jpg");
+  background-image: url("/assets/img/800w/skyview.jpg");
   background-size: cover;
 }
 
@@ -216,7 +216,7 @@ article#home {
 }
 
 [aria-label]:after {
-    background-image: url('/img/icon-paperclip.png');
+    background-image: url('/assets/img/icon-paperclip.png');
     background-repeat: no-repeat;
     background-size: cover;
     transform: translateX(10px);
