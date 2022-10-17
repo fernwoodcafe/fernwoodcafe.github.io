@@ -56,7 +56,8 @@ footer > p {
 
 header {
   height: 400px;
-  background-image: url("/img/skyview.jpg");
+  background-image: url("/img/800w/skyview.jpg");
+  background-size: cover;
 }
 
 header > img {

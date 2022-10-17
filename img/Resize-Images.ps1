@@ -1,4 +1,4 @@
-$widths = @(250, 500);
+$widths = @(250, 500, 800);
 
 $widths | ForEach-Object {
 
