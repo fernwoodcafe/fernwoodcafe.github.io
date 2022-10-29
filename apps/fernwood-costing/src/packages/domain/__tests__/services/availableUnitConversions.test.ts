@@ -1,16 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { availableUnitConversions } from "../services";
+import { availableUnitConversions } from "../../services";
 import {
   isItem,
   isMass,
   isVolume,
   type UnitOfMeasure,
-} from "../types/UnitOfMeasure";
-import { unitsOfMeasure } from "../values";
+} from "../../types/UnitOfMeasure";
+import { unitsOfMeasure } from "../../values";
 import {
   unitsOfMeasureMass,
   unitsOfMeasureVolume,
-} from "../values/unitsOfMeasure";
+} from "../../values/unitsOfMeasure";
 
 describe("when processing valid inputs", () => {
   it("does not throw", () => {

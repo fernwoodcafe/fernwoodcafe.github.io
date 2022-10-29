@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { supplyCostPerUnit } from "../services";
+import { supplyCostPerUnit } from "../../services";
 
 describe("when processing valid inputs", () => {
   const supplyTaxes = {

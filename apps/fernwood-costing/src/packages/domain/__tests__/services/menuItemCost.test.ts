@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
-import { menuItemCost } from "../services";
-import type { MenuItemComponent, Supply, SupplyTaxes } from "../types";
+import { menuItemCost } from "../../services";
+import type { MenuItemComponent, Supply, SupplyTaxes } from "../../types";
 
 describe("when processing valid inputs", () => {
   const taxes: SupplyTaxes = { PST: 0.06 };
