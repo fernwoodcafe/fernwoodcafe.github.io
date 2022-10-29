@@ -20,7 +20,7 @@ const expectedConversions = [
   "8.4535 ounce-fluid-us/cup-metric",
   "33.8140 ounce-fluid-us/litre",
   "4.0000 cup-metric/litre",
-  // Calculated
+  // Calculated: No need to check values online.
   "0.0010 kilogram/gram",
   "0.0353 ounce-mass/gram",
   "0.0022 pound/gram",
