@@ -11,7 +11,7 @@ describe("when processing valid inputs", () => {
 
   unitsOfMeasure
     .filter((m) => m !== "-")
-    .slice(0, 1)
+    .slice(0, 2)
     .map((unitOfMeasure) => ({
       fromUnit: unitOfMeasure,
       expectedToUnits: [...unitsOfMeasureMass],
