@@ -2,11 +2,11 @@ import unitConversions from "@packages/domain/values/unitConversions";
 import { describe, expect, it } from "vitest";
 
 const expectedConversions = [
-  // Low-Level // Values checked online on 2022-10-29
+  // Low-Level: Values checked online on 2022-10-29
   "1000.0000 gram/kilogram",
   "28.3460 gram/ounce-mass",
   "453.5924 gram/pound",
-  // Low-Level // Values checked online on 2022-10-29
+  // Low-Level: Values checked online on 2022-10-29
   "250.0000 millilitre/cup-metric",
   "1000.0000 millilitre/litre",
   "29.5700 millilitre/ounce-fluid-us",
@@ -35,15 +35,13 @@ const expectedConversions = [
   "0.2500 litre/cup-metric",
 ];
 
-describe("when processing valid inputs", () => {
-  it("does not throw", () => {
+describe("unitConversions", () => {
+  it("produces all expected conversions", () => {
     // Act
     const actualConversions = unitConversions.map(
       ({ FromUnit, ToUnit, Multiplier }) =>
         `${Multiplier.toFixed(4)} ${FromUnit}/${ToUnit}`
     );
-
-    console.log(actualConversions);
 
     // Assert
     expect(actualConversions).toEqual(expectedConversions);
