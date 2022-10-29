@@ -21,7 +21,14 @@ export default defineConfig({
   preview: {
     open: true,
   },
-  test: {},
+  test: {
+    // See https://vitest.dev/guide/
+    environment: "jsdom",
+    coverage: {
+      provider: "istanbul",
+      reporter: ["text", "lcovonly"],
+    },
+  },
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
