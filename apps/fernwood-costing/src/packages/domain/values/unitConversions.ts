@@ -3,11 +3,15 @@ import type {
   UnitConversionTuple,
 } from "../types/UnitConversion";
 
+// TODO Turn this into a conversion tree to reduce duplication.
 const conversionsFromSmallerToBigger: UnitConversionTuple[] = [
+  ["cup-metric", "litre", 4],
   ["gram", "kilogram", 1000],
   ["gram", "ounce-mass", 28.346],
   ["gram", "pound", 453.5924],
+  ["millilitre", "cup-metric", 250],
   ["millilitre", "litre", 1000],
+  ["ounce-fluid-us", "cup-metric", 8.45351],
   ["ounce-fluid-us", "litre", 33.814],
   ["ounce-fluid-us", "millilitre", 0.033814],
   ["ounce-mass", "kilogram", 35.274],

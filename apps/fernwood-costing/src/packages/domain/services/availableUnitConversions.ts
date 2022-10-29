@@ -6,11 +6,6 @@ export default (unitOfMeasure: UnitOfMeasure): UnitOfMeasure[] => {
     (conversion) => conversion.FromUnit == unitOfMeasure
   );
 
-  console.log("----------", {
-    unitOfMeasure,
-    availableConversions,
-  });
-
   return availableConversions.length === 0
     ? [unitOfMeasure]
     : availableConversions
