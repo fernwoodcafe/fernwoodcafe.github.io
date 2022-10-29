@@ -3,30 +3,31 @@ import type {
   UnitConversionTuple,
 } from "../types/UnitConversion";
 
-const smallPerBig: UnitConversionTuple[] = [
+const conversionsFromSmallerToBigger: UnitConversionTuple[] = [
   ["gram", "kilogram", 1000],
-  ["gram", "pound", 453.5924],
   ["gram", "ounce-mass", 28.346],
-  //
-  ["pound", "kilogram", 2.20462],
-  ["ounce-mass", "pound", 16],
-  ["ounce-mass", "kilogram", 35.274],
-  //
+  ["gram", "pound", 453.5924],
+  ["millilitre", "litre", 1000],
   ["ounce-fluid-us", "litre", 33.814],
   ["ounce-fluid-us", "millilitre", 0.033814],
-  // TODO: Automate the equivalence of these.
-  ["item", "item", 1],
-  ["slice", "slice", 1],
+  ["ounce-mass", "kilogram", 35.274],
+  ["ounce-mass", "pound", 16],
+  ["pound", "kilogram", 2.20462],
 ];
 
-export default smallPerBig
-  .reduce((acc, [from, to, conversion]) => {
+const conversionsFromBiggerToSmaller: UnitConversionTuple[] =
+  conversionsFromSmallerToBigger.map(([from, to, conversion]) => {
     const inverseConversion = 1 / conversion;
-    acc.push([to, from, inverseConversion]);
-    return acc;
-  }, smallPerBig)
-  .map<UnitConversion>((tuple) => ({
-    FromUnit: tuple[0],
-    ToUnit: tuple[1],
-    Multiplier: tuple[2],
-  }));
+    return [to, from, inverseConversion];
+  });
+
+const allCoversions = [
+  ...conversionsFromSmallerToBigger,
+  ...conversionsFromBiggerToSmaller,
+] as const;
+
+export default allCoversions.map<UnitConversion>((tuple) => ({
+  FromUnit: tuple[0],
+  ToUnit: tuple[1],
+  Multiplier: tuple[2],
+}));

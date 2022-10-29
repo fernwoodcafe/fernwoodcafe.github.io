@@ -1,7 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { availableUnitConversions } from "../services";
+import {
+  isItem,
+  isMass,
+  isVolume,
+  type UnitOfMeasure,
+} from "../types/UnitOfMeasure";
 import { unitsOfMeasure } from "../values";
-import { unitsOfMeasureMass } from "../values/unitsOfMeasure";
+import {
+  unitsOfMeasureMass,
+  unitsOfMeasureVolume,
+} from "../values/unitsOfMeasure";
 
 describe("when processing valid inputs", () => {
   it("does not throw", () => {
@@ -9,12 +18,25 @@ describe("when processing valid inputs", () => {
     availableUnitConversions("gram");
   });
 
+  const expectedAvailableConversions = (unit: UnitOfMeasure) => {
+    if (isMass(unit)) {
+      return unitsOfMeasureMass;
+    }
+
+    if (isVolume(unit)) {
+      return unitsOfMeasureVolume;
+    }
+
+    if (isItem(unit)) {
+      return [unit];
+    }
+  };
+
   unitsOfMeasure
     .filter((m) => m !== "-")
-    .slice(0, 2)
     .map((unitOfMeasure) => ({
       fromUnit: unitOfMeasure,
-      expectedToUnits: [...unitsOfMeasureMass],
+      expectedToUnits: [...expectedAvailableConversions(unitOfMeasure)],
     }))
     .forEach(({ fromUnit, expectedToUnits }) => {
       it(`produces expected conversions for ${fromUnit}`, () => {
