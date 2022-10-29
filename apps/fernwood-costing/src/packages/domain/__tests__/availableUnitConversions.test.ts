@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { availableUnitConversions } from "../services";
+import { unitsOfMeasure } from "../values";
+import { unitsOfMeasureMass } from "../values/unitsOfMeasure";
 
 describe("when processing valid inputs", () => {
   it("does not throw", () => {
@@ -7,20 +9,22 @@ describe("when processing valid inputs", () => {
     availableUnitConversions("gram");
   });
 
-  [
-    {
-      fromUnit: "gram" as const,
-      expectedToUnits: ["pound", "kilogram", "gram"],
-    },
-  ].forEach(({ fromUnit, expectedToUnits }) => {
-    it("produces expected conversions", () => {
-      // Arrange
+  unitsOfMeasure
+    .filter((m) => m !== "-")
+    .slice(0, 1)
+    .map((unitOfMeasure) => ({
+      fromUnit: unitOfMeasure,
+      expectedToUnits: [...unitsOfMeasureMass],
+    }))
+    .forEach(({ fromUnit, expectedToUnits }) => {
+      it(`produces expected conversions for ${fromUnit}`, () => {
+        // Arrange
 
-      // Act
-      const toUnits = availableUnitConversions(fromUnit);
+        // Act
+        const toUnits = availableUnitConversions(fromUnit);
 
-      // Assert
-      expect(toUnits.sort()).toEqual(expectedToUnits.sort());
+        // Assert
+        expect(toUnits.sort()).toEqual(expectedToUnits.sort());
+      });
     });
-  });
 });

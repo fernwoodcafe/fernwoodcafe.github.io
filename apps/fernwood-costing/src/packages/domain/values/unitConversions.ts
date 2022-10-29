@@ -4,12 +4,13 @@ import type {
 } from "../types/UnitConversion";
 
 const smallPerBig: UnitConversionTuple[] = [
-  ["ounce-mass", "pound", 16],
-  ["gram", "pound", 453.5924],
   ["gram", "kilogram", 1000],
-  ["pound", "kilogram", 2.20462],
+  ["gram", "pound", 453.5924],
+  ["gram", "ounce-mass", 28.346],
   ["ounce-fluid-us", "litre", 33.814],
   ["ounce-fluid-us", "millilitre", 0.033814],
+  ["ounce-mass", "pound", 16],
+  ["pound", "kilogram", 2.20462],
   // TODO: Automate the equivalence of these.
   ["item", "item", 1],
   ["slice", "slice", 1],

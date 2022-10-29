@@ -1,12 +1,21 @@
-export default <const>[
-  "-",
+export const unitsOfMeasureMass = <const>[
   "gram",
-  "litre",
-  "millilitre",
   "ounce-mass",
-  "ounce-fluid-us",
-  "item",
-  "slice",
   "pound",
   "kilogram",
+];
+
+export const unitsOfMeasureVolume = <const>[
+  "litre",
+  "millilitre",
+  "ounce-fluid-us",
+];
+
+export const unitsOfMeasureItem = <const>["item", "slice"];
+
+export default <const>[
+  "-",
+  ...unitsOfMeasureMass,
+  ...unitsOfMeasureVolume,
+  ...unitsOfMeasureItem,
 ];
