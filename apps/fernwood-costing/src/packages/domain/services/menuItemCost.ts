@@ -25,7 +25,8 @@ export default (
           : valueConvertedToUnit(
               costPerSupplyUnit,
               targetSupply.supplyUnits,
-              menuItemSupply.menuItemSupplyUnits
+              menuItemSupply.menuItemSupplyUnits,
+              "inverse-conversion"
             );
 
       return {

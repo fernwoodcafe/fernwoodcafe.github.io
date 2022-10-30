@@ -17,10 +17,10 @@ describe("when processing valid inputs", () => {
   ].forEach(([fromUnit, fromValue, toUnit, expectedToValue]) => {
     it(`converts ${fromValue} ${fromUnit} to ${expectedToValue} ${toUnit}`, () => {
       // Act
-      const converted = valueConvertedToUnit(1, fromUnit, toUnit);
+      const toValue = valueConvertedToUnit(fromValue, fromUnit, toUnit);
 
       // Assert
-      expect(converted.toFixed(4)).toEqual(expectedToValue.toFixed(4));
+      expect(toValue.toFixed(4)).toEqual(expectedToValue.toFixed(4));
     });
   });
 });

@@ -116,10 +116,13 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
         props.supplyTaxes,
         targetSupply
       );
+
+      // this currently breaks becaues the 'costPerSupplyUnit' is not the supply unit!
       const costPerMenuItemUnit = valueConvertedToUnit(
         costPerSupplyUnit,
         targetSupply.supplyUnits,
-        data.menuItemSupplyUnits
+        data.menuItemSupplyUnits,
+        "inverse-conversion"
       );
 
       return data.menuItemSupplyQuantity * costPerMenuItemUnit;
