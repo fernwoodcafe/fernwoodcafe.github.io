@@ -8,7 +8,7 @@ export type UnitConversionTuple = [UnitOfMeasure, UnitOfMeasure, number];
  * For all masses, use grams as the smallest base unit.
  * Then we derive high-level conversions from lower-level ones.
  */
-const lowLevelConversionsFromSmallerToBigger: UnitConversionTuple[] = [
+const conversionsFromSmallerToBigger: UnitConversionTuple[] = [
   // Low Level Mass Conversions
   ["gram", "kilogram", 1000],
   ["gram", "ounce-mass", 28.3495],
@@ -21,18 +21,18 @@ const lowLevelConversionsFromSmallerToBigger: UnitConversionTuple[] = [
   ["millilitre", "tablespoon-us", 14.7868],
 ];
 
-const lowLevelConversionsFromBiggerToSmaller: UnitConversionTuple[] =
-  lowLevelConversionsFromSmallerToBigger.map(([from, to, conversion]) => {
+const conversionsFromBiggerToSmaller: UnitConversionTuple[] =
+  conversionsFromSmallerToBigger.map(([from, to, conversion]) => {
     const inverseConversion = 1 / conversion;
     return [to, from, inverseConversion];
   });
 
-export const lowLevelConversions = [
-  ...lowLevelConversionsFromSmallerToBigger,
-  ...lowLevelConversionsFromBiggerToSmaller,
+const conversions = [
+  ...conversionsFromSmallerToBigger,
+  ...conversionsFromBiggerToSmaller,
 ] as const;
 
-export default lowLevelConversions.map<UnitConversion>((tuple) => ({
+export default conversions.map<UnitConversion>((tuple) => ({
   FromUnit: tuple[0],
   ToUnit: tuple[1],
   ConversionFactor: tuple[2],

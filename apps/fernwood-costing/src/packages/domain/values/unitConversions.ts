@@ -1,20 +1,20 @@
 import type { UnitConversion } from "../types/UnitConversion";
-import { deriveHighLevelConversions } from "./deriveHighLevelConversions";
-import lowLevelConversions from "./lowLevelConversions";
+import baseConversions from "./baseConversions";
+import { deriveHighLevelConversions } from "./derivedConversions";
 import { unitsOfMeasureMass, unitsOfMeasureVolume } from "./unitsOfMeasure";
 
 const derivedMassConversions: UnitConversion[] = deriveHighLevelConversions(
-  lowLevelConversions,
+  baseConversions,
   unitsOfMeasureMass
 );
 
 const derivedVolumeConversions: UnitConversion[] = deriveHighLevelConversions(
-  lowLevelConversions,
+  baseConversions,
   unitsOfMeasureVolume
 );
 
 const allConversions = [
-  ...lowLevelConversions,
+  ...baseConversions,
   ...derivedMassConversions,
   ...derivedVolumeConversions,
 ] as const;

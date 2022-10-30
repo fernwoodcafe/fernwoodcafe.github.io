@@ -2,7 +2,7 @@ import type { UnitConversion } from "../types/UnitConversion";
 import type { UnitOfMeasure } from "../types/UnitOfMeasure";
 
 export const deriveHighLevelConversions = (
-  lowLevelConversions: readonly UnitConversion[],
+  baseConversions: readonly UnitConversion[],
   unitsOfMeasureToConvert: readonly UnitOfMeasure[]
 ): UnitConversion[] =>
   unitsOfMeasureToConvert.reduce((acc, fromUnit) => {
@@ -17,7 +17,7 @@ export const deriveHighLevelConversions = (
       .filter(
         ([fromUnit, toUnit]) =>
           undefined ===
-          lowLevelConversions.find(
+          baseConversions.find(
             (low) => low.FromUnit === fromUnit && low.ToUnit === toUnit
           )
       );
@@ -35,13 +35,11 @@ export const deriveHighLevelConversions = (
      */
     const derivedConversions = targetConversions.map<UnitConversion>(
       ([fromUnit, toUnit]) => {
-        const fromBase = lowLevelConversions.find(
+        const fromBase = baseConversions.find(
           (base) => fromUnit == base.ToUnit
         );
 
-        const toBase = lowLevelConversions.find(
-          (base) => toUnit === base.ToUnit
-        );
+        const toBase = baseConversions.find((base) => toUnit === base.ToUnit);
 
         const conversionFactor =
           toBase.ConversionFactor / fromBase.ConversionFactor;
