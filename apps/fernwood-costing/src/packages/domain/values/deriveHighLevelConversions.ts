@@ -22,21 +22,39 @@ export const deriveHighLevelConversions = (
           )
       );
 
-    const derivedConversions = targetConversions.map(([fromUnit, toUnit]) => {
-      const toBase = lowLevelConversions.find((low) => fromUnit === low.ToUnit);
-      const fromBase = lowLevelConversions.find((low) => toUnit == low.ToUnit);
+    /**
+     * @example
+     * [pounds, kilograms]
+     * fromBase = 453.5924 gram/pound
+     * toBase = 1000 gram/kilogram
+     * conversionFactor
+     *     = (1000 gram/kilogram) / (453.5924 gram/pound)
+     *     = (1000 gram/kilogram) * (0.00220462247 pound/gram)
+     *     = (1000 * 0.00220462247) pound/kilogram
+     *     = 2.20462247 pound/kilogram
+     */
+    const derivedConversions = targetConversions.map<UnitConversion>(
+      ([fromUnit, toUnit]) => {
+        const fromBase = lowLevelConversions.find(
+          (base) => fromUnit == base.ToUnit
+        );
 
-      const fromUnitsPerToUnits =
-        fromBase.FromUnitsPerToUnits / toBase.FromUnitsPerToUnits;
+        const toBase = lowLevelConversions.find(
+          (base) => toUnit === base.ToUnit
+        );
 
-      const conversion = {
-        FromUnit: fromUnit,
-        ToUnit: toUnit,
-        FromUnitsPerToUnits: fromUnitsPerToUnits,
-      };
+        const conversionFactor =
+          toBase.ConversionFactor / fromBase.ConversionFactor;
 
-      return conversion;
-    });
+        const unitConversion: UnitConversion = {
+          FromUnit: fromUnit,
+          ToUnit: toUnit,
+          ConversionFactor: conversionFactor,
+        };
+
+        return unitConversion;
+      }
+    );
 
     return [...acc, ...derivedConversions];
   }, []);

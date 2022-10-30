@@ -53,7 +53,7 @@ describe("unitConversions", () => {
   it("produces all expected conversions", () => {
     // Act
     const actualConversions = unitConversions.map(
-      ({ FromUnit, ToUnit, FromUnitsPerToUnits }) =>
+      ({ FromUnit, ToUnit, ConversionFactor: FromUnitsPerToUnits }) =>
         `${FromUnitsPerToUnits.toFixed(4)} ${FromUnit}/${ToUnit}`
     );
 

@@ -35,5 +35,5 @@ export const lowLevelConversions = [
 export default lowLevelConversions.map<UnitConversion>((tuple) => ({
   FromUnit: tuple[0],
   ToUnit: tuple[1],
-  FromUnitsPerToUnits: tuple[2],
+  ConversionFactor: tuple[2],
 }));

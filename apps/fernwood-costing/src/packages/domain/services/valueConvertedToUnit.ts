@@ -27,8 +27,8 @@ export default (
   }
 
   if (strategy === "inverse-conversion") {
-    return fromValue * conversion.FromUnitsPerToUnits;
+    return fromValue * conversion.ConversionFactor;
   }
 
-  return fromValue / conversion.FromUnitsPerToUnits;
+  return fromValue / conversion.ConversionFactor;
 };

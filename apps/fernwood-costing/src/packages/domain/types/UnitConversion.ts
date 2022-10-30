@@ -11,9 +11,9 @@ export type UnitConversion = {
   FromUnit: UnitOfMeasure;
   ToUnit: UnitOfMeasure;
   /**
-   * The quantity of source units to destination units.
+   * The quantity of fromUnits for one toUnit.
    */
-  FromUnitsPerToUnits: number;
+  ConversionFactor: number;
 };
 
 export type UnitConversionTuple = [UnitOfMeasure, UnitOfMeasure, number];
