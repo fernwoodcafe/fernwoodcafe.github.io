@@ -1,5 +1,5 @@
 import type { UnitOfMeasure } from "../types/UnitOfMeasure";
-import unitConversions from "../values/unitConversions";
+import { unitConversions } from "../values";
 
 export default (unitOfMeasure: UnitOfMeasure): UnitOfMeasure[] => {
   const availableConversions = unitConversions.filter(

@@ -1,5 +1,5 @@
 import type { UnitOfMeasure } from "../types/UnitOfMeasure";
-import unitConversions from "../values/unitConversions";
+import { unitConversions } from "../values";
 
 /**
  * @param strategy - Use the 'inverse-conversion' strategy for 'per-unit' conversions.

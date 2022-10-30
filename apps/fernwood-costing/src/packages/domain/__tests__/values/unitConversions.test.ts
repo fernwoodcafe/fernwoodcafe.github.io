@@ -1,4 +1,4 @@
-import unitConversions from "@packages/domain/values/unitConversions";
+import { unitConversions } from "@packages/domain/values";
 import { describe, expect, it } from "vitest";
 
 const expectedConversions = [
