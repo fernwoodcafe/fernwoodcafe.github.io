@@ -1,3 +1,4 @@
+import type { UnitConversion } from "../types/UnitConversion";
 import type { UnitOfMeasure } from "../types/UnitOfMeasure";
 
 export type UnitConversionTuple = [UnitOfMeasure, UnitOfMeasure, number];
@@ -28,3 +29,9 @@ export const lowLevelConversions = [
   ...lowLevelConversionsFromSmallerToBigger,
   ...lowLevelConversionsFromBiggerToSmaller,
 ] as const;
+
+export default lowLevelConversions.map<UnitConversion>((tuple) => ({
+  FromUnit: tuple[0],
+  ToUnit: tuple[1],
+  FromUnitsPerToUnits: tuple[2],
+}));

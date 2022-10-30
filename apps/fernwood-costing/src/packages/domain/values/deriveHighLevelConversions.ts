@@ -1,10 +1,10 @@
-import type { UnitConversionTuple } from "../types/UnitConversion";
+import type { UnitConversion } from "../types/UnitConversion";
 import type { UnitOfMeasure } from "../types/UnitOfMeasure";
 
 export const deriveHighLevelConversions = (
-  lowLevelConversions: readonly UnitConversionTuple[],
+  lowLevelConversions: readonly UnitConversion[],
   unitsOfMeasureToConvert: readonly UnitOfMeasure[]
-) =>
+): UnitConversion[] =>
   unitsOfMeasureToConvert.reduce((acc, fromUnit) => {
     const candidateConversions = unitsOfMeasureToConvert.map(
       (toUnit) => [fromUnit, toUnit] as const
@@ -17,20 +17,27 @@ export const deriveHighLevelConversions = (
       .filter(
         ([fromUnit, toUnit]) =>
           undefined ===
-          lowLevelConversions.find(([f, t]) => fromUnit === f && toUnit === t)
+          lowLevelConversions.find(
+            (low) => low.FromUnit === fromUnit && low.ToUnit === toUnit
+          )
       );
 
     const derivedConversions = targetConversions.map(([fromUnit, toUnit]) => {
-      const [, , toUnitsPerBaseUnit] = lowLevelConversions.find(
-        ([_, baseTo]) => fromUnit === baseTo
-      );
+      const toUnitsPerBaseUnit = lowLevelConversions.find(
+        (low) => fromUnit === low.ToUnit
+      ).FromUnitsPerToUnits;
 
-      const [, , fromUnitsPerBaseUnit] = lowLevelConversions.find(
-        ([_, baseTo]) => toUnit == baseTo
-      );
+      const fromUnitsPerBaseUnit = lowLevelConversions.find(
+        (low) => toUnit == low.ToUnit
+      ).FromUnitsPerToUnits;
 
       const fromUnitsPerToUnits = fromUnitsPerBaseUnit / toUnitsPerBaseUnit;
-      return [fromUnit, toUnit, fromUnitsPerToUnits];
+
+      return {
+        FromUnit: fromUnit,
+        ToUnit: toUnit,
+        FromUnitsPerToUnits: fromUnitsPerToUnits,
+      };
     });
 
     return [...acc, ...derivedConversions];
