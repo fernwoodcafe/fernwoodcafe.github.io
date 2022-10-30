@@ -2,12 +2,12 @@ import type { UnitOfMeasure } from "../types/UnitOfMeasure";
 import unitConversions from "../values/unitConversions";
 
 export default (
-  value: number,
+  fromValue: number,
   fromUnit: UnitOfMeasure,
   toUnit: UnitOfMeasure
 ) => {
   if (!fromUnit || !toUnit || fromUnit === toUnit) {
-    return value;
+    return fromValue;
   }
 
   const conversion = unitConversions.find(
@@ -18,8 +18,8 @@ export default (
   if (!conversion) {
     // TODO Warn the user that updates to the menu item need to happen.
     console.error(`No conversion found for '${fromUnit}' to '${toUnit}'`);
-    return value;
+    return fromValue;
   }
 
-  return value * conversion.Multiplier;
+  return fromValue / conversion.FromUnitsPerToUnits;
 };

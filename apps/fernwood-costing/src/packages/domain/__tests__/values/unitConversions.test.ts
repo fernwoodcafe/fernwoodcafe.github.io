@@ -12,14 +12,8 @@ const expectedConversions = [
   "29.5700 millilitre/ounce-fluid-us",
   // Possible to Derive, Currently Hard Coded
   // Values checked online on 2022-10-29
-  "35.2740 ounce-mass/kilogram",
-  "16.0000 ounce-mass/pound",
-  "2.2046 pound/kilogram",
   // Possible to Derive, Currently Hard Coded
   // Values checked online on 2022-10-29
-  "8.4535 ounce-fluid-us/cup-metric",
-  "33.8140 ounce-fluid-us/litre",
-  "4.0000 cup-metric/litre",
   // Calculated: No need to check values online.
   "0.0010 kilogram/gram",
   "0.0353 ounce-mass/gram",
@@ -27,20 +21,26 @@ const expectedConversions = [
   "0.0040 cup-metric/millilitre",
   "0.0010 litre/millilitre",
   "0.0338 ounce-fluid-us/millilitre",
-  "0.0283 kilogram/ounce-mass",
+  "16.0020 ounce-mass/pound", // Correct the precision.
+  "35.2783 ounce-mass/kilogram", // Correct the precision.
   "0.0625 pound/ounce-mass",
+  "2.2046 pound/kilogram",
+  "0.0283 kilogram/ounce-mass",
   "0.4536 kilogram/pound",
-  "0.1183 cup-metric/ounce-fluid-us",
   "0.0296 litre/ounce-fluid-us",
   "0.2500 litre/cup-metric",
+  "33.8181 ounce-fluid-us/litre", // Correct the precision.
+  "8.4545 ounce-fluid-us/cup-metric", // Correct the precision.
+  "4.0000 cup-metric/litre",
+  "0.1183 cup-metric/ounce-fluid-us",
 ];
 
 describe("unitConversions", () => {
   it("produces all expected conversions", () => {
     // Act
     const actualConversions = unitConversions.map(
-      ({ FromUnit, ToUnit, Multiplier }) =>
-        `${Multiplier.toFixed(4)} ${FromUnit}/${ToUnit}`
+      ({ FromUnit, ToUnit, FromUnitsPerToUnits }) =>
+        `${FromUnitsPerToUnits.toFixed(4)} ${FromUnit}/${ToUnit}`
     );
 
     // Assert

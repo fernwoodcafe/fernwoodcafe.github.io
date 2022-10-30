@@ -2,12 +2,15 @@ import type {
   UnitConversion,
   UnitConversionTuple,
 } from "../types/UnitConversion";
+import { deriveHighLevelConversions } from "./deriveHighLevelConversions";
+import { unitsOfMeasureMass, unitsOfMeasureVolume } from "./unitsOfMeasure";
 
-// TODO [nice-to-have] Turn this into a conversion tree to reduce duplication.
-// For all volumns, use ml as the smallest base unit.
-// For all masses, use grams as the smallest base unit.
-// Then we can infer high-level conversions from lower-level ones instead of hard coding them all.
-const conversionsFromSmallerToBigger: UnitConversionTuple[] = [
+/**
+ * For all volumns, use ml as the smallest base unit.
+ * For all masses, use grams as the smallest base unit.
+ * Then we derive high-level conversions from lower-level ones.
+ */
+const lowLevelConversionsFromSmallerToBigger: UnitConversionTuple[] = [
   // Low Level Mass Conversions
   ["gram", "kilogram", 1000],
   ["gram", "ounce-mass", 28.346],
@@ -16,31 +19,39 @@ const conversionsFromSmallerToBigger: UnitConversionTuple[] = [
   ["millilitre", "cup-metric", 250],
   ["millilitre", "litre", 1000],
   ["millilitre", "ounce-fluid-us", 29.57],
-  // TODO Derived these mass conversions from the low-level ones.
-  ["ounce-mass", "kilogram", 35.274],
-  ["ounce-mass", "pound", 16],
-  ["pound", "kilogram", 2.20462],
-  // TODO Derived these volume conversions from the low-level ones.
-  ["ounce-fluid-us", "cup-metric", 8.45351],
-  ["ounce-fluid-us", "litre", 33.814],
-  ["cup-metric", "litre", 4],
 ];
 
-const conversionsFromBiggerToSmaller: UnitConversionTuple[] =
-  conversionsFromSmallerToBigger.map(([from, to, conversion]) => {
+const lowLevelConversionsFromBiggerToSmaller: UnitConversionTuple[] =
+  lowLevelConversionsFromSmallerToBigger.map(([from, to, conversion]) => {
     const inverseConversion = 1 / conversion;
     return [to, from, inverseConversion];
   });
 
-const allCoversions = [
-  ...conversionsFromSmallerToBigger,
-  ...conversionsFromBiggerToSmaller,
+const lowLevelConversions = [
+  ...lowLevelConversionsFromSmallerToBigger,
+  ...lowLevelConversionsFromBiggerToSmaller,
 ] as const;
 
-const allConversionAsObjects = allCoversions.map<UnitConversion>((tuple) => ({
+const derivedMassConversions: UnitConversion[] = deriveHighLevelConversions(
+  lowLevelConversions,
+  unitsOfMeasureMass
+);
+
+const derivedVolumeConversions: UnitConversion[] = deriveHighLevelConversions(
+  lowLevelConversions,
+  unitsOfMeasureVolume
+);
+
+const allConversions = [
+  ...lowLevelConversions,
+  ...derivedMassConversions,
+  ...derivedVolumeConversions,
+] as const;
+
+const allConversionAsObjects = allConversions.map<UnitConversion>((tuple) => ({
   FromUnit: tuple[0],
   ToUnit: tuple[1],
-  Multiplier: tuple[2],
+  FromUnitsPerToUnits: tuple[2],
 }));
 
 export default allConversionAsObjects;
