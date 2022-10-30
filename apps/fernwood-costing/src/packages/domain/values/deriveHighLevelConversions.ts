@@ -23,21 +23,19 @@ export const deriveHighLevelConversions = (
       );
 
     const derivedConversions = targetConversions.map(([fromUnit, toUnit]) => {
-      const toUnitsPerBaseUnit = lowLevelConversions.find(
-        (low) => fromUnit === low.ToUnit
-      ).FromUnitsPerToUnits;
+      const toBase = lowLevelConversions.find((low) => fromUnit === low.ToUnit);
+      const fromBase = lowLevelConversions.find((low) => toUnit == low.ToUnit);
 
-      const fromUnitsPerBaseUnit = lowLevelConversions.find(
-        (low) => toUnit == low.ToUnit
-      ).FromUnitsPerToUnits;
+      const fromUnitsPerToUnits =
+        fromBase.FromUnitsPerToUnits / toBase.FromUnitsPerToUnits;
 
-      const fromUnitsPerToUnits = fromUnitsPerBaseUnit / toUnitsPerBaseUnit;
-
-      return {
+      const conversion = {
         FromUnit: fromUnit,
         ToUnit: toUnit,
         FromUnitsPerToUnits: fromUnitsPerToUnits,
       };
+
+      return conversion;
     });
 
     return [...acc, ...derivedConversions];

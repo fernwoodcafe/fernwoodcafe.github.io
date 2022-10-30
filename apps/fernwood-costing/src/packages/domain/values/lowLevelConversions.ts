@@ -11,7 +11,7 @@ export type UnitConversionTuple = [UnitOfMeasure, UnitOfMeasure, number];
 const lowLevelConversionsFromSmallerToBigger: UnitConversionTuple[] = [
   // Low Level Mass Conversions
   ["gram", "kilogram", 1000],
-  ["gram", "ounce-mass", 28.346],
+  ["gram", "ounce-mass", 28.3495],
   ["gram", "pound", 453.5924],
   // Low Level Volume Conversions
   ["millilitre", "cup-metric", 250],

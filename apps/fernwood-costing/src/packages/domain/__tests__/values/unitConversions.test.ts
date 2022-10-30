@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 const expectedConversions = [
   // Low-Level: Values checked online on 2022-10-29
   "1000.0000 gram/kilogram",
-  "28.3460 gram/ounce-mass",
+  "28.3495 gram/ounce-mass",
   "453.5924 gram/pound",
   // Low-Level: Values checked online on 2022-10-29
   "250.0000 millilitre/cup-metric",
@@ -21,8 +21,8 @@ const expectedConversions = [
   "0.0338 ounce-fluid-us/millilitre",
   "0.2029 teaspoon-us/millilitre",
   "0.0676 tablespoon-us/millilitre",
-  "16.0020 ounce-mass/pound", // Correct the precision.
-  "35.2783 ounce-mass/kilogram", // Correct the precision.
+  "16.0000 ounce-mass/pound",
+  "35.2740 ounce-mass/kilogram",
   "0.0625 pound/ounce-mass",
   "2.2046 pound/kilogram",
   "0.0283 kilogram/ounce-mass",
