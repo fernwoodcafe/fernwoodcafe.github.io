@@ -156,7 +156,7 @@ const onGridReady = ({ api }: GridOptions) => {
 <style>
 .ag-root-wrapper {
   /* Prevent the edit popup from hiding outside the table dimensions. */
-  overflow:visible;
+  overflow: visible;
 }
 
 .ag-header-cell.ag-editable span.ag-header-cell-text::after {

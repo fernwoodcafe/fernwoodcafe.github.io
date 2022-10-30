@@ -10,11 +10,7 @@ const expectedConversions = [
   "250.0000 millilitre/cup-metric",
   "1000.0000 millilitre/litre",
   "29.5700 millilitre/ounce-fluid-us",
-  // Possible to Derive, Currently Hard Coded
-  // Values checked online on 2022-10-29
-  // Possible to Derive, Currently Hard Coded
-  // Values checked online on 2022-10-29
-  // Calculated: No need to check values online.
+  // Derived
   "0.0010 kilogram/gram",
   "0.0353 ounce-mass/gram",
   "0.0022 pound/gram",
