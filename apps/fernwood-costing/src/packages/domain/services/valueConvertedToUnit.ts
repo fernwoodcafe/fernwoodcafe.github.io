@@ -21,5 +21,5 @@ export default (
     return fromValue;
   }
 
-  return fromValue / conversion.FromUnitsPerToUnits;
+  return fromValue * conversion.FromUnitsPerToUnits;
 };
