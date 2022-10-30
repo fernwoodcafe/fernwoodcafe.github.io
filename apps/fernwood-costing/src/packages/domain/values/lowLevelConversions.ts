@@ -17,6 +17,8 @@ const lowLevelConversionsFromSmallerToBigger: UnitConversionTuple[] = [
   ["millilitre", "cup-metric", 250],
   ["millilitre", "litre", 1000],
   ["millilitre", "ounce-fluid-us", 29.57],
+  ["millilitre", "teaspoon-us", 4.92892],
+  ["millilitre", "tablespoon-us", 14.7868],
 ];
 
 const lowLevelConversionsFromBiggerToSmaller: UnitConversionTuple[] =

@@ -10,6 +10,8 @@ export const unitsOfMeasureVolume = <const>[
   "millilitre",
   "ounce-fluid-us",
   "cup-metric",
+  "teaspoon-us",
+  "tablespoon-us",
 ];
 
 export const unitsOfMeasureItem = <const>["item", "slice"];
