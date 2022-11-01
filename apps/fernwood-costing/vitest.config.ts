@@ -3,6 +3,6 @@
 // 2. Pass --config option to CLI, e.g. vitest --config ./path/to/vitest.config.ts
 // 3. Use process.env.VITEST or mode property on defineConfig...
 
-import x from "./vite.config";
+import baseConfig from "./vite.config";
 
-export default x;
+export default baseConfig;
