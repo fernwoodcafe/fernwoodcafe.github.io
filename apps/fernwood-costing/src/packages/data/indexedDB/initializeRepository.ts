@@ -17,17 +17,18 @@ if (resetPrototype) {
 
 const db = await $migrateDB("restaurantDB", migrations);
 
-export default (): DomainEventsRepository => ({
-  async insert(event: DomainEvent): Promise<DomainEvent> {
-    await $create(db, "domainEvents", [event]);
-    return event;
-  },
-  select: (): Promise<DomainEvent[]> =>
-    $readMany(db, "domainEvents").then((events: DomainEvent[]) =>
-      events.sort((a, b) => a.eventIndex - b.eventIndex)
-    ),
-  addListener: (name, handler) => {
-    // not supported
-    return handler;
-  },
-});
+export default (): Promise<DomainEventsRepository> =>
+  Promise.resolve({
+    async insert(event: DomainEvent): Promise<DomainEvent> {
+      await $create(db, "domainEvents", [event]);
+      return event;
+    },
+    select: (): Promise<DomainEvent[]> =>
+      $readMany(db, "domainEvents").then((events: DomainEvent[]) =>
+        events.sort((a, b) => a.eventIndex - b.eventIndex)
+      ),
+    addListener: (name, handler) => {
+      // not supported
+      return handler;
+    },
+  });
