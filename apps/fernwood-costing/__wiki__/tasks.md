@@ -7,5 +7,6 @@
 - [ ] Add "cups" as a new supply measurement.
 - [ ] Add inventory module.
 - [ ] Highlight menu items that need to change when we have changed a supply's unit.
-- [ ] Set up Cypress to open with `npm run test:e2e`.
-- [ ] Arrange for Cypress testing to run against local storage instead of Excel.
+- [x] Set up Cypress to open with `npm run test:e2e`.
+- [x] Arrange for Cypress testing to run against local storage instead of Excel.
+- [ ] Cypress: Add three supplies, set their percentage waste; toggle sorting.
