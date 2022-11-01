@@ -4,7 +4,8 @@ import {
   materializeSupplies,
 } from "@packages/cqrs-es";
 import materializeCompositeSupplies from "@packages/cqrs-es/materializeCompositeSupplies";
-import { initializeRepository } from "@packages/data/excelDB";
+import { initializeRepository as initializeProductionRepository } from "@packages/data/excelDB";
+import { initializeRepository as initializeTestDb } from "@packages/data/indexedDB";
 import type {
   CafeEventUnion,
   CafeGoals,
@@ -28,7 +29,13 @@ const supplyTaxes = reactive<SupplyTaxes>({
   PST: 0.06,
 });
 
-const domainEventsRepo = initializeRepository();
+console.log(process.env.NODE_ENV);
+
+const domainEventsRepo =
+  process.env.NODE_ENV === "production"
+    ? initializeProductionRepository()
+    : initializeTestDb();
+
 domainEventsRepo.addListener("onSaved", () => (appStatus.message = "Saved"));
 domainEventsRepo.addListener("onQueued", () => (appStatus.message = "Unsaved"));
 const domainEvents = (await domainEventsRepo.select()) as CafeEventUnion[];
