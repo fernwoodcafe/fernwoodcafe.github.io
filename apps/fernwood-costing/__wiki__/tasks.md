@@ -10,4 +10,4 @@
 - [x] Set up Cypress to open with `npm run test:e2e`.
 - [x] Arrange for Cypress testing to run against local storage instead of Excel.
 - [ ] cypress: Add three supplies, set their percentage waste; toggle sorting.
-- [ ] bug: Unit Cost does not sort in the supplies list view.
+- [ ] bug: Sorting does not work in all columns; e.g., Unit Cost does not sort in supplies.
