@@ -1,5 +1,5 @@
 // Create our number formatter.
-var formatter = new Intl.NumberFormat("en-CA", {
+const formatter = new Intl.NumberFormat("en-CA", {
   style: "currency",
   currency: "CAD",
 });
