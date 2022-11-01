@@ -53,7 +53,7 @@ jobs:
       - name: Build Costing App
         run: |
           npm ci
-          npm run build
+          npm run build:production
         working-directory: ${{ env.COSTING_APP_SOURCE_DIR }}
       - name: Dump Build Results
         run: tree -I "node_modules"

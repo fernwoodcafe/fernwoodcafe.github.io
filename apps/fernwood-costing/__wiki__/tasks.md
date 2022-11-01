@@ -9,4 +9,5 @@
 - [ ] Highlight menu items that need to change when we have changed a supply's unit.
 - [x] Set up Cypress to open with `npm run test:e2e`.
 - [x] Arrange for Cypress testing to run against local storage instead of Excel.
-- [ ] Cypress: Add three supplies, set their percentage waste; toggle sorting.
+- [ ] cypress: Add three supplies, set their percentage waste; toggle sorting.
+- [ ] bug: Unit Cost does not sort in the supplies list view.
