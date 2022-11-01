@@ -1,4 +1,3 @@
-Supply
 <template>
   <h1>Composite Supplies</h1>
   <input

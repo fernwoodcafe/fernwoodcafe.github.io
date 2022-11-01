@@ -2,6 +2,7 @@ import type { DomainCommandHandler } from "@packages/cqrs-es-types/DomainCommand
 import type {
   CafeGoals,
   CompositeSupply,
+  Inventory,
   MenuItem,
   Supply,
   SupplyTaxes,
@@ -18,6 +19,7 @@ import {
 type Props = {
   menuItemsList: ReactiveArray<MenuItem>;
   suppliesList: ReactiveArray<Supply>;
+  inventoriesList: ReactiveArray<Inventory>;
   compositeSuppliesList: ReactiveArray<CompositeSupply>;
   sendCommand: DomainCommandHandler;
   cafeGoals: CafeGoals;
@@ -27,6 +29,7 @@ type Props = {
 export default ({
   menuItemsList,
   suppliesList,
+  inventoriesList,
   compositeSuppliesList,
   sendCommand,
   supplyTaxes,
@@ -64,6 +67,15 @@ export default ({
         props: {
           suppliesList,
           supplyTaxes,
+          sendCommand,
+        },
+      },
+      {
+        path: "/inventory",
+        name: "inventory",
+        component: () => import("../views/InventoryListView.vue"),
+        props: {
+          inventoriesList,
           sendCommand,
         },
       },

@@ -1,4 +1,3 @@
-Supply
 <template>
   <h1>Supplies</h1>
   <input type="button" @click="onClickNewSupply" value="New Supply" />

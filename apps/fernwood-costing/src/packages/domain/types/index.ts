@@ -1,6 +1,7 @@
 import type { CafeEventUnion } from "./CafeEventUnion";
 import type { CafeGoals } from "./CafeGoals";
 import type { CompositeSupply } from "./CompositeSupply";
+import type { Inventory } from "./Inventory";
 import type { MenuItem } from "./MenuItem";
 import type { MenuItemComponent } from "./MenuItemComponent";
 import type { Supply } from "./Supply";
@@ -16,4 +17,5 @@ export {
   Supply,
   SupplyTaxes,
   SupplyType,
+  Inventory,
 };

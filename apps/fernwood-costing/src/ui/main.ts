@@ -48,6 +48,8 @@ const suppliesList = materializeSupplies(
   ...domainEvents
 );
 
+const inventoriesList = reactive({ items: [] });
+
 const compositeSuppliesList = materializeCompositeSupplies(
   reactive({ items: [] }),
   ...domainEvents
@@ -72,6 +74,7 @@ app
     router({
       menuItemsList,
       suppliesList,
+      inventoriesList,
       compositeSuppliesList,
       cafeGoals,
       supplyTaxes,

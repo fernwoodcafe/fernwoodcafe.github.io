@@ -1,4 +1,3 @@
-Supply
 <template>
   <h1>
     Menu Items
