@@ -1,9 +1,10 @@
 import {
   handleCommand,
+  materializeCompositeSupplies,
+  materializeInventorySheets,
   materializeMenuItems,
   materializeSupplies,
 } from "@packages/cqrs-es";
-import materializeCompositeSupplies from "@packages/cqrs-es/materializeCompositeSupplies";
 import { initializeRepository as initializeProductionRepository } from "@packages/data/excelDB";
 import { initializeRepository as initializeTestRepository } from "@packages/data/indexedDB";
 import type {
@@ -48,7 +49,7 @@ const suppliesList = materializeSupplies(
   ...domainEvents
 );
 
-const inventoriesList = reactive({ items: [] });
+const inventorySheetsList = reactive({ items: [] });
 
 const compositeSuppliesList = materializeCompositeSupplies(
   reactive({ items: [] }),
@@ -62,6 +63,8 @@ const sendCommand = handleCommand({
   materializeSupplies,
   compositeSuppliesList,
   materializeCompositeSupplies,
+  inventorySheetsList,
+  materializeInventorySheets,
   domainEventsRepo,
 });
 
@@ -74,7 +77,7 @@ app
     router({
       menuItemsList,
       suppliesList,
-      inventoriesList,
+      inventorySheetsList: inventorySheetsList,
       compositeSuppliesList,
       cafeGoals,
       supplyTaxes,

@@ -1,10 +1,13 @@
 import type { DomainEvent } from "@packages/cqrs-es-types";
 import type { CompositeSupply } from "./CompositeSupply";
+import type { InventorySheet } from "./InventorySheet";
 import type { MenuItem } from "./MenuItem";
 import type { MenuItemComponent } from "./MenuItemComponent";
 import type { Supply } from "./Supply";
 
 export type CafeEventUnion =
+  | DomainEvent<"inventory_sheet_created", InventorySheet>
+  //
   | DomainEvent<"supply_created", Supply>
   | DomainEvent<"supply_updated", Supply>
   | DomainEvent<"supply_deleted", Supply>
