@@ -4,7 +4,7 @@
     <select v-model="selectedOption">
       <option disabled :value="null">Please select one</option>
       <option
-        v-for="option in options"
+        v-for="option in sortedOptions"
         :value="option"
         :key="option[optionKey]"
       >
@@ -22,9 +22,13 @@ type Props = {
   optionKey: string;
 };
 
-const selectedOption = ref(null);
+const props = defineProps<Props>();
 
-defineProps<Props>();
+const sortedOptions = [...props.options].sort((a, b) =>
+  a[props.optionKey].localeCompare(b[props.optionKey])
+);
+
+const selectedOption = ref(null);
 
 type Emits = {
   (e: "submitSelect", data: Record<string, any>): void;

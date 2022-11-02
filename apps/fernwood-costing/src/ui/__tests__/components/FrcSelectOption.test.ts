@@ -1,29 +1,32 @@
+import { render } from "@testing-library/vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
-import { mount } from "@vue/test-utils";
-import { describe, it } from "node:test";
+import { describe, expect, it } from "vitest";
 
-describe("", () => {
-  it("", () => {
-    const wrapper = mount(FrcSelectOption, {
-      label: "Ingredients",
-      options: {
-        foo: {
-          name: "foo",
-          value: 0,
-        },
-        bar: {
-          name: "bar",
-          value: 1,
-        },
-        baz: {
-          name: "baz",
-          value: 2,
-        },
-      },
-      optionKey: "name",
-      onSubmitSelect: (data) => {
-        console.log("foo");
+describe("FrcSelectOptions", () => {
+  it("renders option keys as option labels", () => {
+    const { getAllByText } = render(FrcSelectOption, {
+      props: {
+        label: "Ingredients",
+        options: [
+          {
+            name: "Name0",
+            value: 0,
+          },
+          {
+            name: "Name2",
+            value: 2,
+          },
+          {
+            name: "Name1",
+            value: 1,
+          },
+        ],
+        optionKey: "name",
       },
     });
+
+    const all = getAllByText(/Name.*/);
+
+    expect(all.map((a) => a.textContent)).toEqual(["Name0", "Name1", "Name2"]);
   });
 });
