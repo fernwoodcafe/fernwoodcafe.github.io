@@ -36,9 +36,9 @@ type Emits = {
   (e: "menuItemEditClick", data: MenuItem): void;
 };
 
-const emit = defineEmits<Emits>();
-
 const props = defineProps<Props>();
+
+const emit = defineEmits<Emits>();
 
 const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
 const onMenuItemDeleteClick = (data) => emit("menuItemDeleted", data);

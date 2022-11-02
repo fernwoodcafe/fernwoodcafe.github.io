@@ -3,6 +3,7 @@
     :gridData="inventorySheetsList"
     :gridTools="['delete', 'edit']"
     :gridColumnDefs="columnDefs"
+    @gridRowEditClick="onInventorySheetEditClick"
   ></AgGridComponent>
 </template>
 
@@ -17,7 +18,16 @@ type Props = {
   inventorySheetsList: ReactiveArray<InventorySheet>;
 };
 
+type Emits = {
+  (e: "inventorySheetEditClick", data: InventorySheet): void;
+};
+
 defineProps<Props>();
+
+const emit = defineEmits<Emits>();
+
+const onInventorySheetEditClick = (data) =>
+  emit("inventorySheetEditClick", data);
 
 const columnDefs: ColDef[] = [
   {
