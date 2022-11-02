@@ -1,4 +1,3 @@
-Supply
 <template>
   <AgGridComponent
     :gridData="compositeSuppliesList"

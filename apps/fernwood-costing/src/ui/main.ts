@@ -49,7 +49,10 @@ const suppliesList = materializeSupplies(
   ...domainEvents
 );
 
-const inventorySheetsList = reactive({ items: [] });
+const inventorySheetsList = materializeInventorySheets(
+  reactive({ items: [] }),
+  ...domainEvents
+);
 
 const compositeSuppliesList = materializeCompositeSupplies(
   reactive({ items: [] }),

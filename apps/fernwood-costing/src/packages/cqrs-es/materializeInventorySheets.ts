@@ -7,7 +7,14 @@ export default (
 ) => {
   events.forEach((event) => {
     if (event.type == "inventory_sheet_created") {
-      inventorySheetsList.items.push(event.payload);
+      const inventory: InventorySheet = {
+        uniqueId: event.payload.uniqueId,
+        dateStarted: new Date(event.payload.dateStarted),
+        dateCompleted: new Date(event.payload.dateCompleted),
+        inventoryItems: event.payload.inventoryItems,
+      };
+
+      inventorySheetsList.items.push(inventory);
     }
   });
 
