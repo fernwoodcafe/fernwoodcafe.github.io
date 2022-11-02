@@ -30,7 +30,7 @@ const onClickNewInventoryItem = () => {
       uniqueId: crypto.randomUUID(),
       dateStarted: new Date(Date.now()),
       dateCompleted: null,
-      items: [],
+      inventoryItems: [],
     },
   });
 };
