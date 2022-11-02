@@ -1,10 +1,13 @@
 import { render } from "@testing-library/vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
-import { describe, expect, it } from "vitest";
+import "jest-extended";
+import { beforeAll, describe, expect, it } from "vitest";
 
 describe("FrcSelectOptions", () => {
-  it("renders option keys as option labels", () => {
-    const { getAllByText } = render(FrcSelectOption, {
+  let getAllByText;
+
+  beforeAll(() => {
+    ({ getAllByText } = render(FrcSelectOption, {
       props: {
         label: "Ingredients",
         options: [
@@ -23,10 +26,26 @@ describe("FrcSelectOptions", () => {
         ],
         optionKey: "name",
       },
-    });
+    }));
+  });
 
-    const all = getAllByText(/Name.*/);
+  it("renders option keys as option labels", () => {
+    const options = getAllByText(/Name.*/);
 
-    expect(all.map((a) => a.textContent)).toEqual(["Name0", "Name1", "Name2"]);
+    expect(options.map((a) => a.textContent)).toIncludeAllMembers([
+      "Name0",
+      "Name2",
+      "Name1",
+    ]);
+  });
+
+  it("renders option keys in alpha order", () => {
+    const options = getAllByText(/Name.*/);
+
+    expect(options.map((a) => a.textContent)).toEqual([
+      "Name0",
+      "Name1",
+      "Name2",
+    ]);
   });
 });
