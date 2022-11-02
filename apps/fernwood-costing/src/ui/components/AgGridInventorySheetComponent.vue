@@ -1,7 +1,7 @@
 <template>
   <AgGridComponent
     :gridData="inventorySheetsList"
-    :gridTools="['delete']"
+    :gridTools="['delete', 'edit']"
     :gridColumnDefs="columnDefs"
   ></AgGridComponent>
 </template>
