@@ -12,9 +12,9 @@
 import { supplyCostPerUnit } from "@packages/domain/services";
 import type { Supply, SupplyTaxes } from "@packages/domain/types";
 import { unitsOfMeasure } from "@packages/domain/values";
-import AgCheckboxEditor from "@ui/components/AgCheckboxEditor.vue";
+import AgEditorCheckbox from "@ui/components/AgEditorCheckbox.vue";
+import AgEditorPercent from "@ui/components/AgEditorPercent.vue";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
-import AgPercentEditor from "@ui/components/AgPercentEditor.vue";
 import { formatMoney, formatPercent } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type {
@@ -68,13 +68,13 @@ const columnDefs: ColDef[] = [
   },
   {
     field: "percentWaste",
-    cellEditor: AgPercentEditor,
+    cellEditor: AgEditorPercent,
     valueFormatter: (params: ValueFormatterParams<Supply>) =>
       formatPercent(params.value),
   },
   {
     field: "hasPST",
-    cellEditor: AgCheckboxEditor,
+    cellEditor: AgEditorCheckbox,
     cellRenderer: (params) => (params.value ? "&#10003" : "&#10007"),
   },
   { field: "supplyNotes" },

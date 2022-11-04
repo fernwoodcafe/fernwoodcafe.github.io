@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import type { CompositeSupply, Supply } from "@packages/domain/types";
+import AgEditorMultiSelect from "@ui/components/AgEditorMultiSelect.vue";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
-import AgMultiSelectEditor from "@ui/components/AgMultiSelectEditor.vue";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type { ColDef } from "ag-grid-community";
 
@@ -33,7 +33,7 @@ const columnDefs: ColDef[] = [
   { field: "compositeSupplyName" },
   {
     field: "supplies",
-    cellEditor: AgMultiSelectEditor,
+    cellEditor: AgEditorMultiSelect,
     cellEditorParams: () => ({
       key: "uniqueId",
       label: "supplyName",

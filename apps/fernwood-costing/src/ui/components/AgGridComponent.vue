@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import AgRowToolsRenderer from "@ui/components/AgRowToolsRenderer.vue";
+import AgRendererRowTools from "@ui/components/AgRendererRowTools.vue";
 import { AgGridVue } from "ag-grid-vue3";
 
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
@@ -109,7 +109,7 @@ const toolsColDef: ColDef = {
   resizable: false,
   maxWidth: 100,
   suppressMenu: true,
-  cellRenderer: AgRowToolsRenderer,
+  cellRenderer: AgRendererRowTools,
   cellRendererParams: {
     onEditClick: (rowData) => {
       emit("gridRowEditClick", rowData);

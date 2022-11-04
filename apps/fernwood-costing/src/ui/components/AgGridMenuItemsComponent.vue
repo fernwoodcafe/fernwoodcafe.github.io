@@ -17,8 +17,8 @@ import type {
   Supply,
   SupplyTaxes,
 } from "@packages/domain/types";
+import AgEditorPercent from "@ui/components/AgEditorPercent.vue";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
-import AgPercentEditor from "@ui/components/AgPercentEditor.vue";
 import { formatMoney, formatPercent } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type { ColDef, ValueFormatterParams } from "ag-grid-community";
@@ -75,7 +75,7 @@ const columnDefs: ColDef<MenuItem>[] = [
   },
   {
     field: "percentTotalSales",
-    cellEditor: AgPercentEditor,
+    cellEditor: AgEditorPercent,
     valueFormatter: (params: ValueFormatterParams<MenuItem>) =>
       formatPercent(params.value),
   },
