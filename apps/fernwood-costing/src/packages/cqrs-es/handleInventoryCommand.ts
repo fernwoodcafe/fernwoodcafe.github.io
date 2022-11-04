@@ -8,9 +8,17 @@ export type Props = {
   materializeInventorySheets: Materializer<ReactiveArray<InventorySheet>>;
 };
 
+/**
+ * TODO Add command validation. E.g., only delete inventory sheets that exist.
+ * That might entail also narrowing the type of the `DomainCommand` in the handler.
+ */
 const commandHandlers = {
   create_inventory_sheet: (command: DomainCommand) => ({
     type: "inventory_sheet_created",
+    payload: command.payload,
+  }),
+  delete_inventory_sheet: (command: DomainCommand) => ({
+    type: "inventory_sheet_deleted",
     payload: command.payload,
   }),
 };

@@ -5,6 +5,8 @@ export default (
   inventorySheetsList: ReactiveArray<InventorySheet>,
   ...events: CafeEventUnion[]
 ) => {
+  // TODO Consider using a chain-of-responsibility pattern here, to ease
+  // maintanance as the quantity of events and commands grow.
   events.forEach((event) => {
     if (event.type == "inventory_sheet_created") {
       const inventory: InventorySheet = {
@@ -15,6 +17,12 @@ export default (
       };
 
       inventorySheetsList.items.push(inventory);
+    }
+
+    if (event.type == "inventory_sheet_deleted") {
+      inventorySheetsList.items = inventorySheetsList.items.filter(
+        (item) => item.uniqueId != event.payload.uniqueId
+      );
     }
   });
 
