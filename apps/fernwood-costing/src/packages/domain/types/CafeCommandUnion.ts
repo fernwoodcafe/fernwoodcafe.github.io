@@ -1,12 +1,13 @@
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import type { CompositeSupply } from "./CompositeSupply";
-import type { InventorySheet as InventorySheet } from "./InventorySheet";
+import type { InventorySheet } from "./InventorySheet";
 import type { MenuItem } from "./MenuItem";
 import type { MenuItemComponent } from "./MenuItemComponent";
 import type { Supply } from "./Supply";
 
 export type CafeCommandUnion =
   | DomainCommand<"create_inventory_sheet", InventorySheet>
+  | DomainCommand<"delete_inventory_sheet", InventorySheet>
   //
   | DomainCommand<"create_supply", Supply>
   | DomainCommand<"update_supply", Supply>
