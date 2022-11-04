@@ -21,6 +21,10 @@ const commandHandlers = {
     type: "inventory_sheet_deleted",
     payload: command.payload,
   }),
+  update_inventory_sheet: (command: DomainCommand) => ({
+    type: "inventory_sheet_updated",
+    payload: command.payload,
+  }),
 };
 
 export default function (

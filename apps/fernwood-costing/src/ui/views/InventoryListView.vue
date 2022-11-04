@@ -9,7 +9,8 @@
   <AgGridInventorySheetComponent
     :inventorySheetsList="inventorySheetsList"
     @inventorySheetEditClick="onInventorySheetEditClick"
-    @inventorySheetDeleteClick="onInventorySheetDeleteClick"
+    @inventorySheetDeleted="onInventorySheetDeleted"
+    @inventorySheetUpdated="onInventorySheetUpdated"
   ></AgGridInventorySheetComponent>
 </template>
 
@@ -53,10 +54,16 @@ const onInventorySheetEditClick = (inventorySheet: InventorySheet) => {
   router.push(`inventory/${linkDate}/${linkId}`);
 };
 
-const onInventorySheetDeleteClick = (inventorySheet: InventorySheet) => {
+const onInventorySheetDeleted = (inventorySheet: InventorySheet) => {
   props.sendCommand({
     type: "delete_inventory_sheet",
     payload: inventorySheet,
   });
 };
+
+const onInventorySheetUpdated = (inventorySheet: InventorySheet) =>
+  props.sendCommand({
+    type: "update_inventory_sheet",
+    payload: inventorySheet,
+  });
 </script>

@@ -8,6 +8,7 @@ import type { Supply } from "./Supply";
 export type CafeEventUnion =
   | DomainEvent<"inventory_sheet_created", InventorySheet>
   | DomainEvent<"inventory_sheet_deleted", InventorySheet>
+  | DomainEvent<"inventory_sheet_updated", InventorySheet>
   //
   | DomainEvent<"supply_created", Supply>
   | DomainEvent<"supply_updated", Supply>

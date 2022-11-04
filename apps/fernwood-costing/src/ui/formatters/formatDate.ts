@@ -1,8 +1,24 @@
 type DateFormat = "for-human" | "for-uri";
 
+const isValidDate = (input: unknown): input is Date => {
+  if (input instanceof Date) {
+    const date = input.getDate();
+
+    if (isNaN(date)) {
+      // We have an invalid date.
+      return false;
+    }
+
+    // We have a valid date.
+    return true;
+  }
+
+  // We do not even have a date.
+  return false;
+};
+
 export default (input: Date, format: DateFormat = "for-human") => {
-  if (!input) return "";
-  if (isNaN(input.getDate())) return "";
+  if (!isValidDate(input)) return "";
 
   switch (format) {
     case "for-uri":

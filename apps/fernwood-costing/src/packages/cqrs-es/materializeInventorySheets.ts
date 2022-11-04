@@ -32,6 +32,12 @@ export default (
         (item) => item.uniqueId != event.payload.uniqueId
       );
     }
+
+    if (event.type == "inventory_sheet_updated") {
+      inventorySheetsList.items = inventorySheetsList.items.map((oldItem) =>
+        oldItem.uniqueId == event.payload.uniqueId ? event.payload : oldItem
+      );
+    }
   });
 
   return inventorySheetsList;

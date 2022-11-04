@@ -24,7 +24,7 @@ export default defineComponent({
       date,
       getValue: () => {
         console.log(date.value);
-        return date.value;
+        return new Date(date.value);
       },
     };
   },

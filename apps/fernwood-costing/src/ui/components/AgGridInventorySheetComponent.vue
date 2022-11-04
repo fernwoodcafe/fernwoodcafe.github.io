@@ -5,6 +5,7 @@
     :gridColumnDefs="columnDefs"
     @gridRowEditClick="onInventorySheetEditClick"
     @gridRowDeleteClick="onInventorySheetDeleteClick"
+    @gridDataUpdate="onInventorySheetUpdated"
   ></AgGridComponent>
 </template>
 
@@ -22,7 +23,8 @@ type Props = {
 
 type Emits = {
   (e: "inventorySheetEditClick", data: InventorySheet): void;
-  (e: "inventorySheetDeleteClick", data: InventorySheet): void;
+  (e: "inventorySheetDeleted", data: InventorySheet): void;
+  (e: "inventorySheetUpdated", data: InventorySheet): void;
 };
 
 defineProps<Props>();
@@ -33,7 +35,9 @@ const onInventorySheetEditClick = (data) =>
   emit("inventorySheetEditClick", data);
 
 const onInventorySheetDeleteClick = (data) =>
-  emit("inventorySheetDeleteClick", data);
+  emit("inventorySheetDeleted", data);
+
+const onInventorySheetUpdated = (data) => emit("inventorySheetUpdated", data);
 
 const columnDefs: ColDef[] = [
   {
