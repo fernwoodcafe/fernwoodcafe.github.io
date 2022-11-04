@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
 import type { InventorySheet } from "@packages/domain/types";
+import AgEditorDate from "@ui/components/AgEditorDate.vue";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
 import { formatDate } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
@@ -37,10 +38,8 @@ const onInventorySheetDeleteClick = (data) =>
 const columnDefs: ColDef[] = [
   {
     field: "dateStarted",
-    valueFormatter: (params) => {
-      console.log(params);
-      return formatDate(params.data.dateStarted);
-    },
+    valueFormatter: (params) => formatDate(params.data.dateStarted),
+    cellEditor: AgEditorDate,
   },
   {
     field: "dateCompleted",

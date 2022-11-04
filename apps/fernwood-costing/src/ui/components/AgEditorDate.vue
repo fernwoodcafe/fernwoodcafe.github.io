@@ -1,5 +1,5 @@
 <template>
-  <input ref="input" class="percent" type="number" v-model="percent" />
+  <input ref="input" type="date" v-model="date" />
 </template>
 <script lang="ts">
 import type { ICellEditorParams } from "ag-grid-community";
@@ -18,18 +18,16 @@ export default defineComponent({
     });
   },
   setup(props: Props) {
-    const percent = ref(props.params.value * 100);
+    const date = ref(props.params.value);
     return {
-      percent,
-      getValue: () => percent.value / 100,
+      date,
+      getValue: () => date.value,
     };
   },
 });
 </script>
 <style>
-.ag-root-wrapper input.percent {
-  height: 100%;
-  width: 100%;
-  border: none;
+.ag-root-wrapper input[type="date"] {
+  outline: thin solid red;
 }
 </style>
