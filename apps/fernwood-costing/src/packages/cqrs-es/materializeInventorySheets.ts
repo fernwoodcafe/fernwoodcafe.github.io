@@ -1,6 +1,14 @@
 import type { CafeEventUnion, InventorySheet } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 
+const parseStringifiedDate = (input: Date | string): Date => {
+  if (input) {
+    return new Date(input);
+  }
+
+  return null;
+};
+
 export default (
   inventorySheetsList: ReactiveArray<InventorySheet>,
   ...events: CafeEventUnion[]
@@ -11,8 +19,8 @@ export default (
     if (event.type == "inventory_sheet_created") {
       const inventory: InventorySheet = {
         uniqueId: event.payload.uniqueId,
-        dateStarted: new Date(event.payload.dateStarted),
-        dateCompleted: new Date(event.payload.dateCompleted),
+        dateStarted: parseStringifiedDate(event.payload.dateStarted),
+        dateCompleted: parseStringifiedDate(event.payload.dateCompleted),
         inventoryItems: event.payload.inventoryItems,
       };
 

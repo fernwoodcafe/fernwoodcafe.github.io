@@ -42,9 +42,9 @@ const columnDefs: ColDef[] = [
       return formatDate(params.data.dateStarted);
     },
   },
-  // {
-  //   field: "dateCompleted",
-  //   valueFormatter: (params) => formatDate(params.data.dateCompleted),
-  // },
+  {
+    field: "dateCompleted",
+    valueFormatter: (params) => formatDate(params.data.dateCompleted),
+  },
 ];
 </script>
