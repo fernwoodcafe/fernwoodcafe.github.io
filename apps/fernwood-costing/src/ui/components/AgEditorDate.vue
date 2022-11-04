@@ -14,6 +14,7 @@ export default defineComponent({
       if (this.$refs.input instanceof HTMLInputElement) {
         this.$refs.input.focus();
         this.$refs.input.select();
+        this.$refs.input.showPicker();
       }
     });
   },
@@ -21,13 +22,16 @@ export default defineComponent({
     const date = ref(props.params.value);
     return {
       date,
-      getValue: () => date.value,
+      getValue: () => {
+        console.log(date.value);
+        return date.value;
+      },
     };
   },
 });
 </script>
 <style>
 .ag-root-wrapper input[type="date"] {
-  outline: thin solid red;
+  outline: thick solid red;
 }
 </style>
