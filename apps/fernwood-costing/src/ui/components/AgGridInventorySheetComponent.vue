@@ -48,6 +48,7 @@ const columnDefs: ColDef[] = [
   {
     field: "dateCompleted",
     valueFormatter: (params) => formatDate(params.data.dateCompleted),
+    cellEditor: AgEditorDate,
   },
 ];
 </script>

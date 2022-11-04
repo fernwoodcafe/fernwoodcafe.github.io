@@ -12,6 +12,7 @@ export default defineComponent({
   mounted() {
     this.$nextTick(() => {
       if (this.$refs.input instanceof HTMLInputElement) {
+        // TODO Make the chosen date in human readable format instead of YYYY-MM-DD.
         this.$refs.input.focus();
         this.$refs.input.select();
         this.$refs.input.showPicker();
@@ -22,16 +23,16 @@ export default defineComponent({
     const date = ref(props.params.value);
     return {
       date,
-      getValue: () => {
-        console.log(date.value);
-        return new Date(date.value);
-      },
+      getValue: () => new Date(date.value),
     };
   },
 });
 </script>
 <style>
 .ag-root-wrapper input[type="date"] {
-  outline: thick solid red;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  padding: 5px;
 }
 </style>

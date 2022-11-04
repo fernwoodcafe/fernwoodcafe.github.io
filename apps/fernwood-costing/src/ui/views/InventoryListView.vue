@@ -43,15 +43,12 @@ const onClickNewInventoryItem = () => {
 const router = useRouter();
 
 /**
- * TODO [nice-to-have] Remove the linkId from the uri, because it might confuse humans.
- * Currently we have it there to disambiguate among inventory sheeets that share a dateStarted.
- * Would a simpler approach involve disallowing sheets with a shared start date? Validation!
+ * TODO Disallow inventory sheeets that share a dateStarted. That requires a validation feature.
  */
 const onInventorySheetEditClick = (inventorySheet: InventorySheet) => {
   const linkDate = formatLink(inventorySheet.dateStarted);
-  const linkId = formatLink(inventorySheet.uniqueId);
 
-  router.push(`inventory/${linkDate}/${linkId}`);
+  router.push(`inventory/${linkDate}`);
 };
 
 const onInventorySheetDeleted = (inventorySheet: InventorySheet) => {
