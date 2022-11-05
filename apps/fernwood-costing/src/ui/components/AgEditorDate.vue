@@ -16,8 +16,11 @@ export default defineComponent({
         this.$refs.input.focus();
         this.$refs.input.select();
 
-        // TODO Fix type check here.
-        // Property 'showPicker' does not exist on type 'HTMLInputElement'.
+        // TODO Fix type check error here.
+        // > Property 'showPicker' does not exist on type 'HTMLInputElement'.
+        // TODO Fix cypress test error here.
+        // > Failed to execute 'showPicker' on 'HTMLInputElement':
+        // > HTMLInputElement:: showPicker() requires a user gesture.
         this.$refs.input.showPicker();
       }
     });

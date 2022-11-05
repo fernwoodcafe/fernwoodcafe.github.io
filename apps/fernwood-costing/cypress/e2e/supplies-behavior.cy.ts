@@ -1,6 +1,6 @@
-describe("supplies behavior - creates supplies", () => {
-  const suppliesToCreate = 5;
+const suppliesToCreate = 5;
 
+describe("supplies behavior - creates supplies", () => {
   before(() => {
     // Act
     cy.visit("/#/supplies");
