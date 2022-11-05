@@ -1,24 +1,11 @@
-const expectedButtons = ["New Supply"];
+const expectedButtons = ["New Inventory Sheet"];
 
-const expectedTableHeaders = [
-  "Supply Name",
-  "Supplier Name",
-  "Supply Type",
-  "Supply Units",
-  "Purchase Quantity",
-  "Purchase Price before Tax",
-  "Percent Waste",
-  "Has PST",
-  "Supply Notes",
-  "Supply Link",
-  "Unit Cost",
-  "Actions",
-];
+const expectedTableHeaders = ["Date Started", "Date Completed"];
 
-describe("supplies layout", () => {
+describe("inventory layout", () => {
   before(() => {
     // Act
-    cy.visit("/#/supplies");
+    cy.visit("/#/inventory");
   });
 
   expectedButtons.forEach((buttonText) => {
