@@ -15,6 +15,9 @@ export default defineComponent({
         // TODO Make the chosen date in human readable format instead of YYYY-MM-DD.
         this.$refs.input.focus();
         this.$refs.input.select();
+
+        // TODO Fix type check here.
+        // Property 'showPicker' does not exist on type 'HTMLInputElement'.
         this.$refs.input.showPicker();
       }
     });
