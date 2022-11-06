@@ -21,7 +21,8 @@ export default defineComponent({
         // TODO Fix cypress test error here.
         // > Failed to execute 'showPicker' on 'HTMLInputElement':
         // > HTMLInputElement:: showPicker() requires a user gesture.
-        this.$refs.input.showPicker();
+        // The showPicker seems to require a
+        this.$refs.input.click();
       }
     });
   },

@@ -49,7 +49,7 @@ const columnDefs: ColDef<MenuItem>[] = [
     field: "menuItemName",
   },
   {
-    headerName: "Cost",
+    headerName: "Total Cost",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
       const cost = menuItemCost(
@@ -61,14 +61,37 @@ const columnDefs: ColDef<MenuItem>[] = [
     },
   },
   {
+    headerName: "Servings per Recipe",
+    editable: false,
+    cellRenderer: ({ data }: { data: MenuItem }) => {
+      return data.menuItemServingsPerRecipe;
+    },
+  },
+  {
+    headerName: "Cost per Serving",
+    editable: false,
+    cellRenderer: ({ data }: { data: MenuItem }) => {
+      const cost =
+        // TODO Introduce menuItemCostPerServing into domain.
+        menuItemCost(
+          props.supplyTaxes,
+          data.menuItemComponents,
+          props.suppliesList.items
+        ) / data.menuItemServingsPerRecipe;
+      return formatMoney(cost);
+    },
+  },
+  {
     headerName: `Baseline Price @ ${props.cafeGoals.targetWeightedAverageMarkup} Markup`,
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = menuItemCost(
-        props.supplyTaxes,
-        data.menuItemComponents,
-        props.suppliesList.items
-      );
+      // TODO Introduce menuItemCostPerServing into domain.
+      const cost =
+        menuItemCost(
+          props.supplyTaxes,
+          data.menuItemComponents,
+          props.suppliesList.items
+        ) / data.menuItemServingsPerRecipe;
       const price = cost * props.cafeGoals.targetWeightedAverageMarkup;
       return formatMoney(price);
     },
@@ -88,11 +111,13 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Markup",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = menuItemCost(
-        props.supplyTaxes,
-        data.menuItemComponents,
-        props.suppliesList.items
-      );
+      // TODO Introduce menuItemCostPerServing into domain.
+      const cost =
+        menuItemCost(
+          props.supplyTaxes,
+          data.menuItemComponents,
+          props.suppliesList.items
+        ) / data.menuItemServingsPerRecipe;
       const markup = data.menuItemPrice / cost;
       return isNaN(markup) ? "-" : markup.toFixed(2);
     },
@@ -101,11 +126,13 @@ const columnDefs: ColDef<MenuItem>[] = [
     headerName: "Contribution (Price - Cost)",
     editable: false,
     cellRenderer: ({ data }: { data: MenuItem }) => {
-      const cost = menuItemCost(
-        props.supplyTaxes,
-        data.menuItemComponents,
-        props.suppliesList.items
-      );
+      // TODO Introduce menuItemCostPerServing into domain.
+      const cost =
+        menuItemCost(
+          props.supplyTaxes,
+          data.menuItemComponents,
+          props.suppliesList.items
+        ) / data.menuItemServingsPerRecipe;
       const price = cost * props.cafeGoals.targetWeightedAverageMarkup;
       return formatMoney(price - cost);
     },

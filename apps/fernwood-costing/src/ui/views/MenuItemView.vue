@@ -23,7 +23,7 @@
           <label
             >Base Price @ {{ cafeGoals.targetWeightedAverageMarkup }}</label
           >
-          <p>{{ formatMoney(menuItemBaselinePrice) }}</p>
+          <p>{{ formatMoney(menuItemBaselinePricePerServing) }}</p>
         </fieldset>
         <fieldset>
           <label>Actual Markup</label>
@@ -56,7 +56,16 @@
         />
         <fieldset>
           <label>Total Cost</label>
-          <p>{{ formatMoney(menuItemCostComputed) }}</p>
+          <p>{{ formatMoney(menuItemTotalCostComputed) }}</p>
+        </fieldset>
+        <FrcInputNumber
+          :value="menuItem.menuItemServingsPerRecipe ?? 1"
+          :label="'Servings per Recipe'"
+          @changeInNumber="onMenuItemServingsPerRecipeUpdated"
+        />
+        <fieldset>
+          <label>Cost per Serving</label>
+          <p>{{ formatMoney(menuItemCostPerServingComputed) }}</p>
         </fieldset>
       </form>
     </section>
@@ -74,7 +83,6 @@
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import {
   categoryPercentTotalSales,
-  categoryWeightedAverageMarkup,
   menuItemCost,
   menuItemMarkup,
   menuItemPercentCategorySales,
@@ -94,6 +102,7 @@ import { formatLink, formatMoney, formatPercent } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import { computed } from "vue";
 import FrcInputMoney from "../components/FrcInputMoney.vue";
+import FrcInputNumber from "../components/FrcInputNumber.vue";
 import FrcInputPercent from "../components/FrcInputPercent.vue";
 import FrcInputText from "../components/FrcInputText.vue";
 
@@ -162,6 +171,18 @@ const onChosenMenuItemPriceChange = async (menuItemPrice: number) => {
   });
 };
 
+const onMenuItemServingsPerRecipeUpdated = async (
+  menuItemServingsPerRecipe: number
+) => {
+  await props.sendCommand({
+    type: "update_menu_item",
+    payload: {
+      ...props.menuItem,
+      menuItemServingsPerRecipe,
+    },
+  });
+};
+
 const onMenuItemNameUpdated = async (menuItemName: string) => {
   await props.sendCommand({
     type: "update_menu_item",
@@ -189,21 +210,37 @@ const onMenuItemComponentDeleted = (data: MenuItemComponent) =>
     payload: data,
   });
 
-const menuItemCostComputed = computed(() =>
+const menuItemTotalCostComputed = computed(() =>
+  // TODO Rename to menu item total cost.
   menuItemCost(
     props.supplyTaxes,
     props.menuItem.menuItemComponents,
     props.suppliesList.items
   )
 );
-const menuItemBaselinePrice = computed(() =>
+
+const menuItemCostPerServingComputed = computed(
+  // TODO Introduce menuItemCostPerServing into domain.
+  () =>
+    menuItemCost(
+      props.supplyTaxes,
+      props.menuItem.menuItemComponents,
+      props.suppliesList.items
+    ) / (props.menuItem.menuItemServingsPerRecipe ?? 1)
+);
+
+const menuItemBaselinePricePerServing = computed(() =>
   menuItemPriceAtMarkup(
-    menuItemCostComputed.value,
+    menuItemCostPerServingComputed.value,
     props.cafeGoals.targetWeightedAverageMarkup
   )
 );
+
 const menuItemMarkupComputed = computed(() =>
-  menuItemMarkup(props.menuItem.menuItemPrice, menuItemCostComputed.value)
+  menuItemMarkup(
+    props.menuItem.menuItemPrice,
+    menuItemCostPerServingComputed.value
+  )
 );
 
 const menuItemPercentCategorySalesComputed = computed(() =>
@@ -217,14 +254,6 @@ const menuItemWeightedMarkupValue = computed(() =>
   menuItemWeightedMarkup(
     menuItemMarkupComputed.value,
     menuItemPercentCategorySalesComputed.value
-  )
-);
-
-const categoryWeightedAverageMarkupComputed = computed(() =>
-  categoryWeightedAverageMarkup(
-    props.supplyTaxes,
-    props.suppliesList.items,
-    props.menuItemsList.items
   )
 );
 </script>
