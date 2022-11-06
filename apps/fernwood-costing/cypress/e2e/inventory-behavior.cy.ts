@@ -10,13 +10,6 @@ describe("inventory behavior - creates inventory sheets", () => {
     }
   });
 
-  after(() => {
-    // TODO [maybe] Clear the indexDB directly instead of cleaning up through the DOM.
-    for (let i = 0; i < inventorySheetsToCreate; ++i) {
-      cy.get("input[value='Delete'").first().click();
-    }
-  });
-
   it("has button 'New Inventory Sheet'", () => {
     cy.get("input[value='Delete'").should(
       "have.length",

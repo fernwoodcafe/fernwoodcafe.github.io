@@ -11,10 +11,12 @@
 //
 // You can read more here:
 // https://on.cypress.io/configuration
+// https://docs.cypress.io/guides/references/best-practices
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
+import { $deleteDB } from "../../src/packages/data/indexedDB/client";
 import "./commands";
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+before(() => {
+  $deleteDB("restaurantDB");
+});
