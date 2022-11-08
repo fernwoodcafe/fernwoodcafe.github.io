@@ -51,6 +51,7 @@ const onClickNewMenuItem = () => {
       menuItemName: `New Menu Item ${props.menuItemsList.items.length}`,
       percentTotalSales: 0,
       menuItemPrice: 0,
+      // TODO [design] Introduce an approach to storing reasonable default values.
       menuItemServingsPerRecipe: 1,
       menuItemComponents: [],
     },
