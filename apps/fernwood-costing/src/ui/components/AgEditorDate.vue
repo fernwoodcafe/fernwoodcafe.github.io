@@ -12,9 +12,15 @@ type Props = {
 // TODO [architecture] Pass around dates as ISO 8601 strings instead of Date objects.
 // TODO [architecture] Introduce an custom IsoDateString type to store that value.
 // TODO [architecture] Never call new Date() directly, instead use newIsoDateString().
-// Why? This avoids the problem of de/serialization conflicts as we pass around dates.
-// We can always count on the string being an ISO 8601 string instead of being serialized
-// in some way that we do not expect.
+// TODO [architecture] Never use the Date type directly, instead use the IsoDateString type.
+// See also these files:
+//   - formatDate.ts
+//   - materializeInventorySheets.ts
+//   - InventoryListView.vue
+// Why use ISO Date Strings everwhere? This avoids the problem of de/serialization
+// conflicts as we pass around dates. Since we explicity use Iso Date Strings, we can
+// always count on the string being an ISO 8601 string instead of being serialized
+// in some way that we do not expect. In the code, we always use the same format.
 export default defineComponent({
   setup(props: Props) {
     const date = ref(props.params.value);
