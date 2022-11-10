@@ -10,6 +10,7 @@
     "test:coverage": "vitest",
     "test:e2e": "start-server-and-test preview http://localhost:2233/ 'cypress open --e2e --browser edge'",
     "test:e2e:ci": "start-server-and-test preview http://localhost:2233/ 'cypress run --e2e'",
+    "cypress": "cypress open --e2e --browser edge",
     "build-only": "vite build",
     "build-only:production": "vite build --mode production",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
