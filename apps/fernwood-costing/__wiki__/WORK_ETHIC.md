@@ -19,3 +19,8 @@ Experimentation in Work Ethic
 14. If you don't care whether we revert stuff together, make your commits messy.
 15. One day we'll have a CHANGELOG.md.
 16. Until then, we trust you to commit to trunk.
+
+> A little bit of ivory, two inches wide,
+> on which I work with a brush so fine
+> as to produce little effect after much labour.
+> ~ Jane Austen
