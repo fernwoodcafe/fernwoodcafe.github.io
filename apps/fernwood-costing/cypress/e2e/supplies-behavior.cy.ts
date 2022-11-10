@@ -5,8 +5,15 @@ describe("supplies behavior - creates supplies", () => {
     // Act
     cy.visit("/#/supplies");
 
+    // Create (n) supplies.
     for (let i = 0; i < suppliesToCreate; ++i) {
       cy.get('[value="New Supply"]').click();
+    }
+
+    // Edit each of the (n) supplies
+    for (let i = 0; i < suppliesToCreate; ++i) {
+      cy.contains(`New Supply ${i}`).click();
+      cy.focused().type(`Supply${i}`);
     }
   });
 
