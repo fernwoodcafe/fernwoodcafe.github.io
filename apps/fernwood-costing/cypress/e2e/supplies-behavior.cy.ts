@@ -13,7 +13,11 @@ describe("supplies behavior - creates supplies", () => {
       cy.get('[value="New Supply"]').click();
     }
 
-    // Edit each of the (n) supplies
+    // Edit each of the (n) supplies.
+    // TODO This fails when the browser window does not have focus.
+    // See https://github.com/cypress-io/cypress/issues/5023
+    // See also https://github.com/cypress-io/cypress/issues/21673
+    // Workaround in Chromium browsers with Ctrl + Shift + P + "Emulate a focused page"
     for (let i = 0; i < suppliesToCreate; ++i) {
       cy.contains(`New Supply ${i}`).click();
       cy.focused().type(`${i}_supply`).blur();
