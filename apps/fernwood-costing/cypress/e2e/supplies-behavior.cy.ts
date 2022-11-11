@@ -22,6 +22,18 @@ describe("supplies behavior - creates supplies", () => {
     for (let i = 0; i < suppliesToCreate; ++i) {
       cy.contains(`New Supply ${i}`).click();
       cy.focused().type(`${i}_supply`).blur();
+
+      // TODO Edit the Supply Name column. Done.
+      // TODO Edit the Supplier Name column.
+      // TODO Edit the Supply Type column.
+      // TODO Edit the Supply Units column.
+      // TODO Edit the Purchase Quantity column.
+      // TODO Edit the Purchase Price before Tax column.
+      // TODO Edit the Percent Waste column.
+      // TODO Edit the Has PST column.
+      // TODO Edit the Supply Notes column.
+      // TODO Edit the Supply Link column.
+      // TODO Edit the Unit Cost column.
     }
   });
 
@@ -29,7 +41,18 @@ describe("supplies behavior - creates supplies", () => {
     cy.get("input[value='Delete'").should("have.length", suppliesToCreate);
   });
 
-  it("renamed each of the supplies", () => {
+  // TODO Test edit of the Supply Name column. Done.
+  // TODO Test edit of the Supplier Name column.
+  // TODO Test edit of the Supply Type column.
+  // TODO Test edit of the Supply Units column.
+  // TODO Test edit of the Purchase Quantity column.
+  // TODO Test edit of the Purchase Price before Tax column.
+  // TODO Test edit of the Percent Waste column.
+  // TODO Test edit of the Has PST column.
+  // TODO Test edit of the Supply Notes column.
+  // TODO Test edit of the Supply Link column.
+  // TODO Test edit of the Unit Cost column.
+  it("edited the Supply Name", () => {
     for (let i = 0; i < suppliesToCreate; ++i) {
       cy.contains(`${i}_supply`);
     }
@@ -40,9 +63,22 @@ describe("supplies behavior - creates supplies", () => {
   // See also https://blog.ag-grid.com/testing-with-ag-grid-vue-js-cypress/
   // Important: this only works if ag-grid sorts in the DOM not with CSS.
 
-  const columnsToSort = [["Supply Name", "supplyName"]].map((pair) => ({
-    columnHeaderText: pair[0],
-    columnId: pair[1],
+  const columnsToSort = [
+    // TODO Test sort of the Supply Name column.
+    // TODO Test sort on the Supplier Name column.
+    // TODO Test sort on the Supply Type column.
+    // TODO Test sort on the Supply Units column.
+    // TODO Test sort on the Purchase Quantity column.
+    // TODO Test sort on the Purchase Price before Tax column.
+    // TODO Test sort on the Percent Waste column.
+    // TODO Test sort on the Has PST column.
+    // TODO Test sort on the Supply Notes column.
+    // TODO Test sort on the Supply Link column.
+    // TODO Test sort on the Unit Cost column.
+    ["Supply Name", "supplyName"],
+  ].map(([columnHeaderText, columnId]) => ({
+    columnHeaderText,
+    columnId,
   }));
 
   columnsToSort.forEach(({ columnHeaderText, columnId }) => {
