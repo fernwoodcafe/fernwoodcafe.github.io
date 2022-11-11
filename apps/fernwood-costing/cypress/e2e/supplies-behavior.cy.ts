@@ -15,9 +15,10 @@ describe("supplies behavior - creates supplies", () => {
 
     // Edit each of the (n) supplies.
     // TODO This fails when the browser window does not have focus.
+    // This is a known issue - do not fix with code. Instead in Chromium browsers
+    // use this workaround: Ctrl + Shift + P + "Emulate a focused page"
     // See https://github.com/cypress-io/cypress/issues/5023
     // See also https://github.com/cypress-io/cypress/issues/21673
-    // Workaround in Chromium browsers with Ctrl + Shift + P + "Emulate a focused page"
     for (let i = 0; i < suppliesToCreate; ++i) {
       cy.contains(`New Supply ${i}`).click();
       cy.focused().type(`${i}_supply`).blur();
@@ -34,44 +35,41 @@ describe("supplies behavior - creates supplies", () => {
     }
   });
 
-  // TODO Test that the table sorts properly.
+  // Test that the table sorts properly.
   // See https://www.cypress.io/blog/2020/07/27/sorting-the-table/
   // See also https://blog.ag-grid.com/testing-with-ag-grid-vue-js-cypress/
-  // Important: the second link has VueJS specific instructions.
-  it("sorts by suppy name", () => {
-    cy.get(".ag-theme-alpine").within(() => {
-      cy.get("[col-id=supplyName].ag-cell")
-        .then(toInnerText)
-        // TODO [bug] For some reason, even the the items appear reversed on
-        // the user interface, cypress.get fetches them in the non reversed
-        // order. Wassup with that?
-        .then((cellsInnerText) => {
-          console.table(cellsInnerText);
-          cy.log("beforeSort", cellsInnerText.join(","));
-        });
+  // Important: this only works if ag-grid sorts in the DOM not with CSS.
 
-      cy.contains(".ag-header-cell-label", "Supply Name")
-        // The first click does not change the order,
-        // because we added the supplies in order.
-        .click()
-        .click()
-        .then(() => {
-          cy.contains(".ag-header-cell-label", "Supply Name")
-            .find("[ref=eSortDesc]")
-            .should("be.visible");
+  const columnsToSort = [["Supply Name", "supplyName"]].map((pair) => ({
+    columnHeaderText: pair[0],
+    columnId: pair[1],
+  }));
 
-          cy.get("[col-id=supplyName].ag-cell")
-            .then(toInnerText)
-            // TODO [bug] For some reason, even the the items appear reversed on
-            // the user interface, cypress.get fetches them in the non reversed
-            // order. Wassup with that?
-            .then((cellsInnerText) => {
-              const reversed = cellsInnerText.slice().sort().reverse();
-              expect(cellsInnerText, "cells are reversed").to.deep.equal(
-                reversed
-              );
-            });
-        });
+  columnsToSort.forEach(({ columnHeaderText, columnId }) => {
+    it(`sorts by ${columnHeaderText}`, () => {
+      cy.get(".ag-theme-alpine").within(() => {
+        cy.contains(".ag-header-cell-label", columnHeaderText)
+          // The first click does not change the order,
+          // because we added the supplies in lexical order.
+          .click()
+          // The second click sorts it to reversed lexical order.
+          .click()
+          .then(() => {
+            // Make sure that the down pointing sort icon appears.
+            cy.contains(".ag-header-cell-label", columnHeaderText)
+              .find("[ref=eSortDesc]")
+              .should("be.visible");
+
+            cy.get(`[col-id=${columnId}].ag-cell`)
+              .then(toInnerText)
+              .then((cellsInnerText) => {
+                const reversed = cellsInnerText.slice().sort().reverse();
+                expect(cellsInnerText, "cells are reversed").to.deep.equal(
+                  reversed
+                );
+              });
+          });
+      });
     });
   });
 });
