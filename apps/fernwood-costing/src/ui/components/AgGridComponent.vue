@@ -7,6 +7,7 @@
     :getRowId="getRowId"
     :singleClickEdit="true"
     :rowData="rowData"
+    :grid-options="gridOptions"
     @grid-ready="onGridReady"
     @cell-edit-request="onCellEditRequest"
     @model-updated="onModelUpdated"
@@ -27,6 +28,31 @@ import type {
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed.
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS.
 import { ref, watch } from "vue";
+
+/**
+ * @see https://www.ag-grid.com/vue-data-grid/grid-options/
+ */
+const gridOptions: GridOptions = {
+  /**
+   * @remarks
+   *
+   * By default rows and columns can appear out of order in the DOM.
+   * This 'incorrect order' can result in inconsistent results when parsed by
+   * screen readers.
+   *
+   * Also, animations won't work properly when the DOM order is forced,
+   * so ensure they are not enabled.
+   *
+   * @see
+   *
+   * https://www.ag-grid.com/archive/19.1.4/javascript-grid-accessibility/#dom-order
+   * https://www.ag-grid.com/archive/20.2.0/javascript-grid-animation/
+   */
+  ensureDomOrder: true,
+  suppressColumnMoveAnimation: true,
+  suppressAnimationFrame: true,
+  animateRows: false,
+};
 
 type Props = {
   gridData: ReactiveArray<object>;

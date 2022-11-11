@@ -32,8 +32,20 @@ describe("supplies behavior - creates supplies", () => {
 
   // TODO Test that the table sorts properly.
   // See https://www.cypress.io/blog/2020/07/27/sorting-the-table/
+  // See also https://blog.ag-grid.com/testing-with-ag-grid-vue-js-cypress/
+  // Important: the second link has VueJS specific instructions.
   it("sorts by suppy name", () => {
     cy.get(".ag-theme-alpine").within(() => {
+      cy.get("[col-id=supplyName].ag-cell")
+        .then(toInnerText)
+        // TODO [bug] For some reason, even the the items appear reversed on
+        // the user interface, cypress.get fetches them in the non reversed
+        // order. Wassup with that?
+        .then((cellsInnerText) => {
+          console.table(cellsInnerText);
+          cy.log("beforeSort", cellsInnerText.join(","));
+        });
+
       cy.contains(".ag-header-cell-label", "Supply Name")
         // The first click does not change the order,
         // because we added the supplies in order.
@@ -50,11 +62,10 @@ describe("supplies behavior - creates supplies", () => {
             // the user interface, cypress.get fetches them in the non reversed
             // order. Wassup with that?
             .then((cellsInnerText) => {
-              cy.log(cellsInnerText.join(","));
-              const reversed = cellsInnerText.slice().reverse();
-              // expect(cellsInnerText, "cells are reversed").to.deep.equal(
-              //   reversed
-              // );
+              const reversed = cellsInnerText.slice().sort().reverse();
+              expect(cellsInnerText, "cells are reversed").to.deep.equal(
+                reversed
+              );
             });
         });
     });
