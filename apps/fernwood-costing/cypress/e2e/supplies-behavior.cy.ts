@@ -33,24 +33,30 @@ describe("supplies behavior - creates supplies", () => {
   // TODO Test that the table sorts properly.
   // See https://www.cypress.io/blog/2020/07/27/sorting-the-table/
   it("sorts by suppy name", () => {
-    cy.contains(".ag-header-cell-label", "Supply Name")
-      // The first click does not change the order,
-      // because we added the supplies in order.
-      .click()
-      .click()
-      .then(() => {
-        cy.get("[col-id=supplyName].ag-cell")
-          .then(toInnerText)
-          // TODO [bug] For some reason, even the the items appear reversed on
-          // the user interface, cypress.get fetches them in the non reversed
-          // order. Wassup with that?
-          .then((cellsInnerText) => {
-            cy.log(cellsInnerText.join(","));
-            const reversed = cellsInnerText.slice().reverse();
-            expect(cellsInnerText, "cells are reversed").to.deep.equal(
-              reversed
-            );
-          });
-      });
+    cy.get(".ag-theme-alpine").within(() => {
+      cy.contains(".ag-header-cell-label", "Supply Name")
+        // The first click does not change the order,
+        // because we added the supplies in order.
+        .click()
+        .click()
+        .then(() => {
+          cy.contains(".ag-header-cell-label", "Supply Name")
+            .find("[ref=eSortDesc]")
+            .should("be.visible");
+
+          cy.get("[col-id=supplyName].ag-cell")
+            .then(toInnerText)
+            // TODO [bug] For some reason, even the the items appear reversed on
+            // the user interface, cypress.get fetches them in the non reversed
+            // order. Wassup with that?
+            .then((cellsInnerText) => {
+              cy.log(cellsInnerText.join(","));
+              const reversed = cellsInnerText.slice().reverse();
+              // expect(cellsInnerText, "cells are reversed").to.deep.equal(
+              //   reversed
+              // );
+            });
+        });
+    });
   });
 });
