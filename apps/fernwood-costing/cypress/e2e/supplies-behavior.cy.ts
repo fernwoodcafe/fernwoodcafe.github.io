@@ -1,40 +1,62 @@
-const suppliesToCreate = 5;
+const suppliesToCreate = 3;
 
 const toInnerText = (cells: JQuery<HTMLElement>) =>
   cells.toArray().map((c) => c.innerText);
 
+/**
+ * @remarks
+ *
+ * Some Cypress tests fail when the browser window does not have focus.
+ * This is a known issue - do not fix with code. Instead in Chromium browsers
+ * use this workaround: Ctrl + Shift + P + "Emulate a focused page"
+ * See https://github.com/cypress-io/cypress/issues/5023
+ * See also https://github.com/cypress-io/cypress/issues/21673
+ */
 describe("supplies behavior - creates supplies", () => {
   before(() => {
     // Act
     cy.visit("/#/supplies");
 
-    // Create (n) supplies.
+    // Act: Create and edit (n) supplies.
     for (let i = 0; i < suppliesToCreate; ++i) {
+      // Create the supply.
       cy.get('[value="New Supply"]').click();
+
+      // Edit each the supply.
+      cy.get(`[row-index=${i}]`).within(() => {
+        cy.get(`[col-id=supplyName].ag-cell`)
+          .type(`${i}_supply`)
+          .type("{enter}");
+
+        cy.get(`[col-id=supplierName].ag-cell`)
+          .type(`${i}_supplier`)
+          .type("{enter}");
+
+        cy.get(`[col-id=purchaseQuantity].ag-cell`)
+          .type(`${i + 1}`)
+          .type("{enter}");
+
+        cy.get(`[col-id=purchasePriceBeforeTax].ag-cell`)
+          .type(`${i + 1}`)
+          .type("{enter}");
+
+        cy.get(`[col-id=percentWaste].ag-cell`)
+          .type(`${i + 1}`)
+          .type("{enter}");
+      });
     }
 
-    // Edit each of the (n) supplies.
-    // TODO This fails when the browser window does not have focus.
-    // This is a known issue - do not fix with code. Instead in Chromium browsers
-    // use this workaround: Ctrl + Shift + P + "Emulate a focused page"
-    // See https://github.com/cypress-io/cypress/issues/5023
-    // See also https://github.com/cypress-io/cypress/issues/21673
-    for (let i = 0; i < suppliesToCreate; ++i) {
-      cy.contains(`New Supply ${i}`).click();
-      cy.focused().type(`${i}_supply`).blur();
-
-      // TODO Edit the Supply Name column. Done.
-      // TODO Edit the Supplier Name column.
-      // TODO Edit the Supply Type column.
-      // TODO Edit the Supply Units column.
-      // TODO Edit the Purchase Quantity column.
-      // TODO Edit the Purchase Price before Tax column.
-      // TODO Edit the Percent Waste column.
-      // TODO Edit the Has PST column.
-      // TODO Edit the Supply Notes column.
-      // TODO Edit the Supply Link column.
-      // TODO Edit the Unit Cost column.
-    }
+    // TODO Edit the Supply Name column. Done.
+    // TODO Edit the Supplier Name column. Done.
+    // TODO Edit the Supply Type column.
+    // TODO Edit the Supply Units column.
+    // TODO Edit the Purchase Quantity column. Done.
+    // TODO Edit the Purchase Price before Tax column. Done.
+    // TODO Edit the Percent Waste column.
+    // TODO Edit the Has PST column.
+    // TODO Edit the Supply Notes column.
+    // TODO Edit the Supply Link column.
+    // TODO Edit the Unit Cost column.
   });
 
   it(`has 'Delete' ${suppliesToCreate} times`, () => {
@@ -64,18 +86,22 @@ describe("supplies behavior - creates supplies", () => {
   // Important: this only works if ag-grid sorts in the DOM not with CSS.
 
   const columnsToSort = [
-    // TODO Test sort of the Supply Name column.
-    // TODO Test sort on the Supplier Name column.
+    // TODO Test sort of the Supply Name column. Done.
+    // TODO Test sort on the Supplier Name column. Done.
     // TODO Test sort on the Supply Type column.
     // TODO Test sort on the Supply Units column.
-    // TODO Test sort on the Purchase Quantity column.
-    // TODO Test sort on the Purchase Price before Tax column.
-    // TODO Test sort on the Percent Waste column.
+    // TODO Test sort on the Purchase Quantity column. Done.
+    // TODO Test sort on the Purchase Price before Tax column. Done.
+    // TODO Test sort on the Percent Waste column. Done.
     // TODO Test sort on the Has PST column.
     // TODO Test sort on the Supply Notes column.
     // TODO Test sort on the Supply Link column.
     // TODO Test sort on the Unit Cost column.
     ["Supply Name", "supplyName"],
+    ["Supplier Name", "supplierName"],
+    ["Purchase Quantity", "purchaseQuantity"],
+    ["Purchase Price before Tax", "purchasePriceBeforeTax"],
+    ["Percent Waste", "percentWaste"],
   ].map(([columnHeaderText, columnId]) => ({
     columnHeaderText,
     columnId,
