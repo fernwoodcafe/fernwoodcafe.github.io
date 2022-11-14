@@ -1,6 +1,6 @@
-const suppliesToCreate = 3;
+const suppliesToCreate = 5;
 
-const tableTestCase = (
+const simpleTableTestCase = (
   columnHeader: string,
   columnId: string,
   dummyValueForRowIndex: (i: number) => string
@@ -10,7 +10,7 @@ const tableTestCase = (
   dummyValueForRowIndex,
 });
 
-const testCases = [
+const simpleTestCases = [
   // TODO Test sort of the Supply Name column. Done.
   // TODO Test sort on the Supplier Name column. Done.
   // TODO Test sort on the Supply Type column.
@@ -20,15 +20,23 @@ const testCases = [
   // TODO Test sort on the Percent Waste column. Done.
   // TODO Test sort on the Has PST column.
   // TODO Test sort on the Unit Cost column.
-  tableTestCase("Supply Name", "supplyName", (i) => `${i}_supplyName`),
-  tableTestCase("Supplier Name", "supplierName", (i) => `${i}_supplierName`),
-  tableTestCase("Purchase Quantity", "purchaseQuantity", (i) => `${i}`),
-  tableTestCase(
+  simpleTableTestCase("Supply Name", "supplyName", (i) => `${i}_supplyName`),
+  simpleTableTestCase(
+    "Supplier Name",
+    "supplierName",
+    (i) => `${i}_supplierName`
+  ),
+  simpleTableTestCase(
+    "Purchase Quantity",
+    "purchaseQuantity",
+    (i) => `${i + 1}`
+  ),
+  simpleTableTestCase(
     "Purchase Price before Tax",
     "purchasePriceBeforeTax",
-    (i) => `${i}`
+    (i) => `${i + 1}`
   ),
-  tableTestCase("Percent Waste", "percentWaste", (i: number) => `${i}`),
+  simpleTableTestCase("Percent Waste", "percentWaste", (i) => `${i + 1}`),
 ];
 
 const toInnerText = (cells: JQuery<HTMLElement>) =>
@@ -54,13 +62,35 @@ describe("supplies behavior - creates supplies", () => {
       cy.get('[value="New Supply"]').click();
 
       // Edit each column of the supply.
-      cy.get(`[row-index=${i}]`).within(() => {
-        testCases.forEach(({ columnId, dummyValueForRowIndex }) => {
-          cy.get(`[col-id=${columnId}].ag-cell`)
-            .type(dummyValueForRowIndex(i))
-            .type("{enter}");
-        });
+      simpleTestCases.forEach(({ columnId, dummyValueForRowIndex }) => {
+        cy.get(`[row-index=${i}] [col-id=${columnId}].ag-cell`)
+          .type(dummyValueForRowIndex(i))
+          .type("{enter}");
       });
+
+      // Drop Down List
+      cy.get(`[row-index=${i}] [col-id=supplyType].ag-cell`)
+        .click()
+        // Do not use `within`, because the drop down list renders outside the cell.
+        .then(() => {
+          cy.focused().click();
+          cy.get(".ag-popup").contains("packaging").click();
+        });
+
+      cy.get(`[row-index=${i}] [col-id=supplyUnits].ag-cell`)
+        .click()
+        // Do not use `within`, because the drop down list renders outside the cell.
+        .then(() => {
+          cy.focused().click();
+          cy.get(".ag-popup").contains("gram").click();
+        });
+
+      // Checkbox
+      cy.get(`[row-index=${i}] [col-id=hasPST].ag-cell`)
+        .click()
+        .within(() => {
+          cy.get("input[type=checkbox]").click().type("{enter}");
+        });
     }
 
     // TODO Edit the Supply Name column. Done.
@@ -74,7 +104,7 @@ describe("supplies behavior - creates supplies", () => {
     // TODO Edit the Unit Cost column. Not done. We compute this column.
   });
 
-  it(`has 'Delete' ${suppliesToCreate} times`, () => {
+  it.skip(`has 'Delete' ${suppliesToCreate} times`, () => {
     cy.get("input[value='Delete'").should("have.length", suppliesToCreate);
   });
 
@@ -87,8 +117,8 @@ describe("supplies behavior - creates supplies", () => {
   // TODO Test edit of the Percent Waste column.
   // TODO Test edit of the Has PST column.
   // TODO Test computation of the Unit Cost column.
-  testCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
-    it(`edited column '${columnHeader}'`, () => {
+  simpleTestCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
+    it.skip(`edited column '${columnHeader}'`, () => {
       for (let i = 0; i < suppliesToCreate; ++i) {
         cy.contains(dummyValueForRowIndex(i));
       }
@@ -99,8 +129,8 @@ describe("supplies behavior - creates supplies", () => {
   // See https://www.cypress.io/blog/2020/07/27/sorting-the-table/
   // See also https://blog.ag-grid.com/testing-with-ag-grid-vue-js-cypress/
   // Important: this only works if ag-grid sorts in the DOM not with CSS.
-  testCases.forEach(({ columnHeader, columnId }) => {
-    it(`sorts by ${columnHeader}`, () => {
+  simpleTestCases.forEach(({ columnHeader, columnId }) => {
+    it.skip(`sorts by ${columnHeader}`, () => {
       cy.get(".ag-theme-alpine").within(() => {
         cy.contains(".ag-header-cell-label", columnHeader)
           // The first click does not change the order,
