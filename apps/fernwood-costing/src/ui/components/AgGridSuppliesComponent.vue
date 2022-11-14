@@ -73,6 +73,8 @@ const columnDefs: ColDef[] = [
       formatPercent(params.value),
   },
   {
+    // TODO Change the value on click instead of on click twice. Consider using
+    // the 'checkboxSelect' property of ColDef.
     field: "hasPST",
     cellEditor: AgEditorCheckbox,
     cellRenderer: (params) => (params.value ? "&#10003" : "&#10007"),

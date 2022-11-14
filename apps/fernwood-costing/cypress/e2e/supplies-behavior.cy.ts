@@ -48,13 +48,13 @@ describe("supplies behavior - creates supplies", () => {
 
     // TODO Edit the Supply Name column. Done.
     // TODO Edit the Supplier Name column. Done.
-    // TODO Edit the Supply Type column.
+    // TODO Edit the Supply Type column.*
     // TODO Edit the Supply Units column.
     // TODO Edit the Purchase Quantity column. Done.
     // TODO Edit the Purchase Price before Tax column. Done.
-    // TODO Edit the Percent Waste column.
+    // TODO Edit the Percent Waste column. Done.
     // TODO Edit the Has PST column.
-    // TODO Edit the Unit Cost column.
+    // TODO Edit the Unit Cost column. Not done. We compute this column.
   });
 
   it(`has 'Delete' ${suppliesToCreate} times`, () => {
@@ -69,10 +69,16 @@ describe("supplies behavior - creates supplies", () => {
   // TODO Test edit of the Purchase Price before Tax column.
   // TODO Test edit of the Percent Waste column.
   // TODO Test edit of the Has PST column.
-  // TODO Test edit of the Unit Cost column.
-  it("edited the Supply Name", () => {
+  // TODO Test computation of the Unit Cost column.
+  it("edited column 'Supply Name'", () => {
     for (let i = 0; i < suppliesToCreate; ++i) {
       cy.contains(`${i}_supply`);
+    }
+  });
+
+  it("edited column 'Supplier Name'", () => {
+    for (let i = 0; i < suppliesToCreate; ++i) {
+      cy.contains(`${i}_supplier`);
     }
   });
 
