@@ -1,5 +1,36 @@
 const suppliesToCreate = 3;
 
+const tableTestCase = (
+  columnHeader: string,
+  columnId: string,
+  dummyValueForRowIndex: (i: number) => string
+) => ({
+  columnHeader,
+  columnId,
+  dummyValueForRowIndex,
+});
+
+const testCases = [
+  // TODO Test sort of the Supply Name column. Done.
+  // TODO Test sort on the Supplier Name column. Done.
+  // TODO Test sort on the Supply Type column.
+  // TODO Test sort on the Supply Units column.
+  // TODO Test sort on the Purchase Quantity column. Done.
+  // TODO Test sort on the Purchase Price before Tax column. Done.
+  // TODO Test sort on the Percent Waste column. Done.
+  // TODO Test sort on the Has PST column.
+  // TODO Test sort on the Unit Cost column.
+  tableTestCase("Supply Name", "supplyName", (i) => `${i}_supplyName`),
+  tableTestCase("Supplier Name", "supplierName", (i) => `${i}_supplierName`),
+  tableTestCase("Purchase Quantity", "purchaseQuantity", (i) => `${i}`),
+  tableTestCase(
+    "Purchase Price before Tax",
+    "purchasePriceBeforeTax",
+    (i) => `${i}`
+  ),
+  tableTestCase("Percent Waste", "percentWaste", (i: number) => `${i}`),
+];
+
 const toInnerText = (cells: JQuery<HTMLElement>) =>
   cells.toArray().map((c) => c.innerText);
 
@@ -22,27 +53,13 @@ describe("supplies behavior - creates supplies", () => {
       // Create the supply.
       cy.get('[value="New Supply"]').click();
 
-      // Edit each the supply.
+      // Edit each column of the supply.
       cy.get(`[row-index=${i}]`).within(() => {
-        cy.get(`[col-id=supplyName].ag-cell`)
-          .type(`${i}_supply`)
-          .type("{enter}");
-
-        cy.get(`[col-id=supplierName].ag-cell`)
-          .type(`${i}_supplier`)
-          .type("{enter}");
-
-        cy.get(`[col-id=purchaseQuantity].ag-cell`)
-          .type(`${i + 1}`)
-          .type("{enter}");
-
-        cy.get(`[col-id=purchasePriceBeforeTax].ag-cell`)
-          .type(`${i + 1}`)
-          .type("{enter}");
-
-        cy.get(`[col-id=percentWaste].ag-cell`)
-          .type(`${i + 1}`)
-          .type("{enter}");
+        testCases.forEach(({ columnId, dummyValueForRowIndex }) => {
+          cy.get(`[col-id=${columnId}].ag-cell`)
+            .type(dummyValueForRowIndex(i))
+            .type("{enter}");
+        });
       });
     }
 
@@ -70,47 +87,22 @@ describe("supplies behavior - creates supplies", () => {
   // TODO Test edit of the Percent Waste column.
   // TODO Test edit of the Has PST column.
   // TODO Test computation of the Unit Cost column.
-  it("edited column 'Supply Name'", () => {
-    for (let i = 0; i < suppliesToCreate; ++i) {
-      cy.contains(`${i}_supply`);
-    }
-  });
-
-  it("edited column 'Supplier Name'", () => {
-    for (let i = 0; i < suppliesToCreate; ++i) {
-      cy.contains(`${i}_supplier`);
-    }
+  testCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
+    it(`edited column '${columnHeader}'`, () => {
+      for (let i = 0; i < suppliesToCreate; ++i) {
+        cy.contains(dummyValueForRowIndex(i));
+      }
+    });
   });
 
   // Test that the table sorts properly.
   // See https://www.cypress.io/blog/2020/07/27/sorting-the-table/
   // See also https://blog.ag-grid.com/testing-with-ag-grid-vue-js-cypress/
   // Important: this only works if ag-grid sorts in the DOM not with CSS.
-
-  const columnsToSort = [
-    // TODO Test sort of the Supply Name column. Done.
-    // TODO Test sort on the Supplier Name column. Done.
-    // TODO Test sort on the Supply Type column.
-    // TODO Test sort on the Supply Units column.
-    // TODO Test sort on the Purchase Quantity column. Done.
-    // TODO Test sort on the Purchase Price before Tax column. Done.
-    // TODO Test sort on the Percent Waste column. Done.
-    // TODO Test sort on the Has PST column.
-    // TODO Test sort on the Unit Cost column.
-    ["Supply Name", "supplyName"],
-    ["Supplier Name", "supplierName"],
-    ["Purchase Quantity", "purchaseQuantity"],
-    ["Purchase Price before Tax", "purchasePriceBeforeTax"],
-    ["Percent Waste", "percentWaste"],
-  ].map(([columnHeaderText, columnId]) => ({
-    columnHeaderText,
-    columnId,
-  }));
-
-  columnsToSort.forEach(({ columnHeaderText, columnId }) => {
-    it(`sorts by ${columnHeaderText}`, () => {
+  testCases.forEach(({ columnHeader, columnId }) => {
+    it(`sorts by ${columnHeader}`, () => {
       cy.get(".ag-theme-alpine").within(() => {
-        cy.contains(".ag-header-cell-label", columnHeaderText)
+        cy.contains(".ag-header-cell-label", columnHeader)
           // The first click does not change the order,
           // because we added the supplies in lexical order.
           .click()
@@ -118,7 +110,7 @@ describe("supplies behavior - creates supplies", () => {
           .click()
           .then(() => {
             // Make sure that the down pointing sort icon appears.
-            cy.contains(".ag-header-cell-label", columnHeaderText)
+            cy.contains(".ag-header-cell-label", columnHeader)
               .find("[ref=eSortDesc]")
               .should("be.visible");
 
