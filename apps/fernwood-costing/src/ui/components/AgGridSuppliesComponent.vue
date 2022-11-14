@@ -77,8 +77,6 @@ const columnDefs: ColDef[] = [
     cellEditor: AgEditorCheckbox,
     cellRenderer: (params) => (params.value ? "&#10003" : "&#10007"),
   },
-  { field: "supplyNotes" },
-  { field: "supplyLink" },
   {
     field: "unitCost",
     headerName: "Unit Cost",

@@ -9,7 +9,6 @@ const expectedTableHeaders = [
   "Purchase Price before Tax",
   "Percent Waste",
   "Has PST",
-  "Supply Notes",
   "Supply Link",
   "Unit Cost",
   "Actions",

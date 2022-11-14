@@ -54,8 +54,6 @@ describe("supplies behavior - creates supplies", () => {
     // TODO Edit the Purchase Price before Tax column. Done.
     // TODO Edit the Percent Waste column.
     // TODO Edit the Has PST column.
-    // TODO Edit the Supply Notes column.
-    // TODO Edit the Supply Link column.
     // TODO Edit the Unit Cost column.
   });
 
@@ -71,8 +69,6 @@ describe("supplies behavior - creates supplies", () => {
   // TODO Test edit of the Purchase Price before Tax column.
   // TODO Test edit of the Percent Waste column.
   // TODO Test edit of the Has PST column.
-  // TODO Test edit of the Supply Notes column.
-  // TODO Test edit of the Supply Link column.
   // TODO Test edit of the Unit Cost column.
   it("edited the Supply Name", () => {
     for (let i = 0; i < suppliesToCreate; ++i) {
@@ -94,8 +90,6 @@ describe("supplies behavior - creates supplies", () => {
     // TODO Test sort on the Purchase Price before Tax column. Done.
     // TODO Test sort on the Percent Waste column. Done.
     // TODO Test sort on the Has PST column.
-    // TODO Test sort on the Supply Notes column.
-    // TODO Test sort on the Supply Link column.
     // TODO Test sort on the Unit Cost column.
     ["Supply Name", "supplyName"],
     ["Supplier Name", "supplierName"],

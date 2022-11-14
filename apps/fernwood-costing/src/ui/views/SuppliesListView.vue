@@ -43,8 +43,6 @@ const onClickNewSupply = () => {
       supplyUnits: "-",
       supplyName: `New Supply ${props.suppliesList.items.length}`,
       supplierName: "",
-      supplyNotes: "",
-      supplyLink: "",
       supplyType: "ingredient",
       percentWaste: 0,
       hasPST: false,

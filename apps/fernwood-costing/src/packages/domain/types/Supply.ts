@@ -5,8 +5,6 @@ import type { UnitOfMeasure } from "./UnitOfMeasure";
 export type Supply = DomainEntity & {
   supplyName: string;
   supplierName: string;
-  supplyNotes: string;
-  supplyLink: string;
   supplyType: SupplyType;
   /**
    * The unit that purchasers use to think about the supply.
