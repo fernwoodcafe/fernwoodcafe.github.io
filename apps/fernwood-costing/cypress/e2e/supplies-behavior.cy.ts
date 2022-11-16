@@ -101,21 +101,51 @@ describe("supplies behavior - creates supplies", () => {
   });
 
   // TODO Test edit of the Supply Name column. Done.
-  // TODO Test edit of the Supplier Name column.
+  // TODO Test edit of the Supplier Name column. Done.
   // TODO Test edit of the Supply Type column.
   // TODO Test edit of the Supply Units column.
-  // TODO Test edit of the Purchase Quantity column.
-  // TODO Test edit of the Purchase Price before Tax column.
-  // TODO Test edit of the Percent Waste column.
-  // TODO Test edit of the Has PST column.
+  // TODO Test edit of the Purchase Quantity column. Done.
+  // TODO Test edit of the Purchase Price before Tax column. Done.
+  // TODO Test edit of the Percent Waste column. Done.
+  // TODO Test edit of the Has PST column. Done.
   // TODO Test computation of the Unit Cost column.
-  simpleTestCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
-    it(`edited simple column '${columnHeader}'`, () => {
-      for (let i = 0; i < suppliesToCreate; ++i) {
-        cy.contains(dummyValueForRowIndex(i));
-      }
+  for (let rowIndex = 0; rowIndex < suppliesToCreate; ++rowIndex) {
+    simpleTestCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
+      it(`edited simple column '${columnHeader}'`, () => {
+        cy.contains(dummyValueForRowIndex(rowIndex));
+      });
     });
-  });
+
+    it(`edited column 'Supply Type'`, () => {
+      const columnId = "supplyType";
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`).contains(
+        "packaging"
+      );
+    });
+
+    it(`edited column 'Supply Units'`, () => {
+      const columnId = "supplyUnits";
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`).contains(
+        "gram"
+      );
+    });
+
+    it(`edited column 'Has PST'`, () => {
+      const columnId = "hasPST";
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`).contains(
+        "✓"
+      );
+    });
+
+    it(`computed column 'Unit Cost'`, () => {
+      const columnId = "unitCost";
+      // For this test, we only test that we computed a value; we do not test
+      // the accuracy of the computation.
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`)
+        .contains("gram")
+        .should("not.contain.text", "-");
+    });
+  }
 
   // Test that the table sorts properly.
   // See https://www.cypress.io/blog/2020/07/27/sorting-the-table/
