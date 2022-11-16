@@ -73,8 +73,8 @@ const columnDefs: ColDef[] = [
       formatPercent(params.value),
   },
   {
-    // TODO Change the value on click instead of on click twice. Consider using
-    // the 'checkboxSelect' property of ColDef.
+    // TODO [nice-to-have] Change the value on single-click instead of on double-click.
+    // TODO [design] Consider using the 'checkboxSelect' property of ColDef instead of our custom one.
     field: "hasPST",
     cellEditor: AgEditorCheckbox,
     cellRenderer: (params) => (params.value ? "&#10003" : "&#10007"),
@@ -83,6 +83,7 @@ const columnDefs: ColDef[] = [
     field: "unitCost",
     headerName: "Unit Cost",
     editable: false,
+    comparator: (valueA, valueB) => valueA.cost - valueB.cost,
     valueGetter: ({ data }: ValueGetterParams<Supply>) => ({
       cost: supplyCostPerUnit(props.supplyTaxes, data),
       units: data.supplyUnits,

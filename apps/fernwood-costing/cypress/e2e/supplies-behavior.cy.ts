@@ -11,15 +11,6 @@ const tableTestCase = (
 });
 
 const simpleTestCases = [
-  // TODO Test sort of the Supply Name column. Done.
-  // TODO Test sort on the Supplier Name column. Done.
-  // TODO Test sort on the Supply Type column.
-  // TODO Test sort on the Supply Units column.
-  // TODO Test sort on the Purchase Quantity column. Done.
-  // TODO Test sort on the Purchase Price before Tax column. Done.
-  // TODO Test sort on the Percent Waste column. Done.
-  // TODO Test sort on the Has PST column.
-  // TODO Test sort on the Unit Cost column.
   tableTestCase("Supply Name", "supplyName", (i) => `${i}_supplyName`),
   tableTestCase("Supplier Name", "supplierName", (i) => `${i}_supplierName`),
   tableTestCase("Purchase Quantity", "purchaseQuantity", (i) => `${i + 1}`),
@@ -102,13 +93,13 @@ describe("supplies behavior - creates supplies", () => {
 
   // TODO Test edit of the Supply Name column. Done.
   // TODO Test edit of the Supplier Name column. Done.
-  // TODO Test edit of the Supply Type column.
-  // TODO Test edit of the Supply Units column.
+  // TODO Test edit of the Supply Type column. Done.
+  // TODO Test edit of the Supply Units column. Done.
   // TODO Test edit of the Purchase Quantity column. Done.
   // TODO Test edit of the Purchase Price before Tax column. Done.
   // TODO Test edit of the Percent Waste column. Done.
   // TODO Test edit of the Has PST column. Done.
-  // TODO Test computation of the Unit Cost column.
+  // TODO Test computation of the Unit Cost column. Done.
   for (let rowIndex = 0; rowIndex < suppliesToCreate; ++rowIndex) {
     simpleTestCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
       it(`edited simple column '${columnHeader}'`, () => {
@@ -139,8 +130,8 @@ describe("supplies behavior - creates supplies", () => {
 
     it(`computed column 'Unit Cost'`, () => {
       const columnId = "unitCost";
-      // For this test, we only test that we computed a value; we do not test
-      // the accuracy of the computation.
+      // For this test, we only test that we computed a value;
+      // we do not test the accuracy of the computation.
       cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`)
         .contains("gram")
         .should("not.contain.text", "-");
@@ -148,10 +139,33 @@ describe("supplies behavior - creates supplies", () => {
   }
 
   // Test that the table sorts properly.
+  //
+  // Note:
+  //
+  // The remaining [nice-to-have] sorting tests require more consideration of our
+  // test arrangement. Sorting on requires having different values for different
+  // rows. If we want to use the same test arrangement to test sorting and to test
+  // editing, we need to figure out a new way of doing a test arrangement.
+  //
+  // TODO Test sort of the Supply Name column. Done.
+  // TODO Test sort on the Supplier Name column. Done.
+  // TODO Test sort on the Supply Type column. [nice-to-have] <-----
+  // TODO Test sort on the Supply Units column. [nice-to-have] <-----
+  // TODO Test sort on the Purchase Quantity column. Done.
+  // TODO Test sort on the Purchase Price before Tax column. Done.
+  // TODO Test sort on the Percent Waste column. Done.
+  // TODO Test sort on the Has PST column. [nice-to-have] <-----
+  // TODO Test sort on the Unit Cost column. Done.
   // See https://www.cypress.io/blog/2020/07/27/sorting-the-table/
   // See also https://blog.ag-grid.com/testing-with-ag-grid-vue-js-cypress/
   // Important: this only works if ag-grid sorts in the DOM not with CSS.
-  simpleTestCases.forEach(({ columnHeader, columnId }) => {
+  [
+    ...simpleTestCases,
+    {
+      columnHeader: "Unit Cost",
+      columnId: "unitCost",
+    },
+  ].forEach(({ columnHeader, columnId }) => {
     it(`sorts by ${columnHeader}`, () => {
       cy.get(".ag-theme-alpine").within(() => {
         cy.contains(".ag-header-cell-label", columnHeader)
@@ -170,6 +184,8 @@ describe("supplies behavior - creates supplies", () => {
               .then(toInnerText)
               .then((cellsInnerText) => {
                 const reversed = cellsInnerText.slice().sort().reverse();
+                cy.log("log me", cellsInnerText.join(","));
+                cy.log("log me", reversed.join(","));
                 expect(cellsInnerText, "cells are reversed").to.deep.equal(
                   reversed
                 );
