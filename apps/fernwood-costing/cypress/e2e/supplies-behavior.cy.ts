@@ -1,6 +1,6 @@
-const suppliesToCreate = 5;
+const suppliesToCreate = 3;
 
-const simpleTableTestCase = (
+const tableTestCase = (
   columnHeader: string,
   columnId: string,
   dummyValueForRowIndex: (i: number) => string
@@ -20,23 +20,15 @@ const simpleTestCases = [
   // TODO Test sort on the Percent Waste column. Done.
   // TODO Test sort on the Has PST column.
   // TODO Test sort on the Unit Cost column.
-  simpleTableTestCase("Supply Name", "supplyName", (i) => `${i}_supplyName`),
-  simpleTableTestCase(
-    "Supplier Name",
-    "supplierName",
-    (i) => `${i}_supplierName`
-  ),
-  simpleTableTestCase(
-    "Purchase Quantity",
-    "purchaseQuantity",
-    (i) => `${i + 1}`
-  ),
-  simpleTableTestCase(
+  tableTestCase("Supply Name", "supplyName", (i) => `${i}_supplyName`),
+  tableTestCase("Supplier Name", "supplierName", (i) => `${i}_supplierName`),
+  tableTestCase("Purchase Quantity", "purchaseQuantity", (i) => `${i + 1}`),
+  tableTestCase(
     "Purchase Price before Tax",
     "purchasePriceBeforeTax",
     (i) => `${i + 1}`
   ),
-  simpleTableTestCase("Percent Waste", "percentWaste", (i) => `${i + 1}`),
+  tableTestCase("Percent Waste", "percentWaste", (i) => `${i + 1}`),
 ];
 
 const toInnerText = (cells: JQuery<HTMLElement>) =>
@@ -61,14 +53,14 @@ describe("supplies behavior - creates supplies", () => {
       // Create the supply.
       cy.get('[value="New Supply"]').click();
 
-      // Edit each column of the supply.
+      // Edit each simple column of the supply.
       simpleTestCases.forEach(({ columnId, dummyValueForRowIndex }) => {
         cy.get(`[row-index=${i}] [col-id=${columnId}].ag-cell`)
           .type(dummyValueForRowIndex(i))
           .type("{enter}");
       });
 
-      // Drop Down List
+      // Edit Drop Down Lists
       cy.get(`[row-index=${i}] [col-id=supplyType].ag-cell`)
         .click()
         // Do not use `within`, because the drop down list renders outside the cell.
@@ -85,7 +77,7 @@ describe("supplies behavior - creates supplies", () => {
           cy.get(".ag-popup").contains("gram").click();
         });
 
-      // Checkbox
+      // Edit Checkboxes
       cy.get(`[row-index=${i}] [col-id=hasPST].ag-cell`)
         .click()
         .within(() => {
@@ -95,16 +87,16 @@ describe("supplies behavior - creates supplies", () => {
 
     // TODO Edit the Supply Name column. Done.
     // TODO Edit the Supplier Name column. Done.
-    // TODO Edit the Supply Type column.*
-    // TODO Edit the Supply Units column.
+    // TODO Edit the Supply Type column. Done.
+    // TODO Edit the Supply Units column. Done.
     // TODO Edit the Purchase Quantity column. Done.
     // TODO Edit the Purchase Price before Tax column. Done.
     // TODO Edit the Percent Waste column. Done.
-    // TODO Edit the Has PST column.
+    // TODO Edit the Has PST column. Done.
     // TODO Edit the Unit Cost column. Not done. We compute this column.
   });
 
-  it.skip(`has 'Delete' ${suppliesToCreate} times`, () => {
+  it(`has 'Delete' ${suppliesToCreate} times`, () => {
     cy.get("input[value='Delete'").should("have.length", suppliesToCreate);
   });
 
@@ -118,7 +110,7 @@ describe("supplies behavior - creates supplies", () => {
   // TODO Test edit of the Has PST column.
   // TODO Test computation of the Unit Cost column.
   simpleTestCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
-    it.skip(`edited column '${columnHeader}'`, () => {
+    it(`edited simple column '${columnHeader}'`, () => {
       for (let i = 0; i < suppliesToCreate; ++i) {
         cy.contains(dummyValueForRowIndex(i));
       }
@@ -130,7 +122,7 @@ describe("supplies behavior - creates supplies", () => {
   // See also https://blog.ag-grid.com/testing-with-ag-grid-vue-js-cypress/
   // Important: this only works if ag-grid sorts in the DOM not with CSS.
   simpleTestCases.forEach(({ columnHeader, columnId }) => {
-    it.skip(`sorts by ${columnHeader}`, () => {
+    it(`sorts by ${columnHeader}`, () => {
       cy.get(".ag-theme-alpine").within(() => {
         cy.contains(".ag-header-cell-label", columnHeader)
           // The first click does not change the order,
