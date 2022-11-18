@@ -4,6 +4,8 @@ const menuItemsToCreate = 3;
 
 const simpleTestCases = [
   tableTestCase("Menu Item Name", "menuItemName", (i) => `${i}_menuItemName`),
+  tableTestCase("Percent Total Sales", "percentTotalSales", (i) => `${i + 1}`),
+  tableTestCase("Chosen Menu Price", "menuItemPrice", (i) => `${i + 1}`),
 ];
 
 describe("creates menu items", () => {
@@ -29,6 +31,17 @@ describe("creates menu items", () => {
     cy.get("input[value='Delete'").should("have.length", menuItemsToCreate);
   });
 
+  // TODO Test edit of the Menu Item Name column. Done.
+  // TODO Test edit of the Percent Total Sales column. Done.
+  // TODO Test edit of the Chosen Menu Price column.
+  //
+  // Non-editable columns to test.
+  // - Total Cost
+  // - Servings per Recipe
+  // - Cost per Serving
+  // - Baseline Price @ 3.5 Markup
+  // - Markup
+  // - Contribution
   for (let rowIndex = 0; rowIndex < menuItemsToCreate; ++rowIndex) {
     simpleTestCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
       it(`edited simple column '${columnHeader}'`, () => {

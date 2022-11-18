@@ -67,16 +67,6 @@ describe("creates supplies", () => {
           cy.get("input[type=checkbox]").click().type("{enter}");
         });
     }
-
-    // TODO Edit the Supply Name column. Done.
-    // TODO Edit the Supplier Name column. Done.
-    // TODO Edit the Supply Type column. Done.
-    // TODO Edit the Supply Units column. Done.
-    // TODO Edit the Purchase Quantity column. Done.
-    // TODO Edit the Purchase Price before Tax column. Done.
-    // TODO Edit the Percent Waste column. Done.
-    // TODO Edit the Has PST column. Done.
-    // TODO Edit the Unit Cost column. Not done. We compute this column.
   });
 
   it(`has 'Delete' ${suppliesToCreate} times`, () => {
