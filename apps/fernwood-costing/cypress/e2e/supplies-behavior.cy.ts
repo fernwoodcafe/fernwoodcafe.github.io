@@ -38,13 +38,13 @@ describe("creates supplies", () => {
 
       // Edit each simple column of the supply.
       simpleTestCases.forEach(({ columnId, dummyValueForRowIndex }) => {
-        cy.get(`[row-index=${i}] [col-id=${columnId}].ag-cell`)
+        cy.get(`[row-index=${i}] [col-id=${columnId}]`)
           .type(dummyValueForRowIndex(i))
           .type("{enter}");
       });
 
       // Edit Drop Down Lists
-      cy.get(`[row-index=${i}] [col-id=supplyType].ag-cell`)
+      cy.get(`[row-index=${i}] [col-id=supplyType]`)
         .click()
         // Do not use `within`, because the drop down list renders outside the cell.
         .then(() => {
@@ -52,7 +52,7 @@ describe("creates supplies", () => {
           cy.get(".ag-popup").contains("packaging").click();
         });
 
-      cy.get(`[row-index=${i}] [col-id=supplyUnits].ag-cell`)
+      cy.get(`[row-index=${i}] [col-id=supplyUnits]`)
         .click()
         // Do not use `within`, because the drop down list renders outside the cell.
         .then(() => {
@@ -61,7 +61,7 @@ describe("creates supplies", () => {
         });
 
       // Edit Checkboxes
-      cy.get(`[row-index=${i}] [col-id=hasPST].ag-cell`)
+      cy.get(`[row-index=${i}] [col-id=hasPST]`)
         .click()
         .within(() => {
           cy.get("input[type=checkbox]").click().type("{enter}");
@@ -91,30 +91,26 @@ describe("creates supplies", () => {
 
     it(`edited column 'Supply Type'`, () => {
       const columnId = "supplyType";
-      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`).contains(
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`).contains(
         "packaging"
       );
     });
 
     it(`edited column 'Supply Units'`, () => {
       const columnId = "supplyUnits";
-      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`).contains(
-        "gram"
-      );
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`).contains("gram");
     });
 
     it(`edited column 'Has PST'`, () => {
       const columnId = "hasPST";
-      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`).contains(
-        "✓"
-      );
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`).contains("✓");
     });
 
     it(`computed column 'Unit Cost'`, () => {
       const columnId = "unitCost";
       // For this test, we only test that we computed a value;
       // we do not test the accuracy of the computation.
-      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`)
+      cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`)
         .contains("gram")
         .should("not.contain.text", "-");
     });
@@ -162,7 +158,7 @@ describe("creates supplies", () => {
               .find("[ref=eSortDesc]")
               .should("be.visible");
 
-            cy.get(`[col-id=${columnId}].ag-cell`)
+            cy.get(`[col-id=${columnId}]`)
               .then(toInnerText)
               .then((cellsInnerText) => {
                 const reversed = cellsInnerText.slice().sort().reverse();
