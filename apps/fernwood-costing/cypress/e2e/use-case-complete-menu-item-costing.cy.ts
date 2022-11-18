@@ -27,6 +27,15 @@ describe("complete menu item costing", () => {
     // Now we follow a pattern of navigating back and forth between the
     // list view and the details view while making and confirming edits.
 
+    // TODO Add an ingredient to the menu item.
+    // TODO Add a supply to the menu item.
+    // TODO Play ping-pong with Percent Total Sales.
+    // TODO Play ping-pong with Chosen Menu Price.
+    // TODO ...
+    // TODO ...
+    // TODO ...
+    // TODO ...
+
     // Ping: List view.
     cy.get('[value="New Menu Item"]').click();
     cy.get(`[col-id="menuItemName"].ag-cell`)
@@ -39,9 +48,6 @@ describe("complete menu item costing", () => {
       .should("have.value", `${menuItemBaseName}_01`)
       .clear()
       .type(`${menuItemBaseName}_02`);
-
-    // TODO Add an ingredient to the menu item.
-    // TODO Add a supply to the menu item.
 
     // Ping: List view.
     cy.contains("a", "Menu Items").click();
