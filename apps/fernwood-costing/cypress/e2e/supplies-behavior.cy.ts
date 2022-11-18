@@ -1,14 +1,6 @@
-const suppliesToCreate = 3;
+import tableTestCase from "../misc/tableTestCase";
 
-const tableTestCase = (
-  columnHeader: string,
-  columnId: string,
-  dummyValueForRowIndex: (i: number) => string
-) => ({
-  columnHeader,
-  columnId,
-  dummyValueForRowIndex,
-});
+const suppliesToCreate = 3;
 
 const simpleTestCases = [
   tableTestCase("Supply Name", "supplyName", (i) => `${i}_supplyName`),
@@ -34,7 +26,7 @@ const toInnerText = (cells: JQuery<HTMLElement>) =>
  * See https://github.com/cypress-io/cypress/issues/5023
  * See also https://github.com/cypress-io/cypress/issues/21673
  */
-describe("supplies behavior - creates supplies", () => {
+describe("creates supplies", () => {
   before(() => {
     // Act
     cy.visit("/#/supplies");
@@ -184,8 +176,6 @@ describe("supplies behavior - creates supplies", () => {
               .then(toInnerText)
               .then((cellsInnerText) => {
                 const reversed = cellsInnerText.slice().sort().reverse();
-                cy.log("log me", cellsInnerText.join(","));
-                cy.log("log me", reversed.join(","));
                 expect(cellsInnerText, "cells are reversed").to.deep.equal(
                   reversed
                 );

@@ -1,4 +1,4 @@
-Experimentation in Work Ethic
+Experimentations in Work Ethic
 
 1. The best chefs finish cleaning up the last onion before chopping the next one.
 2. Maintain test coverage above 80% before moving on to the next feature.
