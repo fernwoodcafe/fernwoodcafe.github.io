@@ -108,7 +108,10 @@ export default ({
   watch(menuItemsList, () => {
     const routes = buildMenuItemRoutes();
     routes.forEach((route) => {
-      router.removeRoute(route.name);
+      if (router.hasRoute(route.name)) {
+        router.removeRoute(route.name);
+      }
+
       router.addRoute(route);
     });
   });

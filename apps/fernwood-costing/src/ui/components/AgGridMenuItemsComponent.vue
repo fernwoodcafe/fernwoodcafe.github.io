@@ -40,9 +40,9 @@ const props = defineProps<Props>();
 
 const emit = defineEmits<Emits>();
 
-const onMenuItemUpdated = (data) => emit("menuItemUpdated", data);
-const onMenuItemDeleteClick = (data) => emit("menuItemDeleted", data);
-const onMenuItemEditClick = (data) => emit("menuItemEditClick", data);
+const onMenuItemUpdated = (data: MenuItem) => emit("menuItemUpdated", data);
+const onMenuItemDeleteClick = (data: MenuItem) => emit("menuItemDeleted", data);
+const onMenuItemEditClick = (data: MenuItem) => emit("menuItemEditClick", data);
 
 const columnDefs: ColDef<MenuItem>[] = [
   {

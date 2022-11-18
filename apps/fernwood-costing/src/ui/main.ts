@@ -80,7 +80,7 @@ app
     router({
       menuItemsList,
       suppliesList,
-      inventorySheetsList: inventorySheetsList,
+      inventorySheetsList,
       compositeSuppliesList,
       cafeGoals,
       supplyTaxes,

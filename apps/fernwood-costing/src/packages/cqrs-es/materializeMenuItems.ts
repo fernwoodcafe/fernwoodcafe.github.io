@@ -5,7 +5,6 @@ import type {
 } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import convertEventToLatestVersion from "./convertEventToLatestVersion";
-import mutateRecord from "./mutateRecord";
 
 export default (
   menuItemsList: ReactiveArray<MenuItem>,
@@ -22,9 +21,14 @@ export default (
           return menuItem;
         }
 
-        mutateRecord(menuItem, event.payload);
+        // TODO Figure out how to support the MenuItemView with object mutation
+        // and also support the MenuItemListView with object replacement.
+        // If this no longer poses a problem, then considering deleting the
+        // mutate record function.
+        // mutateRecord(menuItem, event.payload);
+        // return menuItem;
 
-        return menuItem;
+        return event.payload;
       });
     }
 
