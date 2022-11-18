@@ -10,16 +10,16 @@ const cloneObject = (obj) =>
  */
 export const $create = (db, objectStoreName, objects) =>
   new Promise<void>((resolve, reject) => {
-    console.log("$create", objectStoreName);
+    console.debug("$create", objectStoreName);
     const transaction = db.transaction(objectStoreName, "readwrite");
 
     transaction.oncomplete = (event) => {
-      console.log("complete", event);
+      console.debug("complete", event);
       resolve();
     };
 
     transaction.onerror = (event) => {
-      console.log("error", event);
+      console.debug("error", event);
       reject();
     };
 
@@ -27,7 +27,7 @@ export const $create = (db, objectStoreName, objects) =>
     objects.map(cloneObject).forEach((obj) => {
       const request = objectStore.add(obj);
       request.onsuccess = (event) => {
-        console.log("success", event);
+        console.debug("success", event);
       };
     });
   });
@@ -38,19 +38,19 @@ export const $create = (db, objectStoreName, objects) =>
  */
 export const $readMany = (db, objectStoreName) =>
   new Promise((resolve, reject) => {
-    console.log("$readMany", objectStoreName);
+    console.debug("$readMany", objectStoreName);
     const transaction = db.transaction(objectStoreName, "readonly");
     const objectStore = transaction.objectStore(objectStoreName);
     const objectStoreRequest = objectStore.getAll();
 
     objectStoreRequest.onsuccess = function (event) {
-      console.log("success", event, objectStoreRequest);
+      console.debug("success", event, objectStoreRequest);
       const result = objectStoreRequest.result;
       resolve(result);
     };
 
     objectStoreRequest.onerror = function (event) {
-      console.log("error", event);
+      console.debug("error", event);
       reject(event);
     };
   });
@@ -66,21 +66,21 @@ export const $migrateDB = (
       const openDBRequest = indexedDB.open(databaseName, migrations.length);
 
       openDBRequest.onerror = (event) => {
-        console.log("error", event);
+        console.debug("error", event);
         reject();
       };
 
       openDBRequest.onsuccess = (event) => {
-        console.log("success", event);
+        console.debug("success", event);
         const db = openDBRequest.result;
         resolve(db);
       };
 
       openDBRequest.onupgradeneeded = (event) => {
-        console.log("upgradeneeded", event);
+        console.debug("upgradeneeded", event);
         const db = openDBRequest.result;
         migrations.slice(currentVersion).forEach((migration) => {
-          console.log(`running migration '${migration.message}`);
+          console.debug(`running migration '${migration.message}`);
           migration.operations.forEach((operation) => {
             const objectStore = operation(db);
             if (!objectStore) {
@@ -88,7 +88,7 @@ export const $migrateDB = (
             }
 
             objectStore.transaction.oncomplete = (event) => {
-              console.log("complete", event);
+              console.debug("complete", event);
             };
           });
         });
@@ -104,17 +104,17 @@ export const $deleteDB = (databaseName) =>
     const request = indexedDB.deleteDatabase(databaseName);
 
     request.onsuccess = (event) => {
-      console.log("success", event);
+      console.debug("success", event);
       resolve();
     };
 
     request.onerror = (event) => {
-      console.log("error", event);
+      console.debug("error", event);
       reject();
     };
 
     request.onblocked = (event) => {
-      console.log("blocked", event);
+      console.debug("blocked", event);
       reject();
     };
   });
