@@ -31,17 +31,18 @@ describe("creates menu items", () => {
     cy.get("input[value='Delete'").should("have.length", menuItemsToCreate);
   });
 
+  // Editable Columns
   // TODO Test edit of the Menu Item Name column. Done.
   // TODO Test edit of the Percent Total Sales column. Done.
-  // TODO Test edit of the Chosen Menu Price column.
+  // TODO Test edit of the Chosen Menu Price column. Done.
   //
-  // Non-editable columns to test.
-  // - Total Cost
-  // - Servings per Recipe
-  // - Cost per Serving
-  // - Baseline Price @ 3.5 Markup
-  // - Markup
-  // - Contribution
+  // Non-editable columns.
+  // TODO Test computation of the Total Cost column.
+  // TODO Test computation of the Servings per Recipe column.
+  // TODO Test computation of the Cost per Serving column.
+  // TODO Test computation of the Baseline Price @ 3.5 Markup column.
+  // TODO Test computation of the Markup column.
+  // TODO Test computation of the Contribution column.
   for (let rowIndex = 0; rowIndex < menuItemsToCreate; ++rowIndex) {
     simpleTestCases.forEach(({ columnHeader, dummyValueForRowIndex }) => {
       it(`edited simple column '${columnHeader}'`, () => {
