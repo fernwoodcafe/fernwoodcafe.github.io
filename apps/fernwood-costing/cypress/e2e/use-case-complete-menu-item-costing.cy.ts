@@ -37,7 +37,7 @@ describe("complete menu item costing", () => {
   // TODO ...
   // TODO ...
 
-  it.skip("ping pongs 'menuItemName' between list and details views", () => {
+  it("ping pongs 'menuItemName' between list and details views", () => {
     // Arrange
     const baseValue = "Menu Item";
     const columnId = "menuItemName";
@@ -63,7 +63,8 @@ describe("complete menu item costing", () => {
         `${baseValue}_02` // assert
       )
       .click()
-      .type(`${baseValue}_03`); // act
+      .type(`${baseValue}_03`) // act
+      .type("{enter}");
 
     // Pong 04: Details view.
     cy.get('[value="Edit"]').click();
