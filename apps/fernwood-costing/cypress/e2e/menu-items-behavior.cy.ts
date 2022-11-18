@@ -10,12 +10,11 @@ const simpleTestCases = [
 
 describe("creates menu items", () => {
   before(() => {
-    // Act
     cy.visit("/#/menu-items");
 
-    // Act: Create and edit (n) menu items.
+    // Create and edit (n) menu items.
     for (let i = 0; i < menuItemsToCreate; ++i) {
-      // Create the supply.
+      // Create the menu item.
       cy.get('[value="New Menu Item"]').click();
 
       // Edit each simple column of the menu item.

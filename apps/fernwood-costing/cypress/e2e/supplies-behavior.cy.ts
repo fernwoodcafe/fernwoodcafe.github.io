@@ -28,10 +28,9 @@ const toInnerText = (cells: JQuery<HTMLElement>) =>
  */
 describe("creates supplies", () => {
   before(() => {
-    // Act
     cy.visit("/#/supplies");
 
-    // Act: Create and edit (n) supplies.
+    // Create and edit (n) supplies.
     for (let i = 0; i < suppliesToCreate; ++i) {
       // Create the supply.
       cy.get('[value="New Supply"]').click();

@@ -2,7 +2,6 @@ const inventorySheetsToCreate = 5;
 
 describe("inventory behavior - creates inventory sheets", () => {
   before(() => {
-    // Act
     cy.visit("/#/inventory");
 
     for (let i = 0; i < inventorySheetsToCreate; ++i) {

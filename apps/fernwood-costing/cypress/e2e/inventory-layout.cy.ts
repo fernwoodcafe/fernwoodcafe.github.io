@@ -4,7 +4,6 @@ const expectedTableHeaders = ["Date Started", "Date Completed"];
 
 describe("inventory layout", () => {
   before(() => {
-    // Act
     cy.visit("/#/inventory");
   });
 

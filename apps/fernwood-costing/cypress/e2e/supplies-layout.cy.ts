@@ -16,7 +16,6 @@ const expectedTableHeaders = [
 
 describe("supplies layout", () => {
   before(() => {
-    // Act
     cy.visit("/#/supplies");
   });
 

@@ -16,7 +16,6 @@ const expectedTableHeaders = [
 
 describe("menu-items layout", () => {
   before(() => {
-    // Act
     cy.visit("/#/menu-items");
   });
 
