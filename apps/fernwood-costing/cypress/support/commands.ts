@@ -24,7 +24,7 @@ declare global {
 }
 
 Cypress.Commands.add("inGridSelectOption", (rowIndex, columnId, option) => {
-  cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`)
+  cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`)
     .click()
     // Do not use `within`, because the drop down list renders outside the cell.
     .then(() => {
@@ -36,18 +36,23 @@ Cypress.Commands.add("inGridSelectOption", (rowIndex, columnId, option) => {
 Cypress.Commands.add("addSupply", (supplyName) => {
   cy.visit("/#/supplies");
   cy.get('[value="New Supply"]').click();
-  cy.get(`[col-id="supplyName"].ag-cell`).type(supplyName).type("{enter}");
-  cy.get(`[col-id=supplyUnits].ag-cell`)
-    .click()
-    // Do not use `within`, because the drop down list renders outside the cell.
-    .then(() => {
-      cy.focused().click();
-      cy.get(".ag-popup").contains("gram").click();
-    });
-  cy.get(`[col-id="purchaseQuantity"].ag-cell`).type("10").type("{enter}");
-  cy.get(`[col-id="purchasePriceBeforeTax"].ag-cell`)
-    .type("100")
-    .type("{enter}");
+
+  cy.focused().type(supplyName).type("{enter}");
+
+  cy.contains(".ag-row", supplyName).then((row) => {
+    const index = row.attr("row-index");
+
+    if (index === undefined) {
+      throw new Error("Undefined row-index in command");
+    }
+
+    cy.inGridSelectOption(parseInt(index), "supplyUnits", "gram");
+
+    cy.get(`[col-id="purchaseQuantity"].ag-cell`).type("10").type("{enter}");
+    cy.get(`[col-id="purchasePriceBeforeTax"].ag-cell`)
+      .type("100")
+      .type("{enter}");
+  });
 });
 
 export {};
