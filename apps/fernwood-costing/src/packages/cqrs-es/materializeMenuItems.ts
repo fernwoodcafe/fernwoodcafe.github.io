@@ -5,6 +5,7 @@ import type {
 } from "@packages/domain/types";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import convertEventToLatestVersion from "./convertEventToLatestVersion";
+import mutateRecord from "./mutateRecord";
 
 export default (
   menuItemsList: ReactiveArray<MenuItem>,
@@ -16,20 +17,20 @@ export default (
     }
 
     if (event.type == "menu_item_updated") {
-      menuItemsList.items = menuItemsList.items.map((menuItem) => {
-        if (menuItem.uniqueId !== event.payload.uniqueId) {
-          return menuItem;
-        }
+      const targetItem = menuItemsList.items.filter(
+        (menuItem) => menuItem.uniqueId == event.payload.uniqueId
+      )[0];
 
-        // TODO Figure out how to support the MenuItemView with object mutation
-        // and also support the MenuItemListView with object replacement.
-        // If this no longer poses a problem, then considering deleting the
-        // mutate record function.
-        // mutateRecord(menuItem, event.payload);
-        // return menuItem;
-
-        return event.payload;
-      });
+      // We trigger reactivity on the object only. We do not trigger reactivity
+      // on its containing array. Why not? It seems nearly impossible to trigger
+      // reactivity on both an object and on its array without losing the object
+      // reference in the array. Basically, to trigger array reactivity, we have
+      // to change the object reference; but, to maintain continuity of object
+      // reactivity, we need to keep the object reference. Hmm. Tough challenge.
+      // See https://v2.vuejs.org/v2/guide/reactivity.html
+      // See also https://www.ag-grid.com/vue-data-grid/value-setters/#read-only-edit/
+      // See also our implementation of onCellEditRequest in AgGridComponent.
+      mutateRecord(targetItem, event.payload);
     }
 
     if (event.type == "menu_item_deleted") {
