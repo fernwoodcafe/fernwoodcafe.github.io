@@ -1,7 +1,12 @@
 <template>
   <fieldset>
-    <label v-for="option in options" :key="option[key]">
-      <input type="checkbox" :value="option" v-model="selectedOptions" />
+    <label v-for="option in options" :key="option[key]" for="{{key}}">
+      <input
+        id="{{key}}"
+        type="checkbox"
+        :value="option"
+        v-model="selectedOptions"
+      />
       {{ option[label] }}
     </label>
   </fieldset>

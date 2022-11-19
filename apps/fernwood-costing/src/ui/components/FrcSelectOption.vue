@@ -1,7 +1,7 @@
 <template>
   <fieldset>
-    <label v-if="{ label }">{{ label }}</label>
-    <select v-model="selectedOption">
+    <label :for="inputId" v-if="{ label }">{{ label }}</label>
+    <select :id="inputId" v-model="selectedOption">
       <option disabled :value="null">Please select one</option>
       <option
         v-for="option in sortedOptions"
@@ -33,6 +33,8 @@ const selectedOption = ref(null);
 type Emits = {
   (e: "submitSelect", data: Record<string, any>): void;
 };
+
+const inputId = ref(props.label.replace(" ", "-").toLowerCase());
 
 const emit = defineEmits<Emits>();
 
