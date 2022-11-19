@@ -14,14 +14,34 @@ declare global {
   namespace Cypress {
     interface Chainable {
       addSupply(label: string): Chainable<void>;
+      inGridEditText(
+        rowIndex: number,
+        columnId: string,
+        text: string
+      ): Chainable<void>;
       inGridSelectOption(
         rowIndex: number,
         columnId: string,
         option: string
       ): Chainable<void>;
+      inGridToggleCheckbox(rowIndex: number, columnId: string): Chainable<void>;
     }
   }
 }
+
+Cypress.Commands.add("inGridEditText", (rowIndex, columnId, text) => {
+  cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`)
+    .type(text)
+    .type("{enter}");
+});
+
+Cypress.Commands.add("inGridToggleCheckbox", (rowIndex, columnId) => {
+  cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`)
+    .click()
+    .within(() => {
+      cy.get("input[type=checkbox]").click().type("{enter}");
+    });
+});
 
 Cypress.Commands.add("inGridSelectOption", (rowIndex, columnId, option) => {
   cy.get(`[row-index=${rowIndex}] [col-id=${columnId}].ag-cell`)

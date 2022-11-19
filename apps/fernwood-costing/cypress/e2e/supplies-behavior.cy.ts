@@ -37,21 +37,12 @@ describe("creates supplies", () => {
 
       // Edit each simple column of the supply.
       simpleTestCases.forEach(({ columnId, dummyValueForRowIndex }) => {
-        cy.get(`[row-index=${i}] [col-id=${columnId}]`)
-          .type(dummyValueForRowIndex(i))
-          .type("{enter}");
+        cy.inGridEditText(i, columnId, dummyValueForRowIndex(i));
       });
 
-      // Edit Drop Down Lists
       cy.inGridSelectOption(i, "supplyType", "packaging");
       cy.inGridSelectOption(i, "supplyUnits", "gram");
-
-      // Edit Checkboxes
-      cy.get(`[row-index=${i}] [col-id=hasPST]`)
-        .click()
-        .within(() => {
-          cy.get("input[type=checkbox]").click().type("{enter}");
-        });
+      cy.inGridToggleCheckbox(i, "hasPST");
     }
   });
 
