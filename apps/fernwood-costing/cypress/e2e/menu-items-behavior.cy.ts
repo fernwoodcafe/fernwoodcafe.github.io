@@ -19,9 +19,7 @@ describe("creates menu items", () => {
 
       // Edit each simple column of the menu item.
       simpleTestCases.forEach(({ columnId, dummyValueForRowIndex }) => {
-        cy.get(`[row-index=${i}] [col-id=${columnId}]`)
-          .type(dummyValueForRowIndex(i))
-          .type("{enter}");
+        cy.inGridEditText(i, columnId, dummyValueForRowIndex(i));
       });
     }
   });
