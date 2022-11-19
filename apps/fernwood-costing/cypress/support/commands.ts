@@ -1,3 +1,5 @@
+import type { MenuItem, Supply } from "../../src/packages/domain/types";
+
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -13,8 +15,8 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
-      addSupply(label: string): Chainable<void>;
-      addMenuItem(label: string): Chainable<void>;
+      addSupply(supply: Partial<Supply>): Chainable<void>;
+      addMenuItem(menuItem: Partial<MenuItem>): Chainable<void>;
       inGridEditText(
         rowIndex: number,
         columnId: string,
@@ -54,30 +56,52 @@ Cypress.Commands.add("inGridSelectOption", (rowIndex, columnId, option) => {
     });
 });
 
-Cypress.Commands.add("addMenuItem", (menuItemName) => {
+Cypress.Commands.add("addMenuItem", (menuItem: Partial<MenuItem>) => {
   cy.visit("/#/menu-items");
   cy.get('[value="New Menu Item"]').click();
-  cy.focused().type(menuItemName).type("{enter}");
+
+  if (!menuItem.menuItemName) {
+    throw new Error("menuItemName required");
+  }
+
+  cy.focused().type(menuItem.menuItemName).type("{enter}");
 });
 
-Cypress.Commands.add("addSupply", (supplyName) => {
+Cypress.Commands.add("addSupply", (supply: Partial<Supply>) => {
   cy.visit("/#/supplies");
   cy.get('[value="New Supply"]').click();
-  cy.focused().type(supplyName).type("{enter}");
 
-  cy.contains(".ag-row", supplyName).then((row) => {
+  if (!supply.supplyName) {
+    throw new Error("supplyName required");
+  }
+
+  cy.focused().type(supply.supplyName).type("{enter}");
+  cy.contains(".ag-row", supply.supplyName).then((row) => {
     const index = row.attr("row-index");
 
     if (index === undefined) {
       throw new Error("Undefined row-index in command");
     }
 
-    cy.inGridSelectOption(parseInt(index), "supplyUnits", "gram");
+    if (supply.supplyUnits) {
+      cy.inGridSelectOption(
+        parseInt(index),
+        "supplyUnits",
+        supply.supplyUnits ?? "" ?? "grams"
+      );
+    }
 
-    cy.get(`[col-id="purchaseQuantity"].ag-cell`).type("10").type("{enter}");
-    cy.get(`[col-id="purchasePriceBeforeTax"].ag-cell`)
-      .type("100")
-      .type("{enter}");
+    if (supply.purchaseQuantity) {
+      cy.get(`[col-id="purchaseQuantity"].ag-cell`)
+        .type(`${supply.purchaseQuantity}`)
+        .type("{enter}");
+    }
+
+    if (supply.purchasePriceBeforeTax) {
+      cy.get(`[col-id="purchasePriceBeforeTax"].ag-cell`)
+        .type(`${supply.purchasePriceBeforeTax}`)
+        .type("{enter}");
+    }
   });
 });
 

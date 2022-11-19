@@ -1,10 +1,18 @@
-const supplyBaseName = "Supply";
-const menuItemBaseName = "MenuItem";
+const menuItem = {
+  menuItemName: "Menu Item",
+} as const;
+
+const supply = {
+  supplyName: "Supply",
+  supplyUnits: "kilogram",
+  purchaseQuantity: 10,
+  purchasePriceBeforeTax: 10,
+} as const;
 
 describe("complete menu item costing", () => {
   before(() => {
-    cy.addSupply(supplyBaseName);
-    cy.addMenuItem(menuItemBaseName);
+    cy.addSupply(supply);
+    cy.addMenuItem(menuItem);
   });
 
   // Now we follow a pattern of navigating back and forth between the
