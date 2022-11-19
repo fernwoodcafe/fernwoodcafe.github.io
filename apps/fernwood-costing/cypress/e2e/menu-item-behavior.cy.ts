@@ -1,5 +1,7 @@
 import type { MenuItemComponent } from "../../src/packages/domain/types";
 
+// TODO Test that the url path updates when we edit the menu item name from the details view.
+
 const supply = {
   supplyName: "Supply",
   supplyUnits: "kilogram",
