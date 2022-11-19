@@ -1,13 +1,10 @@
+const supplyBaseName = "Supply";
+const menuItemBaseName = "MenuItem";
+
 describe("complete menu item costing", () => {
   before(() => {
-    const supplyBaseName = "Supply";
-
-    // Add supply.
     cy.addSupply(supplyBaseName);
-
-    // Visit the menu items list and create a default item.
-    cy.visit("/#/menu-items");
-    cy.get('[value="New Menu Item"]').click();
+    cy.addMenuItem(menuItemBaseName);
   });
 
   // Now we follow a pattern of navigating back and forth between the

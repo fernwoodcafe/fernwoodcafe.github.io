@@ -14,6 +14,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       addSupply(label: string): Chainable<void>;
+      addMenuItem(label: string): Chainable<void>;
       inGridEditText(
         rowIndex: number,
         columnId: string,
@@ -53,10 +54,15 @@ Cypress.Commands.add("inGridSelectOption", (rowIndex, columnId, option) => {
     });
 });
 
+Cypress.Commands.add("addMenuItem", (menuItemName) => {
+  cy.visit("/#/menu-items");
+  cy.get('[value="New Menu Item"]').click();
+  cy.focused().type(menuItemName).type("{enter}");
+});
+
 Cypress.Commands.add("addSupply", (supplyName) => {
   cy.visit("/#/supplies");
   cy.get('[value="New Supply"]').click();
-
   cy.focused().type(supplyName).type("{enter}");
 
   cy.contains(".ag-row", supplyName).then((row) => {
