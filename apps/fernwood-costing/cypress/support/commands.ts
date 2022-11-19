@@ -25,13 +25,30 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      addSupply(label: string): Chainable<void>;
+    }
+  }
+}
+
+Cypress.Commands.add("addSupply", (supplyName) => {
+  cy.visit("/#/supplies");
+  cy.get('[value="New Supply"]').click();
+  cy.get(`[col-id="supplyName"].ag-cell`).type(supplyName).type("{enter}");
+  cy.get(`[col-id=supplyUnits].ag-cell`)
+    .click()
+    // Do not use `within`, because the drop down list renders outside the cell.
+    .then(() => {
+      cy.focused().click();
+      cy.get(".ag-popup").contains("gram").click();
+    });
+  cy.get(`[col-id="purchaseQuantity"].ag-cell`).type("10").type("{enter}");
+  cy.get(`[col-id="purchasePriceBeforeTax"].ag-cell`)
+    .type("100")
+    .type("{enter}");
+});
+
+export {};

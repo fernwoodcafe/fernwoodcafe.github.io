@@ -25,7 +25,7 @@ describe("menu-item layout", () => {
         "Add Packaging",
         "Total Cost",
         "Servings per Recipe",
-        // "Cost per Serving",
+        "Cost per Serving",
       ],
     },
   ];
