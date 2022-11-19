@@ -14,11 +14,24 @@ declare global {
   namespace Cypress {
     interface Chainable {
       addSupply(label: string): Chainable<void>;
+      inGridSelectOption(
+        rowIndex: number,
+        columnId: string,
+        option: string
+      ): Chainable<void>;
     }
   }
 }
 
-
+Cypress.Commands.add("inGridSelectOption", (rowIndex, columnId, option) => {
+  cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`)
+    .click()
+    // Do not use `within`, because the drop down list renders outside the cell.
+    .then(() => {
+      cy.focused().click();
+      cy.get(".ag-popup").contains(option).click();
+    });
+});
 
 Cypress.Commands.add("addSupply", (supplyName) => {
   cy.visit("/#/supplies");

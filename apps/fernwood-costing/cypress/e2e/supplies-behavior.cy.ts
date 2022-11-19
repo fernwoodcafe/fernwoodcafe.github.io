@@ -43,21 +43,8 @@ describe("creates supplies", () => {
       });
 
       // Edit Drop Down Lists
-      cy.get(`[row-index=${i}] [col-id=supplyType]`)
-        .click()
-        // Do not use `within`, because the drop down list renders outside the cell.
-        .then(() => {
-          cy.focused().click();
-          cy.get(".ag-popup").contains("packaging").click();
-        });
-
-      cy.get(`[row-index=${i}] [col-id=supplyUnits]`)
-        .click()
-        // Do not use `within`, because the drop down list renders outside the cell.
-        .then(() => {
-          cy.focused().click();
-          cy.get(".ag-popup").contains("gram").click();
-        });
+      cy.inGridSelectOption(i, "supplyType", "packaging");
+      cy.inGridSelectOption(i, "supplyUnits", "gram");
 
       // Edit Checkboxes
       cy.get(`[row-index=${i}] [col-id=hasPST]`)
