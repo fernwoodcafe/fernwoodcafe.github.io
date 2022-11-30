@@ -55,7 +55,10 @@ export default (
       menuItemsList.items = menuItemsList.items.map((menuItem: MenuItem) =>
         menuItem.uniqueId == event.payload.menuItemUniqueId
           ? (() => {
-              menuItem.menuItemComponents.push(event.payload);
+              menuItem.menuItemComponents = menuItem.menuItemComponents.concat(
+                event.payload
+              );
+
               return menuItem;
             })()
           : menuItem

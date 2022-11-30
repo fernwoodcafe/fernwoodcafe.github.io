@@ -8,8 +8,8 @@ import valueConvertedToUnit from "./valueConvertedToUnit";
 
 export default (
   supplyTaxes: SupplyTaxes,
-  menuItemComponents: MenuItemComponent[],
-  suppliesList: Supply[]
+  menuItemComponents: readonly MenuItemComponent[],
+  suppliesList: readonly Supply[]
 ) =>
   menuItemComponents
     .map((menuItemSupply) => {

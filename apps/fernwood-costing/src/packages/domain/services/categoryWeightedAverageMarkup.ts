@@ -10,8 +10,8 @@ const doIncludeMenuItemCategoryCostAnalysis = (menuItem: MenuItem) =>
 
 export default (
   supplyTax: SupplyTaxes,
-  suppliesList: Supply[],
-  menuItemsList: MenuItem[]
+  suppliesList: readonly Supply[],
+  menuItemsList: readonly MenuItem[]
 ) =>
   menuItemsList
     .filter(doIncludeMenuItemCategoryCostAnalysis)
