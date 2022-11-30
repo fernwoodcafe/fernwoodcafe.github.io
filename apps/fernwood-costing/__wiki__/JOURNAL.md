@@ -14,3 +14,6 @@ Reactivity:
 - The `ref` gives us the `.value` that lets us swap references!
 - "... ref() allows us to create a "reference" to any value and pass it around without losing reactivity."
 - https://vuejs.org/guide/essentials/reactivity-fundamentals.html
+
+After adding Cypress functional tests
+... introduce more Domain Driven Design value types.
