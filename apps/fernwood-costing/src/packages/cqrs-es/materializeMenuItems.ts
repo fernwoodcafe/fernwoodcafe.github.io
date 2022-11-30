@@ -13,7 +13,7 @@ export default (
 ) => {
   events.map(convertEventToLatestVersion).forEach((event) => {
     if (event.type == "menu_item_created") {
-      menuItemsList.items.push(event.payload);
+      menuItemsList.items = menuItemsList.items.concat(event.payload);
     }
 
     if (event.type == "menu_item_updated") {
@@ -30,6 +30,13 @@ export default (
       // See https://v2.vuejs.org/v2/guide/reactivity.html
       // See also https://www.ag-grid.com/vue-data-grid/value-setters/#read-only-edit/
       // See also our implementation of onCellEditRequest in AgGridComponent.
+      //
+      // > Since Vue's reactivity tracking works over property access,
+      // > we must always keep the same reference to the reactive object.
+      // > This means we can't easily "replace" a reactive object because
+      // > the reactivity connection to the first reference is lost.
+      // > From https://vuejs.org/guide/essentials/reactivity-fundamentals.html
+
       mutateRecord(targetItem, event.payload);
     }
 

@@ -7,7 +7,7 @@ export default (
 ) => {
   events.forEach((event) => {
     if (event.type == "supply_created") {
-      suppliesList.items.push(event.payload);
+      suppliesList.items = suppliesList.items.concat(event.payload);
     }
 
     if (event.type == "supply_updated") {

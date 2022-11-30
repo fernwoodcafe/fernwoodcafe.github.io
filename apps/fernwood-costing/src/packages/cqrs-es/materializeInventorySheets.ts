@@ -24,7 +24,7 @@ export default (
         inventoryItems: event.payload.inventoryItems,
       };
 
-      inventorySheetsList.items.push(inventory);
+      inventorySheetsList.items = inventorySheetsList.items.concat(inventory);
     }
 
     if (event.type == "inventory_sheet_deleted") {
