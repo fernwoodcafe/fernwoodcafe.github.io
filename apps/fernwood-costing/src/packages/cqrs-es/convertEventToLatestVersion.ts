@@ -2,7 +2,7 @@ import type { DomainEvent } from "@packages/cqrs-es-types";
 import type { CafeEventUnion, MenuItem } from "@packages/domain/types";
 import type { MenuItem_v1 } from "@packages/domain/types/MenuItem";
 
-const convertMenuItemEvent = (event: DomainEvent<unknown>) => {
+const convertMenuItemEvent = (event: DomainEvent<unknown>): CafeEventUnion => {
   const clone = JSON.parse(JSON.stringify(event));
   return {
     ...clone,
