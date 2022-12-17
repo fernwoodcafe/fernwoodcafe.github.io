@@ -5,10 +5,10 @@ export const emits = [
   "onClientDomainEventQueued",
   "onServerDomainEventArrived"
 ] as const;
-export type Emits = typeof emits[number];
+export type RepositoryEmits = typeof emits[number];
 
 export type DomainEventsRepository = {
   insert: (event: DomainEvent) => Promise<DomainEvent>;
   select: () => Promise<DomainEvent[]>;
-  addListener: (name: Emits, listener: EventListener) => EventListener;
+  addListener: (name: RepositoryEmits, listener: EventListener) => EventListener;
 };

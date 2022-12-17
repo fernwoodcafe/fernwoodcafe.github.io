@@ -55,6 +55,14 @@ export const $readMany = (db, objectStoreName) =>
     };
   });
 
+export const $onChange = (
+  db,
+  objectStoreName,
+  listener: EventListener
+) => {
+  setInterval(() => listener(new Event("TODO")), 1000);
+}
+
 export const $migrateDB = (
   databaseName: string,
   migrations: any[]

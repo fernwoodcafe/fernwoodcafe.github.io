@@ -1,13 +1,15 @@
 import type {
   DomainEvent,
-  DomainEventsRepository,
+  DomainEventsRepository
 } from "@packages/cqrs-es-types";
 import {
   $create,
   $deleteDB,
   $migrateDB,
-  $readMany,
+  $onChange,
+  $readMany
 } from "@packages/data/indexedDB/client";
+import statusPublisher from '../excelDB/services/statusPublisher';
 import migrations from "./migrations";
 
 const resetPrototype = false;
@@ -16,6 +18,12 @@ if (resetPrototype) {
 }
 
 const db = await $migrateDB("restaurantDB", migrations);
+
+$onChange(
+  db,
+  "domainEvents",
+  () => statusPublisher.publishArrivedEvent()
+);
 
 export default (): Promise<DomainEventsRepository> =>
   Promise.resolve({

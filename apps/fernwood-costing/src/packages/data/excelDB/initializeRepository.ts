@@ -1,9 +1,10 @@
 import type {
   DomainEvent,
-  DomainEventsRepository,
+  DomainEventsRepository
 } from "@packages/cqrs-es-types";
 import createWorkbookTableRows from "./graphCalls/createWorkbookTableRows";
 import getWorkbookTableRange from "./graphCalls/getWorkbookTableRange";
+import subscribeToWorkbookChangeNotifications from './graphCalls/subscribeToWorkbookChangeNotifications';
 import initializeGraphClient from "./initializeGraphClient";
 import intervalRunner from "./services/intervalRunner";
 import statusPublisher from "./services/statusPublisher";
@@ -23,6 +24,13 @@ export default async (): Promise<DomainEventsRepository> => {
       ),
     2_000,
     statusPublisher
+  );
+
+  subscribeToWorkbookChangeNotifications(
+    graphClient,
+    costingWorkbookPath,
+    costingEventsTableName,
+    () => statusPublisher.publishArrivedEvent()
   );
 
   const repository: DomainEventsRepository = {

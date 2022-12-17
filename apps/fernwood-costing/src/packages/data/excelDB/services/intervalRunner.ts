@@ -1,14 +1,17 @@
 // TODO [must-have] Warn the user before navigating away if we have unsaved changes.
 
+import type { RepositoryEmits } from '@packages/cqrs-es-types/DomainEventsRepository';
+
 type Routine<T> = (args: T[]) => Promise<void>;
 
 export type StatusPublisher = {
   addListener: (
-    name: "onClientDomainEventSaved" | "onClientDomainEventQueued",
+    name: RepositoryEmits,
     listener: EventListener
   ) => EventListener;
   publishSavedEvent: () => void;
   publishQueuedEvent: () => void;
+  publishArrivedEvent: () => void;
 };
 
 export default <T>(

@@ -1,16 +1,16 @@
 import {
   emits,
-  type Emits
+  type RepositoryEmits
 } from "@packages/cqrs-es-types/DomainEventsRepository";
 import type { StatusPublisher } from "./intervalRunner";
 
 export default ((): StatusPublisher => {
-  const eventListeners = new Map<Emits, EventListener[]>(
+  const eventListeners = new Map<RepositoryEmits, EventListener[]>(
     emits.map((name) => [name, []])
   );
 
   return {
-    addListener: (name: Emits, listener: EventListener) => {
+    addListener: (name: RepositoryEmits, listener: EventListener) => {
       eventListeners.get(name).push(listener);
       return listener;
     },
@@ -22,5 +22,9 @@ export default ((): StatusPublisher => {
       eventListeners
         .get("onClientDomainEventQueued")
         .forEach((handler) => handler(new Event("queued"))),
+    publishArrivedEvent: () =>
+      eventListeners
+        .get('onServerDomainEventArrived')
+        .forEach((handler) => handler(new Event("arrived")))
   };
 })();
