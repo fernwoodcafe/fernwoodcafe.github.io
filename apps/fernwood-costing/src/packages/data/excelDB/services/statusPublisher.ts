@@ -1,6 +1,6 @@
 import {
   emits,
-  type Emits,
+  type Emits
 } from "@packages/cqrs-es-types/DomainEventsRepository";
 import type { StatusPublisher } from "./intervalRunner";
 
@@ -16,11 +16,11 @@ export default ((): StatusPublisher => {
     },
     publishSavedEvent: () =>
       eventListeners
-        .get("onSaved")
+        .get("onClientDomainEventSaved")
         .forEach((handler) => handler(new Event("saved"))),
     publishQueuedEvent: () =>
       eventListeners
-        .get("onQueued")
+        .get("onClientDomainEventQueued")
         .forEach((handler) => handler(new Event("queued"))),
   };
 })();

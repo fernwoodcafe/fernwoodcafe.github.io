@@ -4,7 +4,7 @@ type Routine<T> = (args: T[]) => Promise<void>;
 
 export type StatusPublisher = {
   addListener: (
-    name: "onSaved" | "onQueued",
+    name: "onClientDomainEventSaved" | "onClientDomainEventQueued",
     listener: EventListener
   ) => EventListener;
   publishSavedEvent: () => void;

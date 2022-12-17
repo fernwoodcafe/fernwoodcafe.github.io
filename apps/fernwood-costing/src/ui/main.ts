@@ -35,8 +35,8 @@ const domainEventsRepo =
     ? await initializeProductionRepository()
     : await initializeTestRepository();
 
-domainEventsRepo.addListener("onSaved", () => (appStatus.message = "Saved"));
-domainEventsRepo.addListener("onQueued", () => (appStatus.message = "Unsaved"));
+domainEventsRepo.addListener("onClientDomainEventSaved", () => (appStatus.message = "Saved"));
+domainEventsRepo.addListener("onClientDomainEventQueued", () => (appStatus.message = "Unsaved"));
 const domainEvents = (await domainEventsRepo.select()) as CafeEventUnion[];
 
 const menuItemsList = materializeMenuItems(
@@ -66,6 +66,19 @@ const compositeSuppliesList = materializeCompositeSupplies(
 // See https://learn.microsoft.com/en-us/graph/api/resources/webhooks?view=graph-rest-1.0
 // See also https://learn.microsoft.com/en-us/graph/api/resources/driveitem?view=graph-rest-1.0
 // See also https://learn.microsoft.com/en-us/graph/webhooks
+// We can do this with or without resource data:
+// > By default, change notifications do not contain resource data...
+// > An app can also subscribe to change notifications that include resource data...
+// See https://learn.microsoft.com/en-us/graph/webhooks-with-resource-data
+// Creating a subscription:
+// 1. The client sends a subscription (POST) request for a specific resource.
+// 2. Microsoft Graph verifies the request.
+// 3. The client sends the validation token back to Microsoft Graph.
+// 4. The Microsoft Graph sends a response back to the client.
+domainEventsRepo.addListener("onServerDomainEventArrived", () =>
+{
+  console.log('New event arrived at server!');
+})
 
 const sendCommand = handleCommand({
   menuItemsList,

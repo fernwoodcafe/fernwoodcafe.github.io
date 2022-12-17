@@ -1,6 +1,10 @@
 import type { DomainEvent } from "./DomainEvent";
 
-export const emits = ["onSaved", "onQueued"] as const;
+export const emits = [
+  "onClientDomainEventSaved",
+  "onClientDomainEventQueued",
+  "onServerDomainEventArrived"
+] as const;
 export type Emits = typeof emits[number];
 
 export type DomainEventsRepository = {
