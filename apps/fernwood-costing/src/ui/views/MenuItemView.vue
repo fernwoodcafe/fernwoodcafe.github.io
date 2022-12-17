@@ -34,7 +34,7 @@
           <p>{{ formatPercent(menuItemPercentCategorySalesComputed) }}</p>
         </fieldset>
         <fieldset>
-          <label>Weighted Markup</label>
+          <label>Category Weighted Markup</label>
           <p>{{ menuItemWeightedMarkupValue.toFixed(2) }}</p>
         </fieldset>
       </form>
