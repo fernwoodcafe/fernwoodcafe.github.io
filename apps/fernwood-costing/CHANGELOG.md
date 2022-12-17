@@ -16,6 +16,8 @@ Types of changes
 
 ## [Unreleased]
 
+- Trim whitespace for Supply Name inputs.
+
 ## 2022-10-30
 
 - Introduce cup, teaspoon, and tablespoon as units of measure.

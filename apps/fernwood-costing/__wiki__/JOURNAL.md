@@ -1,3 +1,12 @@
+2022-12-17
+
+To start Cypress with hot module reloading do this:
+
+1. Terminal A `npm run dev`
+2. Terminal B `npm run cypress`
+
+Note that it takes about a minute from Cypress to start and open a window.
+
 2022-11-29
 
 - Experimented with Immer. Not sure whether to go ahead or not.
