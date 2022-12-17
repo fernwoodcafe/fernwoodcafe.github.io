@@ -3,14 +3,14 @@ import {
   materializeCompositeSupplies,
   materializeInventorySheets,
   materializeMenuItems,
-  materializeSupplies,
+  materializeSupplies
 } from "@packages/cqrs-es";
 import { initializeRepository as initializeProductionRepository } from "@packages/data/excelDB";
 import { initializeRepository as initializeTestRepository } from "@packages/data/indexedDB";
 import type {
   CafeEventUnion,
   CafeGoals,
-  SupplyTaxes,
+  SupplyTaxes
 } from "@packages/domain/types";
 import { createApp, reactive } from "vue";
 import App from "./App.vue";
@@ -58,6 +58,14 @@ const compositeSuppliesList = materializeCompositeSupplies(
   reactive({ items: [] }),
   ...domainEvents
 );
+
+// Possible Design for Multi-User/Tab via Change Notifications
+// 1. Listen for new events.
+// 2. If a new event comes in, pass it to the materializer.
+// 3. Then also remove the materializer from the command handler.
+// See https://learn.microsoft.com/en-us/graph/api/resources/webhooks?view=graph-rest-1.0
+// See also https://learn.microsoft.com/en-us/graph/api/resources/driveitem?view=graph-rest-1.0
+// See also https://learn.microsoft.com/en-us/graph/webhooks
 
 const sendCommand = handleCommand({
   menuItemsList,
