@@ -60,7 +60,11 @@ export const $onChange = (
   objectStoreName,
   listener: EventListener
 ) => {
-  setInterval(() => listener(new Event("TODO")), 1000);
+  console.log('$onChange');
+  setInterval(() => {
+    console.log('interval');
+    listener(new Event("TODO"));
+  }, 1000);
 }
 
 export const $migrateDB = (

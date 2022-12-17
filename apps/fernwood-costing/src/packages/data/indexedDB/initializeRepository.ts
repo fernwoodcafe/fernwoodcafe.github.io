@@ -35,8 +35,5 @@ export default (): Promise<DomainEventsRepository> =>
       $readMany(db, "domainEvents").then((events: DomainEvent[]) =>
         events.sort((a, b) => a.eventIndex - b.eventIndex)
       ),
-    addListener: (name, handler) => {
-      // not supported
-      return handler;
-    },
+    addListener: statusPublisher.addListener
   });
