@@ -121,19 +121,22 @@ const onModelUpdated = (event: ModelUpdatedEvent) => {
 const onCellEditRequest = (event: CellEditRequestEvent) => {
   const oldData = event.data;
   const field = event.colDef.field;
-  const newValue = event.newValue;
-  const newData = { ...oldData };
-  newData[field] = event.newValue;
-  console.log("onCellEditRequest, updating " + field + " to " + newValue);
+  const newData = {
+    ...oldData,
+    [field]: event.newValue,
+  };
+
+  if (typeof newData[field] === "string") {
+    newData[field] = newData[field].trim();
+  }
+
   const tx = {
     update: [newData],
   };
+
   event.api.applyTransaction(tx);
 
-  emit("gridDataUpdate", {
-    ...event.data,
-    [event.colDef.field]: event.value,
-  });
+  emit("gridDataUpdate", newData);
 };
 
 /**

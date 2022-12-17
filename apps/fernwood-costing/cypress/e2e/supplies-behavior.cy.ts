@@ -37,7 +37,17 @@ describe("creates supplies", () => {
 
       // Edit each simple column of the supply.
       simpleTestCases.forEach(({ columnId, dummyValueForRowIndex }) => {
-        cy.inGridEditText(i, columnId, dummyValueForRowIndex(i));
+        // To test white space trimming, we stick in an arbitrary amount of
+        // leading and trailing whitespace here. If white space trimming does
+        // not work, we expect two failures. First, cypress will fail to find
+        // the expect text; second, the table will fail to sort as expected.
+        const leadingSpaces = " ".repeat(5);
+        const trailingSpaces = " ".repeat(5);
+
+        const dummyValueWithWhitespace =
+          leadingSpaces + dummyValueForRowIndex(i) + trailingSpaces;
+
+        cy.inGridEditText(i, columnId, dummyValueWithWhitespace);
       });
 
       cy.inGridSelectOption(i, "supplyType", "packaging");
