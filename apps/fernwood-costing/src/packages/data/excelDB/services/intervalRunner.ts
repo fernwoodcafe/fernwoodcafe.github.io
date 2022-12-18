@@ -14,6 +14,7 @@ export type StatusPublisher = {
   publishArrivedEvent: () => void;
 };
 
+// Perform `routine` every `intervalMs` on any item received via `enqeue`.
 export default <T>(
   routine: Routine<T>,
   intervalMs: number,
