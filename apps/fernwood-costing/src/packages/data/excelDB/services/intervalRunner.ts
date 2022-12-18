@@ -14,12 +14,18 @@ export type StatusPublisher = {
   publishArrivedEvent: () => void;
 };
 
-// Perform `routine` every `intervalMs` on any item received via `enqeue`.
+export type IntervalQueue<T> = {
+  enqueue: (item: T)=> void;
+};
+
+/**
+ * Perform `routine` every `intervalMs` on any item received via `enqeue`.
+ */
 export default <T>(
   routine: Routine<T>,
   intervalMs: number,
   publisher: StatusPublisher
-) => {
+): IntervalQueue<T> => {
   let queue: T[] = [];
 
   const runRoutine = async () => {
