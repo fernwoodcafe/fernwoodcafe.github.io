@@ -20,6 +20,8 @@ export type IntervalQueue<T> = {
 
 /**
  * Perform `routine` every `intervalMs` on any item received via `enqeue`.
+ *
+ * @returns IntervalQueue<T>
  */
 export default <T>(
   routine: Routine<T>,
