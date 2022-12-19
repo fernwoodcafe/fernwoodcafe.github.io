@@ -20,7 +20,6 @@
   "dependencies": {
     "@azure/msal-browser": "^2.28.0",
     "@microsoft/microsoft-graph-client": "^3.0.2",
-    "@microsoft/microsoft-graph-types": "^2.22.0",
     "@vue/reactivity": "^3.2.41",
     "ag-grid-community": "^28.2.0",
     "ag-grid-vue3": "^28.2.0",
@@ -28,6 +27,7 @@
     "vue-router": "^4.1.2"
   },
   "devDependencies": {
+    "@microsoft/microsoft-graph-types": "^2.25.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@testing-library/vue": "^6.6.1",
     "@types/jsdom": "^16.2.14",
