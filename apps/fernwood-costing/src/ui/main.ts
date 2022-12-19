@@ -59,24 +59,15 @@ const compositeSuppliesList = materializeCompositeSupplies(
   ...domainEvents
 );
 
-// Possible Design for Multi-User/Tab via Change Notifications
-// 1. Listen for new events.
-// 2. If a new event comes in, pass it to the materializer.
-// 3. Then also remove the materializer from the command handler.
-// See https://learn.microsoft.com/en-us/graph/api/resources/webhooks?view=graph-rest-1.0
-// See also https://learn.microsoft.com/en-us/graph/api/resources/driveitem?view=graph-rest-1.0
-// See also https://learn.microsoft.com/en-us/graph/webhooks
-// We can do this with or without resource data:
-// > By default, change notifications do not contain resource data...
-// > An app can also subscribe to change notifications that include resource data...
-// See https://learn.microsoft.com/en-us/graph/webhooks-with-resource-data
-// Creating a subscription:
-// 1. The client sends a subscription (POST) request for a specific resource.
-// 2. Microsoft Graph verifies the request.
-// 3. The client sends the validation token back to Microsoft Graph.
-// 4. The Microsoft Graph sends a response back to the client.
+// This supports a multi-user and multi-tab user interface by feeding new events
+// from the server into the materializers.
 domainEventsRepo.addListener("onServerDomainEventArrived", () =>
 {
+  // For this to work reliably, we need to follow order strictly.
+  // 1. Persist the event to the event store.
+  // 2. Materialize the event with the materializer.
+  // Alternatively, we need to figure out how to merge events that came from other
+  // clients with events that came from the current client. Yikes!
   console.log('New event arrived at server!');
 })
 

@@ -30,6 +30,7 @@ export default async (): Promise<DomainEventsRepository> => {
     graphClient,
     costingWorkbookPath,
     costingEventsTableName,
+    25, // populate this based on how many events we have already materialized.
     () => statusPublisher.publishArrivedEvent()
   );
 

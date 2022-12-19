@@ -6,10 +6,8 @@ import {
   $create,
   $deleteDB,
   $migrateDB,
-  $onChange,
   $readMany
 } from "@packages/data/indexedDB/client";
-import statusPublisher from '../excelDB/services/statusPublisher';
 import migrations from "./migrations";
 
 const resetPrototype = false;
@@ -18,12 +16,6 @@ if (resetPrototype) {
 }
 
 const db = await $migrateDB("restaurantDB", migrations);
-
-$onChange(
-  db,
-  "domainEvents",
-  () => statusPublisher.publishArrivedEvent()
-);
 
 export default (): Promise<DomainEventsRepository> =>
   Promise.resolve({
@@ -35,5 +27,8 @@ export default (): Promise<DomainEventsRepository> =>
       $readMany(db, "domainEvents").then((events: DomainEvent[]) =>
         events.sort((a, b) => a.eventIndex - b.eventIndex)
       ),
-    addListener: statusPublisher.addListener
+    addListener: (name, handler) => {
+      // no-op
+      return handler;
+    }
   });
