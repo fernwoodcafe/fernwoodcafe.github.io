@@ -1,3 +1,11 @@
+2022-12-19
+
+Except for show stoppers, stop feature development until January 16, 2023.
+
+Instead, focus on _using_ the app instead of _building_ the app.
+
+Record tempting development work / bug fixes in ./tasks/index.csv.
+
 2022-12-17
 
 To start Cypress with hot module reloading do this:

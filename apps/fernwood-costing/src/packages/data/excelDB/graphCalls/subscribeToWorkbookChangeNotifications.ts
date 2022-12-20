@@ -12,6 +12,8 @@ import type { WorkbookTableRow } from "@microsoft/microsoft-graph-types";
  * As another thought, perhaps our DomainEvent[] needs to have a pub/sub mechanism,
  * so that the materializers only access events _after_ they persist in the server.
  * That would make for higher reliability at the expense of a more sluggish UI.
+ *
+ * Maybe the time has come to read up on CRDTs!
  */
 export default async (
   graphClient: Client,

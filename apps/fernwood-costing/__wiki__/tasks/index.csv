@@ -1,0 +1,13 @@
+Status, Description, GitHub Issue
+backlog, Use CSS that works in browsers other than Chrome & Edge.
+backlog, Make initial page load faster e.g., by adding event stream snapshots.
+backlog, Diagram the main flows with PlantUml.
+done, Introduce functional UI testing... we have passed the prototype stage.
+done, Add "cups" as a new supply measurement.
+backlog, Add inventory module.
+backlog, Highlight menu items that need to change when we have changed a supply's unit.
+done, Set up Cypress to open with `npm run test:e2e`.
+done, Arrange for Cypress testing to run against local storage instead of Excel.
+done, cypress: Add three supplies, set their percentage waste; toggle sorting.
+done, bug: Sorting does not work in all columns; e.g., Unit Cost does not sort in supplies.
+Done, Make 'Add Ingredient' select list alphabetical.
