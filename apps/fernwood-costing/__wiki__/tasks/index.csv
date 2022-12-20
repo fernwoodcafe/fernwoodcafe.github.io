@@ -10,4 +10,5 @@ done, Set up Cypress to open with `npm run test:e2e`.
 done, Arrange for Cypress testing to run against local storage instead of Excel.
 done, cypress: Add three supplies, set their percentage waste; toggle sorting.
 done, bug: Sorting does not work in all columns; e.g., Unit Cost does not sort in supplies.
-Done, Make 'Add Ingredient' select list alphabetical.
+done, Make 'Add Ingredient' select list alphabetical.
+backlog, Move the costing app to its own repository.
