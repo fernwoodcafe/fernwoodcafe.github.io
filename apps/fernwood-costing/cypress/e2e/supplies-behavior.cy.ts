@@ -1,4 +1,5 @@
 import tableTestCase from "../misc/tableTestCase";
+import toInnerText from "../misc/toInnerText";
 
 const suppliesToCreate = 3;
 
@@ -13,9 +14,6 @@ const simpleTestCases = [
   ),
   tableTestCase("Percent Waste", "percentWaste", (i) => `${i + 1}`),
 ];
-
-const toInnerText = (cells: JQuery<HTMLElement>) =>
-  cells.toArray().map((c) => c.innerText);
 
 /**
  * @remarks

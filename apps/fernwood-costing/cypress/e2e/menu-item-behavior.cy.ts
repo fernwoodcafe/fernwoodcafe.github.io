@@ -2,7 +2,8 @@
 // TODO Test that the url path updates when we edit the menu item name from the details view.
 
 import type { PartialDeep } from 'type-fest';
-import { MenuItem } from '../../src/packages/domain/types';
+import type { MenuItem } from '../../src/packages/domain/types';
+import toInnerText from "../misc/toInnerText";
 
 const supplies = [
   {
@@ -91,7 +92,39 @@ describe("menu item behavior", () => {
         cy.get("p").should("contain.text", expectedCostPerServing);
       });
     });
-  });
+
+  [
+    {
+      columnHeader: "Quantity",
+      columnId: "menuItemSupplyQuantity",
+    },
+  ].forEach(({ columnHeader, columnId }) => {
+    it(`sorts by ${columnHeader}`, () => {
+      cy.get(".ag-theme-alpine").within(() => {
+        cy.contains(".ag-header-cell-label", columnHeader)
+          // The first click does not change the order,
+          // because we added the supplies in lexical order.
+          .click()
+          // The second click sorts it to reversed lexical order.
+          .click()
+          .then(() => {
+            // Make sure that the down pointing sort icon appears.
+            cy.contains(".ag-header-cell-label", columnHeader)
+              .find("[ref=eSortDesc]")
+              .should("be.visible");
+
+            cy.get(`[col-id=${columnId}]`)
+              .then(toInnerText)
+              .then((cellsInnerText) => {
+                const reversed = cellsInnerText.slice().sort().reverse();
+                expect(cellsInnerText, "cells are reversed").to.deep.equal(
+                  reversed
+                );
+              });
+          });
+      });
+    });
+  })});
 });
 
 export { };
