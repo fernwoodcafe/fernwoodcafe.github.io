@@ -21,7 +21,7 @@ declare global {
       inGridEditText(
         rowIndex: number,
         columnId: string,
-        text: string
+        text: string | number
       ): Chainable<void>;
       inGridSelectOption(
         rowIndex: number,
@@ -35,7 +35,7 @@ declare global {
 
 Cypress.Commands.add("inGridEditText", (rowIndex, columnId, text) => {
   cy.get(`[row-index=${rowIndex}] [col-id=${columnId}]`)
-    .type(text)
+    .type(text.toString())
     .type("{enter}");
 });
 
@@ -77,31 +77,43 @@ Cypress.Commands.add("addSupply", (supply: PartialDeep<Supply>) => {
   }
 
   cy.focused().type(supply.supplyName).type("{enter}");
-  cy.contains(".ag-row", supply.supplyName).then((row) => {
-    const index = row.attr("row-index");
+  cy.contains(".ag-row", supply.supplyName).then((row: JQuery<HTMLElement>) => {
 
-    if (index === undefined) {
-      throw new Error("Undefined row-index in command");
-    }
+    const getAttr = (element: JQuery<HTMLElement>, attributeName: string) => {
+
+      const value = row.attr("row-index");
+
+      if (value === undefined) {
+        throw new Error(`Undefined ${attributeName} HTMLElement`);
+      }
+
+      return value;
+    };
+
+    const rowIndex = parseInt(getAttr(row, "row-index"));
 
     if (supply.supplyUnits) {
       cy.inGridSelectOption(
-        parseInt(index),
+        rowIndex,
         "supplyUnits",
         supply.supplyUnits ?? "" ?? "grams"
       );
     }
 
     if (supply.purchaseQuantity) {
-      cy.get(`[col-id="purchaseQuantity"].ag-cell`)
-        .type(`${supply.purchaseQuantity}`)
-        .type("{enter}");
+      cy.inGridEditText(
+        rowIndex,
+        'purchaseQuantity',
+        supply.purchaseQuantity
+      );
     }
 
     if (supply.purchasePriceBeforeTax) {
-      cy.get(`[col-id="purchasePriceBeforeTax"].ag-cell`)
-        .type(`${supply.purchasePriceBeforeTax}`)
-        .type("{enter}");
+      cy.inGridEditText(
+        rowIndex,
+        "purchasePriceBeforeTax",
+        supply.purchasePriceBeforeTax
+      )
     }
   });
 });
