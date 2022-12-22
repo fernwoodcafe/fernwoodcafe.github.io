@@ -49,13 +49,14 @@ describe("menu item behavior", () => {
     // Navigate to the menu item.
     cy.get('[value="Edit"]').click();
 
-    // Add an ingredient quantity so the menu item has a total cost.
+    // Add components so the menu item has a total cost.
     cy.contains("fieldset", "Add Ingredient").within(() => {
       supplies.forEach(supply => {
         cy.get("select").select(supply.supplyName);
        });
     });
 
+    // Set component quantities and units.
     menuItem.menuItemComponents?.forEach((component, index) => {
       cy.inGridEditText(
         index,
@@ -89,10 +90,6 @@ describe("menu item behavior", () => {
       cy.contains("fieldset", "Cost per Serving").within(() => {
         cy.get("p").should("contain.text", expectedCostPerServing);
       });
-    });
-
-    it(`updates the menu item list`, () => {
-      // TODO
     });
   });
 });
