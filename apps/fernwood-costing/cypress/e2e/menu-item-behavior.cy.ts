@@ -56,17 +56,15 @@ describe("menu item behavior", () => {
        });
     });
 
-    const rowIndex = 0;
-
-    menuItem.menuItemComponents.forEach((component) => {
+    menuItem.menuItemComponents?.forEach((component, index) => {
       cy.inGridEditText(
-        rowIndex,
+        index,
         "menuItemSupplyQuantity",
         `${component.menuItemSupplyQuantity}`
       );
 
       cy.inGridSelectOption(
-        rowIndex,
+        index,
         "menuItemSupplyUnits",
         `${component.menuItemSupplyUnits}`
       );
