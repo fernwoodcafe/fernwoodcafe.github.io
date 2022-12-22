@@ -1,45 +1,59 @@
-import type { MenuItemComponent } from "../../src/packages/domain/types";
 
 // TODO Test that the url path updates when we edit the menu item name from the details view.
 
-const supply = {
-  supplyName: "Supply",
-  supplyUnits: "kilogram",
-  purchaseQuantity: 5,
-  purchasePriceBeforeTax: 25,
-  // $5/kilogram
-} as const;
+import type { PartialDeep } from 'type-fest';
+import { MenuItem } from '../../src/packages/domain/types';
 
-const menuItem = {
+const supplies = [
+  {
+    supplyName: "Supply01",
+    supplyUnits: "kilogram",
+    purchaseQuantity: 5,
+    purchasePriceBeforeTax: 25,
+    // $5/kilogram
+  },
+  {
+    supplyName: "Supply02",
+    supplyUnits: "kilogram",
+    purchaseQuantity: 5,
+    purchasePriceBeforeTax: 25,
+    // $5/kilogram
+  },
+] as const;
+
+const menuItem: PartialDeep<MenuItem> = {
   menuItemName: "Menu Item",
   menuItemServingsPerRecipe: 2,
-  menuItemComponents: [
-    {
-      menuItemSupplyQuantity: 10,
-      menuItemSupplyUnits: supply.supplyUnits,
-      // $50 worth of the supply.
-    } as MenuItemComponent,
-  ],
-  // $50/recipe.
-  // $25/serving.
+  menuItemComponents: supplies.map(supply => ({
+    // $50 worth of each supply.
+    menuItemSupplyQuantity: 10,
+    menuItemSupplyUnits: supply.supplyUnits,
+  })),
+  // $100/recipe for two supplies.
+  // $50/serving for 2 servings per recipe.
 } as const;
 
 // For now we calculate these expectations manually to keep things simple.
 // To do that, take the supply cost times the supply quantity et cetera.
-const expectedTotalCost = "$50.00";
-const expectedCostPerServing = "$25.00";
+const expectedTotalCost = "$100.00";
+const expectedCostPerServing = "$50.00";
 
 describe("menu item behavior", () => {
   before(() => {
-    cy.addSupply(supply);
+    // Add some supplies to the system.
+    supplies.forEach(supply => cy.addSupply(supply));
+
+    // Add the menu item to the system.
     cy.addMenuItem(menuItem);
 
-    // Navigate to the menu item details.
+    // Navigate to the menu item.
     cy.get('[value="Edit"]').click();
 
     // Add an ingredient quantity so the menu item has a total cost.
     cy.contains("fieldset", "Add Ingredient").within(() => {
-      cy.get("select").select(supply.supplyName);
+      supplies.forEach(supply => {
+        cy.get("select").select(supply.supplyName);
+       });
     });
 
     const rowIndex = 0;
@@ -85,4 +99,5 @@ describe("menu item behavior", () => {
   });
 });
 
-export {};
+export { };
+

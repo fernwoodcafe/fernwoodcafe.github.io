@@ -1,3 +1,4 @@
+import type { PartialDeep } from 'type-fest';
 import type { MenuItem, Supply } from "../../src/packages/domain/types";
 
 /// <reference types="cypress" />
@@ -15,8 +16,8 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
-      addSupply(supply: Partial<Supply>): Chainable<void>;
-      addMenuItem(menuItem: Partial<MenuItem>): Chainable<void>;
+      addSupply(supply: PartialDeep<Supply>): Chainable<void>;
+      addMenuItem(menuItem: PartialDeep<MenuItem>): Chainable<void>;
       inGridEditText(
         rowIndex: number,
         columnId: string,
@@ -56,7 +57,7 @@ Cypress.Commands.add("inGridSelectOption", (rowIndex, columnId, option) => {
     });
 });
 
-Cypress.Commands.add("addMenuItem", (menuItem: Partial<MenuItem>) => {
+Cypress.Commands.add("addMenuItem", (menuItem: PartialDeep<MenuItem>) => {
   cy.visit("/#/menu-items");
   cy.get('[value="New Menu Item"]').click();
 
@@ -67,7 +68,7 @@ Cypress.Commands.add("addMenuItem", (menuItem: Partial<MenuItem>) => {
   cy.focused().type(menuItem.menuItemName).type("{enter}");
 });
 
-Cypress.Commands.add("addSupply", (supply: Partial<Supply>) => {
+Cypress.Commands.add("addSupply", (supply: PartialDeep<Supply>) => {
   cy.visit("/#/supplies");
   cy.get('[value="New Supply"]').click();
 
@@ -105,4 +106,5 @@ Cypress.Commands.add("addSupply", (supply: Partial<Supply>) => {
   });
 });
 
-export {};
+export { };
+
