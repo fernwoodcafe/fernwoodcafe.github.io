@@ -8,5 +8,7 @@ export default defineConfig({
     // We use a wide width for human readability during behavior testing.
     viewportWidth: 1500,
     viewportHeight: 800,
-  },
+    // TODO Enable test isolation as part of our upgrade to Cypress 12.
+    testIsolation: false
+  }
 });
