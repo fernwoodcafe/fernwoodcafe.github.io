@@ -118,5 +118,12 @@ Cypress.Commands.add("addSupply", (supply: PartialDeep<Supply>) => {
   });
 });
 
-export { };
+/**
+ * We could eventually make this into Cypress Custom Queries.
+ * See https://docs.cypress.io/api/cypress-api/custom-queries
+ */
+export const agGridQueries = {
+  getColumns: (columnId: string) => cy.get(`[col-id="${columnId}"].ag-cell`),
+  getHeader: (columnId: string) => cy.get(`[col-id="${columnId}"].ag-header-cell`),
+};
 

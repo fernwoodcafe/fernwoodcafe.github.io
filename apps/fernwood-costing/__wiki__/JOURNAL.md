@@ -1,6 +1,8 @@
 2022-12-22
 
-Test column sorting in the MenuItemView.
+Test column sorting in the MenuItemView. Done.
+
+Worth study: https://github.com/cypress-io/cypress-realworld-app
 
 2022-12-19
 

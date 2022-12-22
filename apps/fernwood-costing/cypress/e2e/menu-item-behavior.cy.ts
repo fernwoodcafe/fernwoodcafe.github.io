@@ -3,6 +3,7 @@
 import type { PartialDeep } from "type-fest";
 import type { MenuItem } from "../../src/packages/domain/types";
 import toInnerText from "../misc/toInnerText";
+import { agGridQueries } from '../support/commands';
 
 const supplies = [
   {
@@ -105,11 +106,7 @@ describe("menu item behavior", () => {
     ].forEach(({ columnHeader, columnId }) => {
       it(`sorts by ${columnHeader}`, () => {
         cy.get(".ag-theme-alpine").within(() => {
-          const getColumns = () => cy.get(`[col-id="${columnId}"].ag-cell`);
-          const getHeader = () =>
-            cy.get(`[col-id="${columnId}"].ag-header-cell`);
-
-          getHeader()
+          agGridQueries.getHeader(columnId)
             // The first click does not change the order,
             // because we added the supplies in lexical order.
             .click()
@@ -117,9 +114,9 @@ describe("menu item behavior", () => {
             .click()
             .then(() => {
               // Make sure that the down pointing sort icon appears.
-              getHeader().find("[ref=eSortDesc]").should("be.visible");
+              agGridQueries.getHeader(columnId).find("[ref=eSortDesc]").should("be.visible");
 
-              getColumns()
+              agGridQueries.getColumns(columnId)
                 .then(toInnerText)
                 .then((cellsInnerText) => {
                   const reversed = cellsInnerText.slice().sort().reverse();
