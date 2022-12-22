@@ -1,4 +1,4 @@
-Status, Description, GitHub Issue
+Status, Description, TaskId
 backlog, Add inventory module,
 backlog, Diagram the main flows with PlantUml,
 backlog, Highlight menu items that need to change when we have changed a supply's unit,
@@ -11,12 +11,13 @@ backlog, Add new items to the top of the table instead of the bottom,
 backlog, Ease the addition of varieties of the same drink e.g. 8 oz / 12 oz / 16 oz...,
 backlog, Allow 'clone item' or 'duplicate item' to ease addition of varieties,
 backlog, Introduce item templates e.g. for drinks with cup/lid/sleeve/espresso,
-backlog, Show 'ingredient cost' / 'ingredient cost x3.5' / 'packaging cost' / 'packaging cost x3.5', TODO,
+backlog, Show 'ingredient cost' / 'ingredient cost x3.5' / 'packaging cost' / 'packaging cost x3.5', task-2022-12-22.md
 backlog, In the MenuItemView focus on Price and Markup,
 backlog, In the MenuItemView allow sort by last updated,
 backlog, [bug] Fix the sort in the MenuItemView,
 backlog, In the SuppliesView show have many menu items have each supply,
 backlog, Checkbox on this side of ingredients to include/exclude from cost,
+backlog, Recipe view for each menu item for printing,
 done, Add 'cups' as a new supply measurement,
 done, Arrange for Cypress testing to run against local storage instead of Excel,
 done, bug: Sorting does not work in all columns; e.g. Unit Cost does not sort in supplies,

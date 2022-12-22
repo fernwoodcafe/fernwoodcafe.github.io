@@ -9,3 +9,8 @@
 - Supply units often differ from menu item component units.
 - For instance, we may buy coffee by the pound but use it in a menu item by the gram.
 - Supplies have a unit cost such as $1/gram or $10/ounce.
+
+# Brainstorming
+
+- Can we generate diagrams from the types here?
+- Can we generate types from the diagrams here?
