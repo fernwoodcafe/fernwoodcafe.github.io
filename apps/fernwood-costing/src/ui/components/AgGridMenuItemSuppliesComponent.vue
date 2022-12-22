@@ -10,24 +10,24 @@
 
 <script setup lang="ts">
 import {
-  availableUnitConversions,
-  supplyCostPerUnit,
-  valueConvertedToUnit,
+availableUnitConversions,
+supplyCostPerUnit,
+valueConvertedToUnit
 } from "@packages/domain/services";
 import type {
-  MenuItem,
-  MenuItemComponent,
-  Supply,
-  SupplyTaxes,
+MenuItem,
+MenuItemComponent,
+Supply,
+SupplyTaxes
 } from "@packages/domain/types";
 import AgGridComponent from "@ui/components/AgGridComponent.vue";
 import { formatMoney } from "@ui/formatters";
 import type { ReactiveArray } from "@ui/types/ReactiveArray";
 import type {
-  ColDef,
-  ColGroupDef,
-  ValueFormatterParams,
-  ValueGetterParams,
+ColDef,
+ColGroupDef,
+ValueFormatterParams,
+ValueGetterParams
 } from "ag-grid-community";
 import { reactive, watch } from "vue";
 
@@ -102,6 +102,7 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     valueParser: (params) => Number(params.newValue),
   },
   {
+    field: "menuItemSupplyCost",
     headerName: "Cost",
     editable: false,
     valueGetter: ({ data }: ValueGetterParams<MenuItemComponent>) => {

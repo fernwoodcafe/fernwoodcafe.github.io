@@ -2,8 +2,9 @@
 
 import type { PartialDeep } from "type-fest";
 import type { MenuItem } from "../../src/packages/domain/types";
+import { compareCurrency, compareNumbers, compareStrings } from "../misc/compareUserInput";
 import toInnerText from "../misc/toInnerText";
-import { agGridQueries } from '../support/commands';
+import { agGridQueries } from "../support/commands";
 
 const supplies = [
   {
@@ -98,15 +99,23 @@ describe("menu item behavior", () => {
       {
         columnHeader: "Units",
         columnId: "menuItemSupplyUnits",
+        compareFn: compareStrings
       },
       {
         columnHeader: "Quantity",
         columnId: "menuItemSupplyQuantity",
+        compareFn: compareNumbers
       },
-    ].forEach(({ columnHeader, columnId }) => {
+      {
+        columnHeader: "Cost",
+        columnId: "menuItemSupplyCost",
+        compareFn: compareCurrency
+      },
+    ].forEach(({ columnHeader, columnId, compareFn }) => {
       it(`sorts by ${columnHeader}`, () => {
         cy.get(".ag-theme-alpine").within(() => {
-          agGridQueries.getHeader(columnId)
+          agGridQueries
+            .getHeader(columnId)
             // The first click does not change the order,
             // because we added the supplies in lexical order.
             .click()
@@ -114,12 +123,21 @@ describe("menu item behavior", () => {
             .click()
             .then(() => {
               // Make sure that the down pointing sort icon appears.
-              agGridQueries.getHeader(columnId).find("[ref=eSortDesc]").should("be.visible");
+              agGridQueries
+                .getHeader(columnId)
+                .find("[ref=eSortDesc]")
+                .should("be.visible");
 
-              agGridQueries.getColumns(columnId)
+              agGridQueries
+                .getColumns(columnId)
                 .then(toInnerText)
                 .then((cellsInnerText) => {
-                  const reversed = cellsInnerText.slice().sort().reverse();
+                  // TODO Share this logic with other sorting tests.
+                  const reversed = cellsInnerText
+                    .slice()
+                    .sort(compareFn)
+                    .reverse();
+
                   expect(cellsInnerText, "cells are reversed").to.deep.equal(
                     reversed
                   );
