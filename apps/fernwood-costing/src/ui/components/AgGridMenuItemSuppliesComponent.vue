@@ -58,7 +58,7 @@ watch(props.menuItem, (newMenuItem) => {
   menuItemComponents.items = newMenuItem.menuItemComponents;
 });
 
-const lookupSupplyDetails = (data: MenuItemComponent) =>
+const lookupSupplyDetails = (data: MenuItemComponent): Supply =>
   props.suppliesList.items.find((item) => item.uniqueId == data.supplyUniqueId);
 
 const columnDefs: (ColDef | ColGroupDef)[] = [
@@ -66,6 +66,8 @@ const columnDefs: (ColDef | ColGroupDef)[] = [
     field: "supplyDetails",
     headerName: "Supply Cost and Units",
     editable: false,
+    comparator: (valueA: Supply, valueB: Supply) =>
+      valueA.supplyName.localeCompare(valueB.supplyName),
     valueGetter: ({ data }: { data: MenuItemComponent }) => {
       const supply = lookupSupplyDetails(data);
       const costPerUnit = formatMoney(

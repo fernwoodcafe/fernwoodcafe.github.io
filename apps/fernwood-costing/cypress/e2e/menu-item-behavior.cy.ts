@@ -97,6 +97,11 @@ describe("menu item behavior", () => {
 
     [
       {
+        columnHeader: "Supply Cost and Units",
+        columnId: "supplyDetails",
+        compareFn: compareStrings
+      },
+      {
         columnHeader: "Units",
         columnId: "menuItemSupplyUnits",
         compareFn: compareStrings
@@ -148,6 +153,3 @@ describe("menu item behavior", () => {
     });
   });
 });
-
-export { };
-
