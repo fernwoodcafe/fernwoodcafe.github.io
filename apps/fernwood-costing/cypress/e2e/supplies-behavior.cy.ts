@@ -131,7 +131,10 @@ describe("creates supplies", () => {
   ].forEach(({ columnHeader, columnId }) => {
     it(`sorts by ${columnHeader}`, () => {
       cy.get(".ag-theme-alpine").within(() => {
-        cy.contains(".ag-header-cell-label", columnHeader)
+        const getColumns = () => cy.get(`[col-id="${columnId}"].ag-cell`);
+        const getHeader = () => cy.get(`[col-id="${columnId}"].ag-header-cell`);
+
+        getHeader()
           // The first click does not change the order,
           // because we added the supplies in lexical order.
           .click()
@@ -139,11 +142,9 @@ describe("creates supplies", () => {
           .click()
           .then(() => {
             // Make sure that the down pointing sort icon appears.
-            cy.contains(".ag-header-cell-label", columnHeader)
-              .find("[ref=eSortDesc]")
-              .should("be.visible");
+            getHeader().find("[ref=eSortDesc]").should("be.visible");
 
-            cy.get(`[col-id=${columnId}]`)
+            getColumns()
               .then(toInnerText)
               .then((cellsInnerText) => {
                 const reversed = cellsInnerText.slice().sort().reverse();

@@ -1,8 +1,7 @@
-
 // TODO Test that the url path updates when we edit the menu item name from the details view.
 
-import type { PartialDeep } from 'type-fest';
-import type { MenuItem } from '../../src/packages/domain/types';
+import type { PartialDeep } from "type-fest";
+import type { MenuItem } from "../../src/packages/domain/types";
 import toInnerText from "../misc/toInnerText";
 
 const supplies = [
@@ -25,9 +24,9 @@ const supplies = [
 const menuItem: PartialDeep<MenuItem> = {
   menuItemName: "Menu Item",
   menuItemServingsPerRecipe: 2,
-  menuItemComponents: supplies.map(supply => ({
+  menuItemComponents: supplies.map((supply, index) => ({
     // $50 worth of each supply.
-    menuItemSupplyQuantity: 10,
+    menuItemSupplyQuantity: 10 * (index + 1),
     menuItemSupplyUnits: supply.supplyUnits,
   })),
   // $100/recipe for two supplies.
@@ -36,13 +35,14 @@ const menuItem: PartialDeep<MenuItem> = {
 
 // For now we calculate these expectations manually to keep things simple.
 // To do that, take the supply cost times the supply quantity et cetera.
-const expectedTotalCost = "$100.00";
-const expectedCostPerServing = "$50.00";
+// TODO [should-have, refactor] Calculate these programmatically.
+const expectedTotalCost = "$150.00";
+const expectedCostPerServing = "$75.00";
 
 describe("menu item behavior", () => {
   before(() => {
     // Add some supplies to the system.
-    supplies.forEach(supply => cy.addSupply(supply));
+    supplies.forEach((supply) => cy.addSupply(supply));
 
     // Add the menu item to the system.
     cy.addMenuItem(menuItem);
@@ -52,9 +52,9 @@ describe("menu item behavior", () => {
 
     // Add components so the menu item has a total cost.
     cy.contains("fieldset", "Add Ingredient").within(() => {
-      supplies.forEach(supply => {
+      supplies.forEach((supply) => {
         cy.get("select").select(supply.supplyName);
-       });
+      });
     });
 
     // Set component quantities and units.
@@ -93,38 +93,45 @@ describe("menu item behavior", () => {
       });
     });
 
-  [
-    {
-      columnHeader: "Quantity",
-      columnId: "menuItemSupplyQuantity",
-    },
-  ].forEach(({ columnHeader, columnId }) => {
-    it(`sorts by ${columnHeader}`, () => {
-      cy.get(".ag-theme-alpine").within(() => {
-        cy.contains(".ag-header-cell-label", columnHeader)
-          // The first click does not change the order,
-          // because we added the supplies in lexical order.
-          .click()
-          // The second click sorts it to reversed lexical order.
-          .click()
-          .then(() => {
-            // Make sure that the down pointing sort icon appears.
-            cy.contains(".ag-header-cell-label", columnHeader)
-              .find("[ref=eSortDesc]")
-              .should("be.visible");
+    [
+      {
+        columnHeader: "Units",
+        columnId: "menuItemSupplyUnits",
+      },
+      {
+        columnHeader: "Quantity",
+        columnId: "menuItemSupplyQuantity",
+      },
+    ].forEach(({ columnHeader, columnId }) => {
+      it(`sorts by ${columnHeader}`, () => {
+        cy.get(".ag-theme-alpine").within(() => {
+          const getColumns = () => cy.get(`[col-id="${columnId}"].ag-cell`);
+          const getHeader = () =>
+            cy.get(`[col-id="${columnId}"].ag-header-cell`);
 
-            cy.get(`[col-id=${columnId}]`)
-              .then(toInnerText)
-              .then((cellsInnerText) => {
-                const reversed = cellsInnerText.slice().sort().reverse();
-                expect(cellsInnerText, "cells are reversed").to.deep.equal(
-                  reversed
-                );
-              });
-          });
+          getHeader()
+            // The first click does not change the order,
+            // because we added the supplies in lexical order.
+            .click()
+            // The second click sorts it to reversed lexical order.
+            .click()
+            .then(() => {
+              // Make sure that the down pointing sort icon appears.
+              getHeader().find("[ref=eSortDesc]").should("be.visible");
+
+              getColumns()
+                .then(toInnerText)
+                .then((cellsInnerText) => {
+                  const reversed = cellsInnerText.slice().sort().reverse();
+                  expect(cellsInnerText, "cells are reversed").to.deep.equal(
+                    reversed
+                  );
+                });
+            });
+        });
       });
     });
-  })});
+  });
 });
 
 export { };
