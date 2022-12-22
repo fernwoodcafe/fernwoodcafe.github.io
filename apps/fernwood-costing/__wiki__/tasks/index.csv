@@ -18,6 +18,8 @@ backlog, [bug] Fix the sort in the MenuItemView,
 backlog, In the SuppliesView show have many menu items have each supply,
 backlog, Checkbox on this side of ingredients to include/exclude from cost,
 backlog, Recipe view for each menu item for printing,
+backlog, Print all recipes by category,
+backlog, MenuItemView -> Add arbitrary notes via a large text field / WYSIWYZ editor.
 done, Add 'cups' as a new supply measurement,
 done, Arrange for Cypress testing to run against local storage instead of Excel,
 done, bug: Sorting does not work in all columns; e.g. Unit Cost does not sort in supplies,
