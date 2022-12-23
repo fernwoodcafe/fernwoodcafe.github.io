@@ -56,7 +56,7 @@
         />
         <fieldset>
           <label>Total Cost</label>
-          <p>{{ formatMoney(menuItemTotalCostComputed) }}</p>
+          <p>{{ formatMoney(menuItemCostComputed) }}</p>
         </fieldset>
         <FrcInputNumber
           :value="menuItem.menuItemServingsPerRecipe ?? 1"
@@ -79,7 +79,7 @@
   ></AgGridMenuItemSuppliesComponent>
   <section>
     <ul v-for="(value, name) in debug">
-      <li>{{ name }} - {{ value }}</li>
+      <li>{{ name }} = {{ value }}</li>
     </ul>
   </section>
 </template>
@@ -89,6 +89,8 @@ import type { DomainCommand } from "@packages/cqrs-es-types";
 import {
 categoryPercentTotalSales,
 menuItemCost,
+menuItemCostIngredients,
+menuItemCostPackaging,
 menuItemMarkup,
 menuItemPercentCategorySales,
 menuItemPriceAtMarkup,
@@ -215,9 +217,25 @@ const onMenuItemComponentDeleted = (data: MenuItemComponent) =>
     payload: data,
   });
 
-const menuItemTotalCostComputed = computed(() =>
-  // TODO Rename to menu item total cost.
+const menuItemCostComputed = computed(() =>
   menuItemCost(
+    props.supplyTaxes,
+    props.menuItem.menuItemComponents,
+    props.suppliesList.items,
+    'total'
+  )
+);
+
+const menuItemCostIngredientsComputed = computed(() =>
+  menuItemCostIngredients(
+    props.supplyTaxes,
+    props.menuItem.menuItemComponents,
+    props.suppliesList.items
+  )
+);
+
+const menuItemCostPackagingComputed = computed(() =>
+  menuItemCostPackaging(
     props.supplyTaxes,
     props.menuItem.menuItemComponents,
     props.suppliesList.items
@@ -225,12 +243,12 @@ const menuItemTotalCostComputed = computed(() =>
 );
 
 const menuItemCostPerServingComputed = computed(
-  // TODO Introduce menuItemCostPerServing into domain.
   () =>
     menuItemCost(
       props.supplyTaxes,
       props.menuItem.menuItemComponents,
-      props.suppliesList.items
+      props.suppliesList.items,
+      'total'
     ) / (props.menuItem.menuItemServingsPerRecipe ?? 1)
 );
 
@@ -263,12 +281,14 @@ const menuItemWeightedMarkupComputed = computed(() =>
 );
 
 const debug = {
-  menuItemTotalCostComputed,
-  menuItemCostPerServingComputed,
-  menuItemBaselinePricePerServing,
-  menuItemMarkupComputed,
-  menuItemPercentCategorySalesComputed,
-  menuItemWeightedMarkupComputed,
+  menuItemCostComputed,
+  menuItemCostPackagingComputed,
+  menuItemCostIngredientsComputed,
+  // menuItemCostPerServingComputed,
+  // menuItemBaselinePricePerServing,
+  // menuItemMarkupComputed,
+  // menuItemPercentCategorySalesComputed,
+  // menuItemWeightedMarkupComputed,
 };
 </script>
 

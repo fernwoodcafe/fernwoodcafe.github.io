@@ -2,29 +2,33 @@ import type {
   MenuItemComponent,
   Supply,
   SupplyTaxes,
+  SupplyType
 } from "@packages/domain/types";
+import joinWithSupplies from "./joinWithSupplies";
 import supplyCostPerUnit from "./supplyCostPerUnit";
 import valueConvertedToUnit from "./valueConvertedToUnit";
 
 export default (
   supplyTaxes: SupplyTaxes,
   menuItemComponents: readonly MenuItemComponent[],
-  suppliesList: readonly Supply[]
+  suppliesList: readonly Supply[],
+  targetSupplyType: SupplyType | "total"
 ) =>
   menuItemComponents
+    .map(joinWithSupplies(suppliesList))
+    .filter(
+      (menuItemSupply) =>
+        targetSupplyType === "total" || menuItemSupply.supplyType === targetSupplyType
+    )
     .map((menuItemSupply) => {
-      const targetSupply = suppliesList.find(
-        (s) => s.uniqueId == menuItemSupply.supplyUniqueId
-      );
-
-      const costPerSupplyUnit = supplyCostPerUnit(supplyTaxes, targetSupply);
+      const costPerSupplyUnit = supplyCostPerUnit(supplyTaxes, menuItemSupply);
       const costPerMenuItemUnit =
         menuItemSupply.menuItemSupplyUnits === "-" ||
-        targetSupply.supplyUnits === "-"
+        menuItemSupply.supplyUnits === "-"
           ? 0
           : valueConvertedToUnit(
               costPerSupplyUnit,
-              targetSupply.supplyUnits,
+              menuItemSupply.supplyUnits,
               menuItemSupply.menuItemSupplyUnits,
               "inverse-conversion"
             );

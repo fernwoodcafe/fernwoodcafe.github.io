@@ -2,6 +2,8 @@ import availableUnitConversions from "./availableUnitConversions";
 import categoryPercentTotalSales from "./categoryPercentTotalSales";
 import categoryWeightedAverageMarkup from "./categoryWeightedAverageMarkup";
 import menuItemCost from "./menuItemCost";
+import menuItemCostIngredients from "./menuItemCostIngredients";
+import menuItemCostPackaging from "./menuItemCostPackaging";
 import menuItemMarkup from "./menuItemMarkup";
 import menuItemPercentCategorySales from "./menuItemPercentCategorySales";
 import menuItemPriceAtMarkup from "./menuItemPriceAtMarkup";
@@ -15,6 +17,8 @@ export {
   menuItemPercentCategorySales,
   menuItemWeightedMarkup,
   menuItemCost,
+  menuItemCostPackaging,
+  menuItemCostIngredients,
   menuItemMarkup,
   menuItemPriceAtMarkup,
   supplyCostPerUnit,
