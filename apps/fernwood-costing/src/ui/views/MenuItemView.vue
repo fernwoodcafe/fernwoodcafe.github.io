@@ -35,7 +35,7 @@
         </fieldset>
         <fieldset>
           <label>Category Weighted Markup</label>
-          <p>{{ menuItemWeightedMarkupValue.toFixed(2) }}</p>
+          <p>{{ menuItemWeightedMarkupComputed.toFixed(2) }}</p>
         </fieldset>
       </form>
     </section>
@@ -77,24 +77,27 @@
     @menuItemSupplyUpdated="onMenuItemComponentUpdated"
     @menuItemSupplyDeleted="onMenuItemComponentDeleted"
   ></AgGridMenuItemSuppliesComponent>
+  <ul v-for="(value, name, index) in debug">
+    <li>{{name}} - {{ value }}</li>
+  </ul>
 </template>
 
 <script setup lang="ts">
 import type { DomainCommand } from "@packages/cqrs-es-types";
 import {
-  categoryPercentTotalSales,
-  menuItemCost,
-  menuItemMarkup,
-  menuItemPercentCategorySales,
-  menuItemPriceAtMarkup,
-  menuItemWeightedMarkup,
+categoryPercentTotalSales,
+menuItemCost,
+menuItemMarkup,
+menuItemPercentCategorySales,
+menuItemPriceAtMarkup,
+menuItemWeightedMarkup
 } from "@packages/domain/services";
 import type {
-  CafeGoals,
-  MenuItem,
-  MenuItemComponent,
-  Supply,
-  SupplyTaxes,
+CafeGoals,
+MenuItem,
+MenuItemComponent,
+Supply,
+SupplyTaxes
 } from "@packages/domain/types";
 import AgGridMenuItemSuppliesComponent from "@ui/components/AgGridMenuItemSuppliesComponent.vue";
 import FrcSelectOption from "@ui/components/FrcSelectOption.vue";
@@ -250,12 +253,21 @@ const menuItemPercentCategorySalesComputed = computed(() =>
   )
 );
 
-const menuItemWeightedMarkupValue = computed(() =>
+const menuItemWeightedMarkupComputed = computed(() =>
   menuItemWeightedMarkup(
     menuItemMarkupComputed.value,
     menuItemPercentCategorySalesComputed.value
   )
 );
+
+const debug = {
+  menuItemTotalCostComputed,
+  menuItemCostPerServingComputed,
+  menuItemBaselinePricePerServing,
+  menuItemMarkupComputed,
+  menuItemPercentCategorySalesComputed,
+  menuItemWeightedMarkupComputed,
+};
 </script>
 
 <style scoped>
