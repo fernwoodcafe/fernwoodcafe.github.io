@@ -77,9 +77,11 @@
     @menuItemSupplyUpdated="onMenuItemComponentUpdated"
     @menuItemSupplyDeleted="onMenuItemComponentDeleted"
   ></AgGridMenuItemSuppliesComponent>
-  <ul v-for="(value, name, index) in debug">
-    <li>{{name}} - {{ value }}</li>
-  </ul>
+  <section>
+    <ul v-for="(value, name) in debug">
+      <li>{{ name }} - {{ value }}</li>
+    </ul>
+  </section>
 </template>
 
 <script setup lang="ts">
