@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 import recipeGenerator, { type CustomerOptions } from "../recipeGenerator";
 
-
-
-
 describe("recipeGenerator", () => {
   it("outputs expected recipes", () => {
     // Arranage
@@ -18,8 +15,8 @@ describe("recipeGenerator", () => {
     const recipes = recipeGenerator(options);
 
     // Dump
-    // console.table(recipes);
-    console.log(JSON.stringify(recipes, undefined, 2));
+    console.table(recipes);
+    // console.log(JSON.stringify(recipes, undefined, 2));
 
     // Assert
     expect(recipes).to.deep.include.members([
@@ -36,10 +33,11 @@ describe("recipeGenerator", () => {
         // milk cost
         milkSteamedOunces: 10.5,
         milkColdOunces: 8.5,
-        milkCostDollars: 0.42,
+        milkCostDollars: 0.43,
         // packaging cost
         packagingCostDollars: 0.38,
-        totalCostDollars: 0.95
+        // total cost
+        totalCostDollars: 1.38
       },
     ]);
   });

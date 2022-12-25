@@ -25,11 +25,24 @@ export type RecipeVariant = {
   espressoCostDollars?: number;
 };
 
-const milkCostFor = (recipe: RecipeVariant) => ({
-  milkSteamedOunces: 10.5,
-  milkColdOunces: 8.5,
-  milkCostDollars: 0.42,
-});
+const milkCostFor = (recipe: RecipeVariant) => {
+  const latteMilkSteamedToColdRatio = new Map<number, number>([
+    [9, 7],
+    [10.5, 8.5],
+    [14.5, 11],
+  ]);
+
+  const dairy_3_percent_cost_per_ounce = 0.05;
+
+  const milkSteamedOunces = recipe.drinkSizeOunces - recipe.espressoFluidOunces;
+  const milkColdOunces = latteMilkSteamedToColdRatio.get(milkSteamedOunces);
+  const milkCostDollars = Math.round(milkColdOunces * dairy_3_percent_cost_per_ounce * 100) / 100;
+  return {
+    milkSteamedOunces,
+    milkColdOunces,
+    milkCostDollars,
+  };
+};
 
 const espressoCostFor = (recipe: RecipeVariant) => ({
   espressoGrams: 18.5 * (recipe.espressoShots / 2),
@@ -39,7 +52,9 @@ const espressoCostFor = (recipe: RecipeVariant) => ({
 
 const packagingCostFor = (recipe: RecipeVariant) => {
   if (recipe.cupKind !== "to_go") {
-    return 0;
+      return {
+        packagingCostDollars: 0
+      };
   }
 
   // cup + lid + sleeve
@@ -96,5 +111,5 @@ export default (options: CustomerOptions): RecipeVariant[] =>
     .map((recipe) => ({
       ...recipe,
       totalCostDollars:
-        recipe.packagingCostDollars + recipe.espressoCostDollars,
+        Math.round((recipe.packagingCostDollars + recipe.espressoCostDollars + recipe.milkCostDollars) * 100) / 100,
     }));
