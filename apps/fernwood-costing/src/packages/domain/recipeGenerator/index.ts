@@ -29,6 +29,7 @@ const milkCostFor = (recipe: RecipeVariant) => {
   const latteMilkSteamedToColdRatio = new Map<number, number>([
     [9, 7],
     [10.5, 8.5],
+    [13, 9.5],
     [14.5, 11],
   ]);
 

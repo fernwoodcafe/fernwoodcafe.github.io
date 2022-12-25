@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
 import recipeGenerator, { type CustomerOptions } from "../recipeGenerator";
 
+
 describe("recipeGenerator", () => {
   it("outputs expected recipes", () => {
     // Arranage
     const options: CustomerOptions = {
-      availableSizesInOunces: [12],
+      availableSizesInOunces: [12, 16],
       availableExpressoShots: [2, 4],
       availableMilkAlternatives: ["dairy_3_percent"],
       availableCups: ["for_here", "to_go"],
