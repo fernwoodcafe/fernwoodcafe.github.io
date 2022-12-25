@@ -20,12 +20,11 @@ export type RecipeVariant = {
   cup: AvailableCups;
   espressoShots: AvailableEspressoShots;
   milkAlternative: AvailableMilkAlternatives;
-  //
 };
 
 export default (options: CustomerOptions): RecipeVariant[] =>
   options.availableSizesInOunces
-    .flatMap((size) => ({
+    .map((size) => ({
       size,
     }))
     .flatMap((accumulator) =>
@@ -38,10 +37,9 @@ export default (options: CustomerOptions): RecipeVariant[] =>
       options.availableExpressoShots.map((espressoShots) => ({
         ...accumulator,
         espressoShots,
-        //
-        // espressoGrams: (18.5 * (espressoShots / 2)),
-        // espressoFluidOunces: (1.5 * (espressoShots / 2)),
-        // espressoCostDollars: (0.57 * (espressoShots / 2)),
+        espressoGrams: (18.5 * (espressoShots / 2)),
+        espressoFluidOunces: (1.5 * (espressoShots / 2)),
+        espressoCostDollars: (0.57 * (espressoShots / 2)),
       }))
     )
     .flatMap((accumulator) =>
