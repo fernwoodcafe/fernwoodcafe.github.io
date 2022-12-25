@@ -7,6 +7,11 @@ describe("recipeGenerator", () => {
     const options: RecipeOptions = {
       availableSizesInOunces: [8, 12, 16],
       availableExpressoShots: [2, 4, 6],
+      availableCups: [
+        'for_here',
+        'own_cup',
+        'to_go'
+      ],
       availableMilkAlternatives: [
         "dairy_one_percent",
         "dairy_3_percent",
@@ -27,7 +32,8 @@ describe("recipeGenerator", () => {
       {
         size: 8,
         shots: 2,
-        milk: 'oat'
+        milk: 'oat',
+        cup: 'to_go'
       },
     ]);
   });

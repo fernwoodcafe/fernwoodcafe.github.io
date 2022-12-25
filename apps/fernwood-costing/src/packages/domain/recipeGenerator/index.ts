@@ -1,3 +1,4 @@
+type AvailableCups = readonly ("for_here" | "to_go" | "own_cup")[];
 type AvailableSizesInOunces = readonly (8 | 12 | 16)[];
 type AvailableEspressoShots = readonly (2 | 4 | 6)[];
 type AvailableMilkAlternatives = readonly (
@@ -12,21 +13,29 @@ export type RecipeOptions = {
   availableSizesInOunces: AvailableSizesInOunces;
   availableExpressoShots: AvailableEspressoShots;
   availableMilkAlternatives: AvailableMilkAlternatives;
+  availableCups: AvailableCups;
 };
 
-export default (options: RecipeOptions) => {
-  return options.availableSizesInOunces
+export default (options: RecipeOptions) =>
+  options.availableSizesInOunces
     .map((size) => ({
       size,
     }))
+    .flatMap((accumulator) =>
+      options.availableCups.map((cup) => ({
+        ...accumulator,
+        cup,
+      }))
+    )
     .flatMap((accumulator) =>
       options.availableExpressoShots.map((shots) => ({
         ...accumulator,
         shots,
       }))
     )
-    .flatMap((accumulator) => options.availableMilkAlternatives.map((milk) => ({
-      ...accumulator,
-      milk
-    })));
-};
+    .flatMap((accumulator) =>
+      options.availableMilkAlternatives.map((milk) => ({
+        ...accumulator,
+        milk,
+      }))
+    );
