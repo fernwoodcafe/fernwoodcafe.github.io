@@ -77,6 +77,10 @@ const packagingCostFor = (recipe: RecipeVariant) => {
   }
 };
 
+/**
+ * Currently this supports only lattes.
+ * TODO [work-ethic] Complete the latte 12 & 16 ounce before moving on to other drinks.
+ */
 export default (options: CustomerOptions): RecipeVariant[] =>
   options.availableSizesInOunces
     .map((drinkSizeOunces) => ({
