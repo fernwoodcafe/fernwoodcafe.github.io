@@ -25,6 +25,9 @@ export type RecipeVariant = {
   espressoCostDollars?: number;
 };
 
+const roundToTwoDecimalPlaces = (input: number) =>
+  Math.round(input * 100) / 100;
+
 const milkCostFor = (recipe: RecipeVariant) => {
   const latteMilkSteamedToColdRatio = new Map<number, number>([
     [9, 7],
@@ -37,7 +40,9 @@ const milkCostFor = (recipe: RecipeVariant) => {
 
   const milkSteamedOunces = recipe.drinkSizeOunces - recipe.espressoFluidOunces;
   const milkColdOunces = latteMilkSteamedToColdRatio.get(milkSteamedOunces);
-  const milkCostDollars = Math.round(milkColdOunces * dairy_3_percent_cost_per_ounce * 100) / 100;
+  const milkCostDollars = roundToTwoDecimalPlaces(
+    milkColdOunces * dairy_3_percent_cost_per_ounce
+  );
   return {
     milkSteamedOunces,
     milkColdOunces,
@@ -53,9 +58,9 @@ const espressoCostFor = (recipe: RecipeVariant) => ({
 
 const packagingCostFor = (recipe: RecipeVariant) => {
   if (recipe.cupKind !== "to_go") {
-      return {
-        packagingCostDollars: 0
-      };
+    return {
+      packagingCostDollars: 0,
+    };
   }
 
   // cup + lid + sleeve
@@ -64,22 +69,28 @@ const packagingCostFor = (recipe: RecipeVariant) => {
       // Note: We currently do not have 8 ounce sleeves;
       // people tend not to ask for them.
       return {
-        packagingCostDollars: Math.round((0.13 + 0.12 + 0.0) * 100) / 100,
+        packagingCostDollars: roundToTwoDecimalPlaces(0.13 + 0.12 + 0.0),
       };
     case 12:
       return {
-        packagingCostDollars: Math.round((0.17 + 0.13 + 0.08) * 100) / 100,
+        packagingCostDollars: roundToTwoDecimalPlaces(0.17 + 0.13 + 0.08),
       };
     case 16:
       return {
-        packagingCostDollars: Math.round((0.19 + 0.13 + 0.08) * 100) / 100,
+        packagingCostDollars: roundToTwoDecimalPlaces(0.19 + 0.13 + 0.08),
       };
   }
 };
 
 /**
  * Currently this supports only lattes.
+ *
  * TODO [work-ethic] Complete the latte 12 & 16 ounce before moving on to other drinks.
+ *
+ * TODO [design] Break the output into three related objects joined on the menu-item-id.
+ * 1. **Menu Item Customer Options** This includes everything a custom can choose.
+ * 2. **Menu Item Recipe** This includes ingredients (raw and cooked) and packaging.
+ * 3. **Menu Item Cost** This includes the cost details and summary.
  */
 export default (options: CustomerOptions): RecipeVariant[] =>
   options.availableSizesInOunces
@@ -115,6 +126,9 @@ export default (options: CustomerOptions): RecipeVariant[] =>
     }))
     .map((recipe) => ({
       ...recipe,
-      totalCostDollars:
-        Math.round((recipe.packagingCostDollars + recipe.espressoCostDollars + recipe.milkCostDollars) * 100) / 100,
+      totalCostDollars: roundToTwoDecimalPlaces(
+        recipe.packagingCostDollars +
+          recipe.espressoCostDollars +
+          recipe.milkCostDollars
+      ),
     }));
