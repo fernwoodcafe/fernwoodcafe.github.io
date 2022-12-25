@@ -34,9 +34,9 @@ const packagingCostFor = (
     case 8:
       // Note: We currently do not have 8 ounce sleeves;
       // people tend not to ask for them.
-      return Math.round((0.13 + 0.12 + 0.00) * 100) / 100;
+      return Math.round((0.13 + 0.12 + 0.0) * 100) / 100;
     case 12:
-      return Math.round((0.17 + 0.13 + 0.08)* 100) / 100;
+      return Math.round((0.17 + 0.13 + 0.08) * 100) / 100;
     case 16:
       return Math.round((0.19 + 0.13 + 0.08) * 100) / 100;
   }
@@ -72,4 +72,9 @@ export default (options: CustomerOptions): RecipeVariant[] =>
       espressoFluidOunces: 1.5 * (recipe.espressoShots / 2),
       espressoCostDollars: 0.57 * (recipe.espressoShots / 2),
       packagingCostDollars: packagingCostFor(recipe),
+    }))
+    .map((recipe) => ({
+      ...recipe,
+      totalCostDollars:
+        recipe.packagingCostDollars + recipe.espressoCostDollars,
     }));

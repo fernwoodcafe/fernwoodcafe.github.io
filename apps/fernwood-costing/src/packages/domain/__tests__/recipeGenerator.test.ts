@@ -3,12 +3,17 @@ import recipeGenerator, { type CustomerOptions } from "../recipeGenerator";
 
 
 
+
+
+
+
+
 describe("recipeGenerator", () => {
   it("outputs expected recipes", () => {
     // Arranage
     const options: CustomerOptions = {
       availableSizesInOunces: [12],
-      availableExpressoShots: [2],
+      availableExpressoShots: [2, 4],
       availableMilkAlternatives: ["dairy_3_percent"],
       availableCups: ["for_here", "own_cup", "to_go"],
     };
@@ -36,7 +41,8 @@ describe("recipeGenerator", () => {
         // milkColdOunces: 8.5,
         // milkCostDollars: 0.42,
         // packaging cost
-        packagingCostDollars: 0.38
+        packagingCostDollars: 0.38,
+        totalCostDollars: 0.95
       },
     ]);
   });
