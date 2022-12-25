@@ -31,14 +31,20 @@ describe("recipeGenerator", () => {
     expect(recipes).to.deep.include.members([
       {
         // 12 ounce 2 shot oat milk latte to go.
-        size: 12,
+        size: 12
         espressoShots: 2,
-        milkAlternative: 'oat',
+        milkAlternative: 'dairy',
         cup: 'to_go',
-        //
-        espressoGrams: 18.5,
-        espressoFluidOunces: 1.5
-
+        // espresso cost
+        // espressoGrams: 18.5,
+        // espressoFluidOunces: 1.5,
+        // espressoCostDollars: 0.57,
+        // milk cost
+        // milkSteamedOunces: 10.5,
+        // milkColdOunces: 8.5,
+        // milkCostDollars: 0.42,
+        // packaging cost
+        // packagingCostDollars: 0.38
       },
     ]);
   });

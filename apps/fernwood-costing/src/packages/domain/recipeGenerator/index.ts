@@ -1,13 +1,12 @@
 type AvailableCups = "for_here" | "to_go" | "own_cup";
 type AvailableSizesInOunces = 8 | 12 | 16;
 type AvailableEspressoShots = 2 | 4 | 6;
-type AvailableMilkAlternatives = (
+type AvailableMilkAlternatives =
   | "dairy_one_percent"
   | "dairy_3_percent"
   | "dairy_10_percent"
   | "oat"
-  | "almond"
-)[];
+  | "almond";
 
 export type CustomerOptions = {
   availableSizesInOunces: readonly AvailableSizesInOunces[];
@@ -21,11 +20,12 @@ export type RecipeVariant = {
   cup: AvailableCups;
   espressoShots: AvailableEspressoShots;
   milkAlternative: AvailableMilkAlternatives;
+  //
 };
 
 export default (options: CustomerOptions): RecipeVariant[] =>
   options.availableSizesInOunces
-    .map((size) => ({
+    .flatMap((size) => ({
       size,
     }))
     .flatMap((accumulator) =>
@@ -38,6 +38,10 @@ export default (options: CustomerOptions): RecipeVariant[] =>
       options.availableExpressoShots.map((espressoShots) => ({
         ...accumulator,
         espressoShots,
+        //
+        // espressoGrams: (18.5 * (espressoShots / 2)),
+        // espressoFluidOunces: (1.5 * (espressoShots / 2)),
+        // espressoCostDollars: (0.57 * (espressoShots / 2)),
       }))
     )
     .flatMap((accumulator) =>
