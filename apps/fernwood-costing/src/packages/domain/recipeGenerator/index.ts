@@ -1,7 +1,7 @@
-type AvailableCups = readonly ("for_here" | "to_go" | "own_cup")[];
-type AvailableSizesInOunces = readonly (8 | 12 | 16)[];
-type AvailableEspressoShots = readonly (2 | 4 | 6)[];
-type AvailableMilkAlternatives = readonly (
+type AvailableCups = "for_here" | "to_go" | "own_cup";
+type AvailableSizesInOunces = 8 | 12 | 16;
+type AvailableEspressoShots = 2 | 4 | 6;
+type AvailableMilkAlternatives = (
   | "dairy_one_percent"
   | "dairy_3_percent"
   | "dairy_10_percent"
@@ -10,13 +10,20 @@ type AvailableMilkAlternatives = readonly (
 )[];
 
 export type CustomerOptions = {
-  availableSizesInOunces: AvailableSizesInOunces;
-  availableExpressoShots: AvailableEspressoShots;
-  availableMilkAlternatives: AvailableMilkAlternatives;
-  availableCups: AvailableCups;
+  availableSizesInOunces: readonly AvailableSizesInOunces[];
+  availableExpressoShots: readonly AvailableEspressoShots[];
+  availableMilkAlternatives: readonly AvailableMilkAlternatives[];
+  availableCups: readonly AvailableCups[];
 };
 
-export default (options: CustomerOptions) =>
+export type RecipeVariant = {
+  size: AvailableSizesInOunces;
+  cup: AvailableCups;
+  espressoShots: AvailableEspressoShots;
+  milkAlternative: AvailableMilkAlternatives;
+};
+
+export default (options: CustomerOptions): RecipeVariant[] =>
   options.availableSizesInOunces
     .map((size) => ({
       size,
@@ -28,14 +35,14 @@ export default (options: CustomerOptions) =>
       }))
     )
     .flatMap((accumulator) =>
-      options.availableExpressoShots.map((shots) => ({
+      options.availableExpressoShots.map((espressoShots) => ({
         ...accumulator,
-        shots,
+        espressoShots,
       }))
     )
     .flatMap((accumulator) =>
-      options.availableMilkAlternatives.map((milk) => ({
+      options.availableMilkAlternatives.map((milkAlternative) => ({
         ...accumulator,
-        milk,
+        milkAlternative,
       }))
     );

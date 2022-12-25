@@ -30,10 +30,15 @@ describe("recipeGenerator", () => {
     // Assert
     expect(recipes).to.deep.include.members([
       {
-        size: 8,
-        shots: 2,
-        milk: 'oat',
-        cup: 'to_go'
+        // 12 ounce 2 shot oat milk latte to go.
+        size: 12,
+        espressoShots: 2,
+        milkAlternative: 'oat',
+        cup: 'to_go',
+        //
+        espressoGrams: 18.5,
+        espressoFluidOunces: 1.5
+
       },
     ]);
   });
