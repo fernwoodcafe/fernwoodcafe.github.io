@@ -9,14 +9,14 @@ type AvailableMilkAlternatives = readonly (
   | "almond"
 )[];
 
-export type RecipeOptions = {
+export type CustomerOptions = {
   availableSizesInOunces: AvailableSizesInOunces;
   availableExpressoShots: AvailableEspressoShots;
   availableMilkAlternatives: AvailableMilkAlternatives;
   availableCups: AvailableCups;
 };
 
-export default (options: RecipeOptions) =>
+export default (options: CustomerOptions) =>
   options.availableSizesInOunces
     .map((size) => ({
       size,
