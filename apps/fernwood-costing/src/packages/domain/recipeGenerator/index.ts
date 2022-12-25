@@ -1,3 +1,7 @@
+import espressoCostFor from './espressoCostFor';
+import milkCostFor from './milkCostFor';
+import packagingCostFor from './packagingCostFor';
+
 type AvailableCupKinds = "for_here" | "to_go" | "own_cup";
 type AvailableDrinkSizesInOunces = 8 | 12 | 16;
 type AvailableEspressoShots = 2 | 4 | 6;
@@ -8,79 +12,30 @@ type AvailableMilkAlternatives =
   | "oat"
   | "almond";
 
-export type CustomerOptions = {
+export type AvailableCustomerOptions = {
   availableSizesInOunces: readonly AvailableDrinkSizesInOunces[];
   availableExpressoShots: readonly AvailableEspressoShots[];
   availableMilkAlternatives: readonly AvailableMilkAlternatives[];
   availableCups: readonly AvailableCupKinds[];
 };
 
-export type RecipeVariant = {
-  drinkSizeOunces: AvailableDrinkSizesInOunces;
+export type RecipePermutation = {
   cupKind: AvailableCupKinds;
+  drinkSizeOunces: AvailableDrinkSizesInOunces;
+  espressoCostDollars: number;
+  espressoFluidOunces: number;
+  espressoGrams?: number;
   espressoShots: AvailableEspressoShots;
   milkAlternative: AvailableMilkAlternatives;
-  espressoGrams?: number;
-  espressoFluidOunces?: number;
-  espressoCostDollars?: number;
+  milkColdOunces: number;
+  milkCostDollars: number;
+  milkSteamedOunces: number;
+  packagingCostDollars: number;
+  totalCostDollars: number;
 };
 
-const roundToTwoDecimalPlaces = (input: number) =>
+export const roundToTwoDecimalPlaces = (input: number) =>
   Math.round(input * 100) / 100;
-
-const milkCostFor = (recipe: RecipeVariant) => {
-  const latteMilkSteamedToColdRatio = new Map<number, number>([
-    [9, 7],
-    [10.5, 8.5],
-    [13, 9.5],
-    [14.5, 11],
-  ]);
-
-  const dairy_3_percent_cost_per_ounce = 0.05;
-
-  const milkSteamedOunces = recipe.drinkSizeOunces - recipe.espressoFluidOunces;
-  const milkColdOunces = latteMilkSteamedToColdRatio.get(milkSteamedOunces);
-  const milkCostDollars = roundToTwoDecimalPlaces(
-    milkColdOunces * dairy_3_percent_cost_per_ounce
-  );
-  return {
-    milkSteamedOunces,
-    milkColdOunces,
-    milkCostDollars,
-  };
-};
-
-const espressoCostFor = (recipe: RecipeVariant) => ({
-  espressoGrams: 18.5 * (recipe.espressoShots / 2),
-  espressoFluidOunces: 1.5 * (recipe.espressoShots / 2),
-  espressoCostDollars: 0.57 * (recipe.espressoShots / 2),
-});
-
-const packagingCostFor = (recipe: RecipeVariant) => {
-  if (recipe.cupKind !== "to_go") {
-    return {
-      packagingCostDollars: 0,
-    };
-  }
-
-  // cup + lid + sleeve
-  switch (recipe.drinkSizeOunces) {
-    case 8:
-      // Note: We currently do not have 8 ounce sleeves;
-      // people tend not to ask for them.
-      return {
-        packagingCostDollars: roundToTwoDecimalPlaces(0.13 + 0.12 + 0.0),
-      };
-    case 12:
-      return {
-        packagingCostDollars: roundToTwoDecimalPlaces(0.17 + 0.13 + 0.08),
-      };
-    case 16:
-      return {
-        packagingCostDollars: roundToTwoDecimalPlaces(0.19 + 0.13 + 0.08),
-      };
-  }
-};
 
 /**
  * Currently this supports only lattes.
@@ -92,7 +47,7 @@ const packagingCostFor = (recipe: RecipeVariant) => {
  * 2. **Menu Item Recipe** This includes ingredients (raw and cooked) and packaging.
  * 3. **Menu Item Cost** This includes the cost details and summary.
  */
-export default (options: CustomerOptions): RecipeVariant[] =>
+export default (options: AvailableCustomerOptions): RecipePermutation[] =>
   options.availableSizesInOunces
     .map((drinkSizeOunces) => ({
       drinkSizeOunces,

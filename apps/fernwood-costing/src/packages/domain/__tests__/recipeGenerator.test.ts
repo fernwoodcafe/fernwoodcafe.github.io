@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import recipeGenerator, { type CustomerOptions } from "../recipeGenerator";
+import recipeGenerator, { type AvailableCustomerOptions } from "../recipeGenerator";
 
 
 describe("recipeGenerator", () => {
   it("outputs expected recipes", () => {
     // Arranage
-    const options: CustomerOptions = {
+    const options: AvailableCustomerOptions = {
       availableSizesInOunces: [12, 16],
       availableExpressoShots: [2, 4],
       availableMilkAlternatives: ["dairy_3_percent"],
