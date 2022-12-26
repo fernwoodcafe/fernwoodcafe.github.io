@@ -1,3 +1,15 @@
+
+2022-12-26
+
+The current goal: program the 2023 latte into Square through CSV import.
+
+Bits:
+
+* How do we set the price for each of the modifiers?
+* Can we make the price interactive (ie, as a function of _all_ modifiers)?
+* Or do we need to have one-and-only-one price per option?
+* What kinds of dynamic pricing, if any, does Square support?
+
 2022-12-22
 
 Test column sorting in the MenuItemView. Done.
