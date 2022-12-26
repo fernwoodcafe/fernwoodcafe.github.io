@@ -37,6 +37,8 @@ describe("recipeGenerator", () => {
       suggestedPrice: r.suggestedPrice
     })));
 
+    console.log(recipes[2]);
+
     // Assert
     expect(recipes).to.deep.include.members([
       {
@@ -45,17 +47,16 @@ describe("recipeGenerator", () => {
         espressoShots: 2,
         milkAlternative: "dairy_3_percent",
         cupKind: "to_go",
-        // espresso cost
-        espressoGrams: 18.5,
-        espressoFluidOunces: 1.5,
-        espressoCostDollars: 0.57,
-        // milk cost
-        milkSteamedOunces: 10.5,
-        milkColdOunces: 8.5,
-        milkCostDollars: 0.43,
-        // packaging cost
-        packagingCostDollars: 0.38,
+        // espresso ingredients
+        espressoGrams: 18.5, // raw amount
+        espressoFluidOunces: 1.5, // cooked amount
+        espressoCostDollars: 0.57, // raw cost
+        // milk ingredients
+        milkColdOunces: 8.5, // raw amount
+        milkSteamedOunces: 10.5, // cooked amount
+        milkCostDollars: 0.43, // raw cost
         // total cost
+        packagingCostDollars: 0.38,
         ingredientCostDollars: 1,
         totalCostDollars: 1.38,
         // price
