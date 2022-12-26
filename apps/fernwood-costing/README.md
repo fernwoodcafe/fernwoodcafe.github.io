@@ -8,3 +8,7 @@ npm run dev
 ```
 
 Then see the `package.json` scripts for more.
+
+# Development
+
+We use **trunk based development**.
