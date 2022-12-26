@@ -24,7 +24,7 @@ digraph costing_plan {
 
   POS_Line_Item [
     shape=record
-    label = "{Transaction Item |16 ounce oat milk latte with 2 shots to go}"
+    label = "{Transaction Item |16 ounce 2 shot oat milk latte to go}"
   ]
 
   Menu_Item_Name [
@@ -36,7 +36,7 @@ digraph costing_plan {
 
   Customer_Option [
     shape=record
-    label = "{Customer Option|size|milk|cup|shots}"
+    label = "{Customer Option|size|shots|milk|cup}"
     style=filled
     fillcolor=yellow
   ]

@@ -24,7 +24,7 @@ export type RecipePermutation = {
   drinkSizeOunces: AvailableDrinkSizesInOunces;
   espressoCostDollars: number;
   espressoFluidOunces: number;
-  espressoGrams?: number;
+  espressoGrams: number;
   espressoShots: AvailableEspressoShots;
   milkAlternative: AvailableMilkAlternatives;
   milkColdOunces: number;

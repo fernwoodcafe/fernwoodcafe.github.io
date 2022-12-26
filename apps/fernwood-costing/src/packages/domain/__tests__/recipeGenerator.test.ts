@@ -16,8 +16,13 @@ describe("recipeGenerator", () => {
     const recipes = recipeGenerator(options);
 
     // Dump
-    console.table(recipes);
-    // console.log(JSON.stringify(recipes, undefined, 2));
+    console.table(recipes.map(recipe => ({
+      size: recipe.drinkSizeOunces,
+      shots: recipe.espressoShots,
+      milk: recipe.milkAlternative,
+      cup: recipe.cupKind,
+      cost: recipe.totalCostDollars,
+    })));
 
     // Assert
     expect(recipes).to.deep.include.members([
