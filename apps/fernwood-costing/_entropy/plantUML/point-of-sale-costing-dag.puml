@@ -1,4 +1,4 @@
-@startuml
+@startdot
 
 digraph costing_plan {
 
@@ -24,64 +24,59 @@ digraph costing_plan {
 
   POS_Line_Item [
     shape=record
-    label = "
-      Transaction Item
-      |16 ounce oat milk latte with 2 shots to go
-    "
+    label = "{Transaction Item |16 ounce oat milk latte with 2 shots to go}"
   ]
 
   Menu_Item_Name [
     shape=record
-    label="Menu Item|Latte"
+    label="{Menu Item|Latte}"
     style=filled
     fillcolor=yellow
   ]
 
   Customer_Option [
     shape=record
-    label = "Customer Option|size|milk|cup|shots"
+    label = "{Customer Option|size|milk|cup|shots}"
     style=filled
     fillcolor=yellow
   ]
 
   Ingredient [
     shape=record
-    label = "
-      Ingredient
-      |oat milk, espresso"
+    label = "{Ingredient|oat milk, espresso}"
   ]
 
   Packaging [
     shape=record
-    label = "Packaging|cup, lid, sleeve"
+    label = "{Packaging|cup, lid, sleeve}"
   ]
 
   POS_Catalog [
     shape=record
-    label="Point of Sale Catalog|Square"
+    label="{Point of Sale Catalog|Square}"
   ]
 
   POS_Catalog_Item [
     shape=record
-    label="Catalog Item|Latte"
+    label="{Catalog Item|Latte}"
   ]
 
   Markup [
     shape=record
-    label="Markup|3.5x"
+    label="{Markup|3.5x}"
   ]
 
   Cost [
     shape=record
-    label="Cost|$1.50"
+    label="{Cost|$1.50}"
   ]
 
   Price [
     shape=record
-    label="Price|$5.25"
+    label="{Price|$5.25}"
     style=filled
     fillcolor=yellow
   ]
 }
 
-@enduml
+@enddot
