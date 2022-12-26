@@ -47,15 +47,19 @@ describe("recipeGenerator", () => {
         espressoShots: 2,
         milkAlternative: "dairy_3_percent",
         cupKind: "to_go",
-        // espresso ingredients
-        espressoGrams: 18.5, // raw amount
-        espressoFluidOunces: 1.5, // cooked amount
-        espressoCostDollars: 0.57, // raw cost
-        // milk ingredients
-        milkColdOunces: 8.5, // raw amount
-        milkSteamedOunces: 10.5, // cooked amount
-        milkCostDollars: 0.43, // raw cost
-        // total cost
+        // ingredients - espresso
+        espressoGrams: 18.5, // raw
+        espressoFluidOunces: 1.5, // cooked
+        espressoCostDollars: 0.57, // cost
+        // ingredients - milk
+        milkColdOunces: 8.5, // raw
+        milkSteamedOunces: 10.5, // cooked
+        milkCostDollars: 0.43, // cost
+        // packaging
+        cupSize: 0,
+        lidSize: 0,
+        sleeveSize: 0,
+        // cost
         packagingCostDollars: 0.38,
         ingredientCostDollars: 1,
         totalCostDollars: 1.38,
