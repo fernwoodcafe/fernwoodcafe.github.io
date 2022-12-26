@@ -1,27 +1,40 @@
 import { describe, expect, it } from "vitest";
-import recipeGenerator, { type AvailableCustomerOptions } from "../recipeGenerator";
+import recipeGenerator, { type AvailableCustomerOptions, type PricingOptions } from "../recipeGenerator";
 
 
 describe("recipeGenerator", () => {
   it("outputs expected recipes", () => {
     // Arranage
-    const options: AvailableCustomerOptions = {
+    const customerOptions: AvailableCustomerOptions = {
       availableSizesInOunces: [12, 16],
       availableExpressoShots: [2, 4],
       availableMilkAlternatives: ["dairy_3_percent"],
       availableCups: ["for_here", "to_go"],
     };
 
+    const pricingOptions: PricingOptions = {
+      ingredientMarkup: 4,
+      packagingMarkup: 2
+    };
+
     // Act
-    const recipes = recipeGenerator(options);
+    const recipes = recipeGenerator(customerOptions, pricingOptions);
 
     // Dump
-    console.table(recipes.map(recipe => ({
-      size: recipe.drinkSizeOunces,
-      shots: recipe.espressoShots,
-      milk: recipe.milkAlternative,
-      cup: recipe.cupKind,
-      cost: recipe.totalCostDollars,
+    console.table(recipes.map(r => ({
+      size: r.drinkSizeOunces,
+      shots: r.espressoShots,
+      milk: r.milkAlternative,
+      cup: r.cupKind,
+      cost: r.totalCostDollars,
+    })));
+
+    console.table(recipes.map(r => ({
+      description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
+      ingredientCost: r.ingredientCostDollars,
+      packagingCost: r.packagingCostDollars,
+      totalCost: r.totalCostDollars,
+      suggestedPrice: r.suggestedPrice
     })));
 
     // Assert
@@ -43,7 +56,12 @@ describe("recipeGenerator", () => {
         // packaging cost
         packagingCostDollars: 0.38,
         // total cost
-        totalCostDollars: 1.38
+        ingredientCostDollars: 1,
+        totalCostDollars: 1.38,
+        // price
+        packagingMarkup: 2,
+        ingredientMarkup: 4,
+        suggestedPrice: 4.76
       },
     ]);
   });

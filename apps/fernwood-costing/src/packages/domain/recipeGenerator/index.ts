@@ -2,10 +2,10 @@ import espressoCostFor from './espressoCostFor';
 import milkCostFor from './milkCostFor';
 import packagingCostFor from './packagingCostFor';
 
-type AvailableCupKinds = "for_here" | "to_go" | "own_cup";
+type AvailableCupKind = "for_here" | "to_go" | "own_cup";
 type AvailableDrinkSizesInOunces = 8 | 12 | 16;
 type AvailableEspressoShots = 2 | 4 | 6;
-type AvailableMilkAlternatives =
+type AvailableMilkAlternative =
   | "dairy_one_percent"
   | "dairy_3_percent"
   | "dairy_10_percent"
@@ -15,23 +15,35 @@ type AvailableMilkAlternatives =
 export type AvailableCustomerOptions = {
   availableSizesInOunces: readonly AvailableDrinkSizesInOunces[];
   availableExpressoShots: readonly AvailableEspressoShots[];
-  availableMilkAlternatives: readonly AvailableMilkAlternatives[];
-  availableCups: readonly AvailableCupKinds[];
+  availableMilkAlternatives: readonly AvailableMilkAlternative[];
+  availableCups: readonly AvailableCupKind[];
 };
 
-export type RecipePermutation = {
-  cupKind: AvailableCupKinds;
+export type PricingOptions = {
+  packagingMarkup: number;
+  ingredientMarkup: number;
+}
+
+export type RecipePermutation = PricingOptions & {
+  // recipe permutation
+  cupKind: AvailableCupKind;
   drinkSizeOunces: AvailableDrinkSizesInOunces;
-  espressoCostDollars: number;
-  espressoFluidOunces: number;
-  espressoGrams: number;
   espressoShots: AvailableEspressoShots;
-  milkAlternative: AvailableMilkAlternatives;
+  milkAlternative: AvailableMilkAlternative;
+  // ingredients - raw
+  espressoGrams: number;
   milkColdOunces: number;
-  milkCostDollars: number;
+  // ingredients - cooked
+  espressoFluidOunces: number;
   milkSteamedOunces: number;
+  // cost
+  milkCostDollars: number;
+  espressoCostDollars: number;
+  ingredientCostDollars: number;
   packagingCostDollars: number;
   totalCostDollars: number;
+  // markup and _suggested_ price
+  suggestedPrice: number;
 };
 
 export const roundToTwoDecimalPlaces = (input: number) =>
@@ -47,25 +59,28 @@ export const roundToTwoDecimalPlaces = (input: number) =>
  * 2. **Menu Item Recipe** This includes ingredients (raw and cooked) and packaging.
  * 3. **Menu Item Cost** This includes the cost details and summary.
  */
-export default (options: AvailableCustomerOptions): RecipePermutation[] =>
-  options.availableSizesInOunces
+export default (
+  customerOptions: AvailableCustomerOptions,
+  pricingOptions: PricingOptions
+): RecipePermutation[] =>
+  customerOptions.availableSizesInOunces
     .map((drinkSizeOunces) => ({
       drinkSizeOunces,
     }))
     .flatMap((recipe) =>
-      options.availableCups.map((cupKind) => ({
+      customerOptions.availableCups.map((cupKind) => ({
         ...recipe,
         cupKind,
       }))
     )
     .flatMap((recipe) =>
-      options.availableExpressoShots.map((espressoShots) => ({
+      customerOptions.availableExpressoShots.map((espressoShots) => ({
         ...recipe,
         espressoShots,
       }))
     )
     .flatMap((recipe) =>
-      options.availableMilkAlternatives.map((milkAlternative) => ({
+      customerOptions.availableMilkAlternatives.map((milkAlternative) => ({
         ...recipe,
         milkAlternative,
       }))
@@ -81,9 +96,21 @@ export default (options: AvailableCustomerOptions): RecipePermutation[] =>
     }))
     .map((recipe) => ({
       ...recipe,
+      ingredientCostDollars: roundToTwoDecimalPlaces(
+          recipe.espressoCostDollars +
+          recipe.milkCostDollars
+      ),
       totalCostDollars: roundToTwoDecimalPlaces(
         recipe.packagingCostDollars +
           recipe.espressoCostDollars +
           recipe.milkCostDollars
       ),
+    }))
+    .map(recipe => ({
+      ...recipe,
+      ...pricingOptions,
+      suggestedPrice: roundToTwoDecimalPlaces(
+        recipe.ingredientCostDollars * pricingOptions.ingredientMarkup +
+        recipe.packagingCostDollars * pricingOptions.packagingMarkup
+      )
     }));
