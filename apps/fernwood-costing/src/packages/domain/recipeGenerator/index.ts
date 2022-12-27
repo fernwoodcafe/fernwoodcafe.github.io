@@ -1,5 +1,5 @@
 import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
-import type { CostingData } from './data';
+import type { CostingData } from './data/schema';
 import discountFor from './discountFor';
 import espressoCostFor from './espressoCostFor';
 import milkCostFor from './milkCostFor';
@@ -56,11 +56,6 @@ export type RecipePermutation = PricingOptions & {
  * Currently this supports only lattes.
  *
  * TODO [work-ethic] Complete the latte 12 & 16 ounce before moving on to other drinks.
- *
- * TODO [design] Break the output into three related objects joined on the menu-item-id.
- * 1. **Menu Item Customer Options** This includes everything a custom can choose.
- * 2. **Menu Item Recipe** This includes ingredients (raw and cooked) and packaging.
- * 3. **Menu Item Cost** This includes the cost details and summary.
  */
 export default (
   costingData: CostingData

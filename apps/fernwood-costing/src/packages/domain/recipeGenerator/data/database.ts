@@ -36,11 +36,25 @@ const pricingOptions: PricingOptions = {
   packagingMarkup: 2
 };
 
+const steamedMilkFromColdMilkForLatte = new Map<number, number>([
+  [9, 7],
+  [10.5, 8.5],
+  [13, 9.5],
+  [14.5, 11],
+]);
+
+const costForIngredient = new Map<string, number>([["dairy_3_percent_cost_per_ounce", 0.05]]);
+
+const discounts = new Map<string, number>();
+
 const database: CostingData = {
   costForPackaging,
+  costForIngredient,
   packagingForHotDrinkSizeInOunces,
   customerOptions,
-  pricingOptions
+  pricingOptions,
+  discounts,
+  steamedMilkFromColdMilkForLatte
 };
 
 export default database;

@@ -1,10 +1,11 @@
 import type { RecipePermutation } from '.';
 import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
-import type { CostingData } from './data';
+import type { CostingData } from './data/schema';
 
 export default (
   recipe: Pick<RecipePermutation, 'cupKind' | 'drinkSizeOunces'>,
-  costingData: CostingData) => {
+  costingData: CostingData
+) => {
   const packaging = recipe.cupKind === 'to_go'
     ? costingData.packagingForHotDrinkSizeInOunces.get(recipe.drinkSizeOunces)
     : [];
