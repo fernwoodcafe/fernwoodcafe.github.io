@@ -1,5 +1,4 @@
 import type { RecipePermutation } from '.';
-import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
 import type { CostingData } from './data/schema';
 
 export default (
@@ -14,6 +13,6 @@ export default (
 
   return {
     packaging,
-    packagingCostDollars: roundToTwoDecimalPlaces(packacingCost)
+    packagingCostDollars: packacingCost
   };
 };

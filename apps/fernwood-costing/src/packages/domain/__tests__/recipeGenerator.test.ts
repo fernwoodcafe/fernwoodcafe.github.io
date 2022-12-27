@@ -34,6 +34,8 @@ const dumpRecipes = (recipes: RecipePermutation[]) => {
     console.table(recipes.map(r => ({
       size: r.drinkSizeOunces,
       shots: r.espressoShots,
+      espressoGrams: r.espressoGrams,
+      espressoFluidOunces: r.espressoFluidOunces,
       milk: r.milkAlternative,
       cup: r.cupKind,
     })));
@@ -42,9 +44,9 @@ const dumpRecipes = (recipes: RecipePermutation[]) => {
 
     console.table(recipes.map(r => ({
       description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
-      "ingredient cost ($)": r.ingredientCostDollars.toFixed(2),
-      "packaging cost ($)": r.packagingCostDollars.toFixed(2),
-      "total cost ($)": r.totalCostDollars.toFixed(2),
+      "ingredient cost ($)": r.ingredientCostDollars,
+      "packaging cost ($)": r.packagingCostDollars,
+      "total cost ($)": r.totalCostDollars,
     })));
 
     header('Suggested Price');
@@ -55,11 +57,7 @@ const dumpRecipes = (recipes: RecipePermutation[]) => {
       "packaging price": r.suggestedPackagingPrice,
       "ingredient markup": r.ingredientMarkup,
       "ingredient price": r.suggestedIngredientsPrice,
-      "discount ($)": r.discountDollars.toFixed(2),
-      "suggested price ($)": r.suggestedPrice.toFixed(2)
+      "discount ($)": r.discountDollars,
+      "suggested price ($)": r.suggestedPrice,
     })));
-
-    header('Example Item');
-
-    console.log(recipes[0]);
 };

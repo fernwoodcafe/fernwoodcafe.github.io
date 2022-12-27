@@ -1,31 +1,14 @@
 import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
-import type { CostingData } from './data/schema';
+import type {
+  AvailableCupKind,
+  AvailableDrinkSizesInOunces,
+  AvailableEspressoShots,
+  AvailableMilkAlternative, CostingData, PricingOptions
+} from './data/schema';
 import discountFor from './discountFor';
 import espressoCostFor from './espressoCostFor';
 import milkCostFor from './milkCostFor';
 import packagingCostFor from './packagingCostFor';
-
-export type AvailableCupKind = "for_here" | "to_go" | "own_cup";
-export type AvailableDrinkSizesInOunces = 8 | 12 | 16;
-export type AvailableEspressoShots = 2 | 4 | 6;
-export type AvailableMilkAlternative =
-  | "dairy_one_percent"
-  | "dairy_3_percent"
-  | "dairy_10_percent"
-  | "oat"
-  | "almond";
-
-export type AvailableCustomerOptions = {
-  availableSizesInOunces: readonly AvailableDrinkSizesInOunces[];
-  availableExpressoShots: readonly AvailableEspressoShots[];
-  availableMilkAlternatives: readonly AvailableMilkAlternative[];
-  availableCups: readonly AvailableCupKind[];
-};
-
-export type PricingOptions = {
-  packagingMarkup: number;
-  ingredientMarkup: number;
-}
 
 export type RecipePermutation = PricingOptions & {
   // recipe permutation
@@ -84,28 +67,28 @@ export default (
     )
     .map((recipe) => ({
       ...recipe,
-      ...espressoCostFor(recipe),
+      ...espressoCostFor(recipe, costingData),
       ...packagingCostFor(recipe, costingData),
     }))
     .map((recipe) => ({
       ...recipe,
-      ...milkCostFor(recipe),
+      ...milkCostFor(recipe, costingData),
     }))
     .map(recipe => ({
       ...recipe,
-      ...discountFor(recipe)
+      ...discountFor(recipe, costingData)
     }))
     .map((recipe) => ({
       ...recipe,
-      ingredientCostDollars: roundToTwoDecimalPlaces(
-          recipe.espressoCostDollars +
-          recipe.milkCostDollars
-      ),
-      totalCostDollars: roundToTwoDecimalPlaces(
+      ingredientCostDollars:
+        recipe.espressoCostDollars +
+        recipe.milkCostDollars
+      ,
+      totalCostDollars:
         recipe.packagingCostDollars +
-          recipe.espressoCostDollars +
-          recipe.milkCostDollars
-      ),
+        recipe.espressoCostDollars +
+        recipe.milkCostDollars
+      ,
     }))
     .map(recipe => ({
       ...recipe,
@@ -115,9 +98,12 @@ export default (
     }))
     .map(recipe => ({
       ...recipe,
-      suggestedPrice: roundToTwoDecimalPlaces(
+      suggestedPrice:
         recipe.suggestedIngredientsPrice +
         recipe.suggestedPackagingPrice -
         recipe.discountDollars
-      )
-    }));
+    }))
+    .map(recipe => Object.entries(recipe).reduce((acc, [key, value]) => ({
+      ...acc,
+      [key]: typeof value === 'number' ? roundToTwoDecimalPlaces(value) : value
+    }), {} as RecipePermutation));

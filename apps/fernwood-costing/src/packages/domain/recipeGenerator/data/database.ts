@@ -1,13 +1,4 @@
-import type { AvailableCustomerOptions, PricingOptions } from '..';
-import type { CostingData } from './schema';
-
-type PackagingOption =
-  | "cup @ 8 oz"
-  | "cup @ 12 oz"
-  | "cup @ 16 oz"
-  | "lid @ 8 oz"
-  | "lid @ 10 to 20 oz"
-  | "sleeve @ 12 to 20 oz";
+import type { AvailableCustomerOptions, CostingData, PackagingOption, PricingOptions } from "./schema";
 
 const costForPackaging = new Map<PackagingOption, number>([
   ["cup @ 8 oz", 0.13],
@@ -43,9 +34,17 @@ const steamedMilkFromColdMilkForLatte = new Map<number, number>([
   [14.5, 11],
 ]);
 
-const costForIngredient = new Map<string, number>([["dairy_3_percent_cost_per_ounce", 0.05]]);
+const costForIngredient = new Map<string, number>([
+  ["dairy_3_percent_cost_per_ounce", 0.05]
+]);
 
-const discounts = new Map<string, number>();
+const discounts = new Map<string, number>([["own_cup", 0.50]]);
+
+const espressoCosting = {
+  gramsPerShot: 18.5 / 2,
+  ouncesPerShot: 1.5 / 2,
+  costPerGram: 0.031
+};
 
 const database: CostingData = {
   costForPackaging,
@@ -54,7 +53,8 @@ const database: CostingData = {
   customerOptions,
   pricingOptions,
   discounts,
-  steamedMilkFromColdMilkForLatte
+  steamedMilkFromColdMilkForLatte,
+  espressoCosting,
 };
 
 export default database;
