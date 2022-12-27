@@ -5,7 +5,7 @@ import recipeGenerator, {
 import database from '../recipeGenerator/data/database';
 
 const someExpectedPrices = [
-  ['12 oz 2 shot dairy_3_percent for_here', 4.49]
+  ['12 oz 2 shot dairy_3_percent for_here', 4.74]
 ];
 
 // Arranage
@@ -44,6 +44,7 @@ const dumpRecipes = (recipes: RecipePermutation[]) => {
   header("Recipe");
 
   console.table(recipes.map(r => ({
+    description: r.descriptiveName,
     size: r.drinkSizeOunces,
     shots: r.espressoShots,
     espressoGrams: r.espressoGrams,

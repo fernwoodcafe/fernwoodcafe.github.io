@@ -16,15 +16,15 @@ const packagingForHotDrinkSizeInOunces = new Map<number, PackagingOption[]>([
 ]);
 
 const customerOptions: AvailableCustomerOptions = {
-  availableSizesInOunces: [12, 16],
+  availableSizesInOunces: [12],
   availableExpressoShots: [2],
   availableMilkAlternatives: ["dairy_3_percent"],
   availableCups: ["to_go", "own_cup", "for_here"],
 };
 
 const pricingOptions: PricingOptions = {
-  ingredientMarkup: 4.5,
-  packagingMarkup: 1.5
+  ingredientMarkup: 4.75,
+  packagingMarkup: 1.50
 };
 
 const steamedMilkFromColdMilkForLatte = new Map<number, number>([
