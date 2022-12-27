@@ -8,7 +8,7 @@ type PackagingOption =
   | "lid @ 10 to 20 oz"
   | "sleeve @ 12 to 20 oz";
 
-const packagingCost = new Map<PackagingOption, number>([
+const costForPackaging = new Map<PackagingOption, number>([
   ["cup @ 8 oz", 0.13],
   ["cup @ 12 oz", 0.17],
   ["cup @ 16 oz", 0.19],
@@ -17,7 +17,7 @@ const packagingCost = new Map<PackagingOption, number>([
   ["sleeve @ 12 to 20 oz", 0.08],
 ]);
 
-const packagingForSizeInOunces = new Map<number, PackagingOption[]>([
+const packagingForHotDrinkSizeInOunces = new Map<number, PackagingOption[]>([
   [8, ["cup @ 8 oz", "lid @ 8 oz"]],
   [12, ["cup @ 12 oz", "lid @ 10 to 20 oz", "sleeve @ 12 to 20 oz"]],
   [16, ["cup @ 16 oz", "lid @ 10 to 20 oz", "sleeve @ 12 to 20 oz"]],
@@ -25,9 +25,9 @@ const packagingForSizeInOunces = new Map<number, PackagingOption[]>([
 
 // TODO Put the cup/lid/sleeve costs in an external data source.
 export default (recipe: Pick<RecipePermutation, 'cupKind' | 'drinkSizeOunces'>) => {
-  const packaging = packagingForSizeInOunces.get(recipe.drinkSizeOunces);
+  const packaging = packagingForHotDrinkSizeInOunces.get(recipe.drinkSizeOunces);
   return {
     packaging,
-    packagingCostDollars: roundToTwoDecimalPlaces(packaging.reduce((acc, next) => acc + packagingCost.get(next), 0))
+    packagingCostDollars: roundToTwoDecimalPlaces(packaging.reduce((acc, next) => acc + costForPackaging.get(next), 0))
   };
 };

@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import recipeGenerator, { type AvailableCustomerOptions, type PricingOptions } from "../recipeGenerator";
 
-
 describe("recipeGenerator", () => {
   it("outputs expected recipes", () => {
     // Arranage
