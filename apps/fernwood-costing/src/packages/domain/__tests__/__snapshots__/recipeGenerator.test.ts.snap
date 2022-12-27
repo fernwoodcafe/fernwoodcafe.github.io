@@ -1,0 +1,57 @@
+// Vitest Snapshot v1
+
+exports[`recipeGenerator > outputs expected recipes 1`] = `
+[
+  {
+    "cupKind": "to_go",
+    "discountDollars": 0,
+    "discounts": [],
+    "drinkSizeOunces": 12,
+    "espressoCostDollars": 0.57,
+    "espressoFluidOunces": 1.5,
+    "espressoGrams": 18.5,
+    "espressoShots": 2,
+    "ingredientCostDollars": 1,
+    "ingredientMarkup": 4,
+    "milkAlternative": "dairy_3_percent",
+    "milkColdOunces": 8.5,
+    "milkCostDollars": 0.43,
+    "milkSteamedOunces": 10.5,
+    "packaging": [
+      "cup @ 12 oz",
+      "lid @ 10 to 20 oz",
+      "sleeve @ 12 to 20 oz",
+    ],
+    "packagingCostDollars": 0.38,
+    "packagingMarkup": 2,
+    "suggestedPrice": 4.76,
+    "totalCostDollars": 1.38,
+  },
+  {
+    "cupKind": "own_cup",
+    "discountDollars": 0.5,
+    "discounts": [
+      [
+        "own_cup",
+        0.5,
+      ],
+    ],
+    "drinkSizeOunces": 12,
+    "espressoCostDollars": 0.57,
+    "espressoFluidOunces": 1.5,
+    "espressoGrams": 18.5,
+    "espressoShots": 2,
+    "ingredientCostDollars": 1,
+    "ingredientMarkup": 4,
+    "milkAlternative": "dairy_3_percent",
+    "milkColdOunces": 8.5,
+    "milkCostDollars": 0.43,
+    "milkSteamedOunces": 10.5,
+    "packaging": [],
+    "packagingCostDollars": 0,
+    "packagingMarkup": 2,
+    "suggestedPrice": 3.5,
+    "totalCostDollars": 1,
+  },
+]
+`;

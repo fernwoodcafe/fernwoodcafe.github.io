@@ -1,26 +1,24 @@
 import { describe, expect, it } from "vitest";
-import recipeGenerator, { type AvailableCustomerOptions, type PricingOptions } from "../recipeGenerator";
-import recipeGeneratorExpectation_01 from './recipeGeneratorExpectation_01';
-import recipeGeneratorExpectation_02 from './recipeGeneratorExpectation_02';
+import recipeGenerator, {
+  type AvailableCustomerOptions,
+  type PricingOptions,
+  type RecipePermutation
+} from "../recipeGenerator";
 
-describe("recipeGenerator", () => {
-  it("outputs expected recipes", () => {
-    // Arranage
-    const customerOptions: AvailableCustomerOptions = {
-      availableSizesInOunces: [12],
-      availableExpressoShots: [2],
-      availableMilkAlternatives: ["dairy_3_percent"],
-      availableCups: ["to_go", "own_cup", /* "for_here" */],
-    };
+// Arranage
+const customerOptions: AvailableCustomerOptions = {
+  availableSizesInOunces: [12],
+  availableExpressoShots: [2],
+  availableMilkAlternatives: ["dairy_3_percent"],
+  availableCups: ["to_go", "own_cup", /* "for_here" */],
+};
 
-    const pricingOptions: PricingOptions = {
-      ingredientMarkup: 4,
-      packagingMarkup: 2
-    };
+const pricingOptions: PricingOptions = {
+  ingredientMarkup: 4,
+  packagingMarkup: 2
+};
 
-    // Act
-    const recipes = recipeGenerator(customerOptions, pricingOptions);
-
+const dumpRecipe = (recipes: RecipePermutation[]) => {
     // Dump
     console.log('');
     console.log('Recipe');
@@ -58,11 +56,15 @@ describe("recipeGenerator", () => {
 
 
     // console.log(JSON.stringify(recipes[2], undefined, 2));
+};
+
+describe("recipeGenerator", () => {
+  it("outputs expected recipes", () => {
+    // Act
+    const recipes = recipeGenerator(customerOptions, pricingOptions);
+
 
     // Assert
-    expect(recipes).to.deep.include.members([
-      recipeGeneratorExpectation_01,
-      recipeGeneratorExpectation_02,
-    ]);
+    expect(recipes).toMatchSnapshot();
   });
 });
