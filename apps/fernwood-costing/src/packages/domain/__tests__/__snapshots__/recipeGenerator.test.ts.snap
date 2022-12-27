@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`recipeGenerator > outputs expected recipes 1`] = `
+exports[`recipeGenerator > matches snapshot 1`] = `
 [
   {
     "cupKind": "to_go",
@@ -24,6 +24,8 @@ exports[`recipeGenerator > outputs expected recipes 1`] = `
     ],
     "packagingCostDollars": 0.38,
     "packagingMarkup": 2,
+    "suggestedIngredientsPrice": 4,
+    "suggestedPackagingPrice": 0.76,
     "suggestedPrice": 4.76,
     "totalCostDollars": 1.38,
   },
@@ -50,7 +52,32 @@ exports[`recipeGenerator > outputs expected recipes 1`] = `
     "packaging": [],
     "packagingCostDollars": 0,
     "packagingMarkup": 2,
+    "suggestedIngredientsPrice": 4,
+    "suggestedPackagingPrice": 0,
     "suggestedPrice": 3.5,
+    "totalCostDollars": 1,
+  },
+  {
+    "cupKind": "for_here",
+    "discountDollars": 0,
+    "discounts": [],
+    "drinkSizeOunces": 12,
+    "espressoCostDollars": 0.57,
+    "espressoFluidOunces": 1.5,
+    "espressoGrams": 18.5,
+    "espressoShots": 2,
+    "ingredientCostDollars": 1,
+    "ingredientMarkup": 4,
+    "milkAlternative": "dairy_3_percent",
+    "milkColdOunces": 8.5,
+    "milkCostDollars": 0.43,
+    "milkSteamedOunces": 10.5,
+    "packaging": [],
+    "packagingCostDollars": 0,
+    "packagingMarkup": 2,
+    "suggestedIngredientsPrice": 4,
+    "suggestedPackagingPrice": 0,
+    "suggestedPrice": 4,
     "totalCostDollars": 1,
   },
 ]

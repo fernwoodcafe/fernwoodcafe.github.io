@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import recipeGenerator, {
   type AvailableCustomerOptions,
   type PricingOptions,
@@ -10,7 +10,7 @@ const customerOptions: AvailableCustomerOptions = {
   availableSizesInOunces: [12],
   availableExpressoShots: [2],
   availableMilkAlternatives: ["dairy_3_percent"],
-  availableCups: ["to_go", "own_cup" ],
+  availableCups: ["to_go", "own_cup", "for_here"],
 };
 
 const pricingOptions: PricingOptions = {
@@ -19,13 +19,16 @@ const pricingOptions: PricingOptions = {
 };
 
 describe("recipeGenerator", () => {
-  it("outputs expected recipes", () => {
+  let recipes: RecipePermutation[];
+  beforeAll(() => {
     // Act
-    const recipes = recipeGenerator(customerOptions, pricingOptions);
+    recipes = recipeGenerator(customerOptions, pricingOptions);
 
     // Dump
     dumpRecipes(recipes);
+  });
 
+  it("matches snapshot", () => {
     // Assert
     expect(recipes).toMatchSnapshot();
   });
@@ -61,12 +64,15 @@ const dumpRecipes = (recipes: RecipePermutation[]) => {
 
     console.table(recipes.map(r => ({
       description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
-      packagingMarkup: r.packagingMarkup,
-      ingredientMarkup: r.ingredientMarkup,
+      "packaging markup": r.packagingMarkup,
+      "packaging price": r.suggestedPackagingPrice,
+      "ingredient markup": r.ingredientMarkup,
+      "ingredient price": r.suggestedIngredientsPrice,
       "discount ($)": r.discountDollars.toFixed(2),
       "suggested price ($)": r.suggestedPrice.toFixed(2)
     })));
 
+    header('Example Item');
 
-    // console.log(JSON.stringify(recipes[2], undefined, 2));
+    console.log(recipes[0]);
 };

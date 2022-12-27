@@ -45,6 +45,8 @@ export type RecipePermutation = PricingOptions & {
   totalCostDollars: number;
   // price
   discountDollars: number;
+  suggestedIngredientsPrice: number;
+  suggestedPackagingPrice: number;
   suggestedPrice: number;
 };
 
@@ -115,12 +117,14 @@ export default (
     .map(recipe => ({
       ...recipe,
       ...pricingOptions,
+      suggestedIngredientsPrice: recipe.ingredientCostDollars * pricingOptions.ingredientMarkup,
+      suggestedPackagingPrice: recipe.packagingCostDollars * pricingOptions.packagingMarkup,
     }))
     .map(recipe => ({
       ...recipe,
       suggestedPrice: roundToTwoDecimalPlaces(
-        recipe.ingredientCostDollars * pricingOptions.ingredientMarkup +
-        recipe.packagingCostDollars * pricingOptions.packagingMarkup -
+        recipe.suggestedIngredientsPrice +
+        recipe.suggestedPackagingPrice -
         recipe.discountDollars
       )
     }));
