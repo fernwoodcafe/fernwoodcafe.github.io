@@ -10,7 +10,7 @@ const customerOptions: AvailableCustomerOptions = {
   availableSizesInOunces: [12],
   availableExpressoShots: [2],
   availableMilkAlternatives: ["dairy_3_percent"],
-  availableCups: ["to_go", "own_cup", /* "for_here" */],
+  availableCups: ["to_go", "own_cup" ],
 };
 
 const pricingOptions: PricingOptions = {
@@ -18,11 +18,28 @@ const pricingOptions: PricingOptions = {
   packagingMarkup: 2
 };
 
-const dumpRecipe = (recipes: RecipePermutation[]) => {
+describe("recipeGenerator", () => {
+  it("outputs expected recipes", () => {
+    // Act
+    const recipes = recipeGenerator(customerOptions, pricingOptions);
+
     // Dump
-    console.log('');
-    console.log('Recipe');
-    console.log('');
+    dumpRecipes(recipes);
+
+    // Assert
+    expect(recipes).toMatchSnapshot();
+  });
+});
+
+const dumpRecipes = (recipes: RecipePermutation[]) => {
+
+    const header = (text: string) => {
+      console.log('');
+      console.log(text);
+      console.log('');
+    };
+
+    header("Recipe");
 
     console.table(recipes.map(r => ({
       size: r.drinkSizeOunces,
@@ -31,9 +48,7 @@ const dumpRecipe = (recipes: RecipePermutation[]) => {
       cup: r.cupKind,
     })));
 
-    console.log('');
-    console.log('Cost');
-    console.log('');
+    header('Cost');
 
     console.table(recipes.map(r => ({
       description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
@@ -42,9 +57,7 @@ const dumpRecipe = (recipes: RecipePermutation[]) => {
       "total cost ($)": r.totalCostDollars.toFixed(2),
     })));
 
-    console.log('');
-    console.log('Suggested Price');
-    console.log('');
+    header('Suggested Price');
 
     console.table(recipes.map(r => ({
       description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
@@ -57,14 +70,3 @@ const dumpRecipe = (recipes: RecipePermutation[]) => {
 
     // console.log(JSON.stringify(recipes[2], undefined, 2));
 };
-
-describe("recipeGenerator", () => {
-  it("outputs expected recipes", () => {
-    // Act
-    const recipes = recipeGenerator(customerOptions, pricingOptions);
-
-
-    // Assert
-    expect(recipes).toMatchSnapshot();
-  });
-});
