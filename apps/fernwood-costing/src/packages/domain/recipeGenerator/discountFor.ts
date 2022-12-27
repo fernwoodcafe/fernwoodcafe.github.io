@@ -1,11 +1,15 @@
 import type { RecipePermutation } from '.';
+import type { CostingData } from './data/schema';
 
-export default (recipe: Pick<RecipePermutation, "cupKind">) => {
+export default (
+  recipe: Pick<RecipePermutation, "cupKind">,
+  costingData: CostingData
+) => {
   const discounts = [];
 
   if (recipe.cupKind === "own_cup") {
     discounts.push([
-      recipe.cupKind, 0.50
+      recipe.cupKind, costingData.discounts.get("own_cup")
     ]);
   }
 
