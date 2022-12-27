@@ -23,12 +23,9 @@ export default (recipes: RecipePermutation[]) => {
 
     console.table(recipeGroup.map(r => ({
       description: r.descriptiveName,
-      size: r.drinkSizeOunces,
-      shots: r.espressoShots,
       espressoGrams: r.espressoGrams,
       espressoFluidOunces: r.espressoFluidOunces,
-      milk: r.milkAlternative,
-      cup: r.cupKind,
+      milkColdOunces: r.milkColdOunces
     })));
   }
 
