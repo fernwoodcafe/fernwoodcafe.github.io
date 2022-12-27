@@ -43,7 +43,7 @@ const dumpRecipes = (recipes: RecipePermutation[]) => {
     header('Cost');
 
     console.table(recipes.map(r => ({
-      description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
+      description: r.descriptiveName,
       "ingredient cost ($)": r.ingredientCostDollars,
       "packaging cost ($)": r.packagingCostDollars,
       "total cost ($)": r.totalCostDollars,
@@ -52,11 +52,11 @@ const dumpRecipes = (recipes: RecipePermutation[]) => {
     header('Suggested Price');
 
     console.table(recipes.map(r => ({
-      description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
+      description: r.descriptiveName,
       "packaging markup": r.packagingMarkup,
-      "packaging price": r.suggestedPackagingPrice,
       "ingredient markup": r.ingredientMarkup,
-      "ingredient price": r.suggestedIngredientsPrice,
+      "packaging price ($)": r.suggestedPackagingPrice,
+      "ingredient price ($)": r.suggestedIngredientsPrice,
       "discount ($)": r.discountDollars,
       "suggested price ($)": r.suggestedPrice,
     })));

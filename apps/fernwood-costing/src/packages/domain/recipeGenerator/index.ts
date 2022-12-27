@@ -11,6 +11,7 @@ import milkCostFor from './milkCostFor';
 import packagingCostFor from './packagingCostFor';
 
 export type RecipePermutation = PricingOptions & {
+  descriptiveName: string;
   // recipe permutation
   cupKind: AvailableCupKind;
   drinkSizeOunces: AvailableDrinkSizesInOunces;
@@ -67,6 +68,7 @@ export default (
     )
     .map((recipe) => ({
       ...recipe,
+      descriptiveName: `${recipe.drinkSizeOunces} oz ${recipe.espressoShots} shot ${recipe.milkAlternative} ${recipe.cupKind}`,
       ...espressoCostFor(recipe, costingData),
       ...packagingCostFor(recipe, costingData),
     }))
@@ -82,13 +84,11 @@ export default (
       ...recipe,
       ingredientCostDollars:
         recipe.espressoCostDollars +
-        recipe.milkCostDollars
-      ,
+        recipe.milkCostDollars,
       totalCostDollars:
         recipe.packagingCostDollars +
         recipe.espressoCostDollars +
-        recipe.milkCostDollars
-      ,
+        recipe.milkCostDollars,
     }))
     .map(recipe => ({
       ...recipe,

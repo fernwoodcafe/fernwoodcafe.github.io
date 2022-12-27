@@ -4,6 +4,7 @@ exports[`recipeGenerator > matches snapshot 1`] = `
 [
   {
     "cupKind": "to_go",
+    "descriptiveName": "12 oz 2 shot dairy_3_percent to_go",
     "discountDollars": 0,
     "discounts": [],
     "drinkSizeOunces": 12,
@@ -31,6 +32,7 @@ exports[`recipeGenerator > matches snapshot 1`] = `
   },
   {
     "cupKind": "own_cup",
+    "descriptiveName": "12 oz 2 shot dairy_3_percent own_cup",
     "discountDollars": 0.5,
     "discounts": [
       [
@@ -59,6 +61,7 @@ exports[`recipeGenerator > matches snapshot 1`] = `
   },
   {
     "cupKind": "for_here",
+    "descriptiveName": "12 oz 2 shot dairy_3_percent for_here",
     "discountDollars": 0,
     "discounts": [],
     "drinkSizeOunces": 12,
