@@ -23,8 +23,8 @@ const customerOptions: AvailableCustomerOptions = {
 };
 
 const pricingOptions: PricingOptions = {
-  ingredientMarkup: 4,
-  packagingMarkup: 2
+  ingredientMarkup: 4.5,
+  packagingMarkup: 1.5
 };
 
 const steamedMilkFromColdMilkForLatte = new Map<number, number>([
