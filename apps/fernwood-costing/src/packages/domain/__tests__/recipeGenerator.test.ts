@@ -3,6 +3,7 @@ import recipeGenerator, {
   type RecipePermutation
 } from "../recipeGenerator";
 import database from '../recipeGenerator/data/database';
+import dumpRecipes from './dumpRecipes';
 
 const someExpectedPrices = [
   ['12 oz 2 shot dairy_3_percent for_here', 4.74]
@@ -32,45 +33,3 @@ describe("recipeGenerator", () => {
     expect(recipes).toMatchSnapshot();
   });
 });
-
-const dumpRecipes = (recipes: RecipePermutation[]) => {
-
-  const header = (text: string) => {
-    console.log('');
-    console.log(text);
-    console.log('');
-  };
-
-  header("Recipe");
-
-  console.table(recipes.map(r => ({
-    description: r.descriptiveName,
-    size: r.drinkSizeOunces,
-    shots: r.espressoShots,
-    espressoGrams: r.espressoGrams,
-    espressoFluidOunces: r.espressoFluidOunces,
-    milk: r.milkAlternative,
-    cup: r.cupKind,
-  })));
-
-  header('Cost');
-
-  console.table(recipes.map(r => ({
-    description: r.descriptiveName,
-    "ingredient cost ($)": r.ingredientCostDollars,
-    "packaging cost ($)": r.packagingCostDollars,
-    "total cost ($)": r.totalCostDollars,
-  })));
-
-  header('Suggested Price');
-
-  console.table(recipes.map(r => ({
-    description: r.descriptiveName,
-    "packaging markup": r.packagingMarkup,
-    "ingredient markup": r.ingredientMarkup,
-    "packaging price ($)": r.suggestedPackagingPrice,
-    "ingredient price ($)": r.suggestedIngredientsPrice,
-    "discount ($)": r.discountDollars,
-    "suggested price ($)": r.suggestedPrice,
-  })));
-};
