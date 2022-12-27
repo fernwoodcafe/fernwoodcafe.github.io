@@ -16,7 +16,7 @@ const packagingForHotDrinkSizeInOunces = new Map<number, PackagingOption[]>([
 ]);
 
 const customerOptions: AvailableCustomerOptions = {
-  availableSizesInOunces: [12],
+  availableSizesInOunces: [12, 16],
   availableExpressoShots: [2],
   availableMilkAlternatives: ["dairy_3_percent"],
   availableCups: ["to_go", "own_cup", "for_here"],
