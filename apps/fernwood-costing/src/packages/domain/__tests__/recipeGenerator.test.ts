@@ -56,9 +56,7 @@ describe("recipeGenerator", () => {
         milkSteamedOunces: 10.5, // cooked
         milkCostDollars: 0.43, // cost
         // packaging
-        cupSize: 0,
-        lidSize: 0,
-        sleeveSize: 0,
+        packaging: [ 'cup', 'lid', 'sleeve'],
         // cost
         packagingCostDollars: 0.38,
         ingredientCostDollars: 1,
