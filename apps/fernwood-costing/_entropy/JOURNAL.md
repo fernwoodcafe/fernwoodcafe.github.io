@@ -1,4 +1,3 @@
-
 2022-12-26
 
 The current goal: program the 2023 latte into Square through CSV import.
@@ -9,6 +8,11 @@ Bits:
 * Can we make the price interactive (ie, as a function of _all_ modifiers)?
 * Or do we need to have one-and-only-one price per option?
 * What kinds of dynamic pricing, if any, does Square support?
+
+Questions:
+
+* How does category theory represent multiplication in a graph?
+* How does category theory represent addition in a graph?
 
 2022-12-22
 
