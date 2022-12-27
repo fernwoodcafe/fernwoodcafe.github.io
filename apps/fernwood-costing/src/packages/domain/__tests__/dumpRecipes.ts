@@ -8,43 +8,56 @@ const printHeader = (text: string) => {
 
 export default (recipes: RecipePermutation[]) => {
 
-  printHeader("Recipe");
+  const groupedRecipes = recipes.reduce((acc, next) => {
+    if (!acc.has(next.drinkSizeOunces)) {
+      acc.set(next.drinkSizeOunces, []);
+    };
 
-  console.table(recipes.map(r => ({
-    description: r.descriptiveName,
-    size: r.drinkSizeOunces,
-    shots: r.espressoShots,
-    espressoGrams: r.espressoGrams,
-    espressoFluidOunces: r.espressoFluidOunces,
-    milk: r.milkAlternative,
-    cup: r.cupKind,
-  })));
+    acc.get(next.drinkSizeOunces).push(next);
+    return acc;
+  }, new Map<number, RecipePermutation[]>());
 
-  printHeader('Cost');
+  printHeader(`Recipe`);
 
-  console.table(recipes.map(r => ({
-    description: r.descriptiveName,
-    "ingredient cost ($)": r.ingredientCostDollars,
-    "ingredient markup": r.ingredientMarkup,
-    "packaging cost ($)": r.packagingCostDollars,
-    "packaging markup": r.packagingMarkup,
-    "total cost ($)": r.totalCostDollars,
-  })));
+  for (const [_, recipeGroup] of groupedRecipes.entries()) {
 
-  printHeader('Suggested Price');
-
-  for(const size of [12, 16]) {
-
-    console.table(recipes
-        .filter(r => r.drinkSizeOunces === size)
-        .sort((left, right) => left.suggestedPrice - right.suggestedPrice)
-        .map(r => ({
-          description: r.descriptiveName,
-          "ingredient price ($)": r.suggestedIngredientsPrice,
-          "packaging price ($)": r.suggestedPackagingPrice,
-          "discount ($)": r.discountDollars,
-          "suggested price ($)": r.suggestedPrice,
-        })));
+    console.table(recipeGroup.map(r => ({
+      description: r.descriptiveName,
+      size: r.drinkSizeOunces,
+      shots: r.espressoShots,
+      espressoGrams: r.espressoGrams,
+      espressoFluidOunces: r.espressoFluidOunces,
+      milk: r.milkAlternative,
+      cup: r.cupKind,
+    })));
   }
 
+  printHeader(`Cost`);
+
+  for (const [_, recipeGroup] of groupedRecipes.entries()) {
+
+    console.table(recipeGroup.map(r => ({
+      description: r.descriptiveName,
+      "ingredient cost ($)": r.ingredientCostDollars,
+      "ingredient markup": r.ingredientMarkup,
+      "packaging cost ($)": r.packagingCostDollars,
+      "packaging markup": r.packagingMarkup,
+      "total cost ($)": r.totalCostDollars,
+    })));
+  }
+
+  printHeader(`Suggested Price`);
+
+  for (const [_, recipeGroup] of groupedRecipes.entries()) {
+
+    console.table(recipeGroup
+      .sort((left, right) => left.suggestedPrice - right.suggestedPrice)
+      .map(r => ({
+        description: r.descriptiveName,
+        "ingredient price ($)": r.suggestedIngredientsPrice,
+        "packaging price ($)": r.suggestedPackagingPrice,
+        "discount ($)": r.discountDollars,
+        "suggested price ($)": r.suggestedPrice,
+      })));
+  }
 };
