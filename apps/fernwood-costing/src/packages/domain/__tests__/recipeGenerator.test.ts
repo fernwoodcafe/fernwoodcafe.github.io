@@ -1,28 +1,15 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import recipeGenerator, {
-  type AvailableCustomerOptions,
-  type PricingOptions,
   type RecipePermutation
 } from "../recipeGenerator";
+import database from '../recipeGenerator/data/database';
 
 // Arranage
-const customerOptions: AvailableCustomerOptions = {
-  availableSizesInOunces: [12],
-  availableExpressoShots: [2],
-  availableMilkAlternatives: ["dairy_3_percent"],
-  availableCups: ["to_go", "own_cup", "for_here"],
-};
-
-const pricingOptions: PricingOptions = {
-  ingredientMarkup: 4,
-  packagingMarkup: 2
-};
-
 describe("recipeGenerator", () => {
   let recipes: RecipePermutation[];
   beforeAll(() => {
     // Act
-    recipes = recipeGenerator(customerOptions, pricingOptions);
+    recipes = recipeGenerator(database);
 
     // Dump
     dumpRecipes(recipes);

@@ -1,4 +1,5 @@
-import { roundToTwoDecimalPlaces, type RecipePermutation } from '.';
+import type { RecipePermutation } from '.';
+import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
 
 export default (recipe: Pick<RecipePermutation, 'drinkSizeOunces' | 'espressoFluidOunces'>) => {
   const latteMilkSteamedToColdRatio = new Map<number, number>([

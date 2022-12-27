@@ -1,3 +1,5 @@
+import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
+import type { CostingData } from './data';
 import discountFor from './discountFor';
 import espressoCostFor from './espressoCostFor';
 import milkCostFor from './milkCostFor';
@@ -50,9 +52,6 @@ export type RecipePermutation = PricingOptions & {
   suggestedPrice: number;
 };
 
-export const roundToTwoDecimalPlaces = (input: number) =>
-  Math.round(input * 100) / 100;
-
 /**
  * Currently this supports only lattes.
  *
@@ -64,27 +63,26 @@ export const roundToTwoDecimalPlaces = (input: number) =>
  * 3. **Menu Item Cost** This includes the cost details and summary.
  */
 export default (
-  customerOptions: AvailableCustomerOptions,
-  pricingOptions: PricingOptions
+  costingData: CostingData
 ): RecipePermutation[] =>
-  customerOptions.availableSizesInOunces
+  costingData.customerOptions.availableSizesInOunces
     .map((drinkSizeOunces) => ({
       drinkSizeOunces,
     }))
     .flatMap((recipe) =>
-      customerOptions.availableCups.map((cupKind) => ({
+      costingData.customerOptions.availableCups.map((cupKind) => ({
         ...recipe,
         cupKind,
       }))
     )
     .flatMap((recipe) =>
-      customerOptions.availableExpressoShots.map((espressoShots) => ({
+      costingData.customerOptions.availableExpressoShots.map((espressoShots) => ({
         ...recipe,
         espressoShots,
       }))
     )
     .flatMap((recipe) =>
-      customerOptions.availableMilkAlternatives.map((milkAlternative) => ({
+      costingData.customerOptions.availableMilkAlternatives.map((milkAlternative) => ({
         ...recipe,
         milkAlternative,
       }))
@@ -92,7 +90,7 @@ export default (
     .map((recipe) => ({
       ...recipe,
       ...espressoCostFor(recipe),
-      ...packagingCostFor(recipe),
+      ...packagingCostFor(recipe, costingData),
     }))
     .map((recipe) => ({
       ...recipe,
@@ -116,9 +114,9 @@ export default (
     }))
     .map(recipe => ({
       ...recipe,
-      ...pricingOptions,
-      suggestedIngredientsPrice: recipe.ingredientCostDollars * pricingOptions.ingredientMarkup,
-      suggestedPackagingPrice: recipe.packagingCostDollars * pricingOptions.packagingMarkup,
+      ...costingData.pricingOptions,
+      suggestedIngredientsPrice: recipe.ingredientCostDollars * costingData.pricingOptions.ingredientMarkup,
+      suggestedPackagingPrice: recipe.packagingCostDollars * costingData.pricingOptions.packagingMarkup,
     }))
     .map(recipe => ({
       ...recipe,

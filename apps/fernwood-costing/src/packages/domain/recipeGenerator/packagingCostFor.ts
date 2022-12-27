@@ -1,35 +1,15 @@
-import { roundToTwoDecimalPlaces, type RecipePermutation } from '.';
+import type { RecipePermutation } from '.';
+import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
+import type { CostingData } from './data';
 
-type PackagingOption =
-  | "cup @ 8 oz"
-  | "cup @ 12 oz"
-  | "cup @ 16 oz"
-  | "lid @ 8 oz"
-  | "lid @ 10 to 20 oz"
-  | "sleeve @ 12 to 20 oz";
-
-const costForPackaging = new Map<PackagingOption, number>([
-  ["cup @ 8 oz", 0.13],
-  ["cup @ 12 oz", 0.17],
-  ["cup @ 16 oz", 0.19],
-  ["lid @ 8 oz", 0.12],
-  ["lid @ 10 to 20 oz", 0.13],
-  ["sleeve @ 12 to 20 oz", 0.08],
-]);
-
-const packagingForHotDrinkSizeInOunces = new Map<number, PackagingOption[]>([
-  [8, ["cup @ 8 oz", "lid @ 8 oz"]],
-  [12, ["cup @ 12 oz", "lid @ 10 to 20 oz", "sleeve @ 12 to 20 oz"]],
-  [16, ["cup @ 16 oz", "lid @ 10 to 20 oz", "sleeve @ 12 to 20 oz"]],
-]);
-
-// TODO Put the cup/lid/sleeve costs in an external data source.
-export default (recipe: Pick<RecipePermutation, 'cupKind' | 'drinkSizeOunces'>) => {
+export default (
+  recipe: Pick<RecipePermutation, 'cupKind' | 'drinkSizeOunces'>,
+  costingData: CostingData) => {
   const packaging = recipe.cupKind === 'to_go'
-    ? packagingForHotDrinkSizeInOunces.get(recipe.drinkSizeOunces)
+    ? costingData.packagingForHotDrinkSizeInOunces.get(recipe.drinkSizeOunces)
     : [];
 
-  const packacingCost = packaging.reduce((acc, next) => acc + costForPackaging.get(next), 0);
+  const packacingCost = packaging.reduce((acc, next) => acc + costingData.costForPackaging.get(next), 0);
 
   return {
     packaging,
