@@ -1,11 +1,12 @@
+import discountFor from './discountFor';
 import espressoCostFor from './espressoCostFor';
 import milkCostFor from './milkCostFor';
 import packagingCostFor from './packagingCostFor';
 
-type AvailableCupKind = "for_here" | "to_go" | "own_cup";
-type AvailableDrinkSizesInOunces = 8 | 12 | 16;
-type AvailableEspressoShots = 2 | 4 | 6;
-type AvailableMilkAlternative =
+export type AvailableCupKind = "for_here" | "to_go" | "own_cup";
+export type AvailableDrinkSizesInOunces = 8 | 12 | 16;
+export type AvailableEspressoShots = 2 | 4 | 6;
+export type AvailableMilkAlternative =
   | "dairy_one_percent"
   | "dairy_3_percent"
   | "dairy_10_percent"
@@ -42,7 +43,8 @@ export type RecipePermutation = PricingOptions & {
   ingredientCostDollars: number;
   packagingCostDollars: number;
   totalCostDollars: number;
-  // markup and _suggested_ price
+  // price
+  discountDollars: number;
   suggestedPrice: number;
 };
 
@@ -94,6 +96,10 @@ export default (
       ...recipe,
       ...milkCostFor(recipe),
     }))
+    .map(recipe => ({
+      ...recipe,
+      ...discountFor(recipe)
+    }))
     .map((recipe) => ({
       ...recipe,
       ingredientCostDollars: roundToTwoDecimalPlaces(
@@ -109,8 +115,12 @@ export default (
     .map(recipe => ({
       ...recipe,
       ...pricingOptions,
+    }))
+    .map(recipe => ({
+      ...recipe,
       suggestedPrice: roundToTwoDecimalPlaces(
         recipe.ingredientCostDollars * pricingOptions.ingredientMarkup +
-        recipe.packagingCostDollars * pricingOptions.packagingMarkup
+        recipe.packagingCostDollars * pricingOptions.packagingMarkup -
+        recipe.discountDollars
       )
     }));

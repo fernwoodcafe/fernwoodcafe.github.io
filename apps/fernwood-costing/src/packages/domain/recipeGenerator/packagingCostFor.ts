@@ -25,9 +25,14 @@ const packagingForHotDrinkSizeInOunces = new Map<number, PackagingOption[]>([
 
 // TODO Put the cup/lid/sleeve costs in an external data source.
 export default (recipe: Pick<RecipePermutation, 'cupKind' | 'drinkSizeOunces'>) => {
-  const packaging = packagingForHotDrinkSizeInOunces.get(recipe.drinkSizeOunces);
+  const packaging = recipe.cupKind === 'to_go'
+    ? packagingForHotDrinkSizeInOunces.get(recipe.drinkSizeOunces)
+    : [];
+
+  const packacingCost = packaging.reduce((acc, next) => acc + costForPackaging.get(next), 0);
+
   return {
     packaging,
-    packagingCostDollars: roundToTwoDecimalPlaces(packaging.reduce((acc, next) => acc + costForPackaging.get(next), 0))
+    packagingCostDollars: roundToTwoDecimalPlaces(packacingCost)
   };
 };

@@ -1,14 +1,16 @@
 import { describe, expect, it } from "vitest";
 import recipeGenerator, { type AvailableCustomerOptions, type PricingOptions } from "../recipeGenerator";
+import recipeGeneratorExpectation_01 from './recipeGeneratorExpectation_01';
+import recipeGeneratorExpectation_02 from './recipeGeneratorExpectation_02';
 
 describe("recipeGenerator", () => {
   it("outputs expected recipes", () => {
     // Arranage
     const customerOptions: AvailableCustomerOptions = {
-      availableSizesInOunces: [12, 16],
-      availableExpressoShots: [2, 4],
+      availableSizesInOunces: [12],
+      availableExpressoShots: [2],
       availableMilkAlternatives: ["dairy_3_percent"],
-      availableCups: ["for_here", "to_go"],
+      availableCups: ["to_go", "own_cup", /* "for_here" */],
     };
 
     const pricingOptions: PricingOptions = {
@@ -20,51 +22,47 @@ describe("recipeGenerator", () => {
     const recipes = recipeGenerator(customerOptions, pricingOptions);
 
     // Dump
+    console.log('');
+    console.log('Recipe');
+    console.log('');
+
     console.table(recipes.map(r => ({
       size: r.drinkSizeOunces,
       shots: r.espressoShots,
       milk: r.milkAlternative,
       cup: r.cupKind,
-      cost: r.totalCostDollars,
     })));
+
+    console.log('');
+    console.log('Cost');
+    console.log('');
 
     console.table(recipes.map(r => ({
       description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
-      ingredientCost: r.ingredientCostDollars,
-      packagingCost: r.packagingCostDollars,
-      totalCost: r.totalCostDollars,
-      suggestedPrice: r.suggestedPrice
+      "ingredient cost ($)": r.ingredientCostDollars.toFixed(2),
+      "packaging cost ($)": r.packagingCostDollars.toFixed(2),
+      "total cost ($)": r.totalCostDollars.toFixed(2),
     })));
 
-    console.log(recipes[2]);
+    console.log('');
+    console.log('Suggested Price');
+    console.log('');
+
+    console.table(recipes.map(r => ({
+      description: `${r.drinkSizeOunces} oz ${r.espressoShots} shot ${r.milkAlternative} ${r.cupKind}`,
+      packagingMarkup: r.packagingMarkup,
+      ingredientMarkup: r.ingredientMarkup,
+      "discount ($)": r.discountDollars.toFixed(2),
+      "suggested price ($)": r.suggestedPrice.toFixed(2)
+    })));
+
+
+    // console.log(JSON.stringify(recipes[2], undefined, 2));
 
     // Assert
     expect(recipes).to.deep.include.members([
-      {
-        // 12 ounce 2 shot oat milk latte to go.
-        drinkSizeOunces: 12,
-        espressoShots: 2,
-        milkAlternative: "dairy_3_percent",
-        cupKind: "to_go",
-        // ingredients - espresso
-        espressoGrams: 18.5, // raw
-        espressoFluidOunces: 1.5, // cooked
-        espressoCostDollars: 0.57, // cost
-        // ingredients - milk
-        milkColdOunces: 8.5, // raw
-        milkSteamedOunces: 10.5, // cooked
-        milkCostDollars: 0.43, // cost
-        // packaging
-        packaging: [ 'cup @ 12 oz', 'lid @ 10 to 20 oz', 'sleeve @ 12 to 20 oz'],
-        // cost
-        packagingCostDollars: 0.38,
-        ingredientCostDollars: 1,
-        totalCostDollars: 1.38,
-        // price
-        packagingMarkup: 2,
-        ingredientMarkup: 4,
-        suggestedPrice: 4.76
-      },
+      recipeGeneratorExpectation_01,
+      recipeGeneratorExpectation_02,
     ]);
   });
 });
