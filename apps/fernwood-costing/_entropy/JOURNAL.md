@@ -1,3 +1,19 @@
+2022-12-28
+
+It would seem that a consistent markup of 4 (for example) across all ingredients
+does not apply effectively, because the prices end up as asymmetrical.
+
+For instance, adding another shot to the latte increases by $2 to $5.99.
+
+12 oz 2 shot dairy_3_percent for_here $3.99
+12 oz 4 shot dairy_3_percent for_here $5.99
+
+Possible approaches to going from _cost_ to _price_.
+
+1. Systematically decrease the markup as the cost of the order increases.
+2. Aim for an average markup across all items instead of a consistent markup.
+3. Model the business as `left_over` = `gross_income` - `cogs` - `staffing_cost` - `overhead`
+
 2022-12-26
 
 The current goal: program the 2023 latte into Square through CSV import.
