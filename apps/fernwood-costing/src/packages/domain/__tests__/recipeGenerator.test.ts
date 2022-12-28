@@ -6,7 +6,8 @@ import database from '../recipeGenerator/data/database';
 import dumpRecipes from './dumpRecipes';
 
 const someExpectedPrices = [
-  ['12 oz 2 shot dairy_3_percent for_here', 4.74]
+  // ['12 oz 2 shot dairy_3_percent for_here', 4.74],
+  ['12 oz 4 shot dairy_3_percent for_here', 5.46],
 ];
 
 // Arranage
@@ -17,7 +18,7 @@ describe("recipeGenerator", () => {
     recipes = recipeGenerator(database);
 
     // Dump
-    dumpRecipes(recipes);
+    dumpRecipes(recipes, r => r.descriptiveName.includes("for_here"));
   });
 
   someExpectedPrices.forEach(([name, price]) => {

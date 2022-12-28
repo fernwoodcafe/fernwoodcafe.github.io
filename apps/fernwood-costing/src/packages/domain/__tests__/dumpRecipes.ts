@@ -6,9 +6,14 @@ const printHeader = (text: string) => {
   console.log('');
 };
 
-export default (recipes: RecipePermutation[]) => {
+export default (
+  recipes: RecipePermutation[],
+  recipeFilter: (recipe: RecipePermutation) => boolean = () => true
+  ) => {
 
-  const groupedRecipes = recipes.reduce((acc, next) => {
+  const groupedRecipes = recipes
+    .filter(recipeFilter)
+    .reduce((acc, next) => {
     if (!acc.has(next.drinkSizeOunces)) {
       acc.set(next.drinkSizeOunces, []);
     };
@@ -57,4 +62,26 @@ export default (recipes: RecipePermutation[]) => {
         "suggested price ($)": r.suggestedPrice,
       })));
   }
+
+  printHeader(`Details`);
+
+  const projection: (keyof RecipePermutation)[] = [
+    'descriptiveName'
+  ];
+
+  for (const [_, recipeGroup] of groupedRecipes.entries()) {
+
+      for (const recipe of recipeGroup) {
+        console.log(
+          Object.entries(recipe).reduce((acc, [key, value]) => {
+            return projection.includes(key) ? {
+              ...acc,
+              [key]: value
+            } : acc;
+          }, {})
+        );
+      }
+
+  }
+
 };
