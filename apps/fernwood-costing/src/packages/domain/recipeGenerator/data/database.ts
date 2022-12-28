@@ -28,7 +28,7 @@ const customerOptions: AvailableCustomerOptions = {
 };
 
 const pricingOptions: PricingOptions = {
-  ingredientMarkup: 4.75,
+  ingredientMarkup: 4,
   packagingMarkup: 1.5,
 };
 
