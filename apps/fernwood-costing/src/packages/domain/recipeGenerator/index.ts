@@ -1,14 +1,16 @@
-import { roundToTwoDecimalPlaces } from '../math/roundToDecimalPlaces';
+import { roundToTwoDecimalPlaces } from "../math/roundToDecimalPlaces";
 import type {
   AvailableCupKind,
   AvailableDrinkSizesInOunces,
   AvailableEspressoShots,
-  AvailableMilkAlternative, CostingData, PricingOptions
-} from './data/schema';
-import discountFor from './discountFor';
-import espressoCostFor from './espressoCostFor';
-import milkCostFor from './milkCostFor';
-import packagingCostFor from './packagingCostFor';
+  AvailableMilkAlternative,
+  CostingData,
+  PricingOptions,
+} from "./data/schema";
+import discountFor from "./discountFor";
+import espressoCostFor from "./espressoCostFor";
+import milkCostFor from "./milkCostFor";
+import packagingCostFor from "./packagingCostFor";
 
 export type RecipePermutation = PricingOptions & {
   descriptiveName: string;
@@ -41,9 +43,7 @@ export type RecipePermutation = PricingOptions & {
  *
  * TODO [work-ethic] Complete the latte 12 & 16 ounce before moving on to other drinks.
  */
-export default (
-  costingData: CostingData
-): RecipePermutation[] =>
+export default (costingData: CostingData): RecipePermutation[] =>
   costingData.customerOptions.availableSizesInOunces
     .map((drinkSizeOunces) => ({
       drinkSizeOunces,
@@ -55,16 +55,20 @@ export default (
       }))
     )
     .flatMap((recipe) =>
-      costingData.customerOptions.availableExpressoShots.map((espressoShots) => ({
-        ...recipe,
-        espressoShots,
-      }))
+      costingData.customerOptions.availableExpressoShots.map(
+        (espressoShots) => ({
+          ...recipe,
+          espressoShots,
+        })
+      )
     )
     .flatMap((recipe) =>
-      costingData.customerOptions.availableMilkAlternatives.map((milkAlternative) => ({
-        ...recipe,
-        milkAlternative,
-      }))
+      costingData.customerOptions.availableMilkAlternatives.map(
+        (milkAlternative) => ({
+          ...recipe,
+          milkAlternative,
+        })
+      )
     )
     .map((recipe) => ({
       ...recipe,
@@ -76,34 +80,43 @@ export default (
       ...recipe,
       ...milkCostFor(recipe, costingData),
     }))
-    .map(recipe => ({
+    .map((recipe) => ({
       ...recipe,
-      ...discountFor(recipe, costingData)
+      ...discountFor(recipe, costingData),
     }))
     .map((recipe) => ({
       ...recipe,
       ingredientCostDollars:
-        recipe.espressoCostDollars +
-        recipe.milkCostDollars,
+        recipe.espressoCostDollars + recipe.milkCostDollars,
       totalCostDollars:
         recipe.packagingCostDollars +
         recipe.espressoCostDollars +
         recipe.milkCostDollars,
     }))
-    .map(recipe => ({
+    .map((recipe) => ({
       ...recipe,
       ...costingData.pricingOptions,
-      suggestedIngredientsPrice: recipe.ingredientCostDollars * costingData.pricingOptions.ingredientMarkup,
-      suggestedPackagingPrice: recipe.packagingCostDollars * costingData.pricingOptions.packagingMarkup,
+      suggestedIngredientsPrice:
+        recipe.ingredientCostDollars *
+        costingData.pricingOptions.ingredientMarkup,
+      suggestedPackagingPrice:
+        recipe.packagingCostDollars *
+        costingData.pricingOptions.packagingMarkup,
     }))
-    .map(recipe => ({
+    .map((recipe) => ({
       ...recipe,
       suggestedPrice:
         recipe.suggestedIngredientsPrice +
         recipe.suggestedPackagingPrice -
-        recipe.discountDollars
+        recipe.discountDollars,
     }))
-    .map(recipe => Object.entries(recipe).reduce((acc, [key, value]) => ({
-      ...acc,
-      [key]: typeof value === 'number' ? roundToTwoDecimalPlaces(value) : value
-    }), {} as RecipePermutation));
+    .map((recipe) =>
+      Object.entries(recipe).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]:
+            typeof value === "number" ? roundToTwoDecimalPlaces(value) : value,
+        }),
+        {} as RecipePermutation
+      )
+    );

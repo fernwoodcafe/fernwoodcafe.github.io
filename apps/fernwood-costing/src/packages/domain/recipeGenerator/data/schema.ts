@@ -16,7 +16,7 @@ export type AvailableCustomerOptions = {
 export type PricingOptions = {
   packagingMarkup: number;
   ingredientMarkup: number;
-}
+};
 
 export type AvailableMilkAlternative =
   | "dairy_one_percent"
@@ -44,6 +44,6 @@ export type CostingData = {
   espressoCosting: EspressoCosting;
   steamedMilkFromColdMilkForLatte: Map<number, number>;
   discounts: Map<string, number>;
-  customerOptions:AvailableCustomerOptions;
+  customerOptions: AvailableCustomerOptions;
   pricingOptions: PricingOptions;
 };
