@@ -1,5 +1,5 @@
 const labourStrategy = {
-  labourWageCurrency: 25,
+  labourWageCurrency: 23,
   labourShiftLengthHours: 8,
   // Cutoff low season at 17K
   lowSeasonMonths: ["Nov", "Dec", "Jan", "Feb"],
