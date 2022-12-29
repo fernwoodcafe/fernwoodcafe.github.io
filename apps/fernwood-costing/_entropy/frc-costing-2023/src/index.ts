@@ -8,5 +8,8 @@ businessStrategy.forEach((businessStrategy) => {
   printReport("Business Strategy", businessStrategy);
   printReport("Business Strategy Result", businessResult(businessStrategy));
   printReport("Labour Strategy", labourStrategy);
-  printReport("Labour Result", labourResult);
+  printReport(
+    "Labour Result",
+    labourResult(businessResult(businessStrategy), labourStrategy)
+  );
 });
