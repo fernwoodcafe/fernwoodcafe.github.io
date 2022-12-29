@@ -56,6 +56,10 @@ const format = (record: SupportedReportData) =>
           return formatQuantity(key, value);
         }
 
+        if (Array.isArray(value)) {
+          return [key, value.join(", ")];
+        }
+
         return [key, value];
       })
       .map(([key, value]) => [key, value.padStart(columnWidth, " ")])
