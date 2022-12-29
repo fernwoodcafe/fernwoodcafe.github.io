@@ -9,7 +9,7 @@ const labourStrategy = {
   // Cutoff shoulder season at 25K
   // We did more business in Oct than we did in May!
   shoulderSeasonMonths: ["Mar", "Apr", "May", "Oct"],
-  shoulderSeasonShiftsPerDay: 2,
+  shoulderSeasonShiftsPerDay: 3,
   shoulderSeasonDaysPerWeek: 6,
   shoulderSeasonWeeksClosed: 0,
   // High season captures the rest!

@@ -27,33 +27,32 @@ const calculateShifts = (
   return shifts;
 };
 
-const lowSeasonRequiredShifts = (
-  _: unknown,
-  labourStrategy: LabourStrategy
-) => {
-  return weeksPerMonth;
-};
-
-const shoulderSeasonRequiredShifts = (
-  _: unknown,
-  labourStrategy: LabourStrategy
-) =>
+const lowSeasonRequiredShifts = (_: unknown, s: LabourStrategy) =>
   calculateShifts(
-    labourStrategy.shoulderSeasonMonths,
-    labourStrategy.shoulderSeasonWeeksClosed,
-    labourStrategy.shoulderSeasonDaysPerWeek,
-    labourStrategy.shoulderSeasonShiftsPerDay
+    s.lowSeasonMonths,
+    s.lowSeasonWeeksClosed,
+    s.lowSeasonDaysPerWeek,
+    s.lowSeasonShiftsPerDay
   );
 
-const highSeasonRequiredShifts = (
-  _: unknown,
-  labourStrategy: LabourStrategy
-) => {
-  return weeksPerMonth;
-};
+const shoulderSeasonRequiredShifts = (_: unknown, s: LabourStrategy) =>
+  calculateShifts(
+    s.shoulderSeasonMonths,
+    s.shoulderSeasonWeeksClosed,
+    s.shoulderSeasonDaysPerWeek,
+    s.shoulderSeasonShiftsPerDay
+  );
+
+const highSeasonRequiredShifts = (_: unknown, s: LabourStrategy) =>
+  calculateShifts(
+    s.highSeasonMonths,
+    s.highSeasonWeeksClosed,
+    s.highSeasonDaysPerWeek,
+    s.highSeasonShiftsPerDay
+  );
 
 const shiftBalance = (result: BusinessResult, labourStrategy: LabourStrategy) =>
-  totalAvailableHours(result, labourStrategy) -
+  totalAvailableShifts(result, labourStrategy) -
   highSeasonRequiredShifts(result, labourStrategy) -
   shoulderSeasonRequiredShifts(result, labourStrategy) -
   lowSeasonRequiredShifts(result, labourStrategy);

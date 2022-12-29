@@ -2,7 +2,7 @@
  * The inputs represent the business strategy and its projections.
  */
 const businessStrategy = {
-  grossRevenueCurrency: 300_000,
+  grossRevenueCurrency: 291_000,
   cogsPercent: 0.3,
   labourCostPercent: 0.5,
 };

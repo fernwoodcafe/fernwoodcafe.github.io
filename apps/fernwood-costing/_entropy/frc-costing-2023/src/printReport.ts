@@ -1,8 +1,3 @@
-import { BusinessResult } from "./businessResult.ts";
-import { BusinessStrategy } from "./businessStrategies.ts";
-import { LabourResult } from "./labourResult.ts";
-import { LabourStrategy } from "./labourStrategies.ts";
-
 const columnWidth = 20;
 
 const isCurrency = (key: string, _value: unknown): _value is number =>
@@ -65,7 +60,7 @@ const format = (record: SupportedReportData) =>
       .map(([key, value]) => [key, value.padStart(columnWidth, " ")])
   );
 
-export type SupportedReportData = Record<string, number | string>;
+export type SupportedReportData = Record<string, number | string | string[]>;
 
 export default (title: string, reportData: SupportedReportData) => {
   console.log();
