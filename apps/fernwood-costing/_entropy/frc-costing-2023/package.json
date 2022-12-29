@@ -4,7 +4,7 @@
   "description": "Throwaway business model for small cafe\"",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "deno run ./src/index.ts"
   },
   "keywords": [
     "throwaway"
