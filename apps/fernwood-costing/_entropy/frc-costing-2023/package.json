@@ -1,0 +1,14 @@
+{
+  "name": "frc-costing-2023",
+  "version": "1.0.0",
+  "description": "Throwaway business model for small cafe\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "throwaway"
+  ],
+  "author": "Shaun Luttin",
+  "license": "MIT"
+}
