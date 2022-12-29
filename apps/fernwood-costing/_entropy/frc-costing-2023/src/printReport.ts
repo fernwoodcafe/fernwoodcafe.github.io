@@ -12,7 +12,9 @@ const format = (record: Record<string, unknown>) =>
       if (isCurrency(key, value)) {
         return [
           key,
-          value.toLocaleString("en-CA", { style: "currency", currency: "CAD" }),
+          value
+            .toLocaleString("en-CA", { style: "currency", currency: "CAD" })
+            .padStart(15, "."),
         ];
       }
 
@@ -24,18 +26,20 @@ const format = (record: Record<string, unknown>) =>
     })
   );
 
+const printJSON = (obj: Record<string, unknown>) =>
+  console.log(JSON.stringify(format(obj), undefined, 2));
+
+const printTable = (obj: Record<string, unknown>) => console.table(format(obj));
+
 export default (
   businessStrategy: BusinessStrategy,
   businessResult: BusinessResult
 ) => {
-  console.log(
-    JSON.stringify(
-      {
-        target: format(businessStrategy),
-        result: format(businessResult(businessStrategy)),
-      },
-      undefined,
-      2
-    )
-  );
+  printJSON({
+    target: format(businessStrategy),
+    result: format(businessResult(businessStrategy)),
+  });
+
+  printTable(businessStrategy);
+  printTable(businessResult(businessStrategy));
 };

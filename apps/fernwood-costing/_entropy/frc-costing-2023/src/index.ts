@@ -2,4 +2,6 @@ import businessResult from "./businessResult.ts";
 import businessStrategy from "./businessStrategy.ts";
 import printReport from "./printReport.ts";
 
-printReport(businessStrategy, businessResult);
+businessStrategy.forEach((strategy) => {
+  printReport(strategy, businessResult);
+});

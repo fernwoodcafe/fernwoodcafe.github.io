@@ -7,6 +7,6 @@ const businessStrategy = {
   labourCostPercent: 0.5,
 };
 
-export default businessStrategy;
+export default [businessStrategy];
 
 export type BusinessStrategy = typeof businessStrategy;
