@@ -6,7 +6,7 @@ const weeksPerMonth = 4;
 const totalAvailableHours = (
   result: BusinessResult,
   labourStrategy: LabourStrategy
-) => result.labourCostCurrency / labourStrategy.labourWageCurrency;
+) => result.labourBudgetCurrency / labourStrategy.labourWageCurrency;
 
 const totalAvailableShifts = (
   businessResult: BusinessResult,

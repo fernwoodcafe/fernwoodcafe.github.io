@@ -4,7 +4,7 @@
 const businessStrategy = {
   grossRevenueCurrency: 291_000,
   cogsPercent: 0.3,
-  labourCostPercent: 0.5,
+  postCogsLabourCostPercent: 0.8,
 };
 
 export default [businessStrategy];

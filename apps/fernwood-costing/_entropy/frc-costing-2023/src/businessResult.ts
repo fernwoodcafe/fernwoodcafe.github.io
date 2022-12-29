@@ -3,20 +3,21 @@ import type { BusinessStrategy } from "./businessStrategies.ts";
 const cogsCurrency = (strategy: BusinessStrategy) =>
   strategy.grossRevenueCurrency * strategy.cogsPercent;
 
-const labourCostCurrency = (strategy: BusinessStrategy) =>
-  strategy.grossRevenueCurrency * strategy.labourCostPercent;
+const labourBudgetCurrency = (strategy: BusinessStrategy) =>
+  (strategy.grossRevenueCurrency - cogsCurrency(strategy)) *
+  strategy.postCogsLabourCostPercent;
 
 const grossProfitCurrency = (strategy: BusinessStrategy) =>
   strategy.grossRevenueCurrency -
   cogsCurrency(strategy) -
-  labourCostCurrency(strategy);
+  labourBudgetCurrency(strategy);
 
 /**
  * The result of that strategy.
  */
 const businessResultFuncs = {
   cogsCurrency,
-  labourCostCurrency,
+  labourBudgetCurrency,
   grossProfitCurrency,
 };
 
