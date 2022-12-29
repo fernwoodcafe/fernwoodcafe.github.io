@@ -1,4 +1,4 @@
-import type { RecipePermutation } from "../recipeGenerator";
+import type { RecipePermutation } from "./index.ts";
 
 const printHeader = (text: string) => {
   console.log("");

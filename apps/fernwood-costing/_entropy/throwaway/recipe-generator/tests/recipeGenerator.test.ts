@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import recipeGenerator, { type RecipePermutation } from "../recipeGenerator";
-import database from "../recipeGenerator/data/database";
-import dumpRecipes from "./dumpRecipes";
+import recipeGenerator, { type RecipePermutation } from "../recipeGenerator.ts";
+import database from "../recipeGenerator/data/database.ts";
+import dumpRecipes from "./dumpRecipes.ts";
 
 const someExpectedPrices = [
   ["12 oz 2 shot dairy_3_percent for_here", 4.74],
