@@ -1,16 +1,17 @@
 const businessInputs = {
-  revenueDollars: 300_000,
+  revenueCurrency: 300_000,
   cogsPercent: 0.3,
 };
 
 const businessOutputs = {
-  grossProfit: businessInputs.revenueDollars * (1 - businessInputs.cogsPercent),
+  grossProfit:
+    businessInputs.revenueCurrency * (1 - businessInputs.cogsPercent),
 };
 
 const format = (record) =>
   Object.fromEntries(
     Object.entries(record).map(([key, value]) => {
-      if (key.endsWith("Dollars")) {
+      if (key.endsWith("Currency")) {
         return [
           key,
           value.toLocaleString("en-CA", { style: "currency", currency: "CAD" }),
