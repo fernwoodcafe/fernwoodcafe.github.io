@@ -1,11 +1,19 @@
-import type { BusinessStrategy } from "./businessStrategy.ts";
+import type { BusinessStrategy } from "./businessStrategies.ts";
 
 const cogsCurrency = (strategy: BusinessStrategy) =>
-  strategy.grossRevenueCurrency * strategy.cogsPercent;
+  strategy.expectedGrossRevenueCurrency * strategy.targetCogsPercent;
+
 const labourCostCurrency = (strategy: BusinessStrategy) =>
-  strategy.grossRevenueCurrency * strategy.labourCostPercent;
+  strategy.expectedGrossRevenueCurrency * strategy.targetLabourCostPercent;
+
+const labourAvailableHours = (strategy: BusinessStrategy) =>
+  labourCostCurrency(strategy) / strategy.targetLabourWageCurrency;
+
+const labourAvailableShifts = (strategy: BusinessStrategy) =>
+  labourAvailableHours(strategy) / strategy.labourShiftLengthHours;
+
 const grossProfitCurrency = (strategy: BusinessStrategy) =>
-  strategy.grossRevenueCurrency -
+  strategy.expectedGrossRevenueCurrency -
   cogsCurrency(strategy) -
   labourCostCurrency(strategy);
 
@@ -15,6 +23,8 @@ const grossProfitCurrency = (strategy: BusinessStrategy) =>
 const businessResultParts = [
   cogsCurrency,
   labourCostCurrency,
+  labourAvailableHours,
+  labourAvailableShifts,
   grossProfitCurrency,
 ];
 
