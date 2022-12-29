@@ -1,5 +1,5 @@
 const labourStrategy = {
-  labourWageCurrency: 23,
+  labourWageCurrency: 24,
   labourShiftLengthHours: 8,
   // Cutoff low season at 17K
   lowSeasonMonths: ["Nov", "Dec", "Jan", "Feb"],
@@ -9,7 +9,7 @@ const labourStrategy = {
   // Cutoff shoulder season at 25K
   // We did more business in Oct than we did in May!
   shoulderSeasonMonths: ["Mar", "Apr", "May", "Oct"],
-  shoulderSeasonShiftsPerDay: 3,
+  shoulderSeasonShiftsPerDay: 2.5,
   shoulderSeasonDaysPerWeek: 6,
   shoulderSeasonWeeksClosed: 0,
   // High season captures the rest!

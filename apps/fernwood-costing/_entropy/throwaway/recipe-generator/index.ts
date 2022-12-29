@@ -1,4 +1,4 @@
-import { roundToTwoDecimalPlaces } from "../math/roundToDecimalPlaces";
+import { roundToTwoDecimalPlaces } from "../../../src/packages/domain/math/roundToDecimalPlaces.ts";
 import type {
   AvailableCupKind,
   AvailableDrinkSizesInOunces,
@@ -6,11 +6,11 @@ import type {
   AvailableMilkAlternative,
   CostingData,
   PricingOptions,
-} from "./data/schema";
-import discountFor from "./discountFor";
-import espressoCostFor from "./espressoCostFor";
-import milkCostFor from "./milkCostFor";
-import packagingCostFor from "./packagingCostFor";
+} from "./data/schema.ts";
+import discountFor from "./discountFor.ts";
+import espressoCostFor from "./espressoCostFor.ts";
+import milkCostFor from "./milkCostFor.ts";
+import packagingCostFor from "./packagingCostFor.ts";
 
 export type RecipePermutation = PricingOptions & {
   descriptiveName: string;
