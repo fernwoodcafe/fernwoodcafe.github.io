@@ -15,7 +15,7 @@ export default (
       acc.set(next.drinkSizeOunces, []);
     }
 
-    acc.get(next.drinkSizeOunces).push(next);
+    acc.get(next.drinkSizeOunces)?.push(next);
     return acc;
   }, new Map<number, RecipePermutation[]>());
 

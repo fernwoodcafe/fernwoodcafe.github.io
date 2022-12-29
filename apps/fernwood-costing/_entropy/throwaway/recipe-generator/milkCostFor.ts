@@ -1,5 +1,5 @@
-import type { RecipePermutation } from ".";
-import type { CostingData } from "./data/schema";
+import type { RecipePermutation } from "./index.ts";
+import type { CostingData } from "./data/schema.ts";
 
 export default (
   recipe: Pick<RecipePermutation, "drinkSizeOunces" | "espressoFluidOunces">,

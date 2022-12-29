@@ -3,7 +3,7 @@ import type {
   CostingData,
   PackagingOption,
   PricingOptions,
-} from "./schema";
+} from "./schema.ts";
 
 const costForPackaging = new Map<PackagingOption, number>([
   ["cup @ 8 oz", 0.13],

@@ -1,5 +1,5 @@
-import type { RecipePermutation } from ".";
-import type { CostingData } from "./data/schema";
+import type { RecipePermutation } from "./index.ts";
+import type { CostingData } from "./data/schema.ts";
 
 export default (
   recipe: Pick<RecipePermutation, "cupKind" | "drinkSizeOunces">,
@@ -10,7 +10,7 @@ export default (
       ? costingData.packagingForHotDrinkSizeInOunces.get(recipe.drinkSizeOunces)
       : [];
 
-  const packacingCost = packaging.reduce(
+  const packacingCost = packaging?.reduce(
     (acc, next) => acc + costingData.costForPackaging.get(next),
     0
   );
