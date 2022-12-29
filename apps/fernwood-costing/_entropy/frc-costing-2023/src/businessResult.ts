@@ -2,8 +2,10 @@ import type { BusinessStrategy } from "./businessStrategies.ts";
 
 const cogsCurrency = (strategy: BusinessStrategy) =>
   strategy.grossRevenueCurrency * strategy.cogsPercent;
+
 const labourCostCurrency = (strategy: BusinessStrategy) =>
   strategy.grossRevenueCurrency * strategy.labourCostPercent;
+
 const grossProfitCurrency = (strategy: BusinessStrategy) =>
   strategy.grossRevenueCurrency -
   cogsCurrency(strategy) -
@@ -18,19 +20,24 @@ const labourAvailableShifts = (strategy: BusinessStrategy) =>
 /**
  * The result of that strategy.
  */
-const businessResultParts = [
+const businessResultFuncs = {
   cogsCurrency,
   labourCostCurrency,
   grossProfitCurrency,
   labourAvailableHours,
   labourAvailableShifts,
-];
+};
 
-export default (strategy: BusinessStrategy) =>
+export default (strategy: BusinessStrategy): BusinessResult =>
   Object.fromEntries(
-    businessResultParts.map((func) => [func.name, func(strategy)])
-  );
+    Object.entries(businessResultFuncs).map(([key, func]) => [
+      key,
+      func(strategy),
+    ])
+  ) as BusinessResult;
 
-export type BusinessResult = (
-  strategy: BusinessStrategy
-) => Record<string, unknown>;
+export type BusinessResult = {
+  [K in keyof typeof businessResultFuncs]: ReturnType<
+    typeof businessResultFuncs[K]
+  >;
+};

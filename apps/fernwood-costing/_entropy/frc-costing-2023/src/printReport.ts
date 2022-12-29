@@ -1,7 +1,7 @@
 import { BusinessResult } from "./businessResult.ts";
 import { BusinessStrategy } from "./businessStrategies.ts";
 
-const columnWidth = 15;
+const columnWidth = 20;
 
 const isCurrency = (key: string, _value: unknown): _value is number =>
   key.endsWith("Currency");
@@ -34,32 +34,35 @@ const formatQuantity = (key: string, value: number) => [
   value.toFixed(2).padStart(columnWidth, " "),
 ];
 
-const format = (record: Record<string, unknown>) =>
+const format = (record: BusinessResult | BusinessStrategy) =>
   Object.fromEntries(
-    Object.entries(record).map(([key, value]) => {
-      if (isCurrency(key, value)) {
-        return formatCurrency(key, value);
-      }
+    Object.entries(record)
+      .map(([key, value]) => {
+        if (isCurrency(key, value)) {
+          return formatCurrency(key, value);
+        }
 
-      if (isPercent(key, value)) {
-        return formatPercent(key, value);
-      }
+        if (isPercent(key, value)) {
+          return formatPercent(key, value);
+        }
 
-      if (isHours(key, value)) {
-        return formatHours(key, value);
-      }
+        if (isHours(key, value)) {
+          return formatHours(key, value);
+        }
 
-      if (typeof value === "number") {
-        return formatQuantity(key, value);
-      }
+        if (typeof value === "number") {
+          return formatQuantity(key, value);
+        }
 
-      console.log(typeof value);
-
-      return [key, value];
-    })
+        return [key, value];
+      })
+      .map(([key, value]) => [key, value.padStart(columnWidth, " ")])
   );
 
-const printTable = (title: string, record: Record<string, unknown>) => {
+const printTable = (
+  title: string,
+  record: BusinessResult | BusinessStrategy
+) => {
   console.log();
   console.log(title);
   console.table(format(record));
@@ -70,5 +73,5 @@ export default (
   businessResult: BusinessResult
 ) => {
   printTable("Strategy", businessStrategy);
-  printTable("Result", businessResult(businessStrategy));
+  printTable("Result", businessResult);
 };
