@@ -36,7 +36,7 @@ const formatQuantity = (key: string, value: number) => [
   value.toFixed(2).padStart(columnWidth, " "),
 ];
 
-const format = (record: Record<string, number | string>) =>
+const format = (record: SupportedReportData) =>
   Object.fromEntries(
     Object.entries(record)
       .map(([key, value]) => {
@@ -61,10 +61,9 @@ const format = (record: Record<string, number | string>) =>
       .map(([key, value]) => [key, value.padStart(columnWidth, " ")])
   );
 
-export default (
-  title: string,
-  reportData: BusinessStrategy | BusinessResult | LabourStrategy | LabourResult
-) => {
+export type SupportedReportData = Record<string, number | string>;
+
+export default (title: string, reportData: SupportedReportData) => {
   console.log();
   console.log(title);
   console.table(format(reportData));
