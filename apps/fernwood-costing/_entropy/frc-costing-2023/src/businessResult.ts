@@ -11,12 +11,6 @@ const grossProfitCurrency = (strategy: BusinessStrategy) =>
   cogsCurrency(strategy) -
   labourCostCurrency(strategy);
 
-const labourAvailableHours = (strategy: BusinessStrategy) =>
-  labourCostCurrency(strategy) / strategy.labourWageCurrency;
-
-const labourAvailableShifts = (strategy: BusinessStrategy) =>
-  labourAvailableHours(strategy) / strategy.labourShiftLengthHours;
-
 /**
  * The result of that strategy.
  */
@@ -24,8 +18,6 @@ const businessResultFuncs = {
   cogsCurrency,
   labourCostCurrency,
   grossProfitCurrency,
-  labourAvailableHours,
-  labourAvailableShifts,
 };
 
 export default (strategy: BusinessStrategy): BusinessResult =>

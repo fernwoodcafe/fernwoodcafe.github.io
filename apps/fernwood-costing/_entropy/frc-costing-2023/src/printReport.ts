@@ -1,5 +1,7 @@
 import { BusinessResult } from "./businessResult.ts";
 import { BusinessStrategy } from "./businessStrategies.ts";
+import { LabourResult } from "./labourResult.ts";
+import { LabourStrategy } from "./labourStrategies.ts";
 
 const columnWidth = 20;
 
@@ -34,7 +36,7 @@ const formatQuantity = (key: string, value: number) => [
   value.toFixed(2).padStart(columnWidth, " "),
 ];
 
-const format = (record: BusinessResult | BusinessStrategy) =>
+const format = (record: Record<string, number | string>) =>
   Object.fromEntries(
     Object.entries(record)
       .map(([key, value]) => {
@@ -59,19 +61,11 @@ const format = (record: BusinessResult | BusinessStrategy) =>
       .map(([key, value]) => [key, value.padStart(columnWidth, " ")])
   );
 
-const printTable = (
+export default (
   title: string,
-  record: BusinessResult | BusinessStrategy
+  reportData: BusinessStrategy | BusinessResult | LabourStrategy | LabourResult
 ) => {
   console.log();
   console.log(title);
-  console.table(format(record));
-};
-
-export default (
-  businessStrategy: BusinessStrategy,
-  businessResult: BusinessResult
-) => {
-  printTable("Strategy", businessStrategy);
-  printTable("Result", businessResult);
+  console.table(format(reportData));
 };
