@@ -4,11 +4,15 @@
   "description": "Throwaway business model for small cafe\"",
   "main": "index.js",
   "scripts": {
-    "start": "deno run ./src/index.ts"
+    "start": "deno run ./src/index.ts",
+    "watch": "onchange ./src/**/*.ts -- npm start"
   },
   "keywords": [
     "throwaway"
   ],
   "author": "Shaun Luttin",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "onchange": "^7.1.0"
+  }
 }
