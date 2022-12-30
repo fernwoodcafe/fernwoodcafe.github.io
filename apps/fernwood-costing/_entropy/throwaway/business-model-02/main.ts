@@ -44,7 +44,19 @@ const report = Object.fromEntries(
     cogsPercent,
     averageMarkup,
     grossProfitCurrency,
-  }).map(([key, value]) => [key, value.toFixed(2).padStart(10, " ")])
+  })
+    .map(([key, value]) => {
+      if (/Currency/.test(key)) {
+        return [key, currency(value).format()];
+      }
+
+      if (/Percent/.test(key)) {
+        return [key, `${round(value * 100)}%`];
+      }
+
+      return [key, value.toString()];
+    })
+    .map(([key, value]) => [key, value.padStart(10, " ")])
 );
 
 console.table(report);
