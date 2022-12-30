@@ -13,9 +13,9 @@ export default (reportRecord: Record<string, number>) => {
           return [key, `${round(value * 100)}%`];
         }
 
-        return [key, value.toString()];
+        return [key, value.toFixed(2)];
       })
-      .map(([key, value]) => [key, value.padStart(10, " ").padEnd(13, " ")])
+      .map(([key, value]) => [key, value.padStart(15, " ").padEnd(20, " ")])
   );
 
   console.table(report);
