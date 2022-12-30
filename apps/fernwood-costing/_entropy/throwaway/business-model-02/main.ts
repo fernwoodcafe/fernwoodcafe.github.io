@@ -56,7 +56,7 @@ const report = Object.fromEntries(
 
       return [key, value.toString()];
     })
-    .map(([key, value]) => [key, value.padStart(10, " ")])
+    .map(([key, value]) => [key, value.padStart(10, " ").padEnd(13, " ")])
 );
 
 console.table(report);
