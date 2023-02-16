@@ -1,4 +1,0 @@
-@startuml
-index -> RecipeView: (recipe, suppliesList)
-RecipeView -> AgSelectEditor: (suppliesList)
-@enduml
