@@ -205,6 +205,14 @@ article#home {
   display: block;
 }
 
+aside {
+  background-color:pink;
+  border-radius: 10px;
+  padding:10px 20px;
+  font-size:1.5rem;
+  color:black;
+}
+
 /*
   Custom Aria-Label Hover
 */
